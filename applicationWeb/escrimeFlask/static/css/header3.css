@@ -1,0 +1,89 @@
+body{
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+
+header{
+    display: flex;
+    flex-direction: row;
+    height: 18vmin;
+    margin-bottom: 4vw;
+    gap: 12vw;
+}
+
+header>img{
+    margin: 5vmin;
+    height: 10vmin;
+}
+
+nav{
+    flex-grow: 1;
+    margin-top: 1vw;
+}
+
+.lien{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+.lien li {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: min-content;
+}
+
+
+.lien li a, pre {
+    color: #062656;
+    text-align: center;
+    margin: 1vmin;
+} 
+
+nav img{
+    margin: 0;
+    margin-top: 1vmin;
+    height: 7vmin;
+    object-fit: contain;
+}
+
+.lien li:nth-child(1) img{
+    height: 6vmin;
+}
+
+.lien li:nth-child(2) img{
+    height: 8vmin;
+}
+
+.lien li:nth-child(3) img{
+    height: 5vmin;
+}
+
+.lien li:nth-child(4){
+    position: relative;
+    width: fit-content;
+}
+
+.lien li:nth-child(4) img{
+    height: 6vmin;
+}
+
+.epee {
+    position: relative;
+    top: -2vmin;
+    right: 2vmin;
+
+}
+
+.epee img {
+    width: 100%;
+    object-fit: fill;
+}
+
+@media (max-width: 1000px) {
+    .epee{
+        top: -2vw;
+    }
+}
