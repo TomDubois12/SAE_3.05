@@ -1,0 +1,16 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8"/>
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/index.css')}}"> 
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css')}}">
+        {% block title %}{% endblock %}
+    </head>
+    <body>
+        {% block header %}
+            {% include "partials/_header.html" %}
+        {% endblock %}
+        
+        {% block main %}{% endblock %}
+    </body>
+</html>

@@ -1,3 +1,7 @@
-h1{
-    color: aquamarine;
+header h1{
+    color: black;
 }
+
+header a{
+    color: gray;
+}  
