@@ -3,7 +3,9 @@ main{
     height: 100%;
     
 }
-main > div{
+
+
+.divPrincipale{
     display: flex;
     flex-direction: column;
     justify-content: space-evenly   ;
@@ -13,7 +15,7 @@ main > div{
     padding-left: 10vw;
     padding-right: 10vw;
 }
-main > div > p{
+.divPrincipale > p{
     margin-top: -10vh;
     font-size: 40px;
     text-align: center;
@@ -141,3 +143,74 @@ form{
 }
 
 
+
+
+
+/*
+//
+//Code pour l'affichage de la popup
+//
+//
+*/
+
+
+.affichage_popup{
+    position: absolute;
+    display: flex;
+
+    top:50%;
+    left:50%;
+    transform: translate(-50%,-50%);
+    background-color: rgb(255, 255, 255);
+    width:60vw;
+    height:65vh;
+
+
+    border: solid black thin;
+    box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.159);
+}
+.affichage_popup img{
+    width:50%;
+    height: 100%;
+}
+.affichage_popup > div{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    padding: 1em;
+    width:50%;
+    height: 100%;
+    background-color: rgb(255, 255, 255);
+    padding-bottom: 3em;
+}
+.affichage_popup h1{
+    margin-bottom: 2em ;
+    color: red;
+    text-align: center;
+    font-size: 270%;
+}
+.affichage_popup p{
+    margin-bottom: 1.5em;
+    font-size: 2.3vmin;
+}
+.cover{
+    position: absolute;
+    top:0;
+    left:0;
+    width:100vw;
+    height:100vh;
+    background-color: rgba(135, 135, 135, 0.344);
+    filter: blur(10em);
+    
+}
+.btn-close{
+    position: absolute;
+
+    width:30px;
+    height:30px;
+    background-color: red;
+    top:2%;
+    right:2%;
+    transform: translate(50%,0%);
+}
