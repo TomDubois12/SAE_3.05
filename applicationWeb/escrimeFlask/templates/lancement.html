@@ -8,23 +8,23 @@
 {% block main %}
     <div class="haut">
         <a href="/inscription"><div class="inscription">
-            <img src="../static/images/epeeGris.png" alt="Épée grise d'escrime">
+            <img src="{{url_for('static', filename='images/epeeGris.png')}}" alt="Épée grise d'escrime">
             <p>S’INSCRIRE A UNE COMPETITION</p>
         </div>
         <a href="/"><div class="connection">
-            <img src="../static/images/epeeGris.png" alt="Épée grise d'escrime">
+            <img src="{{url_for('static', filename='images/epeeGris.png')}}" alt="Épée grise d'escrime">
             <p>SE CONNECTER A UNE COMPETITION</p>
         </div>
         </a>
         <a href="/connexion_organisateur"><div class="creer">
-            <img src="../static/images/epeeGris.png" alt="Épée grise d'escrime">
+            <img src="{{url_for('static', filename='images/epeeGris.png')}}" alt="Épée grise d'escrime">
             <p>CREER ET GERER DES COMPETITIONS</p>
         </div>
         </a>
     </div>
     <div class="bas">
         <a href="/"><div class="consultation">
-            <img src="../static/images/epeeGris.png" alt="Épée grise d'escrime">
+            <img src="{{url_for('static', filename='images/epeeGris.png')}}" alt="Épée grise d'escrime">
             <p>CONSULTER DES RESULTATS DE COMPETITIONS</p>
         </div>
         </a>
