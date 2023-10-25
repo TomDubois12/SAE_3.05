@@ -9,6 +9,17 @@ main{
     align-items: center;
     flex-grow: 1;
     justify-content: space-evenly;
+    
+}
+
+.haut a {
+    width: 20%;
+    height: 85%;
+}
+
+.bas a {
+    width: 20%;
+    height: 85%;
 }
 
 .haut div, .bas div {
@@ -55,8 +66,8 @@ main>p a {
 }
 
 .haut div {
-    width: 20%;
-    height: 85%;
+    width: 100%;
+    height: 100%;
 }
 .bas{
     width: 100%;
@@ -66,8 +77,8 @@ main>p a {
 }
 
 .bas div {
-    width: 20%;
-    height: 85%;
+    width: 100%;
+    height: 100%;
 }
 
 .inscription{
