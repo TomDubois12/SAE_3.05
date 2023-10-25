@@ -88,10 +88,19 @@ def inscriptionOuverte() -> list:
                             # print(info[i][9]) #idArme
     return res
 
+def getOrganisateurClub():
+  requete1 = "select * from ORGANISATEURDANSCLUB natural join CLUB ;"
+  cursor.execute(requete1)
+  info = cursor.fetchall()
+  res = dict()
+  for i in range(len(info)):
+    res[info[i][1]] = info[i][2]
+  return res
 
 if __name__ == "__main__":
     #print(classementFile("./csvEscrimeur/classement_Epée_Dames_M15.csv"))
     #print(inscriptionOuverte())
     #print(insertTireurCompetition("Nicolas", "Guillaume", 146313, 2452.00, 1, 1))
     #print(concourtInscritLicence(521531))
+    #print(getOrganisateurClub())
     pass
