@@ -1,0 +1,154 @@
+body{
+    height: 100vh;
+}
+
+main{
+    height: 60%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex-grow: 1;
+    justify-content: space-evenly;
+    
+}
+
+.haut a {
+    width: 20%;
+    height: 85%;
+}
+
+.bas a {
+    width: 20%;
+    height: 85%;
+}
+
+.haut div, .bas div {
+    display: flex;
+}
+
+div p {
+    position: relative;
+    color: #FFFFFF;
+    font-size: 1.5em;
+    text-align: center;
+    top: 0.5em;
+    width: 80%;
+    height: 80%;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+
+
+div img {
+    position: relative;
+    top: -3em;
+    left: 0.2em;
+}
+
+main>p{
+    color :#000000;
+}
+
+main>p a {
+    color: #0019FF;
+    text-decoration:underline;
+}
+
+.consultation p {
+    color: #5E5E5E;
+}
+
+.haut{
+    width: 100%;
+    display: flex;
+    justify-content: space-evenly;
+    height: 30%;
+    margin-bottom: 3em;
+}
+
+.haut div {
+    width: 100%;
+    height: 100%;
+}
+.bas{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    height: 30%;
+}
+
+.bas div {
+    width: 100%;
+    height: 100%;
+}
+
+.inscription{
+    width: 15%;
+    height: 15%;
+    background-color: #062656;
+    box-shadow: -0.5em 0.5em 0.1em #00000040;
+}
+
+.inscription:hover img {
+    transform: translateY(-2em);
+    transition: ease-in 0.15s;
+}
+
+.inscription:hover{
+    transform: translate(0.3em, -0.3em);
+    transition: ease-in-out 0.2s;
+    box-shadow: -0.8em 0.8em 0.1em #00000040;
+}
+
+.connection{
+    width: 15%;
+    height: 15%;
+    background-color: #000000;
+    box-shadow: 0em 0.5em 0.1em #00000040;
+}
+
+.connection:hover img {
+    transform: translateY(-2em);
+    transition: ease-in 0.15s;
+}
+
+.connection:hover {
+    transform: translateY(-0.3em);
+    transition: ease-in-out 0.2s;
+    box-shadow: 0 0.8em 0.1em #00000040;
+}
+
+.creer{
+    width: 15%;
+    height: 15%;
+    background-color: #840707;
+    box-shadow: 0.5em 0.5em 0.1em #00000040;
+}
+
+.creer:hover img {
+    transform: translateY(-2em);
+    transition: ease-in 0.15s;
+}
+
+.creer:hover {
+    transform: translate(-0.3em, -0.3em);
+    transition: ease-in-out 0.2s;
+    box-shadow: 0.8em 0.8em 0.1em #00000040;
+}
+
+.consultation{
+    width: 15%;
+    height: 15%;
+    background-color: #F6F5F5;
+    box-shadow: 0 0.5em 0.1em #00000040;
+}
+
+.consultation:hover img {
+    transform: translateY(-2em);
+    transition: ease-in 0.15s;
+}
+
+.consultation:hover{
+    transform: translateY(-0.3em);
+    transition: ease-in-out 0.2s;
+    box-shadow: 0 0.8em 0.1em #00000040;
+}
