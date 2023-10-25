@@ -1,0 +1,149 @@
+/* div */
+.resultats, .classement, .archives, .profil{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.resultats{
+    background-color: #010101;
+    margin-top: 5vh;
+}
+
+.classement{
+    background-color: #F1F6F7;
+}
+
+.archives{
+    background-color: #010101;
+}
+
+.profil{
+    background-color: #E9EBEA;
+}
+
+/* p */
+.resultats .resultats_p {
+    float: right;
+    justify-content: center;
+    margin: auto;
+    flex-wrap: nowrap;
+}
+
+.resultats .resultats_p p {
+    color: white;
+    font-size: 3.5vh;
+    margin: 0.2vh;
+    font-family: 'Average', sans-serif;
+}
+
+.resultats .resultats_p .resultats_p4 {
+    margin-top: 5vh;
+}
+
+.classement .classement_p {
+    float: left;
+    justify-content: center;
+    margin: auto;
+    flex-wrap: nowrap;
+}
+
+.classement .classement_p p {
+    font-size: 3.5vh;
+    margin: 0.2vh;
+    margin-left: 5vh;
+    font-family: 'Average', sans-serif;
+}
+
+.classement .classement_p .classement_p3 {
+    margin-top: 5vh;
+}
+
+.archives .archives_p {
+    float: right;
+    justify-content: center;
+    margin: auto;
+    flex-wrap: nowrap;
+}
+
+.archives .archives_p p {
+    color: white;
+    font-size: 3.5vh;
+    margin: 0.2vh;
+    font-family: 'Average', sans-serif;
+}
+
+.archives .archives_p .archives_p5 {
+    margin-top: 5vh;
+}
+
+.profil .profil_p {
+    float: left;
+    justify-content: center;
+    margin: auto;
+    flex-wrap: nowrap;
+}
+
+.profil .profil_p p {
+    font-size: 3.5vh;
+    margin: 0.2vh;
+    margin-left: 5vh;
+    font-family: 'Average', sans-serif;
+}
+
+.profil .profil_p .profil_p3 {
+    margin-top: 5vh;
+}
+
+/* img */
+.resultats img {
+    flex-basis: 20%;
+    width: 60vw;
+    height: 25vw;
+    margin: 0;
+    padding: 0;
+    float: left;
+}
+
+.classement img {
+    flex-basis: 20%;
+    width: 60vw;
+    height: 25vw;
+    margin: 0;
+    padding: 0;
+    float: right;
+}
+
+.archives img {
+    flex-basis: 20%;
+    width: 60vw;
+    height: 25vw;
+    margin: 0;
+    padding: 0;
+    float: left;
+}
+
+.profil img {
+    flex-basis: 20%;
+    width: 60vw;
+    height: 25vw;
+    margin: 0;
+    padding: 0;
+    float: right;
+}
+
+
+footer{
+    background-color: #010101;
+    text-align: center;
+    padding: 5vh;
+}
+
+footer p {
+    color: white;
+}
+
+footer .footer_p2, a {
+    color: white;
+    margin-top: 2vh;
+}

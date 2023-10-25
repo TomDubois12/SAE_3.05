@@ -12,7 +12,7 @@ header{
     gap: 12vw;
 }
 
-header>img{
+header>a>img{
     margin: 5vmin;
     height: 10vmin;
 }

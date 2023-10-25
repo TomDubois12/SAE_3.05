@@ -22,3 +22,8 @@ def inscription():
 def connexion_organisateur():
     return render_template('connexion_organisateur.html',
                            title='Connexion_organisateur')
+
+@app.route('/accueil')
+def accueil():
+    return render_template('accueil.html',
+                           title='Accueil')
