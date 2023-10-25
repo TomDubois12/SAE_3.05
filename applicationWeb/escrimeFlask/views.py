@@ -15,3 +15,8 @@ def information():
 def inscription():
     return render_template('inscription.html',
                            title='Inscription')
+
+@app.route('/connexion_organisateur')
+def connexion_organisateur():
+    return render_template('connexion_organisateur.html',
+                           title='Connexion_organisateur')

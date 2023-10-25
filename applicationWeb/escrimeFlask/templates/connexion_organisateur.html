@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+
+{% block linkcss %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/connexion_organisateur.css')}}">
+{% endblock %}
+
+{% block header %}
+{% include "partials/_header2.html" %}
+{% endblock %}
+
+
+
+
+{% block main %}
+<main> 
+    <div>
+        <p>
+            Afin d’accèder à la  création et gestion de concours veuillez entrer votre numéro de license. Pour pouvoir se connecter vous devez être renseigné auprès de la FFE comme un <u>membre organisateur</u>.
+        </p>
+        <div class="wrap_card">
+            <h2>Connexion</h2>
+            
+           
+            
+            <form action="" method="get">
+                <div class="premierInput">
+                    <h3>Numéro de license :</h3>
+                    <img class="epee" src="{{url_for('static', filename='images/epeeBleuTourner.png')}}" alt="Epée bleu d'escrime">
+                </div>
+                <div class="form_nb_license">
+                    <input class="inputForm" type="text" name="nblicense" id="nblicense" placeholder="128456" minlength="6" maxlength="6" required />
+                </div>
+                <div class="deuxiemeInput">
+                    <h3>Nom du club :</h3>
+                    <img class="epee" src="{{url_for('static', filename='images/epeeBleuTourner.png')}}" alt="Epée bleu d'escrime">
+                </div>
+                <div class="form_nom_club">
+                    <input class="inputForm" type="text" name="nomClub" id="nomClub" placeholder="nomClub" minlength="2" maxlength="20" required />
+                </div>
+                <div>
+                    <input type="submit" value="Se connecter" />
+                </div>
+            </form>
+        </div>
+    </div>
+</main>
+{% endblock %}
