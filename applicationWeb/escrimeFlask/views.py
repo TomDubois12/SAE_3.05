@@ -1,5 +1,6 @@
 from .app import app
 from flask import render_template
+from .models import *
 
 @app.route('/')
 def index():
@@ -14,7 +15,8 @@ def information():
 @app.route('/inscription')
 def inscription():
     return render_template('inscription.html',
-                           title='Inscription')
+                           title='Inscription',
+                           competitions=inscriptionOuverte())
 
 @app.route('/connexion_organisateur')
 def connexion_organisateur():
