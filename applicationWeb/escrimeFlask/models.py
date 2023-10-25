@@ -1,10 +1,8 @@
-from flask import Flask
 import csv
 
 # pip install Flask-MySQLdb
 #sudo apt-get install python3-dev default-libmysqlclient-dev build-essential pkg-config
 
-app = Flask(__name__)
 
 # -*- coding: utf-8 -*-
 import mysql.connector
@@ -12,8 +10,8 @@ import mysql.connector
 #connexion au base de données
 db = mysql.connector.connect(
   host = "localhost",
-  user = "nathan",
-  password = "nathan",
+  user = "koko",
+  password = "koko",
   database = "Escrime"
 )
 
@@ -34,11 +32,6 @@ def insertTireurCompetition(nom,prenom,numeroLicence,classement,idSexe,idCompeti
     except Exception as mysql_error:
        print(mysql_error)
 
-@app.route('/')
-def CONNECT_DB():
-    
-  
-    return str("cc pédale")
 
 def classementFile(filename): 
     # à faire 
@@ -52,7 +45,7 @@ def inscriptionOuverte():
     info =  c.fetchall()
     res = []
     for i in range(len(info)):
-      requete2 = """select intituleCompet,typeArme, intituleSexe,intituleCategorie, departement 
+      requete2 = """select intituleCompet,typeArme, intituleSexe,intituleCategorie, departement, idCompetition 
                     from COMPETITION natural join LIEU natural join ARME natural join SEXE natural join CATEGORIE
                     where datediff(dateDebutCompetiton ,CURDATE()) > 14 and idLieu ="""+ str(info[i][6]) +" and idCategorie ="+ str(info[i][7]) +" and idSexe = "+str(info[i][8]) +" and idArme = "+ str(info[i][9]) +" and idCompetition = "+str(info[i][0]) +";"
       c.execute(requete2) 
@@ -71,4 +64,4 @@ def inscriptionOuverte():
 
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    print(inscriptionOuverte())

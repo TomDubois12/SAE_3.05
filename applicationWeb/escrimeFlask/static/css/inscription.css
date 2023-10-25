@@ -1,0 +1,142 @@
+body{
+    height: 100vh;
+}
+
+main{
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    flex-grow: 1;
+}
+
+.open{
+    flex-basis: 30%;
+    border: black thin solid;
+}
+
+.inscription{
+    display: flex;
+    flex-direction: column;
+    flex-basis: 30%;
+    height: 50%;
+    border: black thin solid;
+    box-shadow: 0.3em 0.3em 0.1em #00000040;
+}
+
+.infoInscription{
+
+    flex-grow: 1;
+    padding: 1em;
+}
+
+.titreOpen{
+    text-align: center;
+    background-color: #062656;
+    padding: 1em;
+}
+
+.titreInscription{
+    text-align: center;
+    background-color: #062656;
+    padding: 1em;
+}
+
+.titreOpen p, .titreInscription p{
+    color: #FFFFFF;
+    font-size: 1.5em;
+}
+
+.numLicence{
+    display: flex;
+    margin-bottom: 1.5em;
+    gap: 0.5em;
+}
+
+
+.numLicence input{
+    text-align: center;
+    background-color: #EDEDED;
+    width: 20%;
+    
+}
+
+.infoInscription>p{
+    margin-bottom: 0.5em;
+}
+
+.nomPrenom{
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 1em;
+}
+
+.nomPrenom input{
+    flex-grow: 1;
+    background-color: #EDEDED;
+    padding-left: 0.5em;
+}
+
+.naissanceClub{
+    display: flex;
+    justify-content: space-between;
+}
+
+.naissance input{
+    background-color: #EDEDED;
+    padding-left: 0.5em;
+    margin-right: 1.5em;
+}
+
+.club input {
+    background-color: #EDEDED;
+    padding-left: 0.5em;
+}
+
+.infoInscription>a {
+    position: relative;
+    background-color: #062656;
+    color: #FFFFFF;
+    padding: 1em;
+    left: 35%;
+    top: 2.5em;
+}
+
+
+.contentOpen{
+    padding: 1em;
+    display: flex;
+    flex-direction: column;
+
+}
+
+.contentOpen label{
+    padding: 0.5em;
+    margin: 0.5em;
+    font-size: 1.3vw;
+    text-align: start;
+    display: block;
+}
+
+
+
+.contentOpen label:last-child{
+    border-bottom: none;
+}
+
+.contentOpen input:checked+label{
+    background-color: #062656;
+    color: #FFFFFF;
+}
+
+input[type="radio"] {
+    opacity: 0;
+  }
+
+span{
+    border: #062656 2px solid;
+    flex-grow: 1;
+}
+
+span:last-child{
+    border: none;
+}
