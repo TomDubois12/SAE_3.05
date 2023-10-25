@@ -10,3 +10,8 @@ def index():
 def information():
     return render_template('information.html',
                            title='Information')
+    
+@app.route('/connexion_organisateur')
+def connexion_organisateur():
+    return render_template('connexion_organisateur.html',
+                           title='Connexion_organisateur')
