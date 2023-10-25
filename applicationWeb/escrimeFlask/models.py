@@ -21,6 +21,7 @@ cursor = db.cursor()
 
 def insertTireurCompetition(nom : str, prenom : str,numeroLicence : int ,classement : float, idSexe : int, idCompetition: int) -> None:
     try :
+        if estDansBDNational(numeroLicence) :
           requete2 = "insert into TIREUR (nomTireur,prenomTireur,numeroLicenceTireur,classement,idSexeTireur) values(%s,%s,%s,%s,%s);"
           cursor.execute(requete2, (nom,prenom,numeroLicence,classement,idSexe))
           db.commit()
@@ -31,9 +32,10 @@ def insertTireurCompetition(nom : str, prenom : str,numeroLicence : int ,classem
           except Exception as mysql_error:
             print(mysql_error)
     except Exception as mysql_error:
-       print(mysql_error)
+      print(mysql_error)
 
-
+def estDansBDNational(numeroLicence : int) -> bool:
+  pass
 
 def concourtInscritLicence(numeroLicence : int) -> list:
   requete1 = "select * from TIREUR_DANS_COMPETITIONS natural join COMPETITION where numeroLicenceTireur = " + str(numeroLicence) + ";"
@@ -97,10 +99,21 @@ def getOrganisateurClub():
     res[info[i][1]] = info[i][2]
   return res
 
+
+def getProfil(numeroLicence : int) -> list:
+  requete1 = """select nomTireur, prenomTireur, dateNaissanceTireur, numeroLicenceTireur,  nationTireur, comiteRegionalTireur,nomCLub
+                from TIREUR natural join TIREUR_DANS_CLUB natural join CLUB where numeroLicenceTireur = """ + str(numeroLicence) + " limit 1;"
+  cursor.execute(requete1)
+  res = []
+  res.append(cursor.fetchone())
+  return res
+
+
 if __name__ == "__main__":
     #print(classementFile("./csvEscrimeur/classement_Epée_Dames_M15.csv"))
     #print(inscriptionOuverte())
     #print(insertTireurCompetition("Nicolas", "Guillaume", 146313, 2452.00, 1, 1))
     #print(concourtInscritLicence(521531))
     #print(getOrganisateurClub())
+    #print(getProfil(315486))
     pass

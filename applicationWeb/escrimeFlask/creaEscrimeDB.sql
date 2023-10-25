@@ -59,7 +59,10 @@ create table TIREUR(
     prenomTireur varchar(50) not null,
     numeroLicenceTireur int not null,
     classement Float(10,2) not null,
-    idSexeTireur int not null,
+    idSexeTireur int not null, 
+    dateNaissanceTireur date not null,
+    nationTireur varchar(50) not null,
+    comiteRegionalTireur varchar(50) not null, 
     primary key (numeroLicenceTireur),
     Foreign key(idSexeTireur) references SEXE(idSexe)
 );
@@ -129,6 +132,14 @@ create table TIREUR_DANS_POULE(
     primary key (numeroLicenceTireur, idPoule),
     Foreign key(numeroLicenceTireur) references TIREUR(numeroLicenceTireur),
     Foreign key(idPoule) references POULE(idPoule)
+);
+
+create table TIREUR_DANS_CLUB(
+    numeroLicenceTireur int not null,
+    idClub int not null,
+    primary key (numeroLicenceTireur, idClub),
+    Foreign key(numeroLicenceTireur) references TIREUR(numeroLicenceTireur),
+    Foreign key(idClub) references CLUB(idClub)
 );
 
 create table ARBITRE_DANS_COMPETITIONS(
