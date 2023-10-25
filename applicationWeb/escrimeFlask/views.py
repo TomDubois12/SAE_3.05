@@ -10,3 +10,8 @@ def index():
 def information():
     return render_template('information.html',
                            title='Information')
+
+@app.route('/inscription')
+def inscription():
+    return render_template('inscription.html',
+                           title='Inscription')
