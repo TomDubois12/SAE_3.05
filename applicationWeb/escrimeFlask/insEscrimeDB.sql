@@ -1,4 +1,4 @@
-insert into LIEU(adresse,region,department)  values 
+insert into LIEU(adresse,region,departement)  values 
     ('Chemin des plantes, 45140 Ormes','Centre','Loiret'),
     ('13 bis boulevard du 15 aout 1944','Centre-Val de Loire','Loiret'),
     ('3 rue de la gare','Centre-Val de Loire','Loiret'),
@@ -34,47 +34,50 @@ insert into CLUB(nomClub) values
     ('EscrimeClubPatay');
 
 insert into ORGANISATEUR(nomOrganisateur,prenomOrganisateur,licenseOrganisateur) values
-    ("Roger","Bertrand","241354"),
-    ("Wolfart","Patrick","254612"),
-    ("Duboise","Tomy","734212"),
-    ("Well","Brian","468412");
+    ("Roger","Bertrand",241354),
+    ("Wolfart","Patrick",254612),
+    ("Duboise","Tomy",734212),
+    ("Well","Brian",468412);
 
-insert into ORGANISATEURDANSCLUB(idOrganisateur, idClub) values 
-    (1,1),
-    (2,2),
-    (3,3),
-    (4,4);
+insert into ORGANISATEURDANSCLUB(licenseOrganisateur, idClub) values 
+    (241354,1),
+    (254612,2),
+    (734212,3),
+    (468412,4);
    
 insert into TIREUR(nomTireur,prenomTireur,numeroLicenceTireur,classement,idSexeTireur) values
-    ("Georget","Korentin","315486",45534,1),
-    ("Boissay","Robin","521531",7,1),
-    ("Boissay","Nathan","213138",5689,1),
-    ("Dubois","Tom","324832",12,1),
-    ("Brion","Adèle","465486",43000,2);
+    ("Georget","Korentin",315486,45534,1),
+    ("Boissay","Robin",521531,7,1),
+    ("Boissay","Nathan",213138,5689,1),
+    ("Dubois","Tom",324832,12,1),
+    ("Brion","Adèle",465486,43000,2);
 
 insert into ARBITRE(nomArbitre,prenomArbitre,numeroLicenceArbitre) values 
-    ("Orhant","Killian","654123"),
-    ("Farcy","Adam","947613"),
-    ("Boissay","Gatien","542446");
+    ("Orhant","Killian",654123),
+    ("Farcy","Adam",947613),
+    ("Boissay","Gatien",542446);
 
 insert into COMPETITION(intituleCompet,saison,estFinie,coefficientCompetition,dateDebutCompetiton,idLieuCompetition,idCategorieCompetition,idSexeCompetition,idArmeCompetition) values
-    ("Tounrois hivernale 2023","2023",False,0.2,"2023-12-14",2,5,1,5);
+    ("Tounrois hivernale 2023","2023",False,0.2,"2023-12-14",2,5,1,5),
+    ("Tounrois hivernale 2024","2024",False,0.2,"2024-12-14",2,5,1,5),
+    ("Tounrois hivernale 2022","2022",True,0.2,"2022-12-14",2,5,1,5);
 
-insert into TIREUR_DANS_COMPETITIONS(idTireur,idCompetition)values 
-    (1,1),
-    (2,1),
-    (3,1);
+insert into TIREUR_DANS_COMPETITIONS(numeroLicenceTireur,idCompetition)values 
+    (315486,1),
+    (521531,1),
+    (213138,1);
+    
 
 insert into POULE(nomPoule,numeroPiste,idCompetition) values 
     ("Poule 1",1,1);
     
-insert into TIREUR_DANS_POULE(idTireur,idPoule) values 
-    (1,1),
-    (2,1),
-    (3,1);
+insert into TIREUR_DANS_POULE(numeroLicenceTireur,idPoule) values 
+    (315486,1),
+    (521531,1),
+    (213138,1);
 
-insert into ARBITRE_DANS_COMPETITIONS(idArbitre,idCompetition) values 
-    (1,1);
+insert into ARBITRE_DANS_COMPETITIONS(numeroLicenceArbitre,idCompetition) values 
+    (654123,1);
 
-insert into ARBITRE_POULE(idArbitre,idPoule) values 
-   (1,1);
+insert into ARBITRE_POULE(numeroLicenceArbitre,idPoule) values 
+   (654123,1);

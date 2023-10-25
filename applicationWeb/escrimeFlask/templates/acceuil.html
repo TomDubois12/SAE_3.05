@@ -1,9 +1,34 @@
 {% extends "base.html" %}
-
+{% block linkcss %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/acceuil.css')}}">
+{% endblock %}
 {% block header %}
-{% include "partials/_header3.html" %}
+    {% include "partials/_header.html" %}
 {% endblock %}
 {% block main %}
-<h1>Bonjour</h1>
+    <div class="haut">
+        <a href="/inscription"><div class="inscription">
+            <img src="../static/images/epeeGris.png" alt="Épée grise d'escrime">
+            <p>S’INSCRIRE A UNE COMPETITION</p>
+        </div>
+        <a href="/"><div class="connection">
+            <img src="../static/images/epeeGris.png" alt="Épée grise d'escrime">
+            <p>SE CONNECTER A UNE COMPETITION</p>
+        </div>
+        </a>
+        <a href="/connexion_organisateur"><div class="creer">
+            <img src="../static/images/epeeGris.png" alt="Épée grise d'escrime">
+            <p>CREER ET GERER DES COMPETITIONS</p>
+        </div>
+        </a>
+    </div>
+    <div class="bas">
+        <a href="/"><div class="consultation">
+            <img src="../static/images/epeeGris.png" alt="Épée grise d'escrime">
+            <p>CONSULTER DES RESULTATS DE COMPETITIONS</p>
+        </div>
+        </a>
+    </div>
+    <p class="info">En savoir plus sur l’escrime ? Voici <a href="/information">un petit lien</a> pour vous aider</p>
 {% endblock %}
 
