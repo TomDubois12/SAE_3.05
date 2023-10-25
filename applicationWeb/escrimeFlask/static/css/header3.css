@@ -35,6 +35,16 @@ nav{
     width: min-content;
 }
 
+.lien li a {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.lien img{
+    margin: 0.5em;
+}
+
 
 .lien li a, pre {
     color: #062656;
@@ -80,6 +90,7 @@ nav img{
 .epee img {
     width: 100%;
     object-fit: fill;
+    display: block;
 }
 
 @media (max-width: 1000px) {
