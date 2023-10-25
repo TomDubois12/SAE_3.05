@@ -20,3 +20,8 @@ def inscription():
 def connexion_organisateur():
     return render_template('connexion_organisateur.html',
                            title='Connexion_organisateur')
+
+@app.route('/profil')
+def profil():
+    return render_template('profil.html',
+                           title='Mon profil')

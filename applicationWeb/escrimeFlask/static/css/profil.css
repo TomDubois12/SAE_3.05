@@ -1,0 +1,39 @@
+main{
+    flex-wrap: nowrap;
+    display: flex;
+}
+
+main>div{
+    flex-grow: 1;
+    flex-basis: 80%;
+}
+
+main>img{
+    flex-basis: 20%;
+    width : 40vw;
+    float: right;
+}
+
+section > h1{
+    position: absolute;
+    margin-left: 6% ;
+    font-size:  400%;
+    transform: translateY(-80%);
+}
+
+section > img{
+    margin-left: 6%;
+}
+
+.epeeCroix{
+    width: 50%;
+    margin-left: 50%
+}
+
+.selection{
+    text-align: center;
+}
+
+#selection{
+    margin-top: 15%;
+}
