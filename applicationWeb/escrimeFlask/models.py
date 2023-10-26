@@ -19,11 +19,11 @@ db = mysql.connector.connect(
 #créer un curseur de base de données pour effectuer des opérations SQL
 cursor = db.cursor()
 
-def insertTireurCompetition(nom : str, prenom : str,numeroLicence : int ,classement : float, idSexe : int, idCompetition: int) -> None:
+def insertTireurCompetition(nom : str, prenom : str,numeroLicence : int ,classement : float, idSexe : int, dateNaissanceTireur : str, nation : str, comiteRegional : str, idCompetition: int) -> None:
     try :
         if estDansBDNational(numeroLicence) :
-          requete2 = "insert into TIREUR (nomTireur,prenomTireur,numeroLicenceTireur,classement,idSexeTireur) values(%s,%s,%s,%s,%s);"
-          cursor.execute(requete2, (nom,prenom,numeroLicence,classement,idSexe))
+          requete2 = "insert into TIREUR (nomTireur,prenomTireur,numeroLicenceTireur,classement,idSexeTireur,dateNaissanceTireur,nationTireur,comiteRegionalTireur) values(%s,%s,%s,%s,%s,%s,%s);"
+          cursor.execute(requete2, (nom,prenom,numeroLicence,classement,idSexe,dateNaissanceTireur,nation,comiteRegional))
           db.commit()
           try :
             requete5 = "insert into TIREUR_DANS_COMPETITIONS (numeroLicenceTireur,idCompetition) values(%s,%s);"
@@ -112,7 +112,7 @@ def getProfil(numeroLicence : int) -> list:
 if __name__ == "__main__":
     #print(classementFile("./csvEscrimeur/classement_Epée_Dames_M15.csv"))
     #print(inscriptionOuverte())
-    #print(insertTireurCompetition("Nicolas", "Guillaume", 146313, 2452.00, 1, 1))
+    #print(insertTireurCompetition("Nicolas", "Guillaume", 146313, 2452.00, 1,"2004-10-10","France","CENTRE VAL DE LOIRE", 1))
     #print(concourtInscritLicence(521531))
     #print(getOrganisateurClub())
     #print(getProfil(315486))
