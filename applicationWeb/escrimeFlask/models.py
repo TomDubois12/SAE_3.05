@@ -1,4 +1,3 @@
-from flask import Flask
 import csv
 
 # pip install Flask-MySQLdb
@@ -11,8 +10,8 @@ import mysql.connector
 #connexion au base de données
 db = mysql.connector.connect(
   host = "localhost",
-  user = "nathan",
-  password = "nathan",
+  user = "koko",
+  password = "koko",
   database = "Escrime"
 )
 
@@ -73,7 +72,7 @@ def inscriptionOuverte() -> list:
     res = []
     for i in range(len(info)):
       
-      requete2 = """select intituleCompet,typeArme, intituleSexe,intituleCategorie, departement
+      requete2 = """select intituleCompet,typeArme, intituleSexe,intituleCategorie, departement, idCompetition
                     from COMPETITION natural join LIEU natural join ARME natural join SEXE natural join CATEGORIE
                     where datediff(dateDebutCompetiton ,CURDATE()) > 14 and idLieu ="""+ str(info[i][6]) +" and idCategorie ="+ str(info[i][7]) +" and idSexe = "+str(info[i][8]) +" and idArme = "+ str(info[i][9]) +" and idCompetition = "+str(info[i][0]) +";"
       cursor.execute(requete2) 
@@ -117,3 +116,4 @@ if __name__ == "__main__":
     #print(getOrganisateurClub())
     #print(getProfil(315486))
     pass
+
