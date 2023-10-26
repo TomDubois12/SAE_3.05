@@ -4,14 +4,16 @@ import csv
 #sudo apt-get install python3-dev default-libmysqlclient-dev build-essential pkg-config
 
 
+import os.path
+
 # -*- coding: utf-8 -*-
 import mysql.connector
 
 #connexion au base de données
 db = mysql.connector.connect(
   host = "localhost",
-  user = "koko",
-  password = "koko",
+  user = "nathan",
+  password = "nathan",
   database = "Escrime"
 )
 
@@ -20,8 +22,8 @@ cursor = db.cursor()
 
 def insertTireurCompetition(nom : str, prenom : str,numeroLicence : int ,classement : float, idSexe : int, dateNaissanceTireur : str, nation : str, comiteRegional : str, idCompetition: int) -> None:
     try :
-        if estDansBDNational(numeroLicence) :
-          requete2 = "insert into TIREUR (nomTireur,prenomTireur,numeroLicenceTireur,classement,idSexeTireur,dateNaissanceTireur,nationTireur,comiteRegionalTireur) values(%s,%s,%s,%s,%s,%s,%s);"
+        
+          requete2 = "insert into TIREUR (nomTireur,prenomTireur,numeroLicenceTireur,classement,idSexeTireur,dateNaissanceTireur,nationTireur,comiteRegionalTireur) values(%s,%s,%s,%s,%s,%s,%s,%s);"
           cursor.execute(requete2, (nom,prenom,numeroLicence,classement,idSexe,dateNaissanceTireur,nation,comiteRegional))
           db.commit()
           try :
@@ -34,7 +36,14 @@ def insertTireurCompetition(nom : str, prenom : str,numeroLicence : int ,classem
       print(mysql_error)
 
 def estDansBDNational(numeroLicence : int) -> bool:
-  pass
+  res = False
+  fichiers = fichiersDossier("./csvEscrimeur/")
+  for f in fichiers :
+    infoFichier = classementFile("./csvEscrimeur/" + f)
+    for cat in infoFichier :
+       if str(numeroLicence) == cat[3] :
+          return True
+  return res 
 
 def concourtInscritLicence(numeroLicence : int) -> list:
   requete1 = "select * from TIREUR_DANS_COMPETITIONS natural join COMPETITION where numeroLicenceTireur = " + str(numeroLicence) + ";"
@@ -107,6 +116,12 @@ def getProfil(numeroLicence : int) -> list:
   res.append(cursor.fetchone())
   return res
 
+def fichiersDossier(path : str) :
+  files = os.listdir(path)
+  listeChemin = []
+  for name in files:
+    listeChemin.append(name)
+  return listeChemin
 
 if __name__ == "__main__":
     #print(classementFile("./csvEscrimeur/classement_Epée_Dames_M15.csv"))
@@ -115,5 +130,7 @@ if __name__ == "__main__":
     #print(concourtInscritLicence(521531))
     #print(getOrganisateurClub())
     #print(getProfil(315486))
+    #print(estDansBDNational(521531))
+    #print(estDansBDNational(138932))
     pass
 
