@@ -92,7 +92,7 @@ main{
     padding-left: 0.5em;
 }
 
-.infoInscription>a {
+.infoInscription>input {
     position: relative;
     background-color: #062656;
     color: #FFFFFF;

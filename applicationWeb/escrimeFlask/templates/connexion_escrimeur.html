@@ -1,0 +1,102 @@
+{% extends "base.html" %}
+{% block linkcss %}
+    <script src="{{ url_for('static',filename='js/popup.js')}}"> </script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/connexion_escrimeur.css')}}">
+{% endblock %}
+
+{% block header %}
+    {% include "partials/_header2.html" %}
+{% endblock %}
+
+{% block main %}
+    <div class="blockConnexion">
+        <div class="connexion">
+            <div class="titreConnexion">
+                <h2>CONNEXION</h2>
+            </div>
+            <form class="infoConnexion" action="{{url_for("verifConnexionEscrimeur")}}" method="GET">
+                <div class="numLicence">
+                    <h3>Numéro de licence:</h3>
+                    <img class="epee" src="{{url_for('static', filename='images/epeeBleuTourner.png')}}" alt="Epée bleu d'escrime">
+                </div>
+                <input class="nbLicense" type="number" required="required" name="nbLicense" id="nbLicense" placeholder="112853">
+                <input class="submit" type="submit" value="SE CONNECTER" />
+            </form>
+        </div>
+        <p>Pas encore inscrit a une compétition ?</p>
+        <a href="./inscription.html">S'inscrire</a>
+    </div>
+
+{% if affichageConcours %}
+    <div class="concours">
+        <div class="titreConcours">
+            <h2>CONCOURS INSCRIT</h2>
+        </div>
+        <div class="concoursInfo">
+            {% for x in concours %}
+                <p>{{x[0][0].upper()}} {{x[0][1].upper()}} {{x[0][3].upper()}}, {{x[0][4]}}</p>
+                <span></span>
+            {% endfor %}
+        </div>
+    </div>
+{% else %}
+    {% if popup %}
+        <div class="wrap_popup">
+            <div class="cover"> </div>
+            
+            <div class="affichage_popup">
+                <div>
+                    <h1>VOUS N’AVEZ AUCUNE INSCRIPTION A UNE COMPETITION</h1>
+                    <p>Nous n’avons trouvé aucune inscription avec votre numéro de licence parmis toutes les compétitions ouvertes.</p>
+                    <p>Si vous souhaitez vous inscrire, un lien est mis à votre disposition.</p>
+                </div>
+                
+                <img src="../../static/images/imgConnexionError.png" alt="image illustration escrime">
+                <button class="btn-close" type="button"></button>
+
+            </div>
+        </div>
+    {% else %}
+        <style> 
+        .popup{
+            visibility: hidden;
+        }
+        </style>
+    {% endif %}
+    {% if popup2 %}
+        <div class="wrap_popup">
+            <div class="cover"> </div>
+            
+            <div class="affichage_popup">
+                <div>
+                    <h1>NUMERO DE LICENCE INTROUVABLE</h1>
+                    <p>Le numéro {{nbLicense}} ne correspond à aucune licence existante dans nos fichiers de la Fédération Française d’Escrime.
+                    Vérifiez que vous n’avez pas fait d’erreur lors de la saisie ou contactez votre centre de formation pour vous renseigner votre numéro 
+                    de license.</p>
+                </div>
+                
+                <img src="../../static/images/imgLicenseIntrouvable.png" alt="image illustration escrime">
+                <button class="btn-close" type="button"></button>
+
+            </div>
+        </div>
+    {% else %}
+        <style> 
+        .popup{
+            visibility: hidden;
+        }
+        </style>
+    {% endif %}
+    <div class="concours">
+        <div class="titreConcours">
+            <h2>CONCOURS INSCRIT</h2>
+        </div>
+        <div class="concoursInfo">
+            <p>Connectez-vous pour voir vos concours</p>
+    </div>
+{% endif %}
+
+
+
+
+{% endblock %}
