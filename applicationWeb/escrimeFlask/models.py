@@ -35,11 +35,37 @@ def insertTireurCompetition(nom : str, prenom : str,numeroLicence : int ,classem
     except Exception as mysql_error:
       print(mysql_error)
 
+def insertParticipantByLicence(numeroLicence : int) : 
+   if estDansBDNational(numeroLicence) : 
+      try :
+        infoTireurGlobal = getInfoFromBDNational(numeroLicence)
+        infoTireur = infoTireurGlobal[1]
+        idSexe = infoTireurGlobal[0]
+        if "Dames" in idSexe : 
+           idSexe = 1
+        else : 
+           idSexe = 0
+        requete1 = "insert into TIREUR(nomTireur,prenomTireur,numeroLicenceTireur,classement,idSexeTireur,dateNaissanceTireur,nationTireur,comiteRegionalTireur) values(%s,%s,%s,%s,%s,%s,%s,%s);"
+        cursor.execute(requete1, (infoTireur[0],infoTireur[1],numeroLicence,infoTireur[7],idSexe[0],infoTireur[2],infoTireur[4],infoTireur[5]))
+        db.commit()
+      except Exception as mysql_error:
+        print(mysql_error)
+
+def getInfoFromBDNational(numeroLicence : int) -> list :
+  
+  fichiers = fichiersDossier("./escrimeFlask/csvEscrimeur/")
+  for f in fichiers :
+    infoFichier = classementFile("./escrimeFlask/csvEscrimeur/" + f)
+    for cat in infoFichier :
+       if str(numeroLicence) == cat[3] :
+          return [f,cat]
+  
+
 def estDansBDNational(numeroLicence : int) -> bool:
   res = False
-  fichiers = fichiersDossier("./csvEscrimeur/")
+  fichiers = fichiersDossier("./escrimeFlask/csvEscrimeur/")
   for f in fichiers :
-    infoFichier = classementFile("./csvEscrimeur/" + f)
+    infoFichier = classementFile("./escrimeFlask/csvEscrimeur/" + f)
     for cat in infoFichier :
        if str(numeroLicence) == cat[3] :
           return True
@@ -116,6 +142,7 @@ def getProfil(numeroLicence : int) -> list:
   res.append(cursor.fetchone())
   return res
 
+
 def fichiersDossier(path : str) :
   files = os.listdir(path)
   listeChemin = []
@@ -132,5 +159,6 @@ if __name__ == "__main__":
     #print(getProfil(315486))
     #print(estDansBDNational(521531))
     #print(estDansBDNational(138932))
+    #insertParticipantByLicence(138932)
     pass
 

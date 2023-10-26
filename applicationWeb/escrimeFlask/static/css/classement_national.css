@@ -1,0 +1,117 @@
+/* titre */
+.epee {
+    position: relative;
+    top: -2vmin;
+    right: 2vmin;
+
+}
+
+.epee img {
+    width: 100%;
+    object-fit: fill;
+    display: block;
+}
+
+.titre {
+    margin-top: 4em;
+    margin-left: 5em;
+}
+
+.titre h3 {
+    padding-bottom: 0;
+    margin-left: 10vh;
+    font-size: 5vh;
+    font-family: 'Average', sans-serif;
+}
+
+/* Menu déroulant */
+.menu-deroulant {
+    font-family: 'Average', sans-serif;
+    margin-left: 10vh;
+}
+
+.menu-deroulant h5 {
+    font-size: 4vh;
+    margin-bottom: 2vh;
+    margin-left: 1vh;
+}
+
+select {
+    background-color: white;
+    border: thin solid rgb(24, 24, 123);
+    border-radius: 6vw;
+    display: inline-block;
+    font: inherit;
+    line-height: 1.5em;
+    padding: 0.5em 3.5em 0.5em 1em;
+
+    margin: 0;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    -webkit-appearance: none;
+
+    background-image:
+    linear-gradient(45deg, transparent 50%, skyblue 50%),
+    linear-gradient(135deg, skyblue 50%, transparent 50%),
+    linear-gradient(to right, rgb(24, 24, 123), rgb(24, 24, 123));
+    background-position:
+    calc(100% - 20px) calc(1em + 2px),
+    calc(100% - 15px) calc(1em + 2px),
+    100% 0;
+    background-size:
+    5px 5px,
+    5px 5px,
+    2.5em 2.5em;
+    background-repeat: no-repeat;
+}
+
+select:focus {
+    background-image:
+    linear-gradient(45deg, rgb(117, 19, 19) 50%, transparent 50%),
+    linear-gradient(135deg, transparent 50%, rgb(117, 19, 19) 50%),
+    linear-gradient(to right, lightgray, lightgray);
+    background-position:
+    calc(100% - 15px) 1em,
+    calc(100% - 20px) 1em,
+    100% 0;
+    background-size:
+    5px 5px,
+    5px 5px,
+    2.5em 2.5em;
+    background-repeat: no-repeat;
+    border-color: grey;
+    outline: 0;
+}
+
+select *{
+    font-size: large;
+    font-style: italic bold;
+    color: rgb(24, 24, 123);
+}
+
+
+
+
+/* table */
+table {
+    width: 90%;
+    margin-top: 3em;
+    margin-left: 4.5em;
+    margin-right: 4.5em;
+    margin-bottom: 3em;
+}
+
+table, td, tr {
+    border: 1.5px solid;
+    border-color: #062656;
+    padding: 5px;
+}
+
+.titre-tableau {
+    font-weight: bold;
+}
+
+table tr:nth-child(odd){
+    background-color: #EDEDED;
+} 

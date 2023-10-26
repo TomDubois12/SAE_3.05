@@ -1,0 +1,201 @@
+{% extends "base.html" %}
+
+{% block linkcss %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/classement_national.css')}}">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Average" rel="stylesheet">
+{% endblock %}
+
+{% block header %}
+{% include "partials/_header3.html" %}
+{% endblock %}
+
+{% block main %}
+<main> 
+    <div>  
+        <div class="titre">
+            <h3>Classement National :</h3>
+            <img class="epee" src="{{url_for('static', filename='images/epeeBleu.png')}}" alt="Epée bleu d'escrime">
+        </div>
+        <div class="menu-deroulant">
+            <h5>Catégorie :</h5>
+            <select class="menu">
+                <option>Épée Dames M15</option>
+                <option>Épée Dames M17</option>
+                <option>Épée Dames M20</option>
+                <option>Épée Dames Seniors</option>
+                <option>Épée Dames Vétérans1</option>
+                <option>Épée Dames Vétérans2</option>
+                <option>Épée Dames Vétérans3-4</option>
+                <option>Épée Homme M15</option>
+                <option>Épée Homme M17</option>
+                <option>Épée Homme M20</option>
+                <option>Épée Homme Vétérans1</option>
+                <option>Épée Homme Vétérans2</option>
+                <option>Épée Homme Vétérans3-4</option>
+                <option>Épée Homme M15</option>
+                <option>Épée Homme M17</option>
+                <option>Épée Homme M20</option>
+                <option>Épée Homme Vétérans1</option>
+                <option>Épée Homme Vétérans2</option>
+                <option>Épée Homme Vétérans3</option>
+                <option>Épée Homme Vétérans4</option>
+                <option>Fleuret Dames M15</option>
+                <option>Fleuret Dames M17</option>
+                <option>Fleuret Dames M20</option>
+                <option>Fleuret Dames Seniors</option>
+                <option>Fleuret Dames Vétérans1</option>
+                <option>Fleuret Dames Vétérans2</option>
+                <option>Fleuret Dames Vétérans3-4</option>
+                <option>Fleuret Homme M15</option>
+                <option>Fleuret Homme M17</option>
+                <option>Fleuret Homme M20</option>
+                <option>Fleuret Homme Seniors</option>
+                <option>Fleuret Homme Vétérans1</option>
+                <option>Fleuret Homme Vétérans2</option>
+                <option>Fleuret Homme Vétérans3-4</option>
+                <option>Sabre Dames M15</option>
+                <option>Sabre Dames M17</option>
+                <option>Sabre Dames M20</option>
+                <option>Sabre Dames Seniors</option>
+                <option>Sabre Dames Vétérans1</option>
+                <option>Sabre Dames Vétérans2</option>
+                <option>Sabre Dames Vétérans3-4</option>
+                <option>Sabre Homme M15</option>
+                <option>Sabre Homme M17</option>
+                <option>Sabre Homme M20</option>
+                <option>Sabre Homme Seniors</option>
+                <option>Sabre Homme Vétérans1</option>
+                <option>Sabre Homme Vétérans2</option>
+                <option>Sabre Homme Vétérans3-4</option>
+            </select>
+        </div>
+        <div class="tableau">
+            <table>
+                <tr class="titre-tableau">
+                    <td>RANG</td>
+                    <td>NOM</td>
+                    <td>PRÉNOM</td>
+                    <td>COMITE REGIONAL</td>
+                    <td>CLUB</td>
+                    <td>POINTS</td>
+                    </tr>
+                <tr>
+                    <td>1</td>
+                    <td>BOISSAY</td>
+                    <td>NATHAN</td>
+                    <td>OCCITANIE</td>
+                    <td>BLOISESCRIME</td>
+                    <td>5000</td>
+                </tr>
+                <tr>
+                    <td>1</td>
+                    <td>BOISSAY</td>
+                    <td>NATHAN</td>
+                    <td>OCCITANIE</td>
+                    <td>BLOISESCRIME</td>
+                    <td>5000</td>
+                </tr>
+                <tr>
+                    <td>1</td>
+                    <td>BOISSAY</td>
+                    <td>NATHAN</td>
+                    <td>OCCITANIE</td>
+                    <td>BLOISESCRIME</td>
+                    <td>5000</td>
+                </tr>
+                <tr>
+                    <td>1</td>
+                    <td>BOISSAY</td>
+                    <td>NATHAN</td>
+                    <td>OCCITANIE</td>
+                    <td>BLOISESCRIME</td>
+                    <td>5000</td>
+                </tr>
+                <tr>
+                    <td>1</td>
+                    <td>BOISSAY</td>
+                    <td>NATHAN</td>
+                    <td>OCCITANIE</td>
+                    <td>BLOISESCRIME</td>
+                    <td>5000</td>
+                </tr>
+                <tr>
+                    <td>1</td>
+                    <td>BOISSAY</td>
+                    <td>NATHAN</td>
+                    <td>OCCITANIE</td>
+                    <td>BLOISESCRIME</td>
+                    <td>5000</td>
+                </tr>
+                <tr>
+                    <td>1</td>
+                    <td>BOISSAY</td>
+                    <td>NATHAN</td>
+                    <td>OCCITANIE</td>
+                    <td>BLOISESCRIME</td>
+                    <td>5000</td>
+                </tr>
+                <tr>
+                    <td>1</td>
+                    <td>BOISSAY</td>
+                    <td>NATHAN</td>
+                    <td>OCCITANIE</td>
+                    <td>BLOISESCRIME</td>
+                    <td>5000</td>
+                </tr>
+                <tr>
+                    <td>1</td>
+                    <td>BOISSAY</td>
+                    <td>NATHAN</td>
+                    <td>OCCITANIE</td>
+                    <td>BLOISESCRIME</td>
+                    <td>5000</td>
+                </tr>
+                <tr>
+                    <td>1</td>
+                    <td>BOISSAY</td>
+                    <td>NATHAN</td>
+                    <td>OCCITANIE</td>
+                    <td>BLOISESCRIME</td>
+                    <td>5000</td>
+                </tr>
+                <tr>
+                    <td>1</td>
+                    <td>BOISSAY</td>
+                    <td>NATHAN</td>
+                    <td>OCCITANIE</td>
+                    <td>BLOISESCRIME</td>
+                    <td>5000</td>
+                </tr>
+                <tr>
+                    <td>1</td>
+                    <td>BOISSAY</td>
+                    <td>NATHAN</td>
+                    <td>OCCITANIE</td>
+                    <td>BLOISESCRIME</td>
+                    <td>5000</td>
+                </tr>
+                <tr>
+                    <td>1</td>
+                    <td>BOISSAY</td>
+                    <td>NATHAN</td>
+                    <td>OCCITANIE</td>
+                    <td>BLOISESCRIME</td>
+                    <td>5000</td>
+                </tr>
+                <tr>
+                    <td>1</td>
+                    <td>BOISSAY</td>
+                    <td>NATHAN</td>
+                    <td>OCCITANIE</td>
+                    <td>BLOISESCRIME</td>
+                    <td>5000</td>
+                </tr>
+            </table>  
+        </div>
+    </div>
+
+</main>
+{% endblock %}
