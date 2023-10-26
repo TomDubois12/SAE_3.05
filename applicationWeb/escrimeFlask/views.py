@@ -28,7 +28,10 @@ def accueil():
     return render_template('accueil.html',
                            title='Accueil')
 
-    
+@app.route('/classement_national')
+def classement_national():
+    return render_template('classement_national.html',
+                           title='Classement National')
     
 # @app.route('/traitement')
 # def traitement():
