@@ -22,7 +22,7 @@ insert into ARME(typeArme,descriptionArme) values
     ('épée femme','épée'),
     ('sabre homme','sabre'),
     ('sabre femme','sabre');
-
+ 
 insert into SEXE(intituleSexe) values
     ('Homme'),
     ('Femme');
@@ -45,12 +45,17 @@ insert into ORGANISATEURDANSCLUB(licenseOrganisateur, idClub) values
     (734212,3),
     (468412,4);
    
-insert into TIREUR(nomTireur,prenomTireur,numeroLicenceTireur,classement,idSexeTireur) values
-    ("Georget","Korentin",315486,45534,1),
-    ("Boissay","Robin",521531,7,1),
-    ("Boissay","Nathan",213138,5689,1),
-    ("Dubois","Tom",324832,12,1),
-    ("Brion","Adèle",465486,43000,2);
+insert into TIREUR(nomTireur,prenomTireur,numeroLicenceTireur,classement,idSexeTireur,dateNaissanceTireur,nationTireur,comiteRegionalTireur) values
+    ("Georget","Korentin",315486,45534,1,'2004-05-23','France','CENTRE VAL DE LOIRE'),
+    ("Boissay","Robin",521531,7,1,'2004-12-14','France','CENTRE VAL DE LOIRE'),
+    ("Boissay","Nathan",213138,5689,1,'2004-12-14','France','CENTRE VAL DE LOIRE'),
+    ("Dubois","Tom",324832,12,1,'2004-06-02','France','CENTRE VAL DE LOIRE'),
+    ("Brion","Adèle",465486,43000,2,'2003-10-30','France','CENTRE VAL DE LOIRE');
+
+insert into TIREUR_DANS_CLUB(numeroLicenceTireur,idClub) values 
+    (315486,3),
+    (521531,3),
+    (213138,3);
 
 insert into ARBITRE(nomArbitre,prenomArbitre,numeroLicenceArbitre) values 
     ("Orhant","Killian",654123),
