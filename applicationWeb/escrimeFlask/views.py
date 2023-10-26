@@ -16,8 +16,8 @@ def information():
 @app.route('/inscription')
 def inscription():
     return render_template('inscription.html',
-                           title='Inscription')
-                        competitions=inscriptionOuverte())
+                           title='Inscription',
+                           competitions=inscriptionOuverte())
 
 @app.route('/connexion_organisateur')
 def connexion_organisateur():
@@ -67,10 +67,10 @@ def verifConnexionEscrimeur():
 @app.route('/traitement')
 def traitement():
     
-    # dicoOrganisateur = getOrganisateurClub()
+    dicoOrganisateur = getOrganisateurClub()
     print(request.args)
-    # print(dicoOrganisateur)
-    # print(dicoOrganisateur.keys())
+    print(dicoOrganisateur)
+    print(dicoOrganisateur.keys())
     print()
     if int(request.args.get("nblicense")) in dicoOrganisateur.keys() and dicoOrganisateur[int(request.args.get("nblicense"))] == request.args.get("nomClub"):
         return render_template('connexion_organisateur.html',
