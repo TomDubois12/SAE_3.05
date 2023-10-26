@@ -16,8 +16,8 @@ def information():
 @app.route('/inscription')
 def inscription():
     return render_template('inscription.html',
-                           title='Inscription',
-                           competitions=inscriptionOuverte())
+                           title='Inscription')
+                        competitions=inscriptionOuverte())
 
 @app.route('/connexion_organisateur')
 def connexion_organisateur():
@@ -28,11 +28,19 @@ def accueil():
     return render_template('accueil.html',
                            title='Accueil')
 
+
     
 @app.route('/connexion_escrimeur')
 def connexion_escrimeur():
     return render_template('connexion_escrimeur.html',
                            title='Connexion_escrimeur')
+
+  
+@app.route('/classement_national')
+def classement_national():
+    return render_template('classement_national.html',
+                           title='Classement National')
+
     
 
 @app.route('/verifConnexionEscrimeur')
@@ -59,9 +67,12 @@ def verifConnexionEscrimeur():
 @app.route('/traitement')
 def traitement():
     
-    dicoOrganisateur = {"111111": "boulay","123456":"adminClub"}
-    
-    if request.args.get("nblicense") in dicoOrganisateur.keys() and dicoOrganisateur[request.args.get("nblicense")] == request.args.get("nomClub"):
+    # dicoOrganisateur = getOrganisateurClub()
+    print(request.args)
+    # print(dicoOrganisateur)
+    # print(dicoOrganisateur.keys())
+    print()
+    if int(request.args.get("nblicense")) in dicoOrganisateur.keys() and dicoOrganisateur[int(request.args.get("nblicense"))] == request.args.get("nomClub"):
         return render_template('connexion_organisateur.html',
                            title='bonne page')
     else:
