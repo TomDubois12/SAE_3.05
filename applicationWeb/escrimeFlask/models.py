@@ -37,6 +37,7 @@ def insertTireurDansCompetition(nom : str, prenom : str,numeroLicence : int ,cla
     except Exception as mysql_error:
       print(mysql_error)
 
+
 def insertTireurDansBD(numeroLicence : int) : 
    if estDansBDNational(numeroLicence) : 
       try :
@@ -50,6 +51,7 @@ def insertTireurDansBD(numeroLicence : int) :
            idSexe = 1
         requete1 = "insert into TIREUR(nomTireur,prenomTireur,numeroLicenceTireur,classement,idSexeTireur,dateNaissanceTireur,nationTireur,comiteRegionalTireur) values(%s,%s,%s,%s,%s,%s,%s,%s);"
         cursor.execute(requete1, (infoTireur[0],infoTireur[1],numeroLicence,infoTireur[7],idSexe,corrigerDate(infoTireur[2]),infoTireur[4],infoTireur[5]))
+
         db.commit()
       except Exception as mysql_error:
         print(mysql_error)
@@ -59,9 +61,10 @@ def corrigerDate(date :str) -> str :
    return newDate
 
 def getInfoFromBDNational(numeroLicence : int) -> list :
-  fichiers = fichiersDossier("./csvEscrimeur/")
+  
+  fichiers = fichiersDossier("./escrimeFlask/csvEscrimeur/")
   for f in fichiers :
-    infoFichier = classementFile("./csvEscrimeur/" + f)
+    infoFichier = classementFile("./escrimeFlask/csvEscrimeur/" + f)
     for cat in infoFichier :
        if str(numeroLicence) == cat[3] :
           return [f,cat]
@@ -69,9 +72,9 @@ def getInfoFromBDNational(numeroLicence : int) -> list :
 
 def estDansBDNational(numeroLicence : int) -> bool:
   res = False
-  fichiers = fichiersDossier("./csvEscrimeur/")
+  fichiers = fichiersDossier("./escrimeFlask/csvEscrimeur/")
   for f in fichiers :
-    infoFichier = classementFile("./csvEscrimeur/" + f)
+    infoFichier = classementFile("./escrimeFlask/csvEscrimeur/" + f)
     for cat in infoFichier :
        if str(numeroLicence) == cat[3] :
           return True
@@ -149,6 +152,7 @@ def getOrganisateurClub():
 #   return res
 
 
+
 def fichiersDossier(path : str) :
   files = os.listdir(path)
   listeChemin = []
@@ -165,6 +169,7 @@ if __name__ == "__main__":
     #print(getProfil(315486))
     #print(estDansBDNational(521531))
     #print(estDansBDNational(138932))
-    insertTireurDansCompetition(53985)
+    #insertTireurDansCompetition(53985)
+
     pass
 
