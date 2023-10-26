@@ -4,33 +4,47 @@
 # #sudo apt-get install python3-dev default-libmysqlclient-dev build-essential pkg-config
 
 
-# # -*- coding: utf-8 -*-
-# import mysql.connector
 
-# #connexion au base de données
-# # db = mysql.connector.connect(
-# #   host = "localhost",
-# #   user = "nathan",
-# #   password = "nathan",
-# #   database = "Escrime"
-# # )
+import os.path
+
+# -*- coding: utf-8 -*-
+import mysql.connector
+
+#connexion au base de données
+db = mysql.connector.connect(
+  host = "localhost",
+  user = "nathan",
+  password = "nathan",
+  database = "Escrime"
+)
 
 # #créer un curseur de base de données pour effectuer des opérations SQL
 # # cursor = db.cursor()
 
-# def insertTireurCompetition(nom : str, prenom : str,numeroLicence : int ,classement : float, idSexe : int,dateNaissance : str, nationTireur : str, comiteRegional : str, idCompetition: int) -> None:
-#     try :
-#           requete2 = "insert into TIREUR (nomTireur,prenomTireur,numeroLicenceTireur,classement,idSexeTireur, dateNaissanceTireur, nationTireur, comiteRegionalTireur) values(%s,%s,%s,%s,%s,%s,%s,%s);"
-#           cursor.execute(requete2, (nom,prenom,numeroLicence,classement,idSexe,dateNaissance,nationTireur,comiteRegional))
-#           db.commit()
-#           try :
-#             requete5 = "insert into TIREUR_DANS_COMPETITIONS (numeroLicenceTireur,idCompetition) values(%s,%s);"
-#             cursor.execute(requete5, (numeroLicence,idCompetition))
-#             db.commit()
-#           except Exception as mysql_error:
-#             print(mysql_error)
-#     except Exception as mysql_error:
-#        print(mysql_error)
+def insertTireurCompetition(nom : str, prenom : str,numeroLicence : int ,classement : float, idSexe : int, dateNaissanceTireur : str, nation : str, comiteRegional : str, idCompetition: int) -> None:
+    try :
+        
+          requete2 = "insert into TIREUR (nomTireur,prenomTireur,numeroLicenceTireur,classement,idSexeTireur,dateNaissanceTireur,nationTireur,comiteRegionalTireur) values(%s,%s,%s,%s,%s,%s,%s,%s);"
+          cursor.execute(requete2, (nom,prenom,numeroLicence,classement,idSexe,dateNaissanceTireur,nation,comiteRegional))
+          db.commit()
+          try :
+            requete5 = "insert into TIREUR_DANS_COMPETITIONS (numeroLicenceTireur,idCompetition) values(%s,%s);"
+            cursor.execute(requete5, (numeroLicence,idCompetition))
+            db.commit()
+          except Exception as mysql_error:
+            print(mysql_error)
+    except Exception as mysql_error:
+      print(mysql_error)
+
+def estDansBDNational(numeroLicence : int) -> bool:
+  res = False
+  fichiers = fichiersDossier("./csvEscrimeur/")
+  for f in fichiers :
+    infoFichier = classementFile("./csvEscrimeur/" + f)
+    for cat in infoFichier :
+       if str(numeroLicence) == cat[3] :
+          return True
+  return res 
 
 # def concourtInscritLicence(numeroLicence : int) -> list:
 #   requete1 = "select * from TIREUR_DANS_COMPETITIONS natural join COMPETITION where numeroLicenceTireur = " + str(numeroLicence) + ";"
@@ -94,10 +108,28 @@
 #     res[info[i][1]] = info[i][2]
 #   return res
 
-# if __name__ == "__main__":
-#     #print(classementFile("./csvEscrimeur/classement_Epée_Dames_M15.csv"))
-#     #print(inscriptionOuverte())
-#     #print(insertTireurCompetition("Nicolas", "Guillaume", 145313, 2452.00,1,"2004-10-10" ,"France","CENTRE VAL DE LOIRE", 1))
-#     #print(concourtInscritLicence(145313))
-#     #print(getOrganisateurClub())
-#     pass
+def getProfil(numeroLicence : int) -> list:
+  requete1 = """select nomTireur, prenomTireur, dateNaissanceTireur, numeroLicenceTireur,  nationTireur, comiteRegionalTireur,nomCLub
+                from TIREUR natural join TIREUR_DANS_CLUB natural join CLUB where numeroLicenceTireur = """ + str(numeroLicence) + " limit 1;"
+  cursor.execute(requete1)
+  res = []
+  res.append(cursor.fetchone())
+  return res
+
+def fichiersDossier(path : str) :
+  files = os.listdir(path)
+  listeChemin = []
+  for name in files:
+    listeChemin.append(name)
+  return listeChemin
+
+if __name__ == "__main__":
+    #print(classementFile("./csvEscrimeur/classement_Epée_Dames_M15.csv"))
+    #print(inscriptionOuverte())
+    #print(insertTireurCompetition("Nicolas", "Guillaume", 146313, 2452.00, 1,"2004-10-10","France","CENTRE VAL DE LOIRE", 1))
+    #print(concourtInscritLicence(521531))
+    #print(getOrganisateurClub())
+    #print(getProfil(315486))
+    #print(estDansBDNational(521531))
+    #print(estDansBDNational(138932))
+    pass
