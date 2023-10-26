@@ -20,36 +20,45 @@ db = mysql.connector.connect(
 #créer un curseur de base de données pour effectuer des opérations SQL
 cursor = db.cursor()
 
-def insertTireurCompetition(nom : str, prenom : str,numeroLicence : int ,classement : float, idSexe : int, dateNaissanceTireur : str, nation : str, comiteRegional : str, idCompetition: int) -> None:
+def insertTireurDansCompetition(nom : str, prenom : str,numeroLicence : int ,classement : float, idSexe : int, dateNaissanceTireur : str, nation : str, comiteRegional : str, idCompetition: int) -> None:
     try :
-        
-          requete2 = "insert into TIREUR (nomTireur,prenomTireur,numeroLicenceTireur,classement,idSexeTireur,dateNaissanceTireur,nationTireur,comiteRegionalTireur) values(%s,%s,%s,%s,%s,%s,%s,%s);"
-          cursor.execute(requete2, (nom,prenom,numeroLicence,classement,idSexe,dateNaissanceTireur,nation,comiteRegional))
-          db.commit()
+        if estDansBDNational(numeroLicence) :
+          insertTireurDansBD(numeroLicence)
           try :
             requete5 = "insert into TIREUR_DANS_COMPETITIONS (numeroLicenceTireur,idCompetition) values(%s,%s);"
             cursor.execute(requete5, (numeroLicence,idCompetition))
             db.commit()
           except Exception as mysql_error:
             print(mysql_error)
+            return False
+          return True  
+        else : 
+          return False
     except Exception as mysql_error:
       print(mysql_error)
 
-def insertParticipantByLicence(numeroLicence : int) : 
+
+def insertTireurDansBD(numeroLicence : int) : 
    if estDansBDNational(numeroLicence) : 
       try :
         infoTireurGlobal = getInfoFromBDNational(numeroLicence)
+        # = ['PETIT', 'Stéphane', '02/09/1963', '138932', 'FRANCE', 'ILE DE FRANCE Ouest', 'NEUILLY ESCR', '1687', '149']
         infoTireur = infoTireurGlobal[1]
         idSexe = infoTireurGlobal[0]
-        if "Dames" in idSexe : 
-           idSexe = 1
+        if "Dames" in str(idSexe) : 
+           idSexe = 2
         else : 
-           idSexe = 0
+           idSexe = 1
         requete1 = "insert into TIREUR(nomTireur,prenomTireur,numeroLicenceTireur,classement,idSexeTireur,dateNaissanceTireur,nationTireur,comiteRegionalTireur) values(%s,%s,%s,%s,%s,%s,%s,%s);"
-        cursor.execute(requete1, (infoTireur[0],infoTireur[1],numeroLicence,infoTireur[7],idSexe[0],infoTireur[2],infoTireur[4],infoTireur[5]))
+        cursor.execute(requete1, (infoTireur[0],infoTireur[1],numeroLicence,infoTireur[7],idSexe,corrigerDate(infoTireur[2]),infoTireur[4],infoTireur[5]))
+
         db.commit()
       except Exception as mysql_error:
         print(mysql_error)
+
+def corrigerDate(date :str) -> str : 
+   newDate = date[6] + date[7] + date[8] + date[9] + "-" + date[3] + date[4] + "-" + date[0] + date[1]
+   return newDate
 
 def getInfoFromBDNational(numeroLicence : int) -> list :
   
@@ -134,13 +143,14 @@ def getOrganisateurClub():
   return res
 
 
-def getProfil(numeroLicence : int) -> list:
-  requete1 = """select nomTireur, prenomTireur, dateNaissanceTireur, numeroLicenceTireur,  nationTireur, comiteRegionalTireur,nomCLub
-                from TIREUR natural join TIREUR_DANS_CLUB natural join CLUB where numeroLicenceTireur = """ + str(numeroLicence) + " limit 1;"
-  cursor.execute(requete1)
-  res = []
-  res.append(cursor.fetchone())
-  return res
+# def getProfil(numeroLicence : int) -> list:
+#   requete1 = """select nomTireur, prenomTireur, dateNaissanceTireur, numeroLicenceTireur,  nationTireur, comiteRegionalTireur,nomCLub
+#                 from TIREUR natural join TIREUR_DANS_CLUB natural join CLUB where numeroLicenceTireur = """ + str(numeroLicence) + " limit 1;"
+#   cursor.execute(requete1)
+#   res = []
+#   res.append(cursor.fetchone())
+#   return res
+
 
 
 def fichiersDossier(path : str) :
@@ -159,6 +169,7 @@ if __name__ == "__main__":
     #print(getProfil(315486))
     #print(estDansBDNational(521531))
     #print(estDansBDNational(138932))
-    #insertParticipantByLicence(138932)
+    #insertTireurDansCompetition(53985)
+
     pass
 
