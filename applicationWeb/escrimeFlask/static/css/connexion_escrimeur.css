@@ -1,0 +1,192 @@
+body{
+    height: 100vh;
+}
+
+main{
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    flex-grow: 1;
+}
+
+.connexion{
+    border: black thin solid;
+    box-shadow: 0.3em 0.3em 0.1em #00000040;
+    margin-bottom: 1em;
+}
+
+.titreConnexion{
+    text-align: center;
+    background-color: #062656;
+    padding: 1em;
+}
+
+.titreConnexion h2, .titreConcours h2 {
+    color: #FFFFFF;
+}
+
+.infoConnexion{
+    padding: 2em;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.numLicence{
+    display: flex;
+    flex-direction: column;
+    width: 60%;
+    height: fit-content;
+}
+
+.epee {
+    position: relative;
+    top: -1em;
+    flex-grow: 1;
+}
+
+.nbLicense{
+    width: 20%;
+    height: 3rem;
+    background-color: #EDEDED;
+    text-align: center;
+    margin-bottom: 3em;
+}
+
+.submit{
+    background-color: #062656;
+    color: #FFFFFF;
+    padding: 0.5em;
+    font-size: large;
+    width: 40%;
+
+}
+
+.blockConnexion>p{
+    margin-bottom: 0.2em;
+}
+
+.blockConnexion>a {
+    text-decoration: underline;
+    color: #0019FF;
+}
+
+.concours{
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    flex-basis: 30%;
+    border: black thin solid;
+    box-shadow: 0.3em 0.3em 0.1em #00000040;
+    top: -3%;
+}
+
+.titreConcours{
+    text-align: center;
+    background-color: #062656;
+    padding: 1em;
+}
+
+.concoursInfo{
+    padding: 2em;
+    display: flex;
+    flex-direction: column;
+}
+
+.concoursInfo>p{
+    font-size: x-large;
+    text-align: center;
+}
+
+.concoursInfo label{
+    padding: 0.5em;
+    margin: 0.5em;
+    font-size: 1.3vw;
+    text-align: start;
+    display: block;
+}
+
+.concoursInfo label:last-child{
+    border-bottom: none;
+}
+
+.concoursInfo input:checked+label{
+    background-color: #062656;
+    color: #FFFFFF;
+}
+
+input[type="radio"] {
+    opacity: 0;
+  }
+
+span{
+    border: #062656 2px solid;
+    flex-grow: 1;
+}
+
+span:last-child{
+    border: none;
+}
+
+
+/* Affichage Popup */
+
+.affichage_popup{
+    position: absolute;
+    display: flex;
+    top:50%;
+    left:50%;
+    transform: translate(-50%,-50%);
+    background-color: rgb(255, 255, 255);
+    width:60vw;
+    height:65vh;
+    border: solid black thin;
+    box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.159);
+    z-index: 2;
+}
+.affichage_popup img{
+    width:50%;
+    height: 100%;
+}
+.affichage_popup > div{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    padding: 1em;
+    width:50%;
+    height: 100%;
+    background-color: rgb(255, 255, 255);
+    padding-bottom: 3em;
+}
+.affichage_popup h1{
+    margin-bottom: 2em ;
+    color: red;
+    text-align: center;
+    font-size: 270%;
+}
+.affichage_popup p{
+    margin-bottom: 1.5em;
+    font-size: 2.3vmin;
+}
+.cover{
+    position: absolute;
+    top:0;
+    left:0;
+    width:100vw;
+    height:100vh;
+    background-color: rgba(135, 135, 135, 0.344);
+    filter: blur(10em);
+    
+}
+.btn-close{
+    position: absolute;
+
+    width:30px;
+    height:30px;
+    background-color: red;
+    top:2%;
+    right:2%;
+    transform: translate(50%,0%);
+}

@@ -12,8 +12,8 @@ import mysql.connector
 #connexion au base de données
 db = mysql.connector.connect(
   host = "localhost",
-  user = "nathan",
-  password = "nathan",
+  user = "koko",
+  password = "koko",
   database = "Escrime"
 )
 
@@ -72,9 +72,9 @@ def getInfoFromBDNational(numeroLicence : int) -> list :
 
 def estDansBDNational(numeroLicence : int) -> bool:
   res = False
-  fichiers = fichiersDossier("./escrimeFlask/csvEscrimeur/")
+  fichiers = fichiersDossier("escrimeFlask/csvEscrimeur/")
   for f in fichiers :
-    infoFichier = classementFile("./escrimeFlask/csvEscrimeur/" + f)
+    infoFichier = classementFile("escrimeFlask//csvEscrimeur/" + f)
     for cat in infoFichier :
        if str(numeroLicence) == cat[3] :
           return True
