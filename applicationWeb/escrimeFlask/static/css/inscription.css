@@ -106,7 +106,8 @@ main{
     padding: 1em;
     display: flex;
     flex-direction: column;
-
+    max-height: 50vh;
+    overflow: auto;
 }
 
 .contentOpen label{
