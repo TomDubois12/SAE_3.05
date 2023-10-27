@@ -20,10 +20,9 @@ db = mysql.connector.connect(
 #créer un curseur de base de données pour effectuer des opérations SQL
 cursor = db.cursor()
 
-def insertTireurDansCompetition(nom : str, prenom : str,numeroLicence : int , dateNaissanceTireur : str, nomCLub :str, idCompetition: int) -> bool:
+def insertTireurDansCompetition(nom : str, prenom : str,numeroLicence : int , dateNaissanceTireur : str, nomCLub :str, idCompetition: int, ToA : str) -> bool:
     try :
         if estDansBDNational(numeroLicence) :
-          insertTireurDansBD(numeroLicence)
           try :
             #Verifié si les info données correspondent aux valeurs de la BD national
             infoTireur = getInfoFromBDNational(numeroLicence)
@@ -31,11 +30,17 @@ def insertTireurDansCompetition(nom : str, prenom : str,numeroLicence : int , da
               infs = infoTireur[1] # On prend la infos de la personne qui veut s'inscrire 
               if infs[0].lower() == nom.lower() and infs[1].lower() == prenom.lower() and infs[2] == dateNaissanceTireur and infs[6].lower() == nomCLub.lower() : # On regarde si les infos passé correspondent au csv
 
-                # Il manque de vérifié le genre de la compète et idSexe
-
-                requete5 = "insert into TIREUR_DANS_COMPETITIONS (numeroLicenceTireur,idCompetition) values(%s,%s);"
-                cursor.execute(requete5, (numeroLicence,idCompetition))
-                db.commit()
+                # Il manque de vérifié le genre de la compète et idSexe + si arbitre ou tireur est passé en paremètre
+                if ToA.upper() == 'TIREUR' :  
+                  insertTireurDansBD(numeroLicence)
+                  requete5 = "insert into TIREUR_DANS_COMPETITIONS (numeroLicenceTireur,idCompetition) values(%s,%s);"
+                  cursor.execute(requete5, (numeroLicence,idCompetition))
+                  db.commit()
+                else : 
+                  insertArbitreDansBD(numeroLicence)
+                  requete5 = "insert into ARBITRE_DANS_COMPETITIONS(numeroLicenceArbitre,idCompetition) values(%s,%s);"
+                  cursor.execute(requete5, (numeroLicence,idCompetition))
+                  db.commit()
                 return True  
               else :
                 return False
@@ -70,6 +75,27 @@ def insertTireurDansBD(numeroLicence : int) :
       except Exception as mysql_error:
         print(mysql_error)
         return False
+      
+
+def insertArbitreDansBD(numeroLicence : int) : 
+   if estDansBDNational(numeroLicence) : 
+      try :
+        infoTireurGlobal = getInfoFromBDNational(numeroLicence)
+        # = ['PETIT', 'Stéphane', '02/09/1963', '138932', 'FRANCE', 'ILE DE FRANCE Ouest', 'NEUILLY ESCR', '1687', '149']
+        infoTireur = infoTireurGlobal[1]
+        idSexe = infoTireurGlobal[0]
+        if "Dames" in str(idSexe) : 
+           idSexe = 2
+        else : 
+           idSexe = 1
+        requete1 = "insert into ARBITRE(nomArbitre,prenomArbitre,numeroLicenceArbitre) values(%s,%s,%s);"
+        cursor.execute(requete1, (infoTireur[0],infoTireur[1],numeroLicence))
+        db.commit()
+        return True
+      except Exception as mysql_error:
+        print(mysql_error)
+        return False
+      
 
 def corrigerDate(date :str) -> str : 
    newDate = date[6] + date[7] + date[8] + date[9] + "-" + date[3] + date[4] + "-" + date[0] + date[1]
@@ -184,7 +210,7 @@ if __name__ == "__main__":
     #print(getProfil(315486))
     #print(estDansBDNational(521531))
     #print(getInfoFromBDNational(138932))
-    print(insertTireurDansCompetition('CONY', 'Philippe' ,13659, '06/07/1961', 'NEUVY NA', 1))   # nom , prenom ,numeroLicence  , dateNaissanceTireur , nomCLub , idCompetition
+    print(insertTireurDansCompetition('CONY', 'Philippe' ,13659, '06/07/1961', 'NEUVY NA', 1,'tireur'))   # nom , prenom ,numeroLicence  , dateNaissanceTireur , nomCLub , idCompetition
 
     pass
 
