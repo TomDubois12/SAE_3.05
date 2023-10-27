@@ -1,30 +1,37 @@
 main {
-    flex-wrap: nowrap;
+    flex-wrap: wrap;
     display: flex;
 }
 
-main>div {
+.profil{
     flex-grow: 1;
-    max-height: 50%;
+    flex-basis: 70%;
 }
 
-main>img {
-    flex-basis: 20%;
-    float: right;
-    max-width: 50%;
-    max-height: 50%;
-    height: auto;
+.image{
+    flex-basis: 25%;
+}
+
+.image img {
+    max-width: 100%;
+    max-height: 100%;
 }
 
 section>h1 {
     position: absolute;
-    margin-left: 6%;
+    margin-left: 10%;
     font-size: 400%;
     transform: translateY(-80%);
 }
 
+section>img {
+    margin-left: 8%;
+}
+
 #informations {
     margin-bottom: 10vh;
+    
+    margin-top: 6%;
 }
 
 #informations div {
@@ -42,15 +49,12 @@ section>h1 {
     margin-left: 2vw;
 }
 
-section>img {
-    margin-left: 6%;
-}
-
 .epeeCroix {
     width: 50%;
     text-align: center;
     margin-left: 25%;
     margin-right: 25%;
+    margin-top: 0%;
 }
 
 .selectBoxes,
@@ -61,62 +65,4 @@ section>img {
     padding-left: 6vw;
     padding-right: 6vw;
     padding-bottom: 3vh;
-}
-
-select {
-    /* styling */
-    background-color: white;
-    border: thin solid rgb(24, 24, 123);
-    border-radius: 6vw;
-    display: inline-block;
-    font: inherit;
-    line-height: 1.5em;
-    padding: 0.5em 3.5em 0.5em 1em;
-
-    /* reset */
-    margin: 0;
-    -webkit-box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    box-sizing: border-box;
-    -webkit-appearance: none;
-    /* permet de retirer la flèche par défaut */
-
-    /* Background uniquement pour la zone de la flèche */
-    background-image:
-        linear-gradient(45deg, transparent 50%, skyblue 50%),
-        linear-gradient(135deg, skyblue 50%, transparent 50%),
-        linear-gradient(to right, rgb(24, 24, 123), rgb(24, 24, 123));
-    background-position:
-        calc(100% - 20px) calc(1em + 2px),
-        calc(100% - 15px) calc(1em + 2px),
-        100% 0;
-    background-size:
-        5px 5px,
-        5px 5px,
-        2.5em 2.5em;
-    background-repeat: no-repeat;
-}
-
-select:focus {
-    background-image:
-        linear-gradient(45deg, rgb(117, 19, 19) 50%, transparent 50%),
-        linear-gradient(135deg, transparent 50%, rgb(117, 19, 19) 50%),
-        linear-gradient(to right, lightgray, lightgray);
-    background-position:
-        calc(100% - 15px) 1em,
-        calc(100% - 20px) 1em,
-        100% 0;
-    background-size:
-        5px 5px,
-        5px 5px,
-        2.5em 2.5em;
-    background-repeat: no-repeat;
-    border-color: grey;
-    outline: 0;
-}
-
-select * {
-    font-size: large;
-    font-style: italic bold;
-    color: rgb(24, 24, 123);
 }
