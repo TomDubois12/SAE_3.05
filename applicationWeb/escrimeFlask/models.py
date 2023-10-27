@@ -56,6 +56,7 @@ def insertTireurDansCompetition(nom : str, prenom : str,numeroLicence : int , da
       return False
 
 
+
 def insertTireurDansBD(numeroLicence : int) : 
    if estDansBDNational(numeroLicence) : 
       try :
@@ -210,7 +211,7 @@ if __name__ == "__main__":
     #print(getProfil(315486))
     #print(estDansBDNational(521531))
     #print(getInfoFromBDNational(138932))
-    print(insertTireurDansCompetition('CONY', 'Philippe' ,13659, '06/07/1961', 'NEUVY NA', 1,'tireur'))   # nom , prenom ,numeroLicence  , dateNaissanceTireur , nomCLub , idCompetition
+    #print(insertTireurDansCompetition('CONY', 'Philippe' ,13659, '06/07/1961', 'NEUVY NA', 1,'tireur'))   # nom , prenom ,numeroLicence  , dateNaissanceTireur , nomCLub , idCompetition
 
     pass
 
