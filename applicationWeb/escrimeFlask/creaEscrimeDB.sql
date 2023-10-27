@@ -198,4 +198,22 @@ begin
     end if ;
 end |
 
+create or replace trigger estPasDejaAbitre before insert on TIREUR_DANS_COMPETITIONS for each row 
+begin
+    declare nbligne int;
+    select count(*) into nbligne from ARBITRE_DANS_COMPETITIONS where numeroLicenceArbitre = new.numeroLicenceTireur and idCompetition = new.idCompetition;
+    if (nbligne > 0) then
+        signal sqlstate '45000' set message_text = 'Ce numéro de licence est déjà inscris en tant que Arbitre dans cette compétition';
+    end if ;
+end |
+
+create or replace trigger estPasDejaTireur before insert on ARBITRE_DANS_COMPETITIONS for each row 
+begin
+    declare nbligne int;
+    select count(*) into nbligne from TIREUR_DANS_COMPETITIONS where numeroLicenceTireur = new.numeroLicenceArbitre and idCompetition = new.idCompetition;
+    if (nbligne > 0) then
+        signal sqlstate '45000' set message_text = 'Ce numéro de licence est déjà inscris en tant que Tireur dans cette compétition';
+    end if ;
+end |
+
 delimiter ; 
