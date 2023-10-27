@@ -31,21 +31,20 @@ def insertTireurDansCompetition(nom : str, prenom : str,numeroLicence : int , da
               if infs[0].lower() == nom.lower() and infs[1].lower() == prenom.lower() and infs[2] == dateNaissanceTireur and infs[6].lower() == nomCLub.lower() : # On regarde si les infos passé correspondent au csv
 
                 # Il manque de vérifié le genre de la compète et idSexe + si arbitre ou tireur est passé en paremètre
-                if ToA.upper() == 'TIREUR' :  
-                  insertTireurDansBD(numeroLicence)
-                  requete5 = "insert into TIREUR_DANS_COMPETITIONS (numeroLicenceTireur,idCompetition) values(%s,%s);"
-                  cursor.execute(requete5, (numeroLicence,idCompetition))
-                  db.commit()
-                else : 
-                  insertArbitreDansBD(numeroLicence)
-                  requete5 = "insert into ARBITRE_DANS_COMPETITIONS(numeroLicenceArbitre,idCompetition) values(%s,%s);"
-                  cursor.execute(requete5, (numeroLicence,idCompetition))
-                  db.commit()
-                return True  
-              else :
-                return False
-            else :
-              return False
+                if getIdSexeByIdCompetition(idCompetition) == getIdSexeByNumLicence(numeroLicence) :
+                  if ToA.upper() == 'TIREUR' :  
+                    insertTireurDansBD(numeroLicence)
+                    requete5 = "insert into TIREUR_DANS_COMPETITIONS (numeroLicenceTireur,idCompetition) values(%s,%s);"
+                    cursor.execute(requete5, (numeroLicence,idCompetition))
+                    db.commit()
+                    return True  
+                  else : 
+                    insertArbitreDansBD(numeroLicence)
+                    requete5 = "insert into ARBITRE_DANS_COMPETITIONS(numeroLicenceArbitre,idCompetition) values(%s,%s);"
+                    cursor.execute(requete5, (numeroLicence,idCompetition))
+                    db.commit()
+                  return True  
+            return False
           except Exception as mysql_error:
             print(mysql_error)
             return False
@@ -183,6 +182,17 @@ def getOrganisateurClub():
   for i in range(len(info)):
     res[info[i][1]] = info[i][2]
   return res
+
+
+def getIdSexeByIdCompetition(idCompetition : int) -> int:
+  requete = "select idSexeCompetition from COMPETITION where idCompetition = " + str(idCompetition) + ";"
+  cursor.execute(requete)
+  return cursor.fetchall()
+
+def getIdSexeByNumLicence(numeroLicence : int) -> int:
+  requete = "select idSexeTireur from TIREUR where numeroLicenceTireur = " + str(numeroLicence) + ";"
+  cursor.execute(requete)
+  return cursor.fetchall()
 
 
 # def getProfil(numeroLicence : int) -> list:
