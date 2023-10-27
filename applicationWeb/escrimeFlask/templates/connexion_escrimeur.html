@@ -24,7 +24,7 @@
             </form>
         </div>
         <p>Pas encore inscrit a une compétition ?</p>
-        <a href="./inscription.html">S'inscrire</a>
+        <a href="./inscription">S'inscrire</a>
     </div>
 
 {% if affichageConcours %}
@@ -33,8 +33,12 @@
             <h2>CONCOURS INSCRIT</h2>
         </div>
         <div class="concoursInfo">
-            {% for x in concours %}
-                <p>{{x[0][0].upper()}} {{x[0][1].upper()}} {{x[0][3].upper()}}, {{x[0][4]}}</p>
+            {% for x in concoursTireur %}
+                <input type="radio" id="{{x[0][-1]}}" name="compet" required="required" value="{{x[0][-1]}}"> <label for="{{x[0][-1]}}">{{x[0][0].upper()}} {{x[0][1].upper()}} {{x[0][3].upper()}}, {{x[0][4]}}, en tant que TIREUR</label></input>
+                <span></span>
+            {% endfor %}
+            {% for x in concoursArbitre %}
+                <input type="radio" id="{{x[0][-1]}}" name="compet" required="required" value="{{x[0][-1]}}"> <label for="{{x[0][-1]}}">{{x[0][0].upper()}} {{x[0][1].upper()}} {{x[0][3].upper()}}, {{x[0][4]}}, en tant qu'ARBITRE</label></input>
                 <span></span>
             {% endfor %}
         </div>

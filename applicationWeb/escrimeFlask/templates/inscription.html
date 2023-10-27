@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 {% block linkcss %}
     <link rel="stylesheet" href="{{ url_for('static', filename='css/inscription.css')}}">
+    <script src="{{ url_for('static',filename='js/popup.js')}}"> </script>
 {% endblock %}
 
 {% block header %}
@@ -8,42 +9,139 @@
 {% endblock %}
 
 {% block main %}
-    <div class="open">
-        <div class="titreOpen">
-            <p>INSCRIPTIONS OUVERTES</p>
+    <form action="{{url_for("verifInscription")}}" method="get">
+        <div class="open">
+            <div class="titreOpen">
+                <h2>INSCRIPTIONS OUVERTES</h2>
+            </div>
+            <div class="contentOpen">
+                {% for x in competitions %}
+                    <input type="radio" id="{{x[0][-1]}}" name="compet" required value="{{x[0][-1]}}"> <label for="{{x[0][-1]}}">{{x[0][0].upper()}} {{x[0][1].upper()}} {{x[0][3].upper()}}, {{x[0][4]}}</label></input>
+                    <span></span>
+                {% endfor %}
+            </div>
         </div>
-        <div class="contentOpen">
-            {% for x in competitions %}
-                <input type="radio" id="{{x[0][-1]}}" name="compet" value="{{x[0][-1]}}"> <label for="{{x[0][-1]}}">{{x[0][0].upper()}} {{x[0][1].upper()}} {{x[0][3].upper()}}, {{x[0][4]}}</label></input>
-                <span></span>
-            {% endfor %}
+        <div class="blockInscription">
+            <div class="inscription">
+                <div class="titreInscription">
+                    <h2>INSCRIPTION</h2>
+                </div>
+                <div class="infoInscription">
+                    <div class="numLicence">
+                        <p>Numéro de licence : </p>
+                        <input type="number" name="nbLicence" id="nbLicence" required="required" placeholder="112853">
+                    </div>
+                    <p>Veuillez vous assurer qu'il s'agisse bien de vous avant de vous inscrire.</p>
+                    <div class="nomPrenom">
+                        <p>Nom prénom :</p>
+                        <div>
+                            <input type="text" name="nom" id="nom" required="required" placeholder="TOSCANE">
+                            <input type="text" name="prenom" id="prenom" required="required" placeholder="Tori">
+                        </div>
+                    </div>
+                    <div class="naissanceClub">
+                        <div class="naissance">
+                            <p>Naissance:</p>
+                            <input type="date" name="naissance" id="naissance" required="required">
+                        </div>
+                        <div class="club">
+                            <p>Club:</p>
+                            <input type="text" name="club" id="club" required="required" placeholder="CHARENTON">
+                        </div>
+                    </div>
+                    <div class="role">
+                        <p>S'inscrire en tant que :</p>
+                        <div class="radioButtonRole">
+                            <div>
+                            <input type="radio" id="tireur" name="role" value="tireur" required> <label for="tireur">Tireur</label></input>
+                            </div>
+                            <div>
+                            <input type="radio" id="arbitre" name="role" value="arbitre" required> <label for="arbitre">Arbitre</label></input>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="submit">
+                        <input type="submit" value="SE CONNECTER">
+                    </div>
+                </div>   
+            </div>
+            <p>Déjà inscrit à une compétition ?</p>
+            <a href="./connexion_escrimeur">Se connecter</a>
+        </div>
+    </form>
+
+    {% if popup %}
+        <div class="wrap_popup">
+            <div class="cover"> </div>
+            
+            <div class="affichage_popup">
+                <div>
+                    <h1>NUMERO DE LICENCE INTROUVABLE</h1>
+                    <p>Le numéro {{nbLicence}} ne correspond à aucune licence existante dans nos fichiers de la Fédération Française d’Escrime.</p>
+                    <p>Vérifiez que vous n’avez pas fait d’erreur lors de la saisie ou contactez votre centre de formation pour vous renseigner votre numéro 
+                    de licence.</p>
+                </div>
+                
+                <img src="../../static/images/imgLicenseIntrouvable.png" alt="image illustration escrime">
+                <button class="btn-close" type="button"></button>
+
+            </div>
+        </div>
+    {% else %}
+        <style> 
+        .popup{
+            visibility: hidden;
+        }
+        </style>
+    {% endif %}
+    {% if popup2 %}
+        <div class="wrap_popup">
+            <div class="cover"> </div>
+            
+            <div class="affichage_popup">
+                <div>
+                    <h1>CRITERES DE COMPETITION NON RESPECTES</h1>
+                    <p>Veuillez vous assurer de respecter les critères d’inscriptions à cette compétition.</p>
+
+                    <p>Une femme ne peut pas concourir avec les hommes et inversement.</p>
+
+                    <p>Vous ne pouvez concourir qu’à votre catégorie ou bien une catégorie au-dessus de la vôtre.
+                    (ordre des catégories : U13, U15, U20, senior, V1, V2, V3, V4)</p>
+                </div>
+                
+                <img src="../../static/images/imgConnexionError.png" alt="image illustration escrime">
+                <button class="btn-close" type="button"></button>
+
+            </div>
+        </div>
+    {% else %}
+        <style> 
+        .popup{
+            visibility: hidden;
+        }
+        </style>
+    {% endif %}
+    {% if popup3 %}
+    <div class="wrap_popup">
+        <div class="cover"> </div>
+        
+        <div class="affichage_popup">
+            <div>
+                <h1>Bravo vous êtes inscrit a la compétition</h1>
+                <p>Vous pouvez maintenant vous connecter pour voir vos informations.</p>
+            </div>
+            
+            <img src="../../static/images/imgConnexionError.png" alt="image illustration escrime">
+            <button class="btn-close" type="button"></button>
+
         </div>
     </div>
-    <div class="inscription">
-        <div class="titreInscription">
-            <p>INSCRIPTION</p>
-        </div>
-        <form class="infoInscription" action="" method="GET">
-            <div class="numLicence">
-                <p>Numéro de licence : </p>
-                <input type="text" placeholder="112853">
-            </div>
-            <p>Veuillez vous assurer qu'il s'agisse bien de vous avant de vous inscrire.</p>
-            <div class="nomPrenom">
-                <p>Nom prénom :</p>
-                <input type="text" placeholder="TOSCANE Tori">
-            </div>
-            <div class="naissanceClub">
-                <div class="naissance">
-                    <p>Naissance:</p>
-                    <input type="text" placeholder="03/03/2004">
-                </div>
-                <div class="club">
-                    <p>Club:</p>
-                    <input type="text" placeholder="CHARENTON">
-                </div>
-            </div>
-            <input type="submit" value="SE CONNECTER">
-        </form>
-    </div>
+{% else %}
+    <style> 
+    .popup{
+        visibility: hidden;
+    }
+    </style>
+{% endif %}
+
 {% endblock %}

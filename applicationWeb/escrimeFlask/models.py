@@ -12,8 +12,8 @@ import mysql.connector
 #connexion au base de données
 db = mysql.connector.connect(
   host = "localhost",
-  user = "nathan",
-  password = "nathan",
+  user = "koko",
+  password = "koko",
   database = "Escrime"
 )
 
@@ -28,7 +28,7 @@ def insertTireurDansCompetition(nom : str, prenom : str,numeroLicence : int , da
             infoTireur = getInfoFromBDNational(numeroLicence)
             if infoTireur != False : # si le numéro de licence est dans la BD national
               infs = infoTireur[1] # On prend la infos de la personne qui veut s'inscrire 
-              if infs[0].lower() == nom.lower() and infs[1].lower() == prenom.lower() and infs[2] == dateNaissanceTireur and infs[6].lower() == nomCLub.lower() : # On regarde si les infos passé correspondent au csv
+              if infs[0].lower() == nom.lower() and infs[1].lower() == prenom.lower() and corrigerDate(infs[2]) == dateNaissanceTireur and infs[6].lower() == nomCLub.lower() : # On regarde si les infos passé correspondent au csv
 
                 # Il manque de vérifié le genre de la compète et idSexe + si arbitre ou tireur est passé en paremètre
                
@@ -116,15 +116,15 @@ def getInfoFromBDNational(numeroLicence : int) -> list :
   return False
 
 def estDansBDNational(numeroLicence : int) -> bool:
-  fichiers = fichiersDossier("escrimeFlask/csvEscrimeur/")
+  fichiers = fichiersDossier("./escrimeFlask/csvEscrimeur/")
   for f in fichiers :
-    infoFichier = classementFile("escrimeFlask//csvEscrimeur/" + f)
+    infoFichier = classementFile("./escrimeFlask//csvEscrimeur/" + f)
     for cat in infoFichier :
        if str(numeroLicence) == cat[3] :
           return True
   return False 
 
-def concourtInscritLicence(numeroLicence : int) -> list:
+def concourtInscritLicenceTireur(numeroLicence : int) -> list:
   requete1 = "select * from TIREUR_DANS_COMPETITIONS natural join COMPETITION where numeroLicenceTireur = " + str(numeroLicence) + ";"
   cursor.execute(requete1)
   info = cursor.fetchall()
@@ -138,6 +138,19 @@ def concourtInscritLicence(numeroLicence : int) -> list:
   # return sous la forme : nomCompetition intituleCompet typeArme intituleSexe intituleCategorie departement
   return res
 
+def concourtInscritLicenceArbitre(numeroLicence : int) -> list:
+  requete1 = "select * from ARBITRE_DANS_COMPETITIONS natural join COMPETITION where numeroLicenceArbitre = " + str(numeroLicence) + ";"
+  cursor.execute(requete1)
+  info = cursor.fetchall()
+  res = []
+  for i in range(len(info)):
+    requete2 = """select intituleCompet,typeArme, intituleSexe,intituleCategorie, departement
+                  from COMPETITION natural join LIEU natural join ARME natural join SEXE natural join CATEGORIE
+                  where datediff(dateDebutCompetiton ,CURDATE()) > 14 and idLieu ="""+ str(info[i][7]) +" and idCategorie ="+ str(info[i][8]) +" and idSexe = "+str(info[i][9]) +" and idArme = "+ str(info[i][10]) +" and idCompetition = "+str(info[i][0]) +";"
+    cursor.execute(requete2) 
+    res.append(cursor.fetchall())
+  # return sous la forme : nomCompetition intituleCompet typeArme intituleSexe intituleCategorie departement
+  return res
 
 
 def classementFile(filename :str) -> list:
@@ -224,7 +237,9 @@ if __name__ == "__main__":
     #print(getProfil(315486))
     #print(estDansBDNational(521531))
     #print(getInfoFromBDNational(138932))
-    print(insertTireurDansCompetition('CONY', 'Philippe' ,13659, '06/07/1961', 'NEUVY NA', 1,'arbitre'))   # nom , prenom ,numeroLicence  , dateNaissanceTireur , nomCLub , idCompetition
-
+    # print(insertTireurDansCompetition('CONY', 'Philippe' ,13659, '1961-07-06', 'NEUVY NA', 2,'tireur'))   # nom , prenom ,numeroLicence  , dateNaissanceTireur , nomCLub , idCompetition
+    # print(estDansBDNational(13659))
+    print(concourtInscritLicenceTireur(13659))
+    print(concourtInscritLicenceArbitre(147282))
     pass
 
