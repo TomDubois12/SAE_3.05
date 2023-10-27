@@ -70,7 +70,6 @@ insert into COMPETITION(intituleCompet,saison,estFinie,coefficientCompetition,da
 insert into TIREUR_DANS_COMPETITIONS(numeroLicenceTireur,idCompetition)values 
     (315486,1),
     (315486,2),
-    (315486,3),
     (521531,1),
     (213138,1);
     
