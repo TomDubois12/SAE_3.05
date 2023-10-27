@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+{% block linkcss %}
+<link rel="stylesheet"
+    href="{{ url_for('static', filename='css/creation_competition.css')}}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/select.css') }}">
+{% endblock %}
+{% block header %}
+{% include "partials/_header3.html" %}
+{% endblock %}
+{% block main %}
+<section class="creation">
+    <h1>CRÉATION D’UNE COMPÉTITION</h1>
+    <div class="choix">
+        <h2>Lieu :</h2>
+        <select>
+            <option>Paris</option>
+            <option>Bordeaux</option>
+            <option>Toulouse</option>
+            <option>Strasbourg</option>
+            <option>Nantes</option>
+            <option>Lille</option>
+        </select>
+    </div>
+    <div class="date">
+        <h2>Date: <input type="datetime-local" value="2023-10-27T00:00"
+                min="2023-10-27T00:00"></h2>
+    </div>
+    <div class="choix">
+        <h2>Catégorie :</h2>
+        <select>
+            <option value="none" selected disabled hidden>Choississez une
+                catégorie</option>
+            <option value="m15">M15</option>
+            <option value="m17">M17</option>
+            <option value="m20">M20</option>
+            <option value="senior">Seniors</option>
+            <option value="veteran1">Vétérans1</option>
+            <option value="veteran2">Vétérans2</option>
+            <option value="veteran3">Vétérans3</option>
+            <option value="veteran4">Vétérans4</option>
+        </select>
+    </div>
+    <div class="choix">
+        <h2>Type :</h2>
+        <div class="type">
+            <select>
+                <option value="none" selected disabled hidden>Choississez un
+                    type</option>
+                <option value="dames">Dames</option>
+                <option value="homme">Homme</option>
+            </select>
+            <select>
+                <option value="none" selected disabled hidden>Choississez une
+                    arme</option>
+                <option value="epee">Epee</option>
+                <option value="fleuret">Fleuret</option>
+                <option value="sabre">Sabre</option>
+            </select>
+        </div>
+    </div>
+</section>
+{% endblock %}
