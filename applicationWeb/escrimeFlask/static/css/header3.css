@@ -12,7 +12,7 @@ header{
     gap: 12vw;
 }
 
-header>img{
+header>a>img{
     margin: 5vmin;
     height: 10vmin;
 }
@@ -33,6 +33,16 @@ nav{
     flex-direction: column;
     justify-content: center;
     width: min-content;
+}
+
+.lien li a {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.lien img{
+    margin: 0.5em;
 }
 
 
@@ -80,6 +90,7 @@ nav img{
 .epee img {
     width: 100%;
     object-fit: fill;
+    display: block;
 }
 
 @media (max-width: 1000px) {

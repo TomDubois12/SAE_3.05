@@ -1,9 +1,10 @@
-from flask import Flask
 import csv
 
 # pip install Flask-MySQLdb
 #sudo apt-get install python3-dev default-libmysqlclient-dev build-essential pkg-config
 
+
+import os.path
 
 # -*- coding: utf-8 -*-
 import mysql.connector
@@ -19,10 +20,11 @@ db = mysql.connector.connect(
 #créer un curseur de base de données pour effectuer des opérations SQL
 cursor = db.cursor()
 
-def insertTireurCompetition(nom : str, prenom : str,numeroLicence : int ,classement : float, idSexe : int, idCompetition: int) -> None:
+def insertTireurCompetition(nom : str, prenom : str,numeroLicence : int ,classement : float, idSexe : int, dateNaissanceTireur : str, nation : str, comiteRegional : str, idCompetition: int) -> None:
     try :
-          requete2 = "insert into TIREUR (nomTireur,prenomTireur,numeroLicenceTireur,classement,idSexeTireur) values(%s,%s,%s,%s,%s);"
-          cursor.execute(requete2, (nom,prenom,numeroLicence,classement,idSexe))
+        
+          requete2 = "insert into TIREUR (nomTireur,prenomTireur,numeroLicenceTireur,classement,idSexeTireur,dateNaissanceTireur,nationTireur,comiteRegionalTireur) values(%s,%s,%s,%s,%s,%s,%s,%s);"
+          cursor.execute(requete2, (nom,prenom,numeroLicence,classement,idSexe,dateNaissanceTireur,nation,comiteRegional))
           db.commit()
           try :
             requete5 = "insert into TIREUR_DANS_COMPETITIONS (numeroLicenceTireur,idCompetition) values(%s,%s);"
@@ -31,9 +33,43 @@ def insertTireurCompetition(nom : str, prenom : str,numeroLicence : int ,classem
           except Exception as mysql_error:
             print(mysql_error)
     except Exception as mysql_error:
-       print(mysql_error)
+      print(mysql_error)
 
+def insertParticipantByLicence(numeroLicence : int) : 
+   if estDansBDNational(numeroLicence) : 
+      try :
+        infoTireurGlobal = getInfoFromBDNational(numeroLicence)
+        infoTireur = infoTireurGlobal[1]
+        idSexe = infoTireurGlobal[0]
+        if "Dames" in idSexe : 
+           idSexe = 1
+        else : 
+           idSexe = 0
+        requete1 = "insert into TIREUR(nomTireur,prenomTireur,numeroLicenceTireur,classement,idSexeTireur,dateNaissanceTireur,nationTireur,comiteRegionalTireur) values(%s,%s,%s,%s,%s,%s,%s,%s);"
+        cursor.execute(requete1, (infoTireur[0],infoTireur[1],numeroLicence,infoTireur[7],idSexe[0],infoTireur[2],infoTireur[4],infoTireur[5]))
+        db.commit()
+      except Exception as mysql_error:
+        print(mysql_error)
 
+def getInfoFromBDNational(numeroLicence : int) -> list :
+  
+  fichiers = fichiersDossier("./escrimeFlask/csvEscrimeur/")
+  for f in fichiers :
+    infoFichier = classementFile("./escrimeFlask/csvEscrimeur/" + f)
+    for cat in infoFichier :
+       if str(numeroLicence) == cat[3] :
+          return [f,cat]
+  
+
+def estDansBDNational(numeroLicence : int) -> bool:
+  res = False
+  fichiers = fichiersDossier("./escrimeFlask/csvEscrimeur/")
+  for f in fichiers :
+    infoFichier = classementFile("./escrimeFlask/csvEscrimeur/" + f)
+    for cat in infoFichier :
+       if str(numeroLicence) == cat[3] :
+          return True
+  return res 
 
 def concourtInscritLicence(numeroLicence : int) -> list:
   requete1 = "select * from TIREUR_DANS_COMPETITIONS natural join COMPETITION where numeroLicenceTireur = " + str(numeroLicence) + ";"
@@ -71,7 +107,7 @@ def inscriptionOuverte() -> list:
     res = []
     for i in range(len(info)):
       
-      requete2 = """select intituleCompet,typeArme, intituleSexe,intituleCategorie, departement
+      requete2 = """select intituleCompet,typeArme, intituleSexe,intituleCategorie, departement, idCompetition
                     from COMPETITION natural join LIEU natural join ARME natural join SEXE natural join CATEGORIE
                     where datediff(dateDebutCompetiton ,CURDATE()) > 14 and idLieu ="""+ str(info[i][6]) +" and idCategorie ="+ str(info[i][7]) +" and idSexe = "+str(info[i][8]) +" and idArme = "+ str(info[i][9]) +" and idCompetition = "+str(info[i][0]) +";"
       cursor.execute(requete2) 
@@ -97,10 +133,32 @@ def getOrganisateurClub():
     res[info[i][1]] = info[i][2]
   return res
 
+
+def getProfil(numeroLicence : int) -> list:
+  requete1 = """select nomTireur, prenomTireur, dateNaissanceTireur, numeroLicenceTireur,  nationTireur, comiteRegionalTireur,nomCLub
+                from TIREUR natural join TIREUR_DANS_CLUB natural join CLUB where numeroLicenceTireur = """ + str(numeroLicence) + " limit 1;"
+  cursor.execute(requete1)
+  res = []
+  res.append(cursor.fetchone())
+  return res
+
+
+def fichiersDossier(path : str) :
+  files = os.listdir(path)
+  listeChemin = []
+  for name in files:
+    listeChemin.append(name)
+  return listeChemin
+
 if __name__ == "__main__":
     #print(classementFile("./csvEscrimeur/classement_Epée_Dames_M15.csv"))
     #print(inscriptionOuverte())
-    #print(insertTireurCompetition("Nicolas", "Guillaume", 146313, 2452.00, 1, 1))
+    #print(insertTireurCompetition("Nicolas", "Guillaume", 146313, 2452.00, 1,"2004-10-10","France","CENTRE VAL DE LOIRE", 1))
     #print(concourtInscritLicence(521531))
     #print(getOrganisateurClub())
+    #print(getProfil(315486))
+    #print(estDansBDNational(521531))
+    #print(estDansBDNational(138932))
+    #insertParticipantByLicence(138932)
     pass
+

@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% block linkcss %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/inscription.css')}}">
+{% endblock %}
+
+{% block header %}
+    {% include "partials/_header2.html" %}
+{% endblock %}
+
+{% block main %}
+    <div class="open">
+        <div class="titreOpen">
+            <p>INSCRIPTIONS OUVERTES</p>
+        </div>
+        <div class="contentOpen">
+            {% for x in competitions %}
+                <input type="radio" id="{{x[0][-1]}}" name="compet" value="{{x[0][-1]}}"> <label for="{{x[0][-1]}}">{{x[0][0].upper()}} {{x[0][1].upper()}} {{x[0][3].upper()}}, {{x[0][4]}}</label></input>
+                <span></span>
+            {% endfor %}
+        </div>
+    </div>
+    <div class="inscription">
+        <div class="titreInscription">
+            <p>INSCRIPTION</p>
+        </div>
+        <div class="infoInscription">
+            <div class="numLicence">
+                <p>Numéro de licence : </p>
+                <input type="text" placeholder="112853">
+            </div>
+            <p>Veuillez vous assurer qu'il s'agisse bien de vous avant de vous inscrire.</p>
+            <div class="nomPrenom">
+                <p>Nom prénom :</p>
+                <input type="text" placeholder="TOSCANE Tori">
+            </div>
+            <div class="naissanceClub">
+                <div class="naissance">
+                    <p>Naissance:</p>
+                    <input type="text" placeholder="03/03/2004">
+                </div>
+                <div class="club">
+                    <p>Club:</p>
+                    <input type="text" placeholder="CHARENTON">
+                </div>
+            </div>
+            <a href="#">S'INSCRIRE</a>
+        </div>
+    </div>
+{% endblock %}
