@@ -12,30 +12,43 @@ import mysql.connector
 #connexion au base de données
 db = mysql.connector.connect(
   host = "localhost",
-  user = "koko",
-  password = "koko",
+  user = "nathan",
+  password = "nathan",
   database = "Escrime"
 )
 
 #créer un curseur de base de données pour effectuer des opérations SQL
 cursor = db.cursor()
 
-def insertTireurDansCompetition(nom : str, prenom : str,numeroLicence : int ,classement : float, idSexe : int, dateNaissanceTireur : str, nation : str, comiteRegional : str, idCompetition: int) -> None:
+def insertTireurDansCompetition(nom : str, prenom : str,numeroLicence : int , dateNaissanceTireur : str, nomCLub :str, idCompetition: int) -> bool:
     try :
         if estDansBDNational(numeroLicence) :
           insertTireurDansBD(numeroLicence)
           try :
-            requete5 = "insert into TIREUR_DANS_COMPETITIONS (numeroLicenceTireur,idCompetition) values(%s,%s);"
-            cursor.execute(requete5, (numeroLicence,idCompetition))
-            db.commit()
+            #Verifié si les info données correspondent aux valeurs de la BD national
+            infoTireur = getInfoFromBDNational(numeroLicence)
+            if infoTireur != False : # si le numéro de licence est dans la BD national
+              infs = infoTireur[1] # On prend la infos de la personne qui veut s'inscrire 
+              if infs[0].lower() == nom.lower() and infs[1].lower() == prenom.lower() and infs[2] == dateNaissanceTireur and infs[6].lower() == nomCLub.lower() : # On regarde si les infos passé correspondent au csv
+
+                # Il manque de vérifié le genre de la compète et idSexe
+
+                requete5 = "insert into TIREUR_DANS_COMPETITIONS (numeroLicenceTireur,idCompetition) values(%s,%s);"
+                cursor.execute(requete5, (numeroLicence,idCompetition))
+                db.commit()
+                return True  
+              else :
+                return False
+            else :
+              return False
           except Exception as mysql_error:
             print(mysql_error)
             return False
-          return True  
         else : 
           return False
     except Exception as mysql_error:
       print(mysql_error)
+      return False
 
 
 def insertTireurDansBD(numeroLicence : int) : 
@@ -53,8 +66,10 @@ def insertTireurDansBD(numeroLicence : int) :
         cursor.execute(requete1, (infoTireur[0],infoTireur[1],numeroLicence,infoTireur[7],idSexe,corrigerDate(infoTireur[2]),infoTireur[4],infoTireur[5]))
 
         db.commit()
+        return True
       except Exception as mysql_error:
         print(mysql_error)
+        return False
 
 def corrigerDate(date :str) -> str : 
    newDate = date[6] + date[7] + date[8] + date[9] + "-" + date[3] + date[4] + "-" + date[0] + date[1]
@@ -67,18 +82,18 @@ def getInfoFromBDNational(numeroLicence : int) -> list :
     infoFichier = classementFile("./escrimeFlask/csvEscrimeur/" + f)
     for cat in infoFichier :
        if str(numeroLicence) == cat[3] :
+          # cat =  nom[0]  prenom[1]  dateNaissance[2]  licence[3]  nation[4]  comiteReg[5]  CLUB[6]  point[7]  classement[8] 
           return [f,cat]
-  
+  return False
 
 def estDansBDNational(numeroLicence : int) -> bool:
-  res = False
   fichiers = fichiersDossier("escrimeFlask/csvEscrimeur/")
   for f in fichiers :
     infoFichier = classementFile("escrimeFlask//csvEscrimeur/" + f)
     for cat in infoFichier :
        if str(numeroLicence) == cat[3] :
           return True
-  return res 
+  return False 
 
 def concourtInscritLicence(numeroLicence : int) -> list:
   requete1 = "select * from TIREUR_DANS_COMPETITIONS natural join COMPETITION where numeroLicenceTireur = " + str(numeroLicence) + ";"
@@ -168,8 +183,8 @@ if __name__ == "__main__":
     #print(getOrganisateurClub())
     #print(getProfil(315486))
     #print(estDansBDNational(521531))
-    #print(estDansBDNational(138932))
-    #insertTireurDansCompetition(53985)
+    #print(getInfoFromBDNational(138932))
+    print(insertTireurDansCompetition('CONY', 'Philippe' ,13659, '06/07/1961', 'NEUVY NA', 1))   # nom , prenom ,numeroLicence  , dateNaissanceTireur , nomCLub , idCompetition
 
     pass
 
