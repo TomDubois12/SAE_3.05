@@ -1,0 +1,68 @@
+main {
+    flex-wrap: wrap;
+    display: flex;
+}
+
+.profil{
+    flex-grow: 1;
+    flex-basis: 70%;
+}
+
+.image{
+    flex-basis: 25%;
+}
+
+.image img {
+    max-width: 100%;
+    max-height: 100%;
+}
+
+section>h1 {
+    position: absolute;
+    margin-left: 10%;
+    font-size: 400%;
+    transform: translateY(-80%);
+}
+
+section>img {
+    margin-left: 8%;
+}
+
+#informations {
+    margin-bottom: 10vh;
+    
+    margin-top: 6%;
+}
+
+#informations div {
+    display: flex;
+    flex-wrap: wrap;
+    padding-bottom: 2vh;
+    padding-left: 6vw;
+    padding-right: 6vw;
+}
+
+#informations p {
+    flex-grow: 1;
+    background-color: lightgray;
+    font-size: x-large;
+    margin-left: 2vw;
+}
+
+.epeeCroix {
+    width: 50%;
+    text-align: center;
+    margin-left: 25%;
+    margin-right: 25%;
+    margin-top: 0%;
+}
+
+.selectBoxes,
+.classement {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    padding-left: 6vw;
+    padding-right: 6vw;
+    padding-bottom: 3vh;
+}
