@@ -1,6 +1,6 @@
 from .app import app
 from flask import render_template, request
-from .models import *
+#from .models import *
 
 
 @app.route('/')
@@ -23,6 +23,12 @@ def inscription():
 def connexion_organisateur():
     return render_template('connexion_organisateur.html',
                            title='Connexion_organisateur')
+
+@app.route('/profil')
+def profil():
+    return render_template('profil.html',
+                           title='Mon profil')
+
 @app.route('/accueil')
 def accueil():
     return render_template('accueil.html',

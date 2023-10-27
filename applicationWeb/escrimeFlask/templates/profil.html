@@ -1,0 +1,86 @@
+{% extends "base.html" %}
+
+{% block linkcss %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/profil.css')}}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/select.css') }}">
+{% endblock %}
+{% block script %}
+<script src="{{ url_for('static', filename='css/selectProfil.js')}}"></script>
+{% endblock %}
+{% block header %}
+{% include "partials/_header3.html" %}
+{% endblock %}
+{% block main %}
+<div class="profil">
+    <section id="informations">
+        <h1>Mon profil</h1>
+        <img class="epee"
+            src="{{url_for('static', filename='images/epeeBleu.png')}}"
+            alt="Epée bleu d'escrime">
+        <div>
+            <h2>NOM :</h2>
+            <p>profil</p>
+        </div>
+        <div>
+            <h2>PRENOM :</h2>
+            <p>Maria</p>
+        </div>
+        <div>
+            <h2>DATE DE NAISSANCE</h2>
+            <p>30/05/2589</p>
+        </div>
+        <img class="epeeCroix"
+            src="{{url_for('static', filename='images/epeeCroisees.png')}}"
+            alt="Deux épee croisés">
+        <div>
+            <h2>NUMERO DE LICENCE :</h2>
+            <p>Maria</p>
+        </div>
+        <div>
+            <h2>NATION :</h2>
+            <p>Maria</p>
+        </div>
+        <div>
+            <h2>COMITE REGIONNAL :</h2>
+            <p>Maria</p>
+        </div>
+        <div>
+            <h2>CLUB :</h2>
+            <p>Maria</p>
+        </div>
+    </section>
+    <section id="statistiques">
+        <h1>Mes statistiques</h1>
+        <img class="epee"
+            src="{{url_for('static', filename='images/epeeBleu.png')}}"
+            alt="Epée bleu d'escrime">
+        <div class="selectBoxes">
+            <div class="selection">
+                <select name="arme">
+                    <option value="none" selected disabled hidden>Choississez
+                        une arme</option>
+                    <option value="fleuret">Fleuret</option>
+                    <option value="epee">Epée</option>
+                    <option value="sabre">Sabre</option>
+                </select>
+            </div>
+            <div class="selection">
+                <select name="categorie">
+                    <option value="none" selected disabled hidden>Choississez
+                        une catégorie</option>
+                    <option value="categorie1">Catégorie d'âge</option>
+                    <option value="categorie2">Catégorie + 1</option>
+                </select>
+            </div>
+        </div>
+        <div class="classement">
+            <p> Points : </p>
+            <p> Rang : </p>
+        </div>
+    </section>
+</div>
+<div class="image">
+    <img src="{{ url_for('static', filename='images/monProfil.png') }}"
+        alt="Un escrimeur">
+</div>
+{% endblock %}
