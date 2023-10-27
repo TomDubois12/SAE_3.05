@@ -9,18 +9,30 @@ main{
     flex-grow: 1;
 }
 
+form{
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    flex-grow: 1;
+}
+
 .open{
     flex-basis: 30%;
     border: black thin solid;
+    height: auto;
 }
 
 .inscription{
     display: flex;
     flex-direction: column;
-    flex-basis: 30%;
-    height: 50%;
     border: black thin solid;
     box-shadow: 0.3em 0.3em 0.1em #00000040;
+    margin-bottom: 1em;
+    width: 30vw;
+}
+
+.blockInscription{
+    flex-basis: 30%;
 }
 
 .infoInscription{
@@ -41,9 +53,8 @@ main{
     padding: 1em;
 }
 
-.titreOpen p, .titreInscription p{
+.titreOpen h2, .titreInscription h2{
     color: #FFFFFF;
-    font-size: 1.5em;
 }
 
 .numLicence{
@@ -56,7 +67,7 @@ main{
 .numLicence input{
     text-align: center;
     background-color: #EDEDED;
-    width: 20%;
+    width: 25%;
     
 }
 
@@ -70,8 +81,14 @@ main{
     margin-bottom: 1em;
 }
 
+.nomPrenom div {
+    display: flex;
+    justify-content: space-between;
+
+}
+
 .nomPrenom input{
-    flex-grow: 1;
+    width: 35%;
     background-color: #EDEDED;
     padding-left: 0.5em;
 }
@@ -79,26 +96,61 @@ main{
 .naissanceClub{
     display: flex;
     justify-content: space-between;
+    margin-bottom: 1em;
+    width: 100%;}
+
+.naissance{
+    flex-basis: 40%;
 }
 
 .naissance input{
     background-color: #EDEDED;
     padding-left: 0.5em;
-    margin-right: 1.5em;
+    width: 100%;
+}
+
+.club{
+    flex-basis: 40%;
 }
 
 .club input {
     background-color: #EDEDED;
     padding-left: 0.5em;
+    width: 100%;
 }
 
-.infoInscription>input {
+.role{
+    display: flex;
+    flex-direction: column;
+}
+
+.radioButtonRole{
+    display: flex;
+    justify-content: space-evenly;
+    padding: 5%;
+}
+
+
+.blockInscription>p{
+    margin-bottom: 0.2em;
+}
+
+.blockInscription>a {
+    text-decoration: underline;
+    color: #0019FF;
+}
+
+.submit{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.submit input {
     position: relative;
     background-color: #062656;
     color: #FFFFFF;
     padding: 1em;
-    left: 35%;
-    top: 2.5em;
 }
 
 
@@ -113,7 +165,7 @@ main{
 .contentOpen label{
     padding: 0.5em;
     margin: 0.5em;
-    font-size: 1.3vw;
+    font-size: 2.2vmin;
     text-align: start;
     display: block;
 }
@@ -129,7 +181,7 @@ main{
     color: #FFFFFF;
 }
 
-input[type="radio"] {
+.contentOpen [type="radio"] {
     opacity: 0;
   }
 
@@ -140,4 +192,67 @@ span{
 
 span:last-child{
     border: none;
+}
+
+
+
+/* Affichage Popup */
+
+.affichage_popup{
+    position: absolute;
+    display: flex;
+    top:50%;
+    left:50%;
+    transform: translate(-50%,-50%);
+    background-color: rgb(255, 255, 255);
+    width:60vw;
+    height:65vh;
+    border: solid black thin;
+    box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.159);
+    z-index: 2;
+}
+.affichage_popup img{
+    width:50%;
+    height: 100%;
+}
+.affichage_popup > div{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    padding: 1em;
+    width:50%;
+    height: 100%;
+    background-color: rgb(255, 255, 255);
+    padding-bottom: 3em;
+}
+.affichage_popup h1{
+    margin-bottom: 2em ;
+    color: red;
+    text-align: center;
+    font-size: 270%;
+}
+.affichage_popup p{
+    margin-bottom: 1.5em;
+    font-size: 2.3vmin;
+}
+.cover{
+    position: absolute;
+    top:0;
+    left:0;
+    width:100vw;
+    height:100vh;
+    background-color: rgba(135, 135, 135, 0.344);
+    filter: blur(10em);
+    
+}
+.btn-close{
+    position: absolute;
+
+    width:30px;
+    height:30px;
+    background-color: red;
+    top:2%;
+    right:2%;
+    transform: translate(50%,0%);
 }

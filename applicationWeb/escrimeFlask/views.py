@@ -41,17 +41,43 @@ def classement_national():
     return render_template('classement_national.html',
                            title='Classement National')
 
-    
+
+@app.route('/verifInscription')
+def verifInscription():
+     if estDansBDNational(int(request.args.get("nbLicence"))):
+        print(estDansBDNational(int(request.args.get("nbLicence"))))
+        if insertTireurDansCompetition(str(request.args.get("nom")), str(request.args.get("prenom")),  int(request.args.get("nbLicence")), str(request.args.get("naissance")), str(request.args.get("club")), int(request.args.get("compet")), str(request.args.get("role"))):
+            return render_template('inscription.html',
+                            title='Inscription',
+                            competitions=inscriptionOuverte(),
+                            popup3=True)
+        else:
+            return render_template('inscription.html',
+                            title='Inscription',
+                            competitions=inscriptionOuverte(),
+                            popup2=True)
+     else:
+        return render_template('inscription.html',
+                           title='Inscription',
+                           popup=True,
+                           competitions=inscriptionOuverte(),
+                           nbLicence=request.args.get("nbLicence"))
+
 
 @app.route('/verifConnexionEscrimeur')
 def verifConnexionEscrimeur():
     if estDansBDNational(int(request.args.get("nbLicense"))):
-        concours = concourtInscritLicence(int(request.args.get("nbLicense")))
-        if concours != []:
+        concoursTireur = concourtInscritLicenceTireur(int(request.args.get("nbLicense")))
+        concoursArbitre = concourtInscritLicenceArbitre(int(request.args.get("nbLicense")))
+        concours=concoursTireur+concoursArbitre
+
+        if concours!=[]:
             return render_template('connexion_escrimeur.html',
                                title='Connexion_escrimeur',
                                affichageConcours=True,
-                               concours=concours)
+                               concoursTireur=concoursTireur,
+                               concoursArbitre=concoursArbitre)
+        
         else:
             return render_template('connexion_escrimeur.html',
                                title='Connexion_escrimeur',
@@ -79,4 +105,3 @@ def traitement():
         return render_template('connexion_organisateur.html',
                            title='Connexion_organisateur',
                            popup=True)
-
