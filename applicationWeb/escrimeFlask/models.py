@@ -31,20 +31,23 @@ def insertTireurDansCompetition(nom : str, prenom : str,numeroLicence : int , da
               if infs[0].lower() == nom.lower() and infs[1].lower() == prenom.lower() and infs[2] == dateNaissanceTireur and infs[6].lower() == nomCLub.lower() : # On regarde si les infos passé correspondent au csv
 
                 # Il manque de vérifié le genre de la compète et idSexe + si arbitre ou tireur est passé en paremètre
-                if getIdSexeByIdCompetition(idCompetition) == getIdSexeByNumLicence(numeroLicence) :
-                  if ToA.upper() == 'TIREUR' :  
-                    insertTireurDansBD(numeroLicence)
+               
+                if ToA.upper() == 'TIREUR' : 
+                  insertTireurDansBD(numeroLicence)
+                  if getIdSexeByIdCompetition(idCompetition) == getIdSexeByNumLicence(numeroLicence) :
                     requete5 = "insert into TIREUR_DANS_COMPETITIONS (numeroLicenceTireur,idCompetition) values(%s,%s);"
                     cursor.execute(requete5, (numeroLicence,idCompetition))
                     db.commit()
                     return True  
                   else : 
-                    insertArbitreDansBD(numeroLicence)
-                    requete5 = "insert into ARBITRE_DANS_COMPETITIONS(numeroLicenceArbitre,idCompetition) values(%s,%s);"
-                    cursor.execute(requete5, (numeroLicence,idCompetition))
-                    db.commit()
+                    return False #pas le bon idSexe
+                else : 
+                  insertArbitreDansBD(numeroLicence)
+                  requete5 = "insert into ARBITRE_DANS_COMPETITIONS(numeroLicenceArbitre,idCompetition) values(%s,%s);"
+                  cursor.execute(requete5, (numeroLicence,idCompetition))
+                  db.commit()
                   return True  
-            return False
+            return False # au moins une des autre close qui vas pas 
           except Exception as mysql_error:
             print(mysql_error)
             return False
@@ -221,7 +224,7 @@ if __name__ == "__main__":
     #print(getProfil(315486))
     #print(estDansBDNational(521531))
     #print(getInfoFromBDNational(138932))
-    #print(insertTireurDansCompetition('CONY', 'Philippe' ,13659, '06/07/1961', 'NEUVY NA', 1,'tireur'))   # nom , prenom ,numeroLicence  , dateNaissanceTireur , nomCLub , idCompetition
+    print(insertTireurDansCompetition('CONY', 'Philippe' ,13659, '06/07/1961', 'NEUVY NA', 1,'arbitre'))   # nom , prenom ,numeroLicence  , dateNaissanceTireur , nomCLub , idCompetition
 
     pass
 
