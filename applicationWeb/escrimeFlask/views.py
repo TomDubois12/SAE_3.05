@@ -45,7 +45,7 @@ def connexion_escrimeur():
 @app.route('/classement_national')
 def classement_national():
     return render_template('classement_national.html',
-                           title='Classement National')
+                           title='Classement_National')
 
 @app.route('/archives')
 def archives():
@@ -55,7 +55,12 @@ def archives():
 @app.route('/options_competitions')
 def options_competitions():
     return render_template('options_competitions.html',
-                           title='Options Compétitions')
+                           title='Options_Compétitions')
+
+@app.route('/resultats')
+def resultats():
+    return render_template('resultats.html',
+                           title='Résultats')
 
 @app.route('/verifInscription')
 def verifInscription():
