@@ -51,7 +51,7 @@
 }
 
 .selector select{
-    margin-right: 7em;
+    margin-right: 4em;
 }
 
 
@@ -80,7 +80,7 @@
     object-fit: fill;
 }   
 
-.bouton button {
+button {
     background-color: #062656;
     color: white;
     padding: 0.5em;
