@@ -1,6 +1,6 @@
 from .app import app
 from flask import render_template, request
-#from .models import *
+from .models import *
 
 
 @app.route('/')
@@ -46,6 +46,7 @@ def connexion_escrimeur():
 def classement_national():
     return render_template('classement_national.html',
                            title='Classement_National')
+
 
 @app.route('/archives')
 def archives():
