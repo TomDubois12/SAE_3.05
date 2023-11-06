@@ -47,7 +47,16 @@ def classement_national():
     return render_template('classement_national.html',
                            title='Classement_National')
 
-<<<<<<< HEAD
+
+@app.route('/archives')
+def archives():
+    return render_template('archives.html',
+                           title='Archives')
+
+@app.route('/archives_nc')
+def archivesNC():
+    return render_template('archives_nc.html',
+                           title='Archives_NonConnecté')
 
 @app.route('/options_competitions')
 def options_competitions():
@@ -109,13 +118,6 @@ def verifConnexionEscrimeur():
 
 @app.route('/traitement')
 def traitement():
-=======
-@app.route('/archives')
-def archives():
-    return render_template('archives.html',
-                           title='Archives')
->>>>>>> 20f73bd (Implémentation de la page archives)
-    
     dicoOrganisateur = getOrganisateurClub()
     print(request.args)
     print(dicoOrganisateur)
