@@ -49,6 +49,11 @@ def classement_national():
 
 <<<<<<< HEAD
 
+@app.route('/options_competitions')
+def options_competitions():
+    return render_template('options_competitions.html',
+                           title='Options Compétitions')
+
 @app.route('/verifInscription')
 def verifInscription():
      if estDansBDNational(int(request.args.get("nbLicence"))):
