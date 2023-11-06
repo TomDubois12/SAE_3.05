@@ -3,6 +3,7 @@
 <link rel="stylesheet"
     href="{{ url_for('static', filename='css/creation_competition.css')}}">
 <link rel="stylesheet" href="{{ url_for('static', filename='css/select.css') }}">
+<script defer src="https://pyscript.net/alpha/pyscript.js"></script>
 {% endblock %}
 {% block header %}
 {% include "partials/_header3.html" %}
@@ -11,7 +12,7 @@
 <section class="creation">
     <h1>CRÉATION D’UNE COMPÉTITION</h1>
     <div class="choix">
-        <h2>Lieu :</h2>
+        <h2>Lieu</h2>
         <select>
             <option>Paris</option>
             <option>Bordeaux</option>
@@ -22,11 +23,24 @@
         </select>
     </div>
     <div class="date">
-        <h2>Date: <input type="datetime-local" value="2023-10-27T00:00"
-                min="2023-10-27T00:00"></h2>
+        <h2>Date</h2>
+        <input required type="datetime-local" id="choisirDate">
+        <script>
+            var dateA = document.getElementById("choisirDate");
+            var now = new Date();  // Obtenir la date et l'heure actuelles
+    
+            // Ajouter 15 jours à la date actuelle
+            now.setDate(now.getDate() + 15);
+    
+            // Formater la date et l'heure pour le format ISO 8601 (YYYY-MM-DDTHH:MM)
+            var minDate = now.toISOString().slice(0, 16);
+    
+            // Définir la valeur "min" de l'élément <input>
+            dateA.setAttribute("min", minDate);
+        </script>
     </div>
     <div class="choix">
-        <h2>Catégorie :</h2>
+        <h2>Catégorie</h2>
         <select>
             <option value="none" selected disabled hidden>Choississez une
                 catégorie</option>
@@ -41,15 +55,15 @@
         </select>
     </div>
     <div class="choix">
-        <h2>Type :</h2>
+        <h2>Type</h2>
         <div class="type">
-            <select>
+            <select required>
                 <option value="none" selected disabled hidden>Choississez un
                     type</option>
                 <option value="dames">Dames</option>
                 <option value="homme">Homme</option>
             </select>
-            <select>
+            <select required>
                 <option value="none" selected disabled hidden>Choississez une
                     arme</option>
                 <option value="epee">Epee</option>
@@ -58,5 +72,6 @@
             </select>
         </div>
     </div>
+    <button type="submit">Créer la compétition</button>
 </section>
 {% endblock %}
