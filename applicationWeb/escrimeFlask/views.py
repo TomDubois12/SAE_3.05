@@ -34,14 +34,16 @@ def accueil():
     return render_template('accueil.html',
                            title='Accueil')
 
+@app.route('/creation_competition')
+def creation_competition():
+    return render_template('creation_competition.html',
+                           title='Création compétition')
 
-    
 @app.route('/connexion_escrimeur')
 def connexion_escrimeur():
     return render_template('connexion_escrimeur.html',
                            title='Connexion_escrimeur')
 
-  
 @app.route('/classement_national')
 def classement_national():
     return render_template('classement_national.html',
