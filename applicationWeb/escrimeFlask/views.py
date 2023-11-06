@@ -52,6 +52,11 @@ def archives():
     return render_template('archives.html',
                            title='Archives')
 
+@app.route('/archives_nc')
+def archivesNC():
+    return render_template('archives_nc.html',
+                           title='Archives_NonConnecté')
+
 @app.route('/options_competitions')
 def options_competitions():
     return render_template('options_competitions.html',

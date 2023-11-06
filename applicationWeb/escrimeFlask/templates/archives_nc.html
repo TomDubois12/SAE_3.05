@@ -1,0 +1,83 @@
+{% extends "base.html" %}
+
+{% block linkcss %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/archives_nc.css')}}">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Average" rel="stylesheet">
+{% endblock %}
+
+{% block header %}
+{% include "partials/_header2.html" %}
+{% endblock %}
+
+{% block main %}
+<main> 
+    <div class="principal">   
+        
+        <div class="titre">
+            <h3>Archives :</h3>
+            <img class="epee" src="{{url_for('static', filename='images/epeeBleu.png')}}" alt="Epée bleu d'escrime">
+        </div>
+        <div class="t">
+            <div class="texte">
+                <p>Vous pouvez consulter ici les archives des compétitions déjà terminées.</p>
+            </div>
+        </div>
+        <div class="competition">
+            <div class="concours">
+                <p>CONCOURS FLEURET DAMES</p>
+                <p>U20, Blois</p>
+            </div>
+            <div class="bouton">
+                <button>Consulter</button>
+            </div>
+        </div>
+        <div class="competition">
+            <div class="concours">
+                <p>CONCOURS FLEURET DAMES</p>
+                <p>U20, Blois</p>
+            </div>
+            <div class="bouton">
+                <button>Consulter</button>
+            </div>
+        </div>
+        <div class="competition">
+            <div class="concours">
+                <p>CONCOURS FLEURET DAMES</p>
+                <p>U20, Blois</p>
+            </div>
+            <div class="bouton">
+                <button>Consulter</button>
+            </div>
+        </div>
+        <div class="competition">
+            <div class="concours">
+                <p>CONCOURS FLEURET DAMES</p>
+                <p>U20, Blois</p>
+            </div>
+            <div class="bouton">
+                <button>Consulter</button>
+            </div>
+        </div>
+        <div class="competition">
+            <div class="concours">
+                <p>CONCOURS FLEURET DAMES</p>
+                <p>U20, Blois</p>
+            </div>
+            <div class="bouton">
+                <button>Consulter</button>
+            </div>
+        </div>
+        <div class="competition">
+            <div class="concours">
+                <p>CONCOURS FLEURET DAMES</p>
+                <p>U20, Blois</p>
+            </div>
+            <div class="bouton">
+                <button>Consulter</button>
+            </div>
+        </div>
+    </div>
+</main>
+{% endblock %}
