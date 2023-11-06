@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+
+{% block linkcss %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/options_competitions.css')}}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/select.css')}}">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Average" rel="stylesheet">
+{% endblock %}
+
+{% block header %}
+{% include "partials/_header3.html" %}
+{% endblock %}
+
+{% block main %}
+<main>
+    <div class="principal">
+        
+        <div class="titre">
+            <h3>Compétitions :</h3>
+            <img class="epee" src="{{url_for('static', filename='images/epeeBleu.png')}}" alt="Epée bleu d'escrime">
+        </div>
+        
+        <div class="competition">
+            <div class="nom_competition">
+                <p>Compétition n°1</p>
+            </div>
+            <div class="bouton">
+                <button>Lancer</button>
+                <button>Consulter</button>
+                <button class="button_desactivated" disabled>Archiver</button>
+            </div>
+        </div>
+
+        <div class="competition">
+            <div class="nom_competition">
+                <p>Compétition n°2</p>
+            </div>
+            <div class="bouton">
+                <button class="button_desactivated" disabled>Lancer</button>
+                <button>Consulter</button>
+                <button>Archiver</button>
+            </div>
+        </div>
+
+        <div class="competition">
+            <div class="nom_competition">
+                <p>Compétition n°3</p>
+            </div>
+            <div class="bouton">
+                <button class="button_desactivated" disabled>Lancer</button>
+                <button>Consulter</button>
+                <button class="button_desactivated" disabled>Archiver</button>
+            </div>
+        </div>
+    
+    </div>
+</main>
+{% endblock %}
