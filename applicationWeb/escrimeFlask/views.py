@@ -47,6 +47,7 @@ def classement_national():
     return render_template('classement_national.html',
                            title='Classement National')
 
+<<<<<<< HEAD
 
 @app.route('/verifInscription')
 def verifInscription():
@@ -98,6 +99,12 @@ def verifConnexionEscrimeur():
 
 @app.route('/traitement')
 def traitement():
+=======
+@app.route('/archives')
+def archives():
+    return render_template('archives.html',
+                           title='Archives')
+>>>>>>> 20f73bd (Implémentation de la page archives)
     
     dicoOrganisateur = getOrganisateurClub()
     print(request.args)
