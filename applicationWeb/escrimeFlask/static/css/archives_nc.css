@@ -29,10 +29,27 @@
     flex-wrap: wrap;
 }
 
+.vousavezparticipe {
+    width: 10%;
+    object-fit: fill;
+}   
+
 .t {
     margin-left: 5em;
     font-size: 175%;
 }
+
+/* selector */
+
+.selector {
+    margin-left : 8em;
+    margin-top: 4em;
+}
+
+.selector select{
+    margin-right: 4em;
+}
+
 
 /* compétition */
 
@@ -51,7 +68,7 @@
 .concours{
     margin-right: 4em;
     padding-right: 10em;
-} 
+}
 
 button {
     background-color: #062656;
