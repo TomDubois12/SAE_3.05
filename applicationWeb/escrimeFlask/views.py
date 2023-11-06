@@ -68,15 +68,6 @@ def resultats():
     return render_template('resultats.html',
                            title='Résultats')
 
-@app.route('/options_competitions')
-def options_competitions():
-    return render_template('options_competitions.html',
-                           title='Options_Compétitions')
-
-@app.route('/resultats')
-def resultats():
-    return render_template('resultats.html',
-                           title='Résultats')
 
 @app.route('/verifInscription')
 def verifInscription():
