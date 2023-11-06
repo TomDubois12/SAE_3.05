@@ -1,0 +1,83 @@
+/* titre */
+.epee {
+    position: relative;
+    top: -2vmin;
+    right: 2vmin;
+
+}
+
+.epee img {
+    width: 100%;
+    object-fit: fill;
+    display: block;
+}
+
+.titre {
+    margin-top: 4em;
+    margin-left: 5em;
+}
+
+.titre h3 {
+    padding-bottom: 0;
+    margin-left: 10vh;
+    font-size: 5vh;
+    font-family: 'Average', sans-serif;
+}
+
+.texteimg {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.vousavezparticipe {
+    width: 10%;
+    object-fit: fill;
+}   
+
+.t {
+    margin-left: 5em;
+    font-size: 175%;
+}
+
+.texteimg { 
+    margin-top: 0.25em;
+}
+
+/* compétition */
+
+.competition {
+    margin-left: 8em;
+    margin-right: 8em;
+    margin-top: 2em;
+    margin-bottom: 1em;
+    padding: 1em;
+    padding-left: 3em;
+    padding-right: 3em;
+    background-color: lightgray;
+    display: flex;
+}
+
+.nom_competition{
+    margin-right: 4em;
+    padding-right: 10em;
+    padding-top: 0.25em;
+    font-size: 125%;
+}
+
+button {
+    background-color: #062656;
+    color: white;
+    padding: 0.5em;
+    padding-left: 2em;
+    padding-right: 2em;
+    margin-right: 2.5em;
+}
+
+.button_desactivated {
+    background-color: #5E5E5E;
+}
+
+.bouton{
+    margin-left: 5em;
+}
+
