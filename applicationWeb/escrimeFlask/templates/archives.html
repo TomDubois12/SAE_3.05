@@ -29,14 +29,14 @@
                 <img class="vousavezparticipe" src="{{url_for('static', filename='images/vousavezparticipe.png')}}" alt="Vous avez participé">
             </div>
         </div>
-        <div class="selector">
+        <form class="selector" action="{{url_for('rechercheArchives')}}", method="GET">
             <select name="Arme">
                 <option value="none" selected disabled hidden>Choississez une arme</option>
                 <option value="fleuret">Fleuret</option>
                 <option value="epee">Épée</option>
                 <option value="sabre">Sabre</option>
             </select>
-            <select name="Arme">
+            <select name="Sexe">
                 <option value="none" selected disabled hidden>Choississez un sexe</option>
                 <option value="homme">Homme</option>
                 <option value="femme">Dames</option>
@@ -56,8 +56,9 @@
                 <option value="none" selected disabled hidden>Choississez une ville</option>
                 <option value="ville">Villes à recup dans CSV</option>
             </select>
-            <button>Rechercher</button>
-        </div>
+            <input type="text" hidden name="nbLicense" value="{{nbLicense}}">
+            <input type="submit" value="Rechercher"></input>
+        </form>
         <div class="competition">
             <div class="concours">
                 <p>CONCOURS FLEURET DAMES</p>

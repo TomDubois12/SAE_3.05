@@ -1,5 +1,5 @@
 from .app import app
-from flask import render_template, request
+from flask import render_template, request, redirect, url_for
 from .models import *
 
 ##Fonctions de redirection vers les pages sans connexion
@@ -61,6 +61,10 @@ def classement_national(nbLicense):
 
 @app.route('/archives/<nbLicense>')
 def archives(nbLicense):
+    arme=None
+    sexe=None
+    categorie=None
+    ville=None
     return render_template('archives.html',
                            title='Archives',
                            isOrganisateur=estOrganisateur(int(nbLicense)),
@@ -145,3 +149,13 @@ def traitement():
         return render_template('connexion_organisateur.html',
                            title='Connexion_organisateur',
                            popup=True)
+
+
+@app.route('/rechercheArchives')
+def rechercheArchives():
+    arme=request.args.get("arme")
+    sexe=request.args.get("sexe")
+    categorie=request.args.get("categorie")
+    ville=request.args.get("ville")
+    nbLicense=request.args.get("nbLicense")
+    return redirect(url_for('archives', arme=arme, sexe=sexe, categorie=categorie, ville=ville, nbLicense=nbLicense))
