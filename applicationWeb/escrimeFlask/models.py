@@ -12,8 +12,8 @@ import mysql.connector
 #connexion au base de données
 db = mysql.connector.connect(
   host = "localhost",
-  user = "nathan",
-  password = "nathan",
+  user = "koko",
+  password = "koko",
   database = "Escrime"
 )
 
@@ -259,11 +259,11 @@ def fichiersDossier(path : str) :
 if __name__ == "__main__":
     #print(inscriptionOuverte())
     
-    #print(concourtInscritLicence(521531))
-    #print(getOrganisateurClub())
-    #print(getProfil(315486))
-    #print(estDansBDNational(521531))
-    #print(getInfoFromBDNational(138932))
+    # print(concourtInscritLicence(521531))
+    # print(getOrganisateurClub())
+    # print(getProfil(315486))
+    # print(estDansBDNational(521531))
+    # print(getInfoFromBDNational(138932))
     # print(insertTireurDansCompetition('CONY', 'Philippe' ,13659, '1961-07-06', 'NEUVY NA', 2,'tireur'))   # nom , prenom ,numeroLicence  , dateNaissanceTireur , nomCLub , idCompetition
     # print(estDansBDNational(13659))
     # print(concourtInscritLicenceTireur(13659))
@@ -271,8 +271,9 @@ if __name__ == "__main__":
     # print(estOrganisateur(241354))
     # print(getListeComiteReg())
     # print(getListTournoisAllCLosed())
+    # print(getTournoisClosedParticiper(151229))
     # print(concourtInscritLicenceTireur(151229))
-    #print(getClassementNationnal("Sabre","Dames","Seniors"))
+    # print(getClassementNationnal("Sabre","Dames","Seniors"))
 
     ################
     ################
