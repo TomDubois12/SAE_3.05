@@ -69,7 +69,7 @@
                     <p>{{competition[0][3]}}, {{competition[0][4]}} </p>
                 </div>
                 <div class="bouton">
-                    {% if competition[0][1]==None %}
+                    {% if competition in competitionsParticiper %}
                         <img class="vousavezparticipe1" src="{{url_for('static', filename='images/vousavezparticipe.png')}}" alt="Vous avez participé">
                     {% endif %}
                     <button>Consulter</button>

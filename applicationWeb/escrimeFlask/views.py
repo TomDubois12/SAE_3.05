@@ -66,7 +66,8 @@ def archives(nbLicense):
                            isOrganisateur=estOrganisateur(int(nbLicense)),
                            nbLicense=nbLicense,
                            villes=getListeComiteReg(),
-                           competitions=getListTournoisAllCLosed())
+                           competitions=getListTournoisAllCLosed(),
+                           competitionsParticiper=getTournoisClosedParticiper(int(nbLicense)))
 
 @app.route('/options_competitions/<nbLicense>')
 def options_competitions(nbLicense):
@@ -156,4 +157,4 @@ def rechercheArchives():
     categorie=request.args.get("categorie")
     ville=request.args.get("ville")
     nbLicense=request.args.get("nbLicense")
-    return redirect(url_for('archives', arme=arme, sexe=sexe, categorie=categorie, ville=ville, nbLicense=nbLicense))
+    return redirect(url_for('archives', nbLicense=nbLicense))
