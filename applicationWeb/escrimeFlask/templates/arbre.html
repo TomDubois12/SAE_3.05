@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+{% block linkcss %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/arbre.css')}}">
+{% endblock %}
+{% block header %}
+    {% include "partials/_header.html" %}
+{% endblock %}
+{% block main %}
+   <div class="tournament-tree"> </div>
+   <script>
+
+    
+        var tournamentData = {{ data|safe }};
+
+        // Fonction pour afficher l'arbre du tournoi
+        function displayTournamentTree(tournamentData) {
+            var treeContainer = document.getElementsByClassName("tournament-tree")[0];
+
+            for (var round in tournamentData) {
+                var roundDiv = document.createElement("div")
+                roundDiv.className = "round "+ round;
+                roundDiv.innerHTML = "<h3>Round " + round + "</h3>";
+                let wrapper = document.createElement("div");
+                wrapper.className = "wrapper";
+
+                if(round > 1){
+
+                    let divPrec = document.getElementsByClassName("round "+(round-1) )[0];
+                    let wrap = divPrec.children[1]; //récupère la div wrapper du round d'avant
+                    let marginTop = wrap.offsetHeight/2
+                    wrapper.style.margin = marginTop.toString()+"px 0 0 0";
+                    console.log(marginTop);
+                }
+
+                roundDiv.appendChild(wrapper);
+                var matches = tournamentData[round];
+                for (var match in matches) {
+                    var matchDiv = document.createElement("div");
+                    matchDiv.className = "match";
+                    let joueur1 = document.createElement("p");
+                    joueur1.innerText = matches[match][0];
+                    let joueur2 = document.createElement("p");
+                    joueur2.innerText = matches[match][1];
+                    matchDiv.appendChild(joueur1);
+                    matchDiv.appendChild(joueur2);
+                    wrapper.appendChild(matchDiv);
+                }
+
+                treeContainer.appendChild(roundDiv);
+            }
+        }
+
+        // Appeler la fonction pour afficher l'arbre du tournoi
+        displayTournamentTree(tournamentData);
+
+   </script>
+{% endblock %}

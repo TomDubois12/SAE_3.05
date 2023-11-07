@@ -1,97 +1,116 @@
 /* div */
-.resultats, .classement, .archives, .profil{
+.resultats > div, .classement > div, .archives > div, .profil > div{
     display: flex;
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
     justify-content: space-between;
 }
 
-.resultats{
+.resultats > div{
     background-color: #010101;
     margin-top: 5vh;
 }
+.resultats >div:hover{
 
-.classement{
+    transform: scaleY(1.02);
+    box-shadow: 0px 0px 4px rgb(0, 0, 0);
+}
+
+.classement > div{
     background-color: #F1F6F7;
 }
-
-.archives{
-    background-color: #010101;
+.classement >div:hover{
+    
+    transform: scaleY(1.02);
+    box-shadow: 0px 0px 8px rgb(255, 255, 255);
 }
 
-.profil{
+.archives > div{
+    background-color: #010101;
+}
+.archives >div:hover{
+
+    transform: scaleY(1.02);
+    box-shadow: 0px 0px 8px rgb(1, 1, 1) ;
+}
+
+.profil > div{
     background-color: #E9EBEA;
+}
+.profil >div:hover{
+    transform: scaleY(1.02);
+    box-shadow: 0px 0px 8px rgb(255, 255, 255);
 }
 
 /* p */
-.resultats .resultats_p {
+.resultats_p {
     float: right;
     justify-content: center;
     margin: auto;
     flex-wrap: nowrap;
 }
 
-.resultats .resultats_p p {
+.resultats_p p {
     color: white;
     font-size: 3.5vh;
     margin: 0.2vh;
     font-family: 'Average', sans-serif;
 }
 
-.resultats .resultats_p .resultats_p4 {
+.resultats_p4 {
     margin-top: 5vh;
 }
 
-.classement .classement_p {
+.classement_p {
     float: left;
     justify-content: center;
     margin: auto;
     flex-wrap: nowrap;
 }
 
-.classement .classement_p p {
+.classement_p p {
     font-size: 3.5vh;
     margin: 0.2vh;
     margin-left: 5vh;
     font-family: 'Average', sans-serif;
 }
 
-.classement .classement_p .classement_p3 {
+.classement_p3 {
     margin-top: 5vh;
 }
 
-.archives .archives_p {
+.archives_p {
     float: right;
     justify-content: center;
     margin: auto;
     flex-wrap: nowrap;
 }
 
-.archives .archives_p p {
+.archives_p p {
     color: white;
     font-size: 3.5vh;
     margin: 0.2vh;
     font-family: 'Average', sans-serif;
 }
 
-.archives .archives_p .archives_p5 {
+.archives_p5 {
     margin-top: 5vh;
 }
 
-.profil .profil_p {
+.profil_p {
     float: left;
     justify-content: center;
     margin: auto;
     flex-wrap: nowrap;
 }
 
-.profil .profil_p p {
+.profil_p p {
     font-size: 3.5vh;
     margin: 0.2vh;
     margin-left: 5vh;
     font-family: 'Average', sans-serif;
 }
 
-.profil .profil_p .profil_p3 {
+.profil_p3 {
     margin-top: 5vh;
 }
 
@@ -139,11 +158,11 @@ footer{
     padding: 5vh;
 }
 
-footer p {
+footer >p {
     color: white;
 }
 
-footer .footer_p2, a {
+footer .footer_p2, footer a {
     color: white;
     margin-top: 2vh;
 }

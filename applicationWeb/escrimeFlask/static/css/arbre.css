@@ -1,0 +1,13 @@
+.tournament-tree{
+    display: flex;
+}
+
+.round{
+    margin-left: 1em;
+}
+
+.wrapper > div{
+    display: flex;
+    flex-direction: column;
+    margin-top: 1em;
+}
