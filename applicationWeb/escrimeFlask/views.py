@@ -2,6 +2,7 @@ from .app import app
 from flask import render_template, request
 from .models import *
 
+##Fonctions de redirection vers les pages sans connexion
 
 @app.route('/')
 def index():
@@ -12,6 +13,11 @@ def index():
 def information():
     return render_template('information.html',
                            title='Information')
+
+@app.route('/connexion_escrimeur')
+def connexion_escrimeur():
+    return render_template('connexion_escrimeur.html',
+                           title='Connexion_escrimeur')
 
 @app.route('/inscription')
 def inscription():
@@ -24,52 +30,58 @@ def connexion_organisateur():
     return render_template('connexion_organisateur.html',
                            title='Connexion_organisateur')
 
-@app.route('/profil')
-def profil():
-    return render_template('profil.html',
-                           title='Mon profil')
-
-@app.route('/accueil')
-def accueil():
-    return render_template('accueil.html',
-                           title='Accueil')
-
-@app.route('/creation_competition')
-def creation_competition():
-    return render_template('creation_competition.html',
-                           title='Création compétition')
-
-@app.route('/connexion_escrimeur')
-def connexion_escrimeur():
-    return render_template('connexion_escrimeur.html',
-                           title='Connexion_escrimeur')
-
-@app.route('/classement_national')
-def classement_national():
-    return render_template('classement_national.html',
-                           title='Classement_National')
-
-
-@app.route('/archives')
-def archives():
-    return render_template('archives.html',
-                           title='Archives')
-
 @app.route('/archives_nc')
 def archivesNC():
     return render_template('archives_nc.html',
                            title='Archives_NonConnecté')
 
-@app.route('/options_competitions')
-def options_competitions():
+
+##Fonctions de redirection vers les pages avec connexion
+
+@app.route('/profil/<nbLicense>')
+def profil(nbLicense):
+    return render_template('profil.html',
+                           title='Mon profil',
+                           isOrganisateur=estOrganisateur(int(nbLicense)),
+                            nbLicense=nbLicense)
+
+@app.route('/accueil/<nbLicense>')
+def accueil(nbLicense):
+    return render_template('accueil.html',
+                           title='Accueil',
+                           isOrganisateur=estOrganisateur(int(nbLicense)),
+                           nbLicense=nbLicense)
+
+@app.route('/classement_national/<nbLicense>')
+def classement_national(nbLicense):
+    return render_template('classement_national.html',
+                           title='Classement_National',
+                           isOrganisateur=estOrganisateur(int(nbLicense)),
+                           nbLicense=nbLicense)
+
+@app.route('/archives/<nbLicense>')
+def archives(nbLicense):
+    return render_template('archives.html',
+                           title='Archives',
+                           isOrganisateur=estOrganisateur(int(nbLicense)),
+                           nbLicense=nbLicense)
+
+@app.route('/options_competitions/<nbLicense>')
+def options_competitions(nbLicense):
     return render_template('options_competitions.html',
-                           title='Options_Compétitions')
+                           title='Options_Compétitions',
+                           isOrganisateur=estOrganisateur(int(nbLicense)),
+                           nbLicense=nbLicense)
 
-@app.route('/resultats')
-def resultats():
+@app.route('/resultats/<nbLicense>')
+def resultats(nbLicense):
     return render_template('resultats.html',
-                           title='Résultats')
+                           title='Résultats',
+                           isOrganisateur=estOrganisateur(int(nbLicense)),
+                           nbLicense=nbLicense)
 
+
+##Fonctions de vérification
 
 @app.route('/verifInscription')
 def verifInscription():
@@ -133,26 +145,3 @@ def traitement():
         return render_template('connexion_organisateur.html',
                            title='Connexion_organisateur',
                            popup=True)
-
-
-tournament_data = {
-    "1": {
-        "1": ["joueur1", "joueur2"],
-        "2": ["joueur3", "joueur4"],
-        "3": ["joueur5", "joueur6"],
-        "4": ["joueur7", "joueur8"]
-        
-    },
-    "2": {
-        "1": ["joueur1", "joueur3"],
-        "2": ["joueur5", "joueur8"]
-    },
-    "3": {
-        "1": ["joueur1", "joueur5"]
-    }
-}
-
-@app.route('/arbre')
-def arbre():
-    return render_template('arbre.html',
-                           title='ArbreTournoi',data=tournament_data)
