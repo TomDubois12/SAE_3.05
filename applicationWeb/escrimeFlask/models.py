@@ -12,8 +12,8 @@ import mysql.connector
 #connexion au base de données
 db = mysql.connector.connect(
   host = "localhost",
-  user = "nathan",
-  password = "nathan",
+  user = "koko",
+  password = "koko",
   database = "Escrime"
 )
 
@@ -267,7 +267,8 @@ if __name__ == "__main__":
     # print(concourtInscritLicenceArbitre(654123))
     # print(estOrganisateur(241354))
     # print(getListeComiteReg())
-    print(getListTournoisAllCLosed())
+    # print(getListTournoisAllCLosed())
+    # print(getTournoisClosedParticiper(151229))
     # print(concourtInscritLicenceTireur(151229))
 
 
