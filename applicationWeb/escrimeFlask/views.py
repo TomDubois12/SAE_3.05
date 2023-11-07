@@ -1,6 +1,6 @@
 from .app import app
 from flask import render_template, request
-from .models import *
+# from .models import *
 
 
 @app.route('/')
@@ -34,16 +34,14 @@ def accueil():
     return render_template('accueil.html',
                            title='Accueil')
 
-@app.route('/creation_competition')
-def creation_competition():
-    return render_template('creation_competition.html',
-                           title='Création compétition')
 
+    
 @app.route('/connexion_escrimeur')
 def connexion_escrimeur():
     return render_template('connexion_escrimeur.html',
                            title='Connexion_escrimeur')
 
+  
 @app.route('/classement_national')
 def classement_national():
     return render_template('classement_national.html',
@@ -69,6 +67,7 @@ def options_competitions():
 def resultats():
     return render_template('resultats.html',
                            title='Résultats')
+
 
 @app.route('/verifInscription')
 def verifInscription():
@@ -132,26 +131,3 @@ def traitement():
         return render_template('connexion_organisateur.html',
                            title='Connexion_organisateur',
                            popup=True)
-
-
-tournament_data = {
-    "1": {
-        "1": ["joueur1", "joueur2"],
-        "2": ["joueur3", "joueur4"],
-        "3": ["joueur5", "joueur6"],
-        "4": ["joueur7", "joueur8"]
-        
-    },
-    "2": {
-        "1": ["joueur1", "joueur3"],
-        "2": ["joueur5", "joueur8"]
-    },
-    "3": {
-        "1": ["joueur1", "joueur5"]
-    }
-}
-
-@app.route('/arbre')
-def arbre():
-    return render_template('arbre.html',
-                           title='ArbreTournoi',data=tournament_data)
