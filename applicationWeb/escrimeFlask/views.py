@@ -61,14 +61,12 @@ def classement_national(nbLicense):
 
 @app.route('/archives/<nbLicense>')
 def archives(nbLicense):
-    arme=None
-    sexe=None
-    categorie=None
-    ville=None
     return render_template('archives.html',
                            title='Archives',
                            isOrganisateur=estOrganisateur(int(nbLicense)),
-                           nbLicense=nbLicense)
+                           nbLicense=nbLicense,
+                           villes=getListeComiteReg(),
+                           competitions=getListTournoisAllCLosed())
 
 @app.route('/options_competitions/<nbLicense>')
 def options_competitions(nbLicense):
