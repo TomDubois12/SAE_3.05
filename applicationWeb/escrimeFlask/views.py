@@ -132,3 +132,26 @@ def traitement():
         return render_template('connexion_organisateur.html',
                            title='Connexion_organisateur',
                            popup=True)
+
+
+tournament_data = {
+    "1": {
+        "1": ["joueur1", "joueur2"],
+        "2": ["joueur3", "joueur4"],
+        "3": ["joueur5", "joueur6"],
+        "4": ["joueur7", "joueur8"]
+        
+    },
+    "2": {
+        "1": ["joueur1", "joueur3"],
+        "2": ["joueur5", "joueur8"]
+    },
+    "3": {
+        "1": ["joueur1", "joueur5"]
+    }
+}
+
+@app.route('/arbre')
+def arbre():
+    return render_template('arbre.html',
+                           title='ArbreTournoi',data=tournament_data)
