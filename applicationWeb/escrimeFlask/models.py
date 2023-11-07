@@ -269,7 +269,6 @@ if __name__ == "__main__":
     # print(getListeComiteReg())
     # print(getListTournoisAllCLosed())
     # print(getTournoisClosedParticiper(151229))
-    print(getListTournoisAllCLosed())
     # print(concourtInscritLicenceTireur(151229))
 
 
