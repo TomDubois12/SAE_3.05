@@ -241,9 +241,11 @@ def getListTournoisAllCLosed():
   return infoCompetitionPasse(info)
   
 
-def getTournoisParticiper():
-  pass
-
+def getTournoisClosedParticiper(numeroLicence):
+  requete1 = "select * from TIREUR_DANS_COMPETITIONS natural join COMPETITION where numeroLicenceTireur = " + str(numeroLicence) + ";"
+  cursor.execute(requete1)
+  info = cursor.fetchall()
+  return infoCompetitionPasse(info)
 
 def fichiersDossier(path : str) :
   files = os.listdir(path)
@@ -267,5 +269,7 @@ if __name__ == "__main__":
     # print(estOrganisateur(241354))
     # print(getListeComiteReg())
     # print(getListTournoisAllCLosed())
+    print(getTournoisClosedParticiper(151229))
+    # print(concourtInscritLicenceTireur(151229))
     pass
 
