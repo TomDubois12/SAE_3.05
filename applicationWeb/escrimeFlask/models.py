@@ -139,29 +139,15 @@ def concourtInscritLicenceTireur(numeroLicence : int) -> list:
   requete1 = "select * from TIREUR_DANS_COMPETITIONS natural join COMPETITION where numeroLicenceTireur = " + str(numeroLicence) + ";"
   cursor.execute(requete1)
   info = cursor.fetchall()
-  res = []
-  for i in range(len(info)):
-    requete2 = """select intituleCompet,typeArme, intituleSexe,intituleCategorie, departement
-                  from COMPETITION natural join LIEU natural join ARME natural join SEXE natural join CATEGORIE
-                  where datediff(dateDebutCompetiton ,CURDATE()) > 14 and idLieu ="""+ str(info[i][7]) +" and idCategorie ="+ str(info[i][8]) +" and idSexe = "+str(info[i][9]) +" and idArme = "+ str(info[i][10]) +" and idCompetition = "+str(info[i][0]) +";"
-    cursor.execute(requete2) 
-    res.append(cursor.fetchall())
-  # return sous la forme : nomCompetition intituleCompet typeArme intituleSexe intituleCategorie departement
-  return res
+  return infoCompetitionOuverte(info)
 
 def concourtInscritLicenceArbitre(numeroLicence : int) -> list:
   requete1 = "select * from ARBITRE_DANS_COMPETITIONS natural join COMPETITION where numeroLicenceArbitre = " + str(numeroLicence) + ";"
   cursor.execute(requete1)
   info = cursor.fetchall()
-  res = []
-  for i in range(len(info)):
-    requete2 = """select intituleCompet,typeArme, intituleSexe,intituleCategorie, departement
-                  from COMPETITION natural join LIEU natural join ARME natural join SEXE natural join CATEGORIE
-                  where datediff(dateDebutCompetiton ,CURDATE()) > 14 and idLieu ="""+ str(info[i][7]) +" and idCategorie ="+ str(info[i][8]) +" and idSexe = "+str(info[i][9]) +" and idArme = "+ str(info[i][10]) +" and idCompetition = "+str(info[i][0]) +";"
-    cursor.execute(requete2) 
-    res.append(cursor.fetchall())
+  return infoCompetitionOuverte(info)
   # return sous la forme : nomCompetition intituleCompet typeArme intituleSexe intituleCategorie departement
-  return res
+  
 
 
 def classementFile(filename :str) -> list:
@@ -178,28 +164,19 @@ def classementFile(filename :str) -> list:
 
 
 def inscriptionOuverte() -> list:
-    requete1 = "select * from COMPETITION where datediff(dateDebutCompetiton, CURDATE()) > 14;"
-    cursor.execute(requete1)
-    info = cursor.fetchall()
-    res = []
-    for i in range(len(info)):
+  requete1 = "select * from COMPETITION where datediff(dateDebutCompetiton, CURDATE()) > 14;"
+  cursor.execute(requete1)
+  info = cursor.fetchall()
+  res = []
+  for i in range(len(info)):
+    requete2 = """select intituleCompet,typeArme, intituleSexe,intituleCategorie, departement, idCompetition
+                  from COMPETITION natural join LIEU natural join ARME natural join SEXE natural join CATEGORIE
+                  where datediff(dateDebutCompetiton ,CURDATE()) > 14 and idLieu ="""+ str(info[i][6]) +" and idCategorie ="+ str(info[i][7]) +" and idSexe = "+str(info[i][8]) +" and idArme = "+ str(info[i][9]) +" and idCompetition = "+str(info[i][0]) +";"
+    cursor.execute(requete2) 
+    res.append(cursor.fetchall())
       
-      requete2 = """select intituleCompet,typeArme, intituleSexe,intituleCategorie, departement, idCompetition
-                    from COMPETITION natural join LIEU natural join ARME natural join SEXE natural join CATEGORIE
-                    where datediff(dateDebutCompetiton ,CURDATE()) > 14 and idLieu ="""+ str(info[i][6]) +" and idCategorie ="+ str(info[i][7]) +" and idSexe = "+str(info[i][8]) +" and idArme = "+ str(info[i][9]) +" and idCompetition = "+str(info[i][0]) +";"
-      cursor.execute(requete2) 
-      res.append(cursor.fetchall())
-                            # print(info[i][0]) #idCompetition
-                            # print(info[i][1]) #NomCompetition
-                            # print(info[i][2]) #saison
-                            # print(info[i][3]) #estFinit
-                            # print(info[i][4]) #coeficient
-                            # print(info[i][5]) #dateDebutCompetiton
-                            # print(info[i][6]) #idLieu
-                            # print(info[i][7]) #idCategorie
-                            # print(info[i][8]) #idSexe
-                            # print(info[i][9]) #idArme
-    return res
+
+  return res
 
 def getOrganisateurClub():
   requete1 = "select * from ORGANISATEURDANSCLUB natural join CLUB ;"
@@ -234,6 +211,38 @@ def estOrganisateur(numeroLicence : int) :
 #   res.append(cursor.fetchone())
 #   return res
 
+def infoCompetitionOuverte(info):
+  res = []
+  for i in range(len(info)):
+      requete2 = """select intituleCompet,typeArme, intituleSexe,intituleCategorie, departement, idCompetition
+                    from COMPETITION natural join LIEU natural join ARME natural join SEXE natural join CATEGORIE
+                    where datediff(dateDebutCompetiton ,CURDATE()) > 14 and idLieu ="""+ str(info[i][7]) +" and idCategorie ="+ str(info[i][8]) +" and idSexe = "+str(info[i][9]) +" and idArme = "+ str(info[i][10]) +" and idCompetition = "+str(info[i][0]) +";"
+      cursor.execute(requete2) 
+      res.append(cursor.fetchall())
+      
+
+  return res
+
+def infoCompetitionPasse(info):
+  res = []
+  for i in range(len(info)):
+    
+    requete2 = """select intituleCompet,typeArme, intituleSexe,intituleCategorie, departement, idCompetition
+                 from COMPETITION natural join LIEU natural join ARME natural join SEXE natural join CATEGORIE
+                where datediff(dateDebutCompetiton ,CURDATE()) < 0 and idLieu ="""+ str(info[i][6]) +" and idCategorie ="+ str(info[i][7]) +" and idSexe = "+str(info[i][8]) +" and idArme = "+ str(info[i][9]) +" and idCompetition = "+str(info[i][0]) +";"
+    cursor.execute(requete2) 
+    res.append(cursor.fetchall())
+  return res
+
+def getListTournoisAllCLosed():
+  requete1 = "select * from COMPETITION where datediff(dateDebutCompetiton, CURDATE()) < 0;"
+  cursor.execute(requete1)
+  info = cursor.fetchall()
+  return infoCompetitionPasse(info)
+  
+
+def getTournoisParticiper():
+  pass
 
 
 def fichiersDossier(path : str) :
@@ -244,9 +253,8 @@ def fichiersDossier(path : str) :
   return listeChemin
 
 if __name__ == "__main__":
-    #print(classementFile("./csvEscrimeur/classement_Epée_Dames_M15.csv"))
     #print(inscriptionOuverte())
-    #print(insertTireurCompetition("Nicolas", "Guillaume", 146313, 2452.00, 1,"2004-10-10","France","CENTRE VAL DE LOIRE", 1))
+    
     #print(concourtInscritLicence(521531))
     #print(getOrganisateurClub())
     #print(getProfil(315486))
@@ -255,8 +263,9 @@ if __name__ == "__main__":
     # print(insertTireurDansCompetition('CONY', 'Philippe' ,13659, '1961-07-06', 'NEUVY NA', 2,'tireur'))   # nom , prenom ,numeroLicence  , dateNaissanceTireur , nomCLub , idCompetition
     # print(estDansBDNational(13659))
     # print(concourtInscritLicenceTireur(13659))
-    # print(concourtInscritLicenceArbitre(147282))
-    print(estOrganisateur(241354))
-    print(getListeComiteReg())
+    # print(concourtInscritLicenceArbitre(654123))
+    # print(estOrganisateur(241354))
+    # print(getListeComiteReg())
+    # print(getListTournoisAllCLosed())
     pass
 
