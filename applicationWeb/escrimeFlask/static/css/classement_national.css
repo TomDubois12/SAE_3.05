@@ -122,3 +122,54 @@ button {
     padding-left: 1.5em;
     padding-right: 1.5em;
 }
+
+@media screen and (max-width: 1000px) {
+    .titre h3 {
+        font-size: 2.5em;
+        margin-left: 1em;
+        margin-right: 1em;
+    }
+
+    .titre img{
+        width: 50%;
+        height: 50%;
+    }
+
+    .selector{
+        margin-left: 4em;
+    }
+
+    .selector select{
+        margin-left: 0.25em;
+        margin-right: 0.25em;
+    }
+
+    .selector button{
+        font-size: 1em;
+        padding: 1em;
+        padding-left: 1.5em;
+        padding-right: 1.5em;
+    }
+
+    table{
+        margin : 3em;
+    }
+}
+
+@media screen and (max-width: 1300px) {
+    .selector{
+        margin-left: 6em;
+    }
+
+    .selector select{
+        margin-left: 0.25em;
+        margin-right: 0.25em;    
+    }
+
+    .selector button{
+        font-size: 1em;
+        padding: 1em;
+        padding-left: 1.5em;
+        padding-right: 1.5em;
+    }
+}
