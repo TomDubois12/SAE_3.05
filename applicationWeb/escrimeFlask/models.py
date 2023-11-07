@@ -29,9 +29,7 @@ def insertTireurDansCompetition(nom : str, prenom : str,numeroLicence : int , da
             if infoTireur != False : # si le numéro de licence est dans la BD national
               infs = infoTireur[1] # On prend la infos de la personne qui veut s'inscrire 
               if infs[0].lower() == nom.lower() and infs[1].lower() == prenom.lower() and corrigerDate(infs[2]) == dateNaissanceTireur and infs[6].lower() == nomCLub.lower() : # On regarde si les infos passé correspondent au csv
-
                 # Il manque de vérifié le genre de la compète et idSexe + si arbitre ou tireur est passé en paremètre
-               
                 if ToA.upper() == 'TIREUR' : 
                   insertTireurDansBD(numeroLicence)
                   if getIdSexeByIdCompetition(idCompetition) == getIdSexeByNumLicence(numeroLicence) :
@@ -58,7 +56,6 @@ def insertTireurDansCompetition(nom : str, prenom : str,numeroLicence : int , da
       return False
 
 
-
 def insertTireurDansBD(numeroLicence : int) : 
    if estDansBDNational(numeroLicence) : 
       try :
@@ -72,7 +69,6 @@ def insertTireurDansBD(numeroLicence : int) :
            idSexe = 1
         requete1 = "insert into TIREUR(nomTireur,prenomTireur,numeroLicenceTireur,classement,idSexeTireur,dateNaissanceTireur,nationTireur,comiteRegionalTireur) values(%s,%s,%s,%s,%s,%s,%s,%s);"
         cursor.execute(requete1, (infoTireur[0],infoTireur[1],numeroLicence,infoTireur[7],idSexe,corrigerDate(infoTireur[2]),infoTireur[4],infoTireur[5]))
-
         db.commit()
         return True
       except Exception as mysql_error:
@@ -104,8 +100,8 @@ def corrigerDate(date :str) -> str :
    newDate = date[6] + date[7] + date[8] + date[9] + "-" + date[3] + date[4] + "-" + date[0] + date[1]
    return newDate
 
+
 def getInfoFromBDNational(numeroLicence : int) -> list :
-  
   fichiers = fichiersDossier("./escrimeFlask/csvEscrimeur/")
   for f in fichiers :
     infoFichier = classementFile("./escrimeFlask/csvEscrimeur/" + f)
@@ -114,6 +110,7 @@ def getInfoFromBDNational(numeroLicence : int) -> list :
           # cat =  nom[0]  prenom[1]  dateNaissance[2]  licence[3]  nation[4]  comiteReg[5]  CLUB[6]  point[7]  classement[8] 
           return [f,cat]
   return False
+
 
 def getListeComiteReg():
   fichiers = fichiersDossier("./escrimeFlask/csvEscrimeur/")
@@ -135,11 +132,13 @@ def estDansBDNational(numeroLicence : int) -> bool:
           return True
   return False 
 
+
 def concourtInscritLicenceTireur(numeroLicence : int) -> list:
   requete1 = "select * from TIREUR_DANS_COMPETITIONS natural join COMPETITION where numeroLicenceTireur = " + str(numeroLicence) + ";"
   cursor.execute(requete1)
   info = cursor.fetchall()
   return infoCompetitionOuverte(info)
+
 
 def concourtInscritLicenceArbitre(numeroLicence : int) -> list:
   requete1 = "select * from ARBITRE_DANS_COMPETITIONS natural join COMPETITION where numeroLicenceArbitre = " + str(numeroLicence) + ";"
@@ -148,7 +147,6 @@ def concourtInscritLicenceArbitre(numeroLicence : int) -> list:
   return infoCompetitionOuverte(info)
   # return sous la forme : nomCompetition intituleCompet typeArme intituleSexe intituleCategorie departement
   
-
 
 def classementFile(filename :str) -> list:
     "nom prenom date_naissance adherent nation comite_regional club points rang"
@@ -174,9 +172,8 @@ def inscriptionOuverte() -> list:
                   where datediff(dateDebutCompetiton ,CURDATE()) > 14 and idLieu ="""+ str(info[i][6]) +" and idCategorie ="+ str(info[i][7]) +" and idSexe = "+str(info[i][8]) +" and idArme = "+ str(info[i][9]) +" and idCompetition = "+str(info[i][0]) +";"
     cursor.execute(requete2) 
     res.append(cursor.fetchall())
-      
-
   return res
+
 
 def getOrganisateurClub():
   requete1 = "select * from ORGANISATEURDANSCLUB natural join CLUB ;"
@@ -193,23 +190,18 @@ def getIdSexeByIdCompetition(idCompetition : int) -> int:
   cursor.execute(requete)
   return cursor.fetchall()
 
+
 def getIdSexeByNumLicence(numeroLicence : int) -> int:
   requete = "select idSexeTireur from TIREUR where numeroLicenceTireur = " + str(numeroLicence) + ";"
   cursor.execute(requete)
   return cursor.fetchall()
+
 
 def estOrganisateur(numeroLicence : int) :
   requete = "select nomOrganisateur from ORGANISATEUR where licenseOrganisateur = " + str(numeroLicence) + ";"
   cursor.execute(requete)
   return cursor.fetchall() != []
 
-# def getProfil(numeroLicence : int) -> list:
-#   requete1 = """select nomTireur, prenomTireur, dateNaissanceTireur, numeroLicenceTireur,  nationTireur, comiteRegionalTireur,nomCLub
-#                 from TIREUR natural join TIREUR_DANS_CLUB natural join CLUB where numeroLicenceTireur = """ + str(numeroLicence) + " limit 1;"
-#   cursor.execute(requete1)
-#   res = []
-#   res.append(cursor.fetchone())
-#   return res
 
 def infoCompetitionOuverte(info):
   res = []
@@ -219,9 +211,8 @@ def infoCompetitionOuverte(info):
                     where datediff(dateDebutCompetiton ,CURDATE()) > 14 and idLieu ="""+ str(info[i][7]) +" and idCategorie ="+ str(info[i][8]) +" and idSexe = "+str(info[i][9]) +" and idArme = "+ str(info[i][10]) +" and idCompetition = "+str(info[i][0]) +";"
       cursor.execute(requete2) 
       res.append(cursor.fetchall())
-      
-
   return res
+
 
 def infoCompetitionPasse(info):
   res = []
@@ -245,7 +236,15 @@ def getTournoisClosedParticiper(numeroLicence):
   requete1 = "select * from TIREUR_DANS_COMPETITIONS natural join COMPETITION where numeroLicenceTireur = " + str(numeroLicence) + ";"
   cursor.execute(requete1)
   info = cursor.fetchall()
-  return infoCompetitionPasse(info)
+  res = []
+  for i in range(len(info)):
+    
+    requete2 = """select intituleCompet,typeArme, intituleSexe,intituleCategorie, departement, idCompetition
+                 from COMPETITION natural join LIEU natural join ARME natural join SEXE natural join CATEGORIE
+                where datediff(dateDebutCompetiton ,CURDATE()) < 0 and idLieu ="""+ str(info[i][7]) +" and idCategorie ="+ str(info[i][8]) +" and idSexe = "+str(info[i][9]) +" and idArme = "+ str(info[i][10]) +" and idCompetition = "+str(info[i][0]) +";"
+    cursor.execute(requete2) 
+    res.append(cursor.fetchall())
+  return res
 
 def fichiersDossier(path : str) :
   files = os.listdir(path)
@@ -269,7 +268,25 @@ if __name__ == "__main__":
     # print(estOrganisateur(241354))
     # print(getListeComiteReg())
     # print(getListTournoisAllCLosed())
-    print(getTournoisClosedParticiper(151229))
     # print(concourtInscritLicenceTireur(151229))
+
+
+    ################
+    ################
+    # DEMEER;Regis;15/07/1964;151229;FRANCE;ILE DE FRANCE Est;LE PERREUX;18742;20
+    # requete1 = 'insert into COMPETITION(intituleCompet,saison,estFinie,coefficientCompetition,dateDebutCompetiton,idLieuCompetition,idCategorieCompetition,idSexeCompetition,idArmeCompetition) values ("Test06/11/23","2023",True,0.2,"2023-11-06",2,5,1,5)'
+    # cursor.execute(requete1)
+    # db.commit()
+
+    # requete2 = 'insert into TIREUR(nomTireur,prenomTireur,numeroLicenceTireur,classement,idSexeTireur,dateNaissanceTireur,nationTireur,comiteRegionalTireur) values ("DEEMER","Regis",151229,18742,1,"1964-07-15","FRANCE","ILE DE FRANCE Est")'
+    # cursor.execute(requete2)
+    # db.commit() 
+
+    # requete3 = 'insert into TIREUR_DANS_COMPETITIONS() values (151229,4)'
+    # cursor.execute(requete3)
+    # db.commit()
+
+    #print(getTournoisClosedParticiper(151229))
+
     pass
 
