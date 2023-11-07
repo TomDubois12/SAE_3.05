@@ -147,3 +147,22 @@ footer .footer_p2, a {
     color: white;
     margin-top: 2vh;
 }
+
+
+@media screen and (max-width: 1000px){
+    .archives_p, .classement_p, .resultats_p, .profil_p{
+        font-size: 2em;
+    }
+
+    .resultats{
+        background-image: "images/escrimeur1.png";
+    }
+    
+    .resultats img{
+        width: auto;
+        height: auto;
+        max-width: 75%;
+        max-height: 75%;
+        justify-content: center;
+    }
+}
