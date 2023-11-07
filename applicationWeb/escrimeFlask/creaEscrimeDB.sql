@@ -11,6 +11,7 @@ create table LIEU(
     adresse varchar(100) not null,
     region varchar(50) not null,
     departement varchar(50) not null,
+    comiteReg varchar(50) not null,
     primary key (idLieu)
 );
 
@@ -179,14 +180,14 @@ create table ARBITRE_ELIMINATION(
 
 
 delimiter |
-create or replace trigger verifDateInscription before insert on TIREUR_DANS_COMPETITIONS for each row
-begin
-    declare dateDC date;
-    select dateDebutCompetiton into dateDC from COMPETITION where idCompetition = new.idCompetition;
-    if ( datediff(dateDC ,CURDATE()) <= 14  ) then
-        signal sqlstate '45000' set message_text = 'Les inscriptions pour cette compétitions sont close';
-    end if; 
-end |
+-- create or replace trigger verifDateInscription before insert on TIREUR_DANS_COMPETITIONS for each row
+-- begin
+--     declare dateDC date;
+--     select dateDebutCompetiton into dateDC from COMPETITION where idCompetition = new.idCompetition;
+--     if ( datediff(dateDC ,CURDATE()) <= 14  ) then
+--         signal sqlstate '45000' set message_text = 'Les inscriptions pour cette compétitions sont close';
+--     end if; 
+-- end |
 
 
 create or replace trigger verifDejaInserer before insert on TIREUR for each row 

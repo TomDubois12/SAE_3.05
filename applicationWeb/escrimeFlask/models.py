@@ -267,7 +267,7 @@ if __name__ == "__main__":
     # print(concourtInscritLicenceArbitre(654123))
     # print(estOrganisateur(241354))
     # print(getListeComiteReg())
-    # print(getListTournoisAllCLosed())
+    print(getListTournoisAllCLosed())
     # print(concourtInscritLicenceTireur(151229))
 
 
@@ -287,6 +287,7 @@ if __name__ == "__main__":
     # db.commit()
 
     #print(getTournoisClosedParticiper(151229))
+    #Pour réussir ce test il faut enlever le trigger sur la date inscription 
 
     pass
 
