@@ -55,7 +55,8 @@ insert into TIREUR(nomTireur,prenomTireur,numeroLicenceTireur,classement,idSexeT
 
 insert into TIREUR_DANS_CLUB(numeroLicenceTireur,idClub) values 
     (315486,3),
-    (521531,3),
+    (521531,3), 
+    (151229,1),
     (213138,3);
 
 insert into ARBITRE(nomArbitre,prenomArbitre,numeroLicenceArbitre) values 

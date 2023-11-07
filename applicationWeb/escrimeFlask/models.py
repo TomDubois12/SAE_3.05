@@ -12,8 +12,8 @@ import mysql.connector
 #connexion au base de données
 db = mysql.connector.connect(
   host = "localhost",
-  user = "koko",
-  password = "koko",
+  user = "nathan",
+  password = "nathan",
   database = "Escrime"
 )
 
@@ -100,6 +100,9 @@ def corrigerDate(date :str) -> str :
    newDate = date[6] + date[7] + date[8] + date[9] + "-" + date[3] + date[4] + "-" + date[0] + date[1]
    return newDate
 
+def crypterDate(date :str) -> str : 
+   newDate = date[8] + date[9] + "/" +  date[5] + date[6] + "/" + date[0] + date[1] + date[2] + date[3]
+   return newDate
 
 def getInfoFromBDNational(numeroLicence : int) -> list :
   fichiers = fichiersDossier("./escrimeFlask/csvEscrimeur/")
@@ -249,6 +252,17 @@ def getTournoisClosedParticiper(numeroLicence):
     res.append(cursor.fetchall())
   return res
 
+def getProfil(numLicence): 
+  requete1 = "select * from TIREUR  where numeroLicenceTireur = " + str(numLicence) + ";"
+  cursor.execute(requete1)
+  info = cursor.fetchall()[0]
+  requete2 = "select nomClub from TIREUR_DANS_CLUB natural join CLUB where numeroLicenceTireur = " + str(numLicence) + ";"
+  cursor.execute(requete2)
+  club = cursor.fetchall()
+  return [info[0],info[1],crypterDate(str(info[5])),info[2],info[6],info[7],club[0][0]]
+
+print(getProfil(151229))
+
 def fichiersDossier(path : str) :
   files = os.listdir(path)
   listeChemin = []
@@ -273,7 +287,7 @@ if __name__ == "__main__":
     # print(getListTournoisAllCLosed())
     # print(getTournoisClosedParticiper(151229))
     # print(concourtInscritLicenceTireur(151229))
-    # print(getClassementNationnal("Sabre","Dames","Seniors"))
+    #print(getClassementNationnal("Sabre","Dames","Seniors"))
 
     ################
     ################
