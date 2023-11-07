@@ -160,6 +160,9 @@ def classementFile(filename :str) -> list:
       file.close()
     return res
 
+def getClassementNationnal(arme,sexe,categorie) : 
+  return classementFile("./escrimeFlask//csvEscrimeur/classement_" + arme + "_" + sexe + "_" + categorie +".csv")
+
 
 def inscriptionOuverte() -> list:
   requete1 = "select * from COMPETITION where datediff(dateDebutCompetiton, CURDATE()) > 14;"
@@ -267,9 +270,9 @@ if __name__ == "__main__":
     # print(concourtInscritLicenceArbitre(654123))
     # print(estOrganisateur(241354))
     # print(getListeComiteReg())
-    print(getListTournoisAllCLosed())
+    # print(getListTournoisAllCLosed())
     # print(concourtInscritLicenceTireur(151229))
-
+    #print(getClassementNationnal("Sabre","Dames","Seniors"))
 
     ################
     ################
@@ -289,5 +292,6 @@ if __name__ == "__main__":
     #print(getTournoisClosedParticiper(151229))
     #Pour réussir ce test il faut enlever le trigger sur la date inscription 
 
+    
     pass
 
