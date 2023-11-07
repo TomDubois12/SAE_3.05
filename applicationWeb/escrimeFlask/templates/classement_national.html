@@ -18,19 +18,19 @@
             <h3>Classement National :</h3>
             <img class="epee" src="{{url_for('static', filename='images/epeeBleu.png')}}" alt="Epée bleu d'escrime">
         </div>
-        <div class="selector">
-            <select name="Arme">
+        <form class="selector" action="{{url_for('rechercheClassement')}}", method="GET">
+            <select name="arme" required>
                 <option value="none" selected disabled hidden>Choississez une arme</option>
                 <option value="fleuret">Fleuret</option>
                 <option value="epee">Épée</option>
                 <option value="sabre">Sabre</option>
             </select>
-            <select name="Arme">
+            <select name="sexe" required>
                 <option value="none" selected disabled hidden>Choississez un sexe</option>
                 <option value="homme">Homme</option>
                 <option value="femme">Dames</option>
             </select>
-            <select name="Catégorie">
+            <select name="catégorie" required>
                 <option value="none" selected disabled hidden>Choississez une catégorie</option>
                 <option value="m15">M15</option>
                 <option value="m17">M17</option>
@@ -41,8 +41,9 @@
                 <option value="veteran3">Vétérans3</option>
                 <option value="veteran4">Vétérans4</option>
             </select>
-            <button>Rechercher</button>
-        </div>
+            <input type="text" hidden name="nbLicense" value="{{nbLicense}}">
+            <input type="submit" value="Rechercher"></input>
+        </form>
         <div class="tableau">
             <table>
                 <tr class="titre-tableau">

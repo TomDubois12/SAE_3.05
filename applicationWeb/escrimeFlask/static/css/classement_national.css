@@ -115,7 +115,7 @@ table tr:nth-child(odd){
 } 
 
 /* bouton */
-button {
+button, input {
     background-color: #062656;
     color: white;
     padding: 0.5em;

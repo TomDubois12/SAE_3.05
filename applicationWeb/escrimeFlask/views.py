@@ -158,3 +158,15 @@ def rechercheArchives():
     ville=request.args.get("ville")
     nbLicense=request.args.get("nbLicense")
     return redirect(url_for('archives', nbLicense=nbLicense))
+
+@app.route('/rechercheClassement')
+def rechercheClassement():
+    arme=request.args.get("arme")
+    sexe=request.args.get("sexe")
+    categorie=request.args.get("categorie")
+    nbLicense=request.args.get("nbLicense")
+    return render_template('classement_national.html',
+                           title='Classement_National',
+                           isOrganisateur=estOrganisateur(int(nbLicense)),
+                           nbLicense=nbLicense,
+                           )
