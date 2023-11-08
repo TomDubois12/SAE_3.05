@@ -17,8 +17,9 @@ import mysql.connector
 #connexion au base de données
 db = mysql.connector.connect(
   host = "localhost",
-  user = "nathan",
-  password = "nathan",
+
+  user = "koko",
+  password = "koko",
   database = "Escrime"
 )
 #Blabla2147
@@ -177,6 +178,7 @@ def concourtNonFinitInscritArbitre(licenceArbitre) :
       res.append(ligneAj)
   return res
 
+
 def concourtInscritLicenceArbitre(numeroLicence : int) -> list:
   requete1 = "select * from ARBITRE_DANS_COMPETITIONS natural join COMPETITION where numeroLicenceArbitre = " + str(numeroLicence) + ";"
   cursor.execute(requete1)
@@ -184,6 +186,20 @@ def concourtInscritLicenceArbitre(numeroLicence : int) -> list:
   return infoCompetitionOuverte(info)
   # return sous la forme : nomCompetition intituleCompet typeArme intituleSexe intituleCategorie departement
   
+def concourtNonFinitInscritArbitre(licenceArbitre) : 
+  requete1 = "select * from ARBITRE_DANS_COMPETITIONS natural join COMPETITION where numeroLicenceArbitre = " + str(licenceArbitre) + ";"
+  cursor.execute(requete1)
+  info = cursor.fetchall()
+  res = []
+  for i in range(len(info)):
+    requete2 = """select intituleCompet,typeArme, intituleSexe,intituleCategorie, departement, idCompetition
+                  from COMPETITION natural join LIEU natural join ARME natural join SEXE natural join CATEGORIE
+                  where estFinie = False and idLieu ="""+ str(info[i][7]) +" and idCategorie ="+ str(info[i][8]) +" and idSexe = "+str(info[i][9]) +" and idArme = "+ str(info[i][10]) +" and idCompetition = "+str(info[i][0]) +";"
+    cursor.execute(requete2) 
+    ligneAj = cursor.fetchall()
+    if ligneAj != [] :
+      res.append(ligneAj)
+  return res
 
 def classementFile(filename :str) -> list:
     "nom prenom date_naissance adherent nation comite_regional club points rang"
@@ -403,6 +419,7 @@ if __name__ == "__main__":
     # print(getCompetitionParOrga(254612))
     # print(getClassementNationnal("Sabre","Dames","Seniors"))
     #print(getProfil(151229))
+    # print(concourtInscritLicenceTireur())
 
     ################
     ################
