@@ -261,7 +261,19 @@ def getProfil(numLicence):
   club = cursor.fetchall()
   return [info[0],info[1],crypterDate(str(info[5])),info[2],info[6],info[7],club[0][0]]
 
-print(getProfil(151229))
+def getCompetitionParOrga(numLicence): 
+  requete = "select * from ORGANISATEURCOMPETITION natural join COMPETITION  where licenseOrganisateur = 254612;"
+  cursor.execute(requete)
+  info = cursor.fetchall()
+  res = []
+  for i in range(len(info)):
+    requete2 = """select intituleCompet,typeArme, intituleSexe,intituleCategorie, departement, idCompetition
+                 from COMPETITION natural join LIEU natural join ARME natural join SEXE natural join CATEGORIE
+                where  idLieu ="""+ str(info[i][7]) +" and idCategorie ="+ str(info[i][8]) +" and idSexe = "+str(info[i][9]) +" and idArme = "+ str(info[i][10]) +" and idCompetition = "+str(info[i][0]) +";"
+    cursor.execute(requete2) 
+    res.append(cursor.fetchall())
+  return res
+
 
 def fichiersDossier(path : str) :
   files = os.listdir(path)
@@ -288,6 +300,8 @@ if __name__ == "__main__":
     # print(getTournoisClosedParticiper(151229))
     # print(concourtInscritLicenceTireur(151229))
     #print(getClassementNationnal("Sabre","Dames","Seniors"))
+    # print(getProfil(151229))
+    print(getCompetitionParOrga(254612))
 
     ################
     ################

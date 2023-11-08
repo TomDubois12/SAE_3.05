@@ -93,6 +93,14 @@ create table COMPETITION(
     Foreign key(idArmeCompetition) references ARME(idArme)
 );
 
+create table ORGANISATEURCOMPETITION(
+    idCompetition int not null,
+    licenseOrganisateur int not null,
+    primary key (idCompetition, licenseOrganisateur),
+    Foreign key(idCompetition) references COMPETITION(idCompetition),
+    Foreign key (licenseOrganisateur) references ORGANISATEUR(licenseOrganisateur)
+);
+
 create table MATCHELIMINATION(
     idMatchElimination int not null auto_increment,
     nomMatchElimination varchar(60),
