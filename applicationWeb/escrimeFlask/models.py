@@ -218,6 +218,10 @@ def infoCompetitionOuverte(info):
       res.append(cursor.fetchall())
   return res
 
+def getInfoCompetition(idCompetiton):
+  requete = "select * from COMPETITION where idCompetition = " + str(idCompetiton) + ";"
+  cursor.execute(requete)
+  return cursor.fetchall() 
 
 def infoCompetitionPasse(info):
   res = []
@@ -384,4 +388,6 @@ if __name__ == "__main__":
     # print(getListTournoisAllCLosed())
     # print(trieArchive("Sabre","Homme","Senior","Loiret"))
     # print(getStatistique(151229))
+    # print(infoCompetitionOuverte())
+    # print(getInfoCompetition(1))
     pass
