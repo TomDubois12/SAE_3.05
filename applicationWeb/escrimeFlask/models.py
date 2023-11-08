@@ -12,8 +12,8 @@ import mysql.connector
 #connexion au base de données
 db = mysql.connector.connect(
   host = "localhost",
-  user = "koko",
-  password = "koko",
+  user = "nathan",
+  password = "nathan",
   database = "Escrime"
 )
 
@@ -253,13 +253,23 @@ def getTournoisClosedParticiper(numeroLicence):
   return res
 
 def getProfil(numLicence): 
-  requete1 = "select * from TIREUR  where numeroLicenceTireur = " + str(numLicence) + ";"
-  cursor.execute(requete1)
-  info = cursor.fetchall()[0]
-  requete2 = "select nomClub from TIREUR_DANS_CLUB natural join CLUB where numeroLicenceTireur = " + str(numLicence) + ";"
-  cursor.execute(requete2)
-  club = cursor.fetchall()
-  return [info[0],info[1],crypterDate(str(info[5])),info[2],info[6],info[7],club[0][0]]
+  fichiers = fichiersDossier("./escrimeFlask/csvEscrimeur/")
+  profil = []
+  for f in fichiers :
+    infoFichier = classementFile("./escrimeFlask/csvEscrimeur/" + f)
+    for comite in infoFichier :
+      if int(comite[3]) == numLicence :
+        profil.append(comite[0:7])
+  return profil
+
+
+  # requete1 = "select * from TIREUR  where numeroLicenceTireur = " + str(numLicence) + ";"
+  # cursor.execute(requete1)
+  # info = cursor.fetchall()[0]
+  # requete2 = "select nomClub from TIREUR_DANS_CLUB natural join CLUB where numeroLicenceTireur = " + str(numLicence) + ";"
+  # cursor.execute(requete2)
+  # club = cursor.fetchall()
+  # return [info[0],info[1],crypterDate(str(info[5])),info[2],info[6],info[7],club[0][0]]
 
 
 def getCompetitionParOrga(numLicence): 
@@ -304,6 +314,10 @@ if __name__ == "__main__":
   # print(getCompetitionParOrga(254612))
   # print(getClassementNationnal("Sabre","Dames","Seniors"))
   # print(getProfil(151229))
+    print(getProfil(151229))
+    # print(getCompetitionParOrga(254612))
+    # print(getClassementNationnal("Sabre","Dames","Seniors"))
+    #print(getProfil(151229))
 
     ################
     ################
