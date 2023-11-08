@@ -11,12 +11,12 @@ import mysql.connector
 
 #connexion au base de données
 db = mysql.connector.connect(
-  host = "127.0.0.1",
-  user = "root",
-  password = "Blabla2147",
+  host = "localhost",
+  user = "nathan",
+  password = "nathan",
   database = "Escrime"
 )
-
+#Blabla2147
 #créer un curseur de base de données pour effectuer des opérations SQL
 cursor = db.cursor()
 
@@ -207,11 +207,6 @@ def estOrganisateur(numeroLicence : int) :
   cursor.execute(requete)
   return cursor.fetchall() != []
 
-def estOrganisateur(numeroLicence : int) :
-  requete = "select nomOrganisateur from ORGANISATEUR where licenseOrganisateur = " + str(numeroLicence) + ";"
-  cursor.execute(requete)
-  return cursor.fetchall() != []
-
 
 def infoCompetitionOuverte(info):
   res = []
@@ -292,6 +287,27 @@ def trieArchive(arme, sexe, categorie, region):
   return liste2
 
 
+def getStatistique(numLicence):
+  fichiers = fichiersDossier("./escrimeFlask/csvEscrimeur/")
+  stats = []
+  for f in fichiers :
+    if "Epée" in f  :
+      infoFichier = classementFile("./escrimeFlask/csvEscrimeur/" + f)
+      for ligne in infoFichier :
+        if int(ligne[3]) == numLicence :
+          stats.append(("Épée",ligne[3],ligne[8]))
+    if "Sabre" in f  :
+      infoFichier = classementFile("./escrimeFlask/csvEscrimeur/" + f)
+      for ligne in infoFichier :
+        if int(ligne[3]) == numLicence :
+          stats.append(("Sabre",ligne[3],ligne[8]))
+    if "Fleuret" in f  :
+      infoFichier = classementFile("./escrimeFlask/csvEscrimeur/" + f)
+      for ligne in infoFichier :
+        if int(ligne[3]) == numLicence :
+          stats.append(("Fleuret",ligne[3],ligne[8]))
+  return stats
+
 def getCompetitionParOrga(numLicence): 
   requete = "select * from ORGANISATEURCOMPETITION natural join COMPETITION  where licenseOrganisateur = 254612;"
   cursor.execute(requete)
@@ -367,4 +383,5 @@ if __name__ == "__main__":
     # print(trieArchive("Sabre","none","none","none"))
     # print(getListTournoisAllCLosed())
     # print(trieArchive("Sabre","Homme","Senior","Loiret"))
+    # print(getStatistique(151229))
     pass
