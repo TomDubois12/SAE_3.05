@@ -75,7 +75,8 @@ def options_competitions(nbLicense):
     return render_template('options_competitions.html',
                            title='Options_Compétitions',
                            isOrganisateur=estOrganisateur(int(nbLicense)),
-                           nbLicense=nbLicense)
+                           nbLicense=nbLicense,
+                           mesCompetitions=getCompetitionParOrga(nbLicense))
 
 @app.route('/resultats/<nbLicense>')
 def resultats(nbLicense):

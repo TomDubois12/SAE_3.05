@@ -21,9 +21,10 @@
             <img class="epee" src="{{url_for('static', filename='images/epeeBleu.png')}}" alt="Epée bleu d'escrime">
         </div>
         
+        {% for competition in mesCompetitions %}
         <div class="competition">
             <div class="nom_competition">
-                <p>Compétition n°1</p>
+                <p>{{competition[0][0].upper()}} {{competition[0][1].upper()}} {{competition[0][2].upper()}}, {{competition[0][3]}} {{competition[0][4]}}</p>
             </div>
             <div class="bouton">
                 <button>Lancer</button>
@@ -31,29 +32,7 @@
                 <button class="button_desactivated" disabled>Archiver</button>
             </div>
         </div>
-
-        <div class="competition">
-            <div class="nom_competition">
-                <p>Compétition n°2</p>
-            </div>
-            <div class="bouton">
-                <button class="button_desactivated" disabled>Lancer</button>
-                <button>Consulter</button>
-                <button>Archiver</button>
-            </div>
-        </div>
-
-        <div class="competition">
-            <div class="nom_competition">
-                <p>Compétition n°3</p>
-            </div>
-            <div class="bouton">
-                <button class="button_desactivated" disabled>Lancer</button>
-                <button>Consulter</button>
-                <button class="button_desactivated" disabled>Archiver</button>
-            </div>
-        </div>
-    
+        {% endfor %}
     </div>
 </main>
 {% endblock %}
