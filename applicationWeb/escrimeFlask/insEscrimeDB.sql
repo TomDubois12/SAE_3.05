@@ -84,6 +84,22 @@ insert into COMPETITION(intituleCompet,saison,estFinie,coefficientCompetition,da
     ("Tournois hiver 2019","2019",True,0.4,"2019-12-23",2,3,2,6),
     ("Tournois été 2019","2019",True,0.2,"2019-07-22",2,4,2,4);
 
+insert into ORGANISATEURCOMPETITION(idCompetition, licenseOrganisateur) values 
+    (1,241354),
+    (2,254612),
+    (3,734212),
+    (4,468412),
+    (5,241354),
+    (6,254612),
+    (7,254612),
+    (8,254612),
+    (9,254612),
+    (10,254612),
+    (11,254612),
+    (12,254612),
+    (13,241354),
+    (14,254612),
+    (15,734212);
 
 insert into TIREUR_DANS_COMPETITIONS(numeroLicenceTireur,idCompetition)values 
     (315486,1),
