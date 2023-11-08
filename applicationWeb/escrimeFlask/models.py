@@ -364,6 +364,7 @@ if __name__ == "__main__":
     #Pour réussir ce test il faut enlever le trigger sur la date inscription 
 
     #print(getListTournoisAllCLosed())
-    # print(trieArchive("Sabre","Homme","none","Loiret"))
+    # print(trieArchive("Sabre","none","none","none"))
+    # print(getListTournoisAllCLosed())
     # print(trieArchive("Sabre","Homme","Senior","Loiret"))
     pass

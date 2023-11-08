@@ -77,6 +77,13 @@ def options_competitions(nbLicense):
                            nbLicense=nbLicense,
                            mesCompetitions=getCompetitionParOrga(nbLicense))
 
+@app.route('/creation_competition/<nbLicense>')
+def creation_competition(nbLicense):
+    return render_template('creation_competition.html',
+                           title='Création_Compétition',
+                           isOrganisateur=estOrganisateur(int(nbLicense)),
+                           nbLicense=nbLicense)
+
 @app.route('/resultats/<nbLicense>')
 def resultats(nbLicense):
     return render_template('resultats.html',
@@ -158,7 +165,13 @@ def rechercheArchives():
     categorie=request.args.get("categorie")
     ville=request.args.get("ville")
     nbLicense=request.args.get("nbLicense")
-    return redirect(url_for('archives', nbLicense=nbLicense))
+    return render_template('archives.html',
+                           title='Archives',
+                           isOrganisateur=estOrganisateur(int(nbLicense)),
+                           nbLicense=nbLicense,
+                           villes=getListeComiteReg(),
+                           competitions=trieArchive(str(arme),str(sexe),str(categorie),str(ville)),
+                           competitionsParticiper=getTournoisClosedParticiper(int(nbLicense)))
 
 @app.route('/rechercheClassement')
 def rechercheClassement():
