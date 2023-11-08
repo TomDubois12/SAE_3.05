@@ -1,4 +1,9 @@
 import csv
+try: 
+  from .supportModel import *
+except ImportError:
+  from supportModel import *
+
 
 # pip install Flask-MySQLdb
 #sudo apt-get install python3-dev default-libmysqlclient-dev build-essential pkg-config
@@ -142,6 +147,35 @@ def concourtInscritLicenceTireur(numeroLicence : int) -> list:
   info = cursor.fetchall()
   return infoCompetitionOuverte(info)
 
+def concourtNonFinitInscritTireur(licenceTireur) : 
+  requete1 = "select * from TIREUR_DANS_COMPETITIONS natural join COMPETITION where numeroLicenceTireur = " + str(licenceTireur) + ";"
+  cursor.execute(requete1)
+  info = cursor.fetchall()
+  res = []
+  for i in range(len(info)):
+    requete2 = """select intituleCompet,typeArme, intituleSexe,intituleCategorie, departement, idCompetition
+                  from COMPETITION natural join LIEU natural join ARME natural join SEXE natural join CATEGORIE
+                  where estFinie = False and idLieu ="""+ str(info[i][7]) +" and idCategorie ="+ str(info[i][8]) +" and idSexe = "+str(info[i][9]) +" and idArme = "+ str(info[i][10]) +" and idCompetition = "+str(info[i][0]) +";"
+    cursor.execute(requete2) 
+    ligneAj = cursor.fetchall()
+    if ligneAj != [] :
+      res.append(ligneAj)
+  return res
+
+def concourtNonFinitInscritArbitre(licenceArbitre) : 
+  requete1 = "select * from ARBITRE_DANS_COMPETITIONS natural join COMPETITION where numeroLicenceArbitre = " + str(licenceArbitre) + ";"
+  cursor.execute(requete1)
+  info = cursor.fetchall()
+  res = []
+  for i in range(len(info)):
+    requete2 = """select intituleCompet,typeArme, intituleSexe,intituleCategorie, departement, idCompetition
+                  from COMPETITION natural join LIEU natural join ARME natural join SEXE natural join CATEGORIE
+                  where estFinie = False and idLieu ="""+ str(info[i][7]) +" and idCategorie ="+ str(info[i][8]) +" and idSexe = "+str(info[i][9]) +" and idArme = "+ str(info[i][10]) +" and idCompetition = "+str(info[i][0]) +";"
+    cursor.execute(requete2) 
+    ligneAj = cursor.fetchall()
+    if ligneAj != [] :
+      res.append(ligneAj)
+  return res
 
 def concourtInscritLicenceArbitre(numeroLicence : int) -> list:
   requete1 = "select * from ARBITRE_DANS_COMPETITIONS natural join COMPETITION where numeroLicenceArbitre = " + str(numeroLicence) + ";"
@@ -191,10 +225,7 @@ def getOrganisateurClub():
   return res
 
 
-def getIdSexeByIdCompetition(idCompetition : int) -> int:
-  requete = "select idSexeCompetition from COMPETITION where idCompetition = " + str(idCompetition) + ";"
-  cursor.execute(requete)
-  return cursor.fetchall()
+
 
 
 def getIdSexeByNumLicence(numeroLicence : int) -> int:
@@ -299,17 +330,17 @@ def getStatistique(numLicence):
       infoFichier = classementFile("./escrimeFlask/csvEscrimeur/" + f)
       for ligne in infoFichier :
         if int(ligne[3]) == numLicence :
-          stats.append(("Épée",ligne[3],ligne[8]))
+          stats.append(("Épée",ligne[7],ligne[8]))
     if "Sabre" in f  :
       infoFichier = classementFile("./escrimeFlask/csvEscrimeur/" + f)
       for ligne in infoFichier :
         if int(ligne[3]) == numLicence :
-          stats.append(("Sabre",ligne[3],ligne[8]))
+          stats.append(("Sabre",ligne[7],ligne[8]))
     if "Fleuret" in f  :
       infoFichier = classementFile("./escrimeFlask/csvEscrimeur/" + f)
       for ligne in infoFichier :
         if int(ligne[3]) == numLicence :
-          stats.append(("Fleuret",ligne[3],ligne[8]))
+          stats.append(("Fleuret",ligne[7],ligne[8]))
   return stats
 
 def getCompetitionParOrga(numLicence): 
@@ -324,6 +355,14 @@ def getCompetitionParOrga(numLicence):
     cursor.execute(requete2) 
     res.append(cursor.fetchall())
   return res
+
+def createCompetition(nomCompete, lieu, categorie, sexe, arme, coef, date ) : 
+  if getIdLieuByNom(lieu) is None : setNewLieuByNom(lieu)
+  requete1 = """insert into COMPETITION(intituleCompet,saison,estFinie,coefficientCompetition,dateDebutCompetiton,idLieuCompetition,idCategorieCompetition,idSexeCompetition,idArmeCompetition) 
+                values ('""" + str(nomCompete) + "'," + str(corrigerDate(date)[0:4]) + "," + "False" + "," + str(coef) + ",'" + str(corrigerDate(date)) + "'," + str(getIdLieuByNom(lieu)) + "," + str(getIdCategorieByNom(categorie))+ "," + str(getIdSexeByNom(sexe)) +"," + str(getIdArmeByNom(arme)) + ");"""
+  cursor.execute(requete1)
+  db.commit()
+
 
 def fichiersDossier(path : str) :
   files = os.listdir(path)
@@ -387,7 +426,9 @@ if __name__ == "__main__":
     # print(trieArchive("Sabre","none","none","none"))
     # print(getListTournoisAllCLosed())
     # print(trieArchive("Sabre","Homme","Senior","Loiret"))
-    # print(getStatistique(151229))
+    # print(getStatistique(151229))
     # print(infoCompetitionOuverte())
     # print(getInfoCompetition(1))
+    # print(concourtNonFinitInscritTireur(151229))
+    
     pass
