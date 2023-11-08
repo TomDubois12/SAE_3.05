@@ -164,7 +164,7 @@ def classementFile(filename :str) -> list:
     return res
 
 def getClassementNationnal(arme,sexe,categorie) : 
-  return classementFile("./escrimeFlask//csvEscrimeur/classement_" + arme + "_" + sexe + "_" + categorie +".csv")
+  return classementFile("./escrimeFlask/csvEscrimeur/classement_" + arme + "_" + sexe + "_" + categorie +".csv")
 
 
 def inscriptionOuverte() -> list:
