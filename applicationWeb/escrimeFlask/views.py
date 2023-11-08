@@ -169,4 +169,4 @@ def rechercheClassement():
                            title='Classement_National',
                            isOrganisateur=estOrganisateur(int(nbLicense)),
                            nbLicense=nbLicense,
-                           )
+                           classement=getClassementNationnal(arme,sexe,categorie))
