@@ -44,7 +44,8 @@ def profil(nbLicense,nbCompet):
                            isOrganisateur=estOrganisateur(int(nbLicense)),
                             nbLicense=nbLicense,
                             nbCompet=nbCompet,
-                            informations=getProfil(int(nbLicense)))
+                            informations=getProfil(int(nbLicense)),
+                            stats=getStatistique(int(nbLicense)))
 
 @app.route('/accueil/<nbLicense>&<nbCompet>')
 def accueil(nbLicense,nbCompet):
@@ -127,8 +128,8 @@ def verifInscription():
 @app.route('/verifConnexionEscrimeur')
 def verifConnexionEscrimeur():
     if estDansBDNational(int(request.args.get("nbLicense"))):
-        concoursTireur = concourtInscritLicenceTireur(int(request.args.get("nbLicense")))
-        concoursArbitre = concourtInscritLicenceArbitre(int(request.args.get("nbLicense")))
+        concoursTireur = concourtNonFinitInscritTireur(int(request.args.get("nbLicense")))
+        concoursArbitre = concourtNonFinitInscritArbitre(int(request.args.get("nbLicense")))
         concours=concoursTireur+concoursArbitre
 
         if concours!=[]:
