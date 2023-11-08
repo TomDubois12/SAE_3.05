@@ -43,7 +43,8 @@ def profil(nbLicense):
     return render_template('profil.html',
                            title='Mon profil',
                            isOrganisateur=estOrganisateur(int(nbLicense)),
-                            nbLicense=nbLicense)
+                            nbLicense=nbLicense,
+                            informations=getProfil(nbLicense))
 
 @app.route('/accueil/<nbLicense>')
 def accueil(nbLicense):
