@@ -43,17 +43,18 @@
             </select>
             <select name="categorie">
                 <option value="none" selected hidden>Choississez une catégorie</option>
-                <option value="M15">M15</option>
-                <option value="M17">M17</option>
-                <option value="M20">M20</option>
-                <option value="Seniors">Seniors</option>
-                <option value="Vétérans1">Vétérans1</option>
-                <option value="Vétérans2">Vétérans2</option>
-                <option value="Vétérans3">Vétérans3</option>
-                <option value="Vétérans4">Vétérans4</option>
+                <option value="U13">U13</option>
+                <option value="U15">U15</option>
+                <option value="U17">U17</option>
+                <option value="U20">U20</option>
+                <option value="Senior">Senior</option>
+                <option value="V1">Vétérans1</option>
+                <option value="V2">Vétérans2</option>
+                <option value="V3">Vétérans3</option>
+                <option value="V4">Vétérans4</option>
             </select>
             <select name="ville">
-                <option value="none" selected disabled hidden>Choississez une région</option>
+                <option value="none" selected hidden>Choississez une région</option>
                 {% for ville in villes %}
                     <option value="{{ ville }}">{{ ville }}</option>
                 {% endfor %}
