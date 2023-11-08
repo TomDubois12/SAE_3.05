@@ -163,3 +163,50 @@ main>p a {
     transform: translateY(-0.3em);
     box-shadow: 0 0.8em 0.1em #00000040;
 }
+
+
+@media screen and (max-width: 1100px) {
+    
+    main{
+        height: 60%;    
+    }
+
+    .haut {
+        margin-left : 45em;
+        flex-direction: column;
+    }
+    
+    .haut p {
+        padding-left: 0.5em;
+        padding-right: 2em;
+        padding-top: 2em;
+        padding-bottom: 2em;
+        font-size: 1em;
+    }
+
+    .haut img{
+        width: 25%;
+        height: 100%;
+    }
+
+    .bas {
+        margin-left : 45em;
+    }
+    
+    .bas p {
+        padding-left: 0.5em;
+        padding-right: 2em;
+        padding-top: 2em;
+        padding-bottom: 2em;
+        font-size: 1em;
+    }
+
+    .bas img{
+        width: 25%;
+        height: 100%;
+    }
+
+    .inscription .connection .creer .consultation {
+        margin: 5em;
+    }
+}
