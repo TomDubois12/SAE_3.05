@@ -12,8 +12,8 @@ import mysql.connector
 #connexion au base de données
 db = mysql.connector.connect(
   host = "localhost",
-  user = "nathan",
-  password = "nathan",
+  user = "koko",
+  password = "koko",
   database = "Escrime"
 )
 
@@ -261,8 +261,6 @@ def getProfil(numLicence):
   club = cursor.fetchall()
   return [info[0],info[1],crypterDate(str(info[5])),info[2],info[6],info[7],club[0][0]]
 
-print(getProfil(151229))
-
 def fichiersDossier(path : str) :
   files = os.listdir(path)
   listeChemin = []
@@ -287,7 +285,8 @@ if __name__ == "__main__":
     # print(getListTournoisAllCLosed())
     # print(getTournoisClosedParticiper(151229))
     # print(concourtInscritLicenceTireur(151229))
-    #print(getClassementNationnal("Sabre","Dames","Seniors"))
+    # print(getClassementNationnal("Sabre","Dames","Seniors"))
+    print(getProfil(151229))
 
     ################
     ################
