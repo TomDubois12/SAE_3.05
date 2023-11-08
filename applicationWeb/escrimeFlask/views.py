@@ -1,7 +1,8 @@
 from .app import app
-from flask import render_template, request
-# from .models import *
+from flask import render_template, request, redirect, url_for
+from .models import *
 
+##Fonctions de redirection vers les pages sans connexion
 
 @app.route('/')
 def index():
@@ -12,6 +13,11 @@ def index():
 def information():
     return render_template('information.html',
                            title='Information')
+
+@app.route('/connexion_escrimeur')
+def connexion_escrimeur():
+    return render_template('connexion_escrimeur.html',
+                           title='Connexion_escrimeur')
 
 @app.route('/inscription')
 def inscription():
@@ -24,49 +30,62 @@ def connexion_organisateur():
     return render_template('connexion_organisateur.html',
                            title='Connexion_organisateur')
 
-@app.route('/profil')
-def profil():
-    return render_template('profil.html',
-                           title='Mon profil')
-
-@app.route('/accueil')
-def accueil():
-    return render_template('accueil.html',
-                           title='Accueil')
-
-
-    
-@app.route('/connexion_escrimeur')
-def connexion_escrimeur():
-    return render_template('connexion_escrimeur.html',
-                           title='Connexion_escrimeur')
-
-  
-@app.route('/classement_national')
-def classement_national():
-    return render_template('classement_national.html',
-                           title='Classement_National')
-
-
-@app.route('/archives')
-def archives():
-    return render_template('archives.html',
-                           title='Archives')
-
 @app.route('/archives_nc')
 def archivesNC():
     return render_template('archives_nc.html',
                            title='Archives_NonConnecté')
 
-@app.route('/options_competitions')
-def options_competitions():
-    return render_template('options_competitions.html',
-                           title='Options_Compétitions')
+##Fonctions de redirection vers les pages avec connexion
 
-@app.route('/resultats')
-def resultats():
+@app.route('/profil/<nbLicense>')
+def profil(nbLicense):
+    return render_template('profil.html',
+                           title='Mon profil',
+                           isOrganisateur=estOrganisateur(int(nbLicense)),
+                            nbLicense=nbLicense,
+                            informations=getProfil(int(nbLicense)))
+
+@app.route('/accueil/<nbLicense>')
+def accueil(nbLicense):
+    return render_template('accueil.html',
+                           title='Accueil',
+                           isOrganisateur=estOrganisateur(int(nbLicense)),
+                           nbLicense=nbLicense)
+
+@app.route('/classement_national/<nbLicense>')
+def classement_national(nbLicense):
+    return render_template('classement_national.html',
+                           title='Classement_National',
+                           isOrganisateur=estOrganisateur(int(nbLicense)),
+                           nbLicense=nbLicense)
+
+@app.route('/archives/<nbLicense>')
+def archives(nbLicense):
+    return render_template('archives.html',
+                           title='Archives',
+                           isOrganisateur=estOrganisateur(int(nbLicense)),
+                           nbLicense=nbLicense,
+                           villes=getListeComiteReg(),
+                           competitions=getListTournoisAllCLosed(),
+                           competitionsParticiper=getTournoisClosedParticiper(int(nbLicense)))
+
+@app.route('/options_competitions/<nbLicense>')
+def options_competitions(nbLicense):
+    return render_template('options_competitions.html',
+                           title='Options_Compétitions',
+                           isOrganisateur=estOrganisateur(int(nbLicense)),
+                           nbLicense=nbLicense,
+                           mesCompetitions=getCompetitionParOrga(nbLicense))
+
+@app.route('/resultats/<nbLicense>')
+def resultats(nbLicense):
     return render_template('resultats.html',
-                           title='Résultats')
+                           title='Résultats',
+                           isOrganisateur=estOrganisateur(int(nbLicense)),
+                           nbLicense=nbLicense)
+
+
+##Fonctions de vérification
 
 
 @app.route('/verifInscription')
@@ -131,3 +150,25 @@ def traitement():
         return render_template('connexion_organisateur.html',
                            title='Connexion_organisateur',
                            popup=True)
+
+@app.route('/rechercheArchives')
+def rechercheArchives():
+    arme=request.args.get("arme")
+    sexe=request.args.get("sexe")
+    categorie=request.args.get("categorie")
+    ville=request.args.get("ville")
+    nbLicense=request.args.get("nbLicense")
+    return redirect(url_for('archives', nbLicense=nbLicense))
+
+@app.route('/rechercheClassement')
+def rechercheClassement():
+    arme=request.args.get("arme")
+    sexe=request.args.get("sexe")
+    categorie=request.args.get("categorie")
+    nbLicense=request.args.get("nbLicense")
+    return render_template('classement_national.html',
+                           title='Classement_National',
+                           isOrganisateur=estOrganisateur(int(nbLicense)),
+                           nbLicense=nbLicense,
+                           classement=getClassementNationnal(arme,sexe,categorie))
+

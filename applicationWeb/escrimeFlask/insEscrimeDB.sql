@@ -1,31 +1,29 @@
-insert into LIEU(adresse,region,departement)  values 
-    ('Chemin des plantes, 45140 Ormes','Centre','Loiret'),
-    ('13 bis boulevard du 15 aout 1944','Centre-Val de Loire','Loiret'),
-    ('3 rue de la gare','Centre-Val de Loire','Loiret'),
-    ("6 rue des combattant d'afrique du sud","Centre-Val de Loire","Loiret");
+insert into LIEU(adresse,region,departement,comiteReg)  values 
+    ('Chemin des plantes, 45140 Ormes','Centre','Loiret','NORMANDIE'),
+    ('13 bis boulevard du 15 aout 1944','Centre-Val de Loire','Loiret','GRAND EST'),
+    ('3 rue de la gare','Centre-Val de Loire','Loiret','AUVERGNE RHONE ALPES'),
+    ("6 rue des combattant d'afrique du sud","Centre-Val de Loire","Loiret",'ILE DE FRANCE Ouest');
 
 insert into CATEGORIE(intituleCategorie) values 
     ('U13'),
     ('U15'),
     ('U17'),
     ('U20'),
-    ('senior'),
+    ('Senior'),
     ('V1'),
     ('V2'),
     ('V3'),
     ('V4');
 
 insert into ARME(typeArme,descriptionArme) values 
-    ('fleuret homme','fleuret'),
-    ('fleuret femme','fleuret'),
-    ('épée homme','épée'),
-    ('épée femme','épée'),
-    ('sabre homme','sabre'),
-    ('sabre femme','sabre');
+    ('Fleuret','Fleuret'),
+    ('Épée','Épée'),
+    ('Sabre','Sabre');
+   
  
 insert into SEXE(intituleSexe) values
     ('Homme'),
-    ('Femme');
+    ('Dames');
 
 insert into CLUB(nomClub) values 
     ('EscriClub'),
@@ -50,11 +48,13 @@ insert into TIREUR(nomTireur,prenomTireur,numeroLicenceTireur,classement,idSexeT
     ("Boissay","Robin",521531,7,1,'2004-12-14','France','CENTRE VAL DE LOIRE'),
     ("Boissay","Nathan",213138,5689,1,'2004-12-14','France','CENTRE VAL DE LOIRE'),
     ("Dubois","Tom",324832,12,1,'2004-06-02','France','CENTRE VAL DE LOIRE'),
-    ("Brion","Adèle",465486,43000,2,'2003-10-30','France','CENTRE VAL DE LOIRE');
+    ("Brion","Adèle",465486,43000,2,'2003-10-30','France','CENTRE VAL DE LOIRE'),
+    ("DEEMER","Regis",151229,18742,1,"1964-07-15","FRANCE","ILE DE FRANCE Est");
 
 insert into TIREUR_DANS_CLUB(numeroLicenceTireur,idClub) values 
     (315486,3),
-    (521531,3),
+    (521531,3), 
+    (151229,1),
     (213138,3);
 
 insert into ARBITRE(nomArbitre,prenomArbitre,numeroLicenceArbitre) values 
@@ -63,14 +63,49 @@ insert into ARBITRE(nomArbitre,prenomArbitre,numeroLicenceArbitre) values
     ("Boissay","Gatien",542446);
 
 insert into COMPETITION(intituleCompet,saison,estFinie,coefficientCompetition,dateDebutCompetiton,idLieuCompetition,idCategorieCompetition,idSexeCompetition,idArmeCompetition) values
-    ("Tounrois hivernale 2023","2023",False,0.2,"2023-12-14",2,5,1,5),
-    ("Tounrois hivernale 2024","2024",False,0.2,"2024-12-14",2,5,1,5),
-    ("Tounrois hivernale 2022","2022",True,0.2,"2022-12-14",2,5,1,5);
+    ("Tournois hivernale 2023","2023",False,0.2,"2023-12-14",2,5,1,1),
+    ("Tournois hivernale 2024","2024",False,0.2,"2024-12-14",2,5,1,2),
+    ("Tournois hivernale 2022","2022",True,0.2,"2022-12-14",2,5,1,3),
+
+    ("Tournois printemps 2020","2020",True,0.2,"2020-11-14",1,5,1,1),
+    ("Tournois automn 2020","2020",True,0.2,"2020-04-14",2,5,1,2),
+    ("Tournois hiver 2020","2020",True,0.4,"2020-12-23",3,5,1,3),
+    ("Tournois été 2020","2020",True,0.2,"2020-07-22",4,5,2,1),
+
+    ("Tournois printemps 2021","202",True,0.2,"2021-11-14",2,1,1,2),
+    ("Tournois automn 2021","2021",True,0.2,"2021-04-14",2,2,1,3),
+    ("Tournois hiver 2021","2021",True,0.4,"2021-12-23",2,3,1,1),
+    ("Tournois été 2021","2021",True,0.2,"2021-07-22",2,4,2,2),
+
+    ("Tournois printemps 2019","2019",True,0.2,"2019-11-14",2,1,1,3),
+    ("Tournois automn 2019","2019",True,0.2,"2019-04-14",2,2,2,1),
+    ("Tournois hiver 2019","2019",True,0.4,"2019-12-23",2,3,2,2),
+    ("Tournois été 2019","2019",True,0.2,"2019-07-22",2,4,2,3);
+
+insert into ORGANISATEURCOMPETITION(idCompetition, licenseOrganisateur) values 
+    (1,241354),
+    (2,254612),
+    (3,734212),
+    (4,468412),
+    (5,241354),
+    (6,254612),
+    (7,254612),
+    (8,254612),
+    (9,254612),
+    (10,254612),
+    (11,254612),
+    (12,254612),
+    (13,241354),
+    (14,254612),
+    (15,734212);
 
 insert into TIREUR_DANS_COMPETITIONS(numeroLicenceTireur,idCompetition)values 
     (315486,1),
     (315486,2),
     (521531,1),
+    (151229,4),
+    (151229,5),
+    (151229,6),
     (213138,1);
     
 
