@@ -12,8 +12,9 @@ import mysql.connector
 #connexion au base de données
 db = mysql.connector.connect(
   host = "localhost",
-  user = "nathan",
-  password = "nathan",
+
+  user = "koko",
+  password = "koko",
   database = "Escrime"
 )
 #Blabla2147
@@ -364,6 +365,7 @@ if __name__ == "__main__":
     # print(getCompetitionParOrga(254612))
     # print(getClassementNationnal("Sabre","Dames","Seniors"))
     #print(getProfil(151229))
+    # print(concourtInscritLicenceTireur())
 
     ################
     ################

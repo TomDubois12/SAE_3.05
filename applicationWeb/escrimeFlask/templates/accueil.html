@@ -19,7 +19,7 @@
             <div >
                 <img src="{{url_for('static', filename='images/escrimeur1.png')}}" alt="Image d'escrimeur">
                 <div class="resultats_p">    
-                    <p>Vous participez à la compétition “INSERT NAME”,</p>
+                    <p>Vous participez à la compétition {{nomCompet}},</p>
                     <p>Vous voulez consulter les arbres de matchs ?</p>
                     <p>Voir votre prochain duel ?</p> 
                     <p class="resultats_p4">Pour suivre cette évolution,</p>
@@ -44,7 +44,7 @@
             <div >  
                 <img src="{{url_for('static', filename='images/escrimeur3.png')}}" alt="Image d'escrimeur">
                 <div class="archives_p">
-                    <p>Vous avez participé à N compétition,</p>
+                    <p>Vous avez participé à {{nombreCompet}} compétition,</p>
                     <p>Votre classement vous intèresse ?</p>
                     <p>Vous souhaitez revoir les résultats des matchs ?</p>
                     <p>Consulter des compétitions autre que celles auxquelles vous avez participé ?</p>
