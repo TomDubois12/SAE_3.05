@@ -9,23 +9,21 @@ insert into CATEGORIE(intituleCategorie) values
     ('U15'),
     ('U17'),
     ('U20'),
-    ('senior'),
+    ('Senior'),
     ('V1'),
     ('V2'),
     ('V3'),
     ('V4');
 
 insert into ARME(typeArme,descriptionArme) values 
-    ('fleuret homme','fleuret'),
-    ('fleuret femme','fleuret'),
-    ('épée homme','épée'),
-    ('épée femme','épée'),
-    ('sabre homme','sabre'),
-    ('sabre femme','sabre');
+    ('Fleuret','Fleuret'),
+    ('Épée','Épée'),
+    ('Sabre','Sabre');
+   
  
 insert into SEXE(intituleSexe) values
     ('Homme'),
-    ('Femme');
+    ('Dames');
 
 insert into CLUB(nomClub) values 
     ('EscriClub'),
