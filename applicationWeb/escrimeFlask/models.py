@@ -262,14 +262,30 @@ def getProfil(numLicence):
         profil.append(comite[0:7])
   return profil
 
+def trieArchive(arme, sexe, categorie, region):
+  liste = getListTournoisAllCLosed()
+  liste2 = []
+  for comp  in liste : 
+    cpt = 0
+    if arme != "none" : 
+      if comp[0][1] == arme : cpt += 1
+    else : cpt += 1
 
-  # requete1 = "select * from TIREUR  where numeroLicenceTireur = " + str(numLicence) + ";"
-  # cursor.execute(requete1)
-  # info = cursor.fetchall()[0]
-  # requete2 = "select nomClub from TIREUR_DANS_CLUB natural join CLUB where numeroLicenceTireur = " + str(numLicence) + ";"
-  # cursor.execute(requete2)
-  # club = cursor.fetchall()
-  # return [info[0],info[1],crypterDate(str(info[5])),info[2],info[6],info[7],club[0][0]]
+    if sexe != "none" :
+      if comp[0][2] == sexe : cpt += 1
+    else : cpt += 1
+
+    if categorie != "none" :
+      if comp[0][3] == categorie : cpt += 1
+    else : cpt += 1
+
+    if region != "none" :
+      if comp[0][4] == region : cpt += 1 
+    else : cpt += 1
+
+    if cpt == 4 : liste2.append(comp)
+
+  return liste2
 
 
 def getCompetitionParOrga(numLicence): 
@@ -311,10 +327,10 @@ if __name__ == "__main__":
     # print(concourtInscritLicenceTireur(151229))
     #print(getClassementNationnal("Sabre","Dames","Seniors"))
     # print(getProfil(151229))
-  # print(getCompetitionParOrga(254612))
-  # print(getClassementNationnal("Sabre","Dames","Seniors"))
-  # print(getProfil(151229))
-    print(getProfil(151229))
+    # print(getCompetitionParOrga(254612))
+    # print(getClassementNationnal("Sabre","Dames","Seniors"))
+    # print(getProfil(151229))
+    # print(getProfil(151229))
     # print(getCompetitionParOrga(254612))
     # print(getClassementNationnal("Sabre","Dames","Seniors"))
     #print(getProfil(151229))
@@ -337,6 +353,8 @@ if __name__ == "__main__":
     #print(getTournoisClosedParticiper(151229))
     #Pour réussir ce test il faut enlever le trigger sur la date inscription 
 
-    
+    #print(getListTournoisAllCLosed())
+    # print(trieArchive("Sabre","Homme","none","Loiret"))
+    # print(trieArchive("Sabre","Homme","Senior","Loiret"))
     pass
 
