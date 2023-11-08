@@ -33,7 +33,9 @@ def connexion_organisateur():
 @app.route('/archives_nc')
 def archivesNC():
     return render_template('archives_nc.html',
-                           title='Archives_NonConnecté')
+                           title='Archives',
+                           villes=getListeComiteReg(),
+                           competitions=getListTournoisAllCLosed())
 
 ##Fonctions de redirection vers les pages avec connexion
 
@@ -160,8 +162,7 @@ def traitement():
     print(dicoOrganisateur.keys())
     print()
     if int(request.args.get("nblicense")) in dicoOrganisateur.keys() and dicoOrganisateur[int(request.args.get("nblicense"))] == request.args.get("nomClub"):
-        return render_template('connexion_organisateur.html',
-                           title='bonne page')
+        return redirect('options_competitions/'+str(request.args.get("nblicense")))
     else:
         return render_template('connexion_organisateur.html',
                            title='Connexion_organisateur',
@@ -183,6 +184,18 @@ def rechercheArchives():
                            villes=getListeComiteReg(),
                            competitions=trieArchive(str(arme),str(sexe),str(categorie),str(ville)),
                            competitionsParticiper=getTournoisClosedParticiper(int(nbLicense)))
+
+@app.route('/rechercheArchivesNC')
+def rechercheArchivesNC():
+    arme=request.args.get("arme")
+    sexe=request.args.get("sexe")
+    categorie=request.args.get("categorie")
+    ville=request.args.get("ville")
+    return render_template('archives_nc.html',
+                           title='Archives',
+                           villes=getListeComiteReg(),
+                           competitions=trieArchive(str(arme),str(sexe),str(categorie),str(ville)))
+
 
 @app.route('/rechercheClassement')
 def rechercheClassement():
