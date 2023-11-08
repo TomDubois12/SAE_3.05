@@ -62,7 +62,7 @@
 .archives .archives_p {
     float: right;
     justify-content: center;
-    margin: auto;
+    margin: auto;   
     flex-wrap: nowrap;
 }
 
@@ -149,20 +149,85 @@ footer .footer_p2, a {
 }
 
 
-@media screen and (max-width: 1000px){
-    .archives_p, .classement_p, .resultats_p, .profil_p{
-        font-size: 2em;
-    }
+@media screen and (max-width: 1000px){  
 
-    .resultats{
-        background-image: "images/escrimeur1.png";
+    .resultats_p {
+        padding-top: 1em;
+        padding-bottom: 1em;
+    }
+    
+    .resultats .resultats_p p {
+        font-size: 1.2vh;
     }
     
     .resultats img{
         width: auto;
         height: auto;
-        max-width: 75%;
-        max-height: 75%;
-        justify-content: center;
+        max-width: 35%;
+        max-height: 10%;
+        padding-top: 2em;
+        padding-bottom: 2em;
+    }
+
+
+
+    .classement_p {
+        padding-top: 1em;
+        padding-bottom: 1em;
+        margin-left: 0.2em;
+        margin-right: 0.2em;
+    }
+    
+    .classement .classement_p p {
+        font-size: 1.2vh;
+        margin : auto;
+    }
+    
+    .classement img{
+        width: auto;
+        height: auto;
+        max-width: 35%;
+        max-height: 10%;
+    }
+
+
+
+    
+    .archives_p {
+        padding-top: 1em;
+        padding-bottom: 1em;
+        margin: 0;
+    }
+    
+    .archives .archives_p p {
+        font-size: 1.2vh;
+    }
+    
+    .archives img{  
+        width: 30%;
+        height: 5%;
+        padding-top: 2em;
+    }
+
+    .archives .archives_p .archives_p5 {
+        margin-top: 2vh;
+    }
+
+    
+    .profil_p {
+        padding-top: 1em;
+        padding-bottom: 1em;
+    }
+    
+    .profil .profil_p p {
+        font-size: 1.2vh;
+        margin-left: 0.3em;
+        margin-right: 0.3em;
+    }
+    
+    .profil img{
+        width: 30%;
+        height: 10%;
+        margin-top: 2em;
     }
 }
