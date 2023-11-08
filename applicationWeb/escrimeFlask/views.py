@@ -44,7 +44,7 @@ def profil(nbLicense):
                            title='Mon profil',
                            isOrganisateur=estOrganisateur(int(nbLicense)),
                             nbLicense=nbLicense,
-                            informations=getProfil(nbLicense))
+                            informations=getProfil(int(nbLicense)))
 
 @app.route('/accueil/<nbLicense>')
 def accueil(nbLicense):
