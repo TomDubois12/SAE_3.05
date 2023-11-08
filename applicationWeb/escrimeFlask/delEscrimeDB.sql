@@ -1,4 +1,5 @@
 drop table if exists TIREUR_DANS_COMPETITIONS;
+drop table if exists ORGANISATEURCOMPETITION;
 drop table if exists TIREUR_DANS_CLUB;
 drop table if exists TIREUR_DANS_POULE;
 drop table if exists ARBITRE_DANS_COMPETITIONS;

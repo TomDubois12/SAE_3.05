@@ -18,31 +18,32 @@
             <h3>Classement National :</h3>
             <img class="epee" src="{{url_for('static', filename='images/epeeBleu.png')}}" alt="Epée bleu d'escrime">
         </div>
-        <div class="selector">
-            <select name="Arme">
-                <option value="none" selected disabled hidden>Choississez une arme</option>
-                <option value="fleuret">Fleuret</option>
-                <option value="epee">Épée</option>
-                <option value="sabre">Sabre</option>
+        <form class="selector" action="{{url_for('rechercheClassement')}}", method="GET" onsubmit="return validateForm();">
+            <select name="arme">
+                <option value="none" selected disabled hidden>Choisissez une arme</option>
+                <option value="Fleuret">Fleuret</option>
+                <option value="Epée">Épée</option>
+                <option value="Sabre">Sabre</option>
             </select>
-            <select name="Arme">
-                <option value="none" selected disabled hidden>Choississez un sexe</option>
-                <option value="homme">Homme</option>
-                <option value="femme">Dames</option>
+            <select name="sexe">
+                <option value="none" selected disabled hidden>Choisissez un sexe</option>
+                <option value="Homme">Homme</option>
+                <option value="Dames">Dames</option>
             </select>
-            <select name="Catégorie">
-                <option value="none" selected disabled hidden>Choississez une catégorie</option>
-                <option value="m15">M15</option>
-                <option value="m17">M17</option>
-                <option value="m20">M20</option>
-                <option value="senior">Seniors</option>
-                <option value="veteran1">Vétérans1</option>
-                <option value="veteran2">Vétérans2</option>
-                <option value="veteran3">Vétérans3</option>
-                <option value="veteran4">Vétérans4</option>
+            <select name="categorie">
+                <option value="none" selected disabled hidden>Choisissez une catégorie</option>
+                <option value="M15">M15</option>
+                <option value="M17">M17</option>
+                <option value="M20">M20</option>
+                <option value="Seniors">Seniors</option>
+                <option value="Vétérans1">Vétérans1</option>
+                <option value="Vétérans2">Vétérans2</option>
+                <option value="Vétérans3">Vétérans3</option>
+                <option value="Vétérans4">Vétérans4</option>
             </select>
-            <button>Rechercher</button>
-        </div>
+            <input type="text" hidden name="nbLicense" value="{{nbLicense}}">
+            <input type="submit" value="Rechercher"></input>
+        </form>
         <div class="tableau">
             <table>
                 <tr class="titre-tableau">
@@ -52,122 +53,38 @@
                     <td>COMITE REGIONAL</td>
                     <td>CLUB</td>
                     <td>POINTS</td>
+                </tr>
+                {% if classement|length> 0  %}
+                    {% for joueur in classement %}
+                    <tr>
+                        <td>{{joueur[8]}}</td>
+                        <td>{{joueur[0]}}</td>
+                        <td>{{joueur[1]}}</td>
+                        <td>{{joueur[5]}}</td>
+                        <td>{{joueur[6]}}</td>
+                        <td>{{joueur[7]}}</td>
                     </tr>
-                <tr>
-                    <td>1</td>
-                    <td>BOISSAY</td>
-                    <td>NATHAN</td>
-                    <td>OCCITANIE</td>
-                    <td>BLOISESCRIME</td>
-                    <td>5000</td>
-                </tr>
-                <tr>
-                    <td>1</td>
-                    <td>BOISSAY</td>
-                    <td>NATHAN</td>
-                    <td>OCCITANIE</td>
-                    <td>BLOISESCRIME</td>
-                    <td>5000</td>
-                </tr>
-                <tr>
-                    <td>1</td>
-                    <td>BOISSAY</td>
-                    <td>NATHAN</td>
-                    <td>OCCITANIE</td>
-                    <td>BLOISESCRIME</td>
-                    <td>5000</td>
-                </tr>
-                <tr>
-                    <td>1</td>
-                    <td>BOISSAY</td>
-                    <td>NATHAN</td>
-                    <td>OCCITANIE</td>
-                    <td>BLOISESCRIME</td>
-                    <td>5000</td>
-                </tr>
-                <tr>
-                    <td>1</td>
-                    <td>BOISSAY</td>
-                    <td>NATHAN</td>
-                    <td>OCCITANIE</td>
-                    <td>BLOISESCRIME</td>
-                    <td>5000</td>
-                </tr>
-                <tr>
-                    <td>1</td>
-                    <td>BOISSAY</td>
-                    <td>NATHAN</td>
-                    <td>OCCITANIE</td>
-                    <td>BLOISESCRIME</td>
-                    <td>5000</td>
-                </tr>
-                <tr>
-                    <td>1</td>
-                    <td>BOISSAY</td>
-                    <td>NATHAN</td>
-                    <td>OCCITANIE</td>
-                    <td>BLOISESCRIME</td>
-                    <td>5000</td>
-                </tr>
-                <tr>
-                    <td>1</td>
-                    <td>BOISSAY</td>
-                    <td>NATHAN</td>
-                    <td>OCCITANIE</td>
-                    <td>BLOISESCRIME</td>
-                    <td>5000</td>
-                </tr>
-                <tr>
-                    <td>1</td>
-                    <td>BOISSAY</td>
-                    <td>NATHAN</td>
-                    <td>OCCITANIE</td>
-                    <td>BLOISESCRIME</td>
-                    <td>5000</td>
-                </tr>
-                <tr>
-                    <td>1</td>
-                    <td>BOISSAY</td>
-                    <td>NATHAN</td>
-                    <td>OCCITANIE</td>
-                    <td>BLOISESCRIME</td>
-                    <td>5000</td>
-                </tr>
-                <tr>
-                    <td>1</td>
-                    <td>BOISSAY</td>
-                    <td>NATHAN</td>
-                    <td>OCCITANIE</td>
-                    <td>BLOISESCRIME</td>
-                    <td>5000</td>
-                </tr>
-                <tr>
-                    <td>1</td>
-                    <td>BOISSAY</td>
-                    <td>NATHAN</td>
-                    <td>OCCITANIE</td>
-                    <td>BLOISESCRIME</td>
-                    <td>5000</td>
-                </tr>
-                <tr>
-                    <td>1</td>
-                    <td>BOISSAY</td>
-                    <td>NATHAN</td>
-                    <td>OCCITANIE</td>
-                    <td>BLOISESCRIME</td>
-                    <td>5000</td>
-                </tr>
-                <tr>
-                    <td>1</td>
-                    <td>BOISSAY</td>
-                    <td>NATHAN</td>
-                    <td>OCCITANIE</td>
-                    <td>BLOISESCRIME</td>
-                    <td>5000</td>
-                </tr>
+                    {% endfor %}
+                {% else %}
+                    <h3 class="choisir">CHOISISSEZ UNE ARME, UN SEXE, UNE CATEGORIE</h3>
+                {% endif %}
             </table>  
         </div>
     </div>
-
 </main>
+
+<script>
+function validateForm() {
+    var armeSelect = document.querySelector('select[name="arme"]');
+    var sexeSelect = document.querySelector('select[name="sexe"]');
+    var categorieSelect = document.querySelector('select[name="categorie]');
+    
+    if (armeSelect.value === "none" || sexeSelect.value === "none" || categorieSelect.value === "none") {
+        alert("Veuillez sélectionner une option valide pour chaque champ.");
+        return false;
+    }
+    return true;
+}
+</script>
+
 {% endblock %}
