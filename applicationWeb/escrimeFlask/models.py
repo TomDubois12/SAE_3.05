@@ -11,9 +11,9 @@ import mysql.connector
 
 #connexion au base de données
 db = mysql.connector.connect(
-  host = "localhost",
-  user = "koko",
-  password = "koko",
+  host = "127.0.0.1",
+  user = "root",
+  password = "Blabla2147",
   database = "Escrime"
 )
 
@@ -210,6 +210,10 @@ def getIdSexeByNumLicence(numeroLicence : int) -> int:
   cursor.execute(requete)
   return cursor.fetchall()
 
+def estOrganisateur(numeroLicence : int) :
+  requete = "select nomOrganisateur from ORGANISATEUR where licenseOrganisateur = " + str(numeroLicence) + ";"
+  cursor.execute(requete)
+  return cursor.fetchall() != []
 
 # def getProfil(numeroLicence : int) -> list:
 #   requete1 = """select nomTireur, prenomTireur, dateNaissanceTireur, numeroLicenceTireur,  nationTireur, comiteRegionalTireur,nomCLub
@@ -239,7 +243,8 @@ if __name__ == "__main__":
     #print(getInfoFromBDNational(138932))
     # print(insertTireurDansCompetition('CONY', 'Philippe' ,13659, '1961-07-06', 'NEUVY NA', 2,'tireur'))   # nom , prenom ,numeroLicence  , dateNaissanceTireur , nomCLub , idCompetition
     # print(estDansBDNational(13659))
-    print(concourtInscritLicenceTireur(13659))
-    print(concourtInscritLicenceArbitre(147282))
+    # print(concourtInscritLicenceTireur(13659))
+    # print(concourtInscritLicenceArbitre(147282))
+    print(estOrganisateur(241354))
     pass
 
