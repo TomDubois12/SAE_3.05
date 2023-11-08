@@ -7,7 +7,6 @@
 
 .resultats > div{
     background-color: #010101;
-    margin-top: 5vh;
 }
 .resultats >div:hover{
 
@@ -47,6 +46,7 @@
     justify-content: center;
     margin: auto;
     flex-wrap: nowrap;
+    padding: 0.7em;
 }
 
 .resultats_p p {
@@ -61,6 +61,7 @@
 }
 
 .classement_p {
+    padding: 0.7em;
     float: left;
     justify-content: center;
     margin: auto;
@@ -79,6 +80,7 @@
 }
 
 .archives_p {
+    padding: 0.7em;
     float: right;
     justify-content: center;
     margin: auto;
@@ -97,6 +99,7 @@
 }
 
 .profil_p {
+    padding: 0.7em;
     float: left;
     justify-content: center;
     margin: auto;
@@ -165,4 +168,36 @@ footer >p {
 footer .footer_p2, footer a {
     color: white;
     margin-top: 2vh;
+}
+
+@media screen and (max-width: 1200px) {
+    .resultats p{
+        font-size: 1.5em;
+    }
+
+    .archives p{
+        font-size: 1.5em;
+    }
+    .classement p{
+        font-size: 1.5em;
+    }
+    .profil p{
+        font-size: 1.5em;
+    }
+}
+
+@media screen and (max-width: 800px) {
+    .resultats p{
+        font-size: 1.2em;
+    }
+
+    .archives p{
+        font-size: 1.2em;
+    }
+    .classement p{
+        font-size: 1.2em;
+    }
+    .profil p{
+        font-size: 1.2em;
+    }
 }
