@@ -30,13 +30,6 @@ def connexion_organisateur():
     return render_template('connexion_organisateur.html',
                            title='Connexion_organisateur')
 
-@app.route('/archives_nc')
-def archivesNC():
-    return render_template('archives_nc.html',
-                           title='Archives',
-                           villes=getListeComiteReg(),
-                           competitions=getListTournoisAllCLosed())
-
 ##Fonctions de redirection vers les pages avec connexion
 
 @app.route('/profil/<nbLicense>&<nbCompet>')
@@ -44,8 +37,8 @@ def profil(nbLicense,nbCompet):
     return render_template('profil.html',
                            title='Mon profil',
                            isOrganisateur=estOrganisateur(int(nbLicense)),
-                            nbLicense=nbLicense,
-                            nbCompet=nbCompet,
+                            nbLicense=int(nbLicense),
+                            nbCompet=int(nbCompet),
                             informations=getProfil(int(nbLicense)),
                             stats=getStatistique(int(nbLicense)))
 
@@ -54,8 +47,8 @@ def accueil(nbLicense,nbCompet):
     return render_template('accueil.html',
                            title='Accueil',
                            isOrganisateur=estOrganisateur(int(nbLicense)),
-                           nbCompet=nbCompet,
-                           nbLicense=nbLicense,
+                           nbCompet=int(nbCompet),
+                           nbLicense=int(nbLicense),
                            nomCompet=getInfoCompetition(int(nbCompet))[0][1],
                            nombreCompet=len(getTournoisClosedParticiper(int(nbLicense))))
 
@@ -64,16 +57,16 @@ def classement_national(nbLicense,nbCompet):
     return render_template('classement_national.html',
                            title='Classement_National',
                            isOrganisateur=estOrganisateur(int(nbLicense)),
-                           nbCompet=nbCompet,
-                           nbLicense=nbLicense)
+                           nbCompet=int(nbCompet),
+                           nbLicense=int(nbLicense))
 
 @app.route('/archives/<nbLicense>&<nbCompet>')
 def archives(nbLicense,nbCompet):
     return render_template('archives.html',
                            title='Archives',
                            isOrganisateur=estOrganisateur(int(nbLicense)),
-                           nbLicense=nbLicense,
-                           nbCompet=nbCompet,
+                           nbLicense=int(nbLicense),
+                           nbCompet=int(nbCompet),
                            villes=getListeComiteReg(),
                            competitions=getListTournoisAllCLosed(),
                            competitionsParticiper=getTournoisClosedParticiper(int(nbLicense)))
@@ -83,7 +76,7 @@ def options_competitions(nbLicense):
     return render_template('options_competitions.html',
                            title='Options_Compétitions',
                            isOrganisateur=estOrganisateur(int(nbLicense)),
-                           nbLicense=nbLicense,
+                           nbLicense=int(nbLicense),
                            mesCompetitions=getCompetitionParOrga(nbLicense))
 
 @app.route('/creation_competition/<nbLicense>')
@@ -91,15 +84,15 @@ def creation_competition(nbLicense):
     return render_template('creation_competition.html',
                            title='Création_Compétition',
                            isOrganisateur=estOrganisateur(int(nbLicense)),
-                           nbLicense=nbLicense)
+                           nbLicense=int(nbLicense))
 
 @app.route('/resultats/<nbLicense>&<nbCompet>')
 def resultats(nbLicense,nbCompet):
     return render_template('resultats.html',
                            title='Résultats',
                            isOrganisateur=estOrganisateur(int(nbLicense)),
-                           nbCompet=nbCompet,
-                           nbLicense=nbLicense)
+                           nbCompet=int(nbCompet),
+                           nbLicense=int(nbLicense))
 
 
 ##Fonctions de vérification
@@ -179,8 +172,8 @@ def rechercheArchives():
     return render_template('archives.html',
                            title='Archives',
                            isOrganisateur=estOrganisateur(int(nbLicense)),
-                           nbLicense=nbLicense,
-                            nbCompet=nbCompet,
+                           nbLicense=int(nbLicense),
+                            nbCompet=int(nbCompet),
                            villes=getListeComiteReg(),
                            competitions=trieArchive(str(arme),str(sexe),str(categorie),str(ville)),
                            competitionsParticiper=getTournoisClosedParticiper(int(nbLicense)))
@@ -207,8 +200,8 @@ def rechercheClassement():
     return render_template('classement_national.html',
                            title='Classement_National',
                            isOrganisateur=estOrganisateur(int(nbLicense)),
-                           nbLicense=nbLicense,
-                           nbCompet=nbCompet,
+                           nbLicense=int(nbLicense),
+                           nbCompet=int(nbCompet),
                            classement=getClassementNationnal(arme,sexe,categorie))
 
 @app.route('/validationConnexion')
