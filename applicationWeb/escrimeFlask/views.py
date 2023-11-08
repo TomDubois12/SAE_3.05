@@ -37,34 +37,40 @@ def archivesNC():
 
 ##Fonctions de redirection vers les pages avec connexion
 
-@app.route('/profil/<nbLicense>')
-def profil(nbLicense):
+@app.route('/profil/<nbLicense>&<nbCompet>')
+def profil(nbLicense,nbCompet):
     return render_template('profil.html',
                            title='Mon profil',
                            isOrganisateur=estOrganisateur(int(nbLicense)),
                             nbLicense=nbLicense,
+                            nbCompet=nbCompet,
                             informations=getProfil(int(nbLicense)))
 
-@app.route('/accueil/<nbLicense>')
-def accueil(nbLicense):
+@app.route('/accueil/<nbLicense>&<nbCompet>')
+def accueil(nbLicense,nbCompet):
     return render_template('accueil.html',
                            title='Accueil',
                            isOrganisateur=estOrganisateur(int(nbLicense)),
-                           nbLicense=nbLicense)
+                           nbCompet=nbCompet,
+                           nbLicense=nbLicense,
+                           nomCompet=getInfoCompetition(int(nbCompet))[0][1],
+                           nombreCompet=len(getTournoisClosedParticiper(int(nbLicense))))
 
-@app.route('/classement_national/<nbLicense>')
-def classement_national(nbLicense):
+@app.route('/classement_national/<nbLicense>&<nbCompet>')
+def classement_national(nbLicense,nbCompet):
     return render_template('classement_national.html',
                            title='Classement_National',
                            isOrganisateur=estOrganisateur(int(nbLicense)),
+                           nbCompet=nbCompet,
                            nbLicense=nbLicense)
 
-@app.route('/archives/<nbLicense>')
-def archives(nbLicense):
+@app.route('/archives/<nbLicense>&<nbCompet>')
+def archives(nbLicense,nbCompet):
     return render_template('archives.html',
                            title='Archives',
                            isOrganisateur=estOrganisateur(int(nbLicense)),
                            nbLicense=nbLicense,
+                           nbCompet=nbCompet,
                            villes=getListeComiteReg(),
                            competitions=getListTournoisAllCLosed(),
                            competitionsParticiper=getTournoisClosedParticiper(int(nbLicense)))
@@ -84,11 +90,12 @@ def creation_competition(nbLicense):
                            isOrganisateur=estOrganisateur(int(nbLicense)),
                            nbLicense=nbLicense)
 
-@app.route('/resultats/<nbLicense>')
-def resultats(nbLicense):
+@app.route('/resultats/<nbLicense>&<nbCompet>')
+def resultats(nbLicense,nbCompet):
     return render_template('resultats.html',
                            title='Résultats',
                            isOrganisateur=estOrganisateur(int(nbLicense)),
+                           nbCompet=nbCompet,
                            nbLicense=nbLicense)
 
 
@@ -129,7 +136,8 @@ def verifConnexionEscrimeur():
                                title='Connexion_escrimeur',
                                affichageConcours=True,
                                concoursTireur=concoursTireur,
-                               concoursArbitre=concoursArbitre)
+                               concoursArbitre=concoursArbitre,
+                               nbLicense=request.args.get("nbLicense"))
         
         else:
             return render_template('connexion_escrimeur.html',
@@ -165,10 +173,12 @@ def rechercheArchives():
     categorie=request.args.get("categorie")
     ville=request.args.get("ville")
     nbLicense=request.args.get("nbLicense")
+    nbCompet=request.args.get("nbCompet")
     return render_template('archives.html',
                            title='Archives',
                            isOrganisateur=estOrganisateur(int(nbLicense)),
                            nbLicense=nbLicense,
+                            nbCompet=nbCompet,
                            villes=getListeComiteReg(),
                            competitions=trieArchive(str(arme),str(sexe),str(categorie),str(ville)),
                            competitionsParticiper=getTournoisClosedParticiper(int(nbLicense)))
@@ -179,9 +189,16 @@ def rechercheClassement():
     sexe=request.args.get("sexe")
     categorie=request.args.get("categorie")
     nbLicense=request.args.get("nbLicense")
+    nbCompet=request.args.get("nbCompet")
     return render_template('classement_national.html',
                            title='Classement_National',
                            isOrganisateur=estOrganisateur(int(nbLicense)),
                            nbLicense=nbLicense,
+                           nbCompet=nbCompet,
                            classement=getClassementNationnal(arme,sexe,categorie))
 
+@app.route('/validationConnexion')
+def validationConnexion():
+    nbCompet=request.args.get("compet")
+    nbLicense=request.args.get("nbLicense")
+    return redirect('accueil/'+str(nbLicense)+'&'+str(nbCompet))

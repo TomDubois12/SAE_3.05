@@ -1,7 +1,7 @@
 {% block linkcss %}
     <link rel="stylesheet" href="{{ url_for('static', filename='css/header3.css')}}">
 {% endblock %}
-<a href={{url_for('accueil', nbLicense=nbLicense)}}><img src="../../static/images/LogoEscrime.png" alt="Logo de l'escrime"></a>
+<a href={{url_for('accueil', nbLicense=nbLicense, nbCompet=nbCompet)}}><img src="../../static/images/LogoEscrime.png" alt="Logo de l'escrime"></a>
 <nav>
     <ul>
         <div class="lien">
@@ -13,24 +13,24 @@
             </li>
             {% else %}       
             <li>
-                <a href={{url_for('resultats', nbLicense=nbLicense)}}>
+                <a href={{url_for('resultats', nbLicense=nbLicense, nbCompet=nbCompet)}}>
                 <img src="../../static/images/trophee.png" alt="Image de trophée pour indiquer résultat">
                 Résultats</a>
             </li>
             {% endif %}
             
             <li>
-                <a href={{url_for('classement_national', nbLicense=nbLicense)}}>
+                <a href={{url_for('classement_national', nbLicense=nbLicense, nbCompet=nbCompet)}}>
                 <img src="../../static/images/podium.png" alt="Image de podium pour indiquer le classement national">
                 Classement national</a>
             </li>
             <li>
-                <a href={{url_for('archives', nbLicense=nbLicense)}}>
+                <a href={{url_for('archives', nbLicense=nbLicense, nbCompet=nbCompet)}}>
                 <img src="../../static/images/archives.png" alt="Image d'un carton pour indiquer les archives">
                 Archives</a>
             </li>
             <li>
-                <a href={{url_for('profil', nbLicense=nbLicense)}}>
+                <a href={{url_for('profil', nbLicense=nbLicense, nbCompet=nbCompet)}}>
                 <img src="../../static/images/profil.png" alt="Image d'une tete d'escrimeur pour indiquer le profil">
                 Mon profil</a>
             </li>
