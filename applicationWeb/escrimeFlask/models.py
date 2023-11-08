@@ -12,8 +12,8 @@ import mysql.connector
 #connexion au base de données
 db = mysql.connector.connect(
   host = "localhost",
-  user = "nathan",
-  password = "nathan",
+  user = "koko",
+  password = "koko",
   database = "Escrime"
 )
 
@@ -164,7 +164,7 @@ def classementFile(filename :str) -> list:
     return res
 
 def getClassementNationnal(arme,sexe,categorie) : 
-  return classementFile("./escrimeFlask//csvEscrimeur/classement_" + arme + "_" + sexe + "_" + categorie +".csv")
+  return classementFile("./escrimeFlask/csvEscrimeur/classement_" + arme + "_" + sexe + "_" + categorie +".csv")
 
 
 def inscriptionOuverte() -> list:
@@ -261,6 +261,7 @@ def getProfil(numLicence):
   club = cursor.fetchall()
   return [info[0],info[1],crypterDate(str(info[5])),info[2],info[6],info[7],club[0][0]]
 
+
 def getCompetitionParOrga(numLicence): 
   requete = "select * from ORGANISATEURCOMPETITION natural join COMPETITION  where licenseOrganisateur = 254612;"
   cursor.execute(requete)
@@ -273,7 +274,6 @@ def getCompetitionParOrga(numLicence):
     cursor.execute(requete2) 
     res.append(cursor.fetchall())
   return res
-
 
 def fichiersDossier(path : str) :
   files = os.listdir(path)
@@ -302,6 +302,8 @@ if __name__ == "__main__":
     #print(getClassementNationnal("Sabre","Dames","Seniors"))
     # print(getProfil(151229))
     print(getCompetitionParOrga(254612))
+    # print(getClassementNationnal("Sabre","Dames","Seniors"))
+    print(getProfil(151229))
 
     ################
     ################

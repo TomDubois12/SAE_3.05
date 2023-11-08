@@ -115,10 +115,16 @@ table tr:nth-child(odd){
 } 
 
 /* bouton */
-button {
+button, input {
     background-color: #062656;
     color: white;
     padding: 0.5em;
     padding-left: 1.5em;
     padding-right: 1.5em;
+}
+
+.choisir{
+    position: absolute;
+    top: 70%;
+    left: 35%;
 }
