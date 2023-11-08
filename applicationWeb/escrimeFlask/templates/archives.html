@@ -24,10 +24,12 @@
             <div class="texte">
                 <p>Vous pouvez consulter ici les archives des compétitions déjà terminées.</p>
             </div>
+            {% if nbLicense==0 %}
             <div class="texteimg">    
                 <p>Celles auxquelles vous avez participé vous serez indiqué par </p>
                 <img class="vousavezparticipe" src="{{url_for('static', filename='images/vousavezparticipe.png')}}" alt="Vous avez participé">
             </div>
+            {% endif %}
         </div>
         <form class="selector" action="{{url_for('rechercheArchives')}}", method="GET">
             <select name="arme">
