@@ -301,9 +301,9 @@ if __name__ == "__main__":
     # print(concourtInscritLicenceTireur(151229))
     #print(getClassementNationnal("Sabre","Dames","Seniors"))
     # print(getProfil(151229))
-    print(getCompetitionParOrga(254612))
-    # print(getClassementNationnal("Sabre","Dames","Seniors"))
-    print(getProfil(151229))
+  # print(getCompetitionParOrga(254612))
+  # print(getClassementNationnal("Sabre","Dames","Seniors"))
+  # print(getProfil(151229))
 
     ################
     ################
