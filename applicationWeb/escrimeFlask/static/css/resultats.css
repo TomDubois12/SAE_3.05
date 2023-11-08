@@ -1,0 +1,74 @@
+.tableau{
+    width: 100%  ;
+}
+
+iframe{
+    height: 75vh;
+}
+
+/* titre */
+.epee {
+    position: relative;
+    top: -2vmin;
+    right: 2vmin;
+
+}
+
+.epee img {
+    width: 100%;
+    object-fit: fill;
+    display: block;
+}
+
+.titre {
+    margin-top: 4em;
+    margin-left: 5em;
+}
+
+.titre h3 {
+    padding-bottom: 0;
+    margin-left: 10vh;
+    font-size: 5vh;
+    font-family: 'Average', sans-serif;
+}
+
+.texteimg {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+
+/* petit_titre */
+.petite_epee {
+    position: relative;
+    top: -2vmin;
+    right: 2vmin;
+
+}
+
+.petite_epee {
+    width: 25%;
+    object-fit: fill;
+    display: block;
+}
+
+.petit_titre {
+    margin-top: 4em;
+    margin-left: 7em;
+}
+
+.petit_titre h3 {
+    padding-bottom: 0;
+    margin-left: 4vh;
+    font-size: 3vh;
+    font-family: 'Average', sans-serif;
+}
+
+.texteimg {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+p {
+    margin-left: 8em;
+}

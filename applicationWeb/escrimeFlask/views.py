@@ -35,7 +35,6 @@ def archivesNC():
     return render_template('archives_nc.html',
                            title='Archives_NonConnecté')
 
-
 ##Fonctions de redirection vers les pages avec connexion
 
 @app.route('/profil/<nbLicense>')
@@ -87,6 +86,7 @@ def resultats(nbLicense):
 
 
 ##Fonctions de vérification
+
 
 @app.route('/verifInscription')
 def verifInscription():
@@ -151,7 +151,6 @@ def traitement():
                            title='Connexion_organisateur',
                            popup=True)
 
-
 @app.route('/rechercheArchives')
 def rechercheArchives():
     arme=request.args.get("arme")
@@ -172,3 +171,4 @@ def rechercheClassement():
                            isOrganisateur=estOrganisateur(int(nbLicense)),
                            nbLicense=nbLicense,
                            classement=getClassementNationnal(arme,sexe,categorie))
+
