@@ -160,6 +160,12 @@ button, input {
     table{
         margin : 3em;
     }
+
+    select *{
+        font-size: small;
+        font-style: italic bold;
+        color: rgb(24, 24, 123);
+    }
 }
 
 @media screen and (max-width: 1300px) {
