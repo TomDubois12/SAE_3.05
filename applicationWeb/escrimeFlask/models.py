@@ -25,6 +25,66 @@ db = mysql.connector.connect(
 #créer un curseur de base de données pour effectuer des opérations SQL
 cursor = db.cursor()
 
+########################################################################
+########################################################################
+########################################################################
+########################################################################
+########################################################################
+
+def getIdLieuByNom(nomLieu): 
+    try :
+        requete = "select idLieu from LIEU where comiteReg = '" + str(nomLieu) +"' ;"
+        cursor.execute(requete)
+        return cursor.fetchall()[0][0]
+    except Exception : 
+        return None
+
+def setNewLieuByNom(nomLieu): 
+    requete = "insert into LIEU(adresse,region,departement,comiteReg) values('"+ str(nomLieu) +"','"+ str(nomLieu) +"','" + str(nomLieu) + "', '" + str(nomLieu) + "' )"
+    cursor.execute(requete)
+    db.commit()
+
+
+
+def getIdCategorieByNom(nomCat): 
+    requete = "select idCategorie from CATEGORIE where intituleCategorie = '" + str(nomCat) +"' ;"
+    cursor.execute(requete)
+    return cursor.fetchall()[0][0]
+
+def getIdSexeByNom(nomSexe): 
+    requete = "select idSexe from SEXE where intituleSexe = '" + str(nomSexe) +"' ;"
+    cursor.execute(requete)
+    return cursor.fetchall()[0][0]
+
+
+def getIdArmeByNom(nomArme): 
+    requete = "select idArme from ARME where typeArme = '" + str(nomArme) +"' ;"
+    cursor.execute(requete)
+    return cursor.fetchall()[0][0]
+
+def getIdClubByNom(nomClub): 
+    requete = "select idClub from CLUB where nomClub = '" + str(nomClub) +"' ;"
+    cursor.execute(requete)
+    return cursor.fetchall()[0][0]
+
+
+
+def getIdSexeByIdCompetition(idCompetition : int) -> int:
+  requete = "select idSexeCompetition from COMPETITION where idCompetition = " + str(idCompetition) + ";"
+  cursor.execute(requete)
+  return cursor.fetchall()
+
+def getIdMaxCompetition() -> int :
+    requete = "select MAX(idCompetition) from COMPETITION;"
+    cursor.execute(requete)
+    return cursor.fetchall()[0][0]
+
+########################################################################
+########################################################################
+########################################################################
+########################################################################
+########################################################################
+
 def insertTireurDansCompetition(nom : str, prenom : str,numeroLicence : int , dateNaissanceTireur : str, nomCLub :str, idCompetition: int, ToA : str) -> bool:
     try :
         if estDansBDNational(numeroLicence) :
@@ -280,11 +340,25 @@ def getListTournoisAllCLosed():
   info = cursor.fetchall()
   return infoCompetitionFinie(info)
 
+def getListIdCompetitionTournoisClosed():
+  listeIdCompetition = []
+  liste = getListTournoisAllCLosed()
+  for i in range(len(liste))  : 
+    listeIdCompetition.append(liste[i][0][5])
+  return listeIdCompetition
+
 def getTournoisLancer():
-  requete1 = "select * from COMPETITION where estFinie = False and datediff(dateDebutCompetiton,CURDATE()) < 1  and order by dateDebutCompetiton DESC;"
+  requete1 = "select * from COMPETITION where estFinie = False and datediff(dateDebutCompetiton,CURDATE()) < 1 order by dateDebutCompetiton DESC;"
   cursor.execute(requete1)
   info = cursor.fetchall()
   return infoCompetitionOuverte(info)
+
+def getListIdCompetitionTournoisLancer():
+  listeIdCompetition = []
+  liste = getTournoisLancer()
+  for i in range(len(liste)): 
+    listeIdCompetition.append(liste[i][0][5])
+  return listeIdCompetition
 
 def getTournoisClosedParticiper(numeroLicence):
   requete1 = "select * from TIREUR_DANS_COMPETITIONS natural join COMPETITION where numeroLicenceTireur = " + str(numeroLicence) + " and estFinie = True  order by dateDebutCompetiton DESC;"
@@ -376,7 +450,7 @@ def createCompetition(nomCompete, lieu, categorie, sexe, arme, coef, date, licen
                 values ('""" + str(nomCompete) + "'," + str((date)[0:4]) + "," + "False" + "," + str(coef) + ",'" + str((date)) + "'," + str(getIdLieuByNom(lieu)) + "," + str(getIdCategorieByNom(categorie))+ "," + str(getIdSexeByNom(sexe)) +"," + str(getIdArmeByNom(arme)) + ");"""
   cursor.execute(requete1)
   db.commit()
-  idComp = getIdMaxCompetition() + 1 
+  idComp = int(getIdMaxCompetition())
   requete2 = "insert into ORGANISATEURCOMPETITION(idCompetition, licenseOrganisateur) values( " + str(idComp) + "," + str(licenceOrga) + ");"
   cursor.execute(requete2)
   db.commit()
@@ -441,6 +515,7 @@ if __name__ == "__main__":
     # print(getClassementNationnal("Sabre","Dames","Seniors"))
     #print(getProfil(151229))
     # print(concourtInscritLicenceTireur())
+    # print(getIdMaxCompetition())
 
     ################
     ################

@@ -28,17 +28,42 @@
                 <p>{{competition[0][0].upper()}} {{competition[0][1].upper()}} {{competition[0][2].upper()}}, {{competition[0][3]}} {{competition[0][4]}} </p>
             </div>
             <div class="bouton">
+            {% if competition[0][5] in tournoisLancer %}
                 <form action="{{url_for('boutonLancer')}}", method="GET">
                     <input type="text" hidden name="nbCompet" value={{competition[0][5]}}>
                     <input type="text" hidden name="nbLicense" value={{nbLicense}}>
-                    <input type="submit" value="Lancer">
+                    <input class="button_desactivated" disabled type="submit" value="Lancer">
                 </form>
-                <a href={{url_for('resultats', nbLicense=nbLicense, nbCompet=competition[0][5])}}>Consulter</a>
+            {% else %}
+                {% if competition[0][5] in tournoisArchiver %}
+                <form action="{{url_for('boutonLancer')}}", method="GET">
+                    <input type="text" hidden name="nbCompet" value={{competition[0][5]}}>
+                    <input type="text" hidden name="nbLicense" value={{nbLicense}}>
+                    <input class="button_desactivated" disabled type="submit" value="Lancer">
+                </form>
+                {% else %}
+                <form action="{{url_for('boutonLancer')}}", method="GET">
+                    <input type="text" hidden name="nbCompet" value={{competition[0][5]}}>
+                    <input type="text" hidden name="nbLicense" value={{nbLicense}}>
+                    <input class="buttonSubmit" type="submit" value="Lancer">
+                </form>
+                {% endif %}
+            {% endif %}
+                <a class="buttonSubmit" href={{url_for('resultats', nbLicense=nbLicense, nbCompet=competition[0][5])}}>Consulter</a>
+            {% if competition[0][5] in tournoisArchiver %}
                 <form action="{{url_for('boutonArchiver')}}", method="GET">
                     <input type="text" hidden name="nbCompet" value={{competition[0][5]}}>
                     <input type="text" hidden name="nbLicense" value={{nbLicense}}>
-                    <input type="submit" value="Archiver">
+                    <input class="button_desactivated" disabled type="submit" value="Archiver">
                 </form>
+            {% else %}
+                <form action="{{url_for('boutonArchiver')}}", method="GET">
+                    <input type="text" hidden name="nbCompet" value={{competition[0][5]}}>
+                    <input type="text" hidden name="nbLicense" value={{nbLicense}}>
+                    <input class="buttonSubmit" type="submit" value="Archiver">
+                </form>
+            {% endif %}
+                
             </div>
         </div>
         {% endfor %}
