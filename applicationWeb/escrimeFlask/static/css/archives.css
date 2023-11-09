@@ -58,11 +58,11 @@
 /* compétition */
 
 .competition {
+    justify-content: space-between;
     margin-left: 8em;
     margin-right: 8em;
     margin-top: 2em;
-    margin-bottom: 1em;
-    padding: 1em;
+    margin-bottom: 2em;
     padding-left: 3em;
     padding-right: 3em;
     background-color: lightgray;
@@ -70,14 +70,15 @@
 }
 
 .concours{
-    margin-right: 4em;
-    padding-right: 10em;
+    padding-top: 1em;
+    padding-bottom: 1em;
 }
 
 .vousavezparticipe1 {
-    margin-right: 3em;
-    width: 20%;
+    display: block;
+    width: 10%;
     object-fit: fill;
+    margin: 2em;
 }   
 
 input, button {
@@ -86,5 +87,15 @@ input, button {
     padding: 0.5em;
     padding-left: 1.5em;
     padding-right: 1.5em;
+}
+
+
+/* bouton */
+
+.bouton {
+    right: 0px;
+    margin-top: 2em;
+    margin-bottom: 2em;
+    margin-right: 10em;
 }
 

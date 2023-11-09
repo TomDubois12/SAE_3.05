@@ -1,8 +1,8 @@
 import csv
-try: 
-  from .supportModel import *
-except ImportError:
-  from supportModel import *
+# try: 
+#   from .supportModel import *
+# except ImportError:
+#   from supportModel import *
 
 
 # pip install Flask-MySQLdb
@@ -17,9 +17,8 @@ import mysql.connector
 #connexion au base de données
 db = mysql.connector.connect(
   host = "localhost",
-
-  user = "koko",
-  password = "koko",
+  user = "root",
+  password = "1234",
   database = "Escrime"
 )
 #Blabla2147
