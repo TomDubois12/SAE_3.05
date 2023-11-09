@@ -81,7 +81,7 @@
     margin: 2em;
 }   
 
-input, button {
+input, .bouton a {
     background-color: #062656;
     color: white;
     padding: 0.5em;

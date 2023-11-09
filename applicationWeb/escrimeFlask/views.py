@@ -78,8 +78,7 @@ def options_competitions(nbLicense):
                            isOrganisateur=estOrganisateur(int(nbLicense)),
                            nbLicense=int(nbLicense),
                            mesCompetitions=getCompetitionParOrga(nbLicense),
-                           tournoisArchiver=getListTournoisAllCLosed(),
-                           tournoisLancer=)
+                           tournoisArchiver=getListTournoisAllCLosed())
 
 @app.route('/creation_competition/<nbLicense>')
 def creation_competition(nbLicense):

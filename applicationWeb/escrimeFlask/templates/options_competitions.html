@@ -29,13 +29,13 @@
             </div>
             <div class="bouton">
                 <form action="{{url_for('boutonLancer')}}", method="GET">
-                    <input type="text" hidden name="nbCompet" value="{{competition[0][5]}}">
+                    <input type="text" hidden name="nbCompet" value={{competition[0][5]}}>
                     <input type="text" hidden name="nbLicense" value={{nbLicense}}>
                     <input type="submit" value="Lancer">
                 </form>
-                <a href={{url_for()}}></a><button>Consulter</button>
+                <a href={{url_for('resultats', nbLicense=nbLicense, nbCompet=competition[0][5])}}>Consulter</a>
                 <form action="{{url_for('boutonArchiver')}}", method="GET">
-                    <input type="text" hidden name="nbCompet" value="{{competition[0][5]}}">
+                    <input type="text" hidden name="nbCompet" value={{competition[0][5]}}>
                     <input type="text" hidden name="nbLicense" value={{nbLicense}}>
                     <input type="submit" value="Archiver">
                 </form>

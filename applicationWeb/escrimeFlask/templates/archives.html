@@ -82,7 +82,7 @@
                         <img class="vousavezparticipe1" src="{{url_for('static', filename='images/vousavezparticipe.png')}}" alt="Vous avez participé">
                 {% endif %}
                 <div class="bouton">
-                    <button>Consulter</button>
+                    <a href={{url_for('resultats', nbLicense=nbLicense, nbCompet=competition[0][5])}}>Consulter</a>
                 </div>
             </div>
         {% endfor %}
