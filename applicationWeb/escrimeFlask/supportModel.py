@@ -18,7 +18,6 @@ db = mysql.connector.connect(
 
 cursor = db.cursor()
 
-#  arme
 
 def getIdLieuByNom(nomLieu): 
     try :
@@ -32,6 +31,8 @@ def setNewLieuByNom(nomLieu):
     requete = "insert into LIEU(adresse,region,departement,comiteReg) values('','','', '" + str(nomLieu) + "' )"
     cursor.execute(requete)
     db.commit()
+
+
 
 def getIdCategorieByNom(nomCat): 
     requete = "select idCategorie from CATEGORIE where intituleCategorie = '" + str(nomCat) +"' ;"
@@ -64,8 +65,8 @@ def getIdSexeByIdCompetition(idCompetition : int) -> int:
 
 if __name__ == "__main__":
     # print(getIdLieuByNom("GRAND EST"))
-    # print(getIidCategorieByNom("'U13'"))
-    # print(getIdSexeByNom("'Homme'"))
-    # print(getIdArmeByNom("'Fleuret'"))
-    # print(getIdClubByNom("'EscriClub'"))
+    # print(getIidCategorieByNom("U13"))
+    # print(getIdSexeByNom("Homme"))
+    # print(getIdArmeByNom("Fleuret"))
+    # print(getIdClubByNom("EscriClub"))
     pass 
