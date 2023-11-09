@@ -380,7 +380,12 @@ def createCompetition(nomCompete, lieu, categorie, sexe, arme, coef, date ) :
   db.commit()
 
 def archiverCompetition(idCompetition): 
-  requete = "update COMPETIT set estFinie = True where idCompetition = " + idCompetition + ";"
+  requete = "update COMPETITION set estFinie = True where idCompetition = " + idCompetition + ";"
+  cursor.execute(requete)
+  db.commit()
+
+def lancerCompetition(idCompetition): 
+  requete = "update COMPETITION set dateDebutCompetiton = CURDATE() where idCompetition = " + idCompetition + ";"
   cursor.execute(requete)
   db.commit()
 

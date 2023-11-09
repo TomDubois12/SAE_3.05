@@ -28,7 +28,7 @@ def getIdLieuByNom(nomLieu):
         return None
 
 def setNewLieuByNom(nomLieu): 
-    requete = "insert into LIEU(adresse,region,departement,comiteReg) values('','','', '" + str(nomLieu) + "' )"
+    requete = "insert into LIEU(adresse,region,departement,comiteReg) values('"+ str(nomLieu) +"','"+ str(nomLieu) +"','" + str(nomLieu) + "', '" + str(nomLieu) + "' )"
     cursor.execute(requete)
     db.commit()
 
