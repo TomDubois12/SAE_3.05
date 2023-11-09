@@ -77,7 +77,9 @@ def options_competitions(nbLicense):
                            title='Options_Compétitions',
                            isOrganisateur=estOrganisateur(int(nbLicense)),
                            nbLicense=int(nbLicense),
-                           mesCompetitions=getCompetitionParOrga(nbLicense))
+                           mesCompetitions=getCompetitionParOrga(nbLicense),
+                           tournoisArchiver=getListTournoisAllCLosed(),
+                           tournoisLancer=)
 
 @app.route('/creation_competition/<nbLicense>')
 def creation_competition(nbLicense):
@@ -224,3 +226,14 @@ def creationCompetition():
     nbLicense=request.args.get("nbLicense")
     createCompetition(nom,lieu,categorie,sexe,arme,coeff,date,nbLicense)
     return redirect('options_competitions/'+str(nbLicense))
+
+
+@app.route('/boutonLancer')
+def boutonLancer():
+    lancerCompetition(int(request.args.get("nbCompet")))
+    return redirect('options_competitions/'+str(request.args.get("nbLicense")))
+
+@app.route('/boutonArchiver')
+def boutonArchiver():
+    archiverCompetition(int(request.args.get("nbCompet")))
+    return redirect('options_competitions/'+str(request.args.get("nbLicense")))

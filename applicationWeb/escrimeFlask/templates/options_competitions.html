@@ -25,13 +25,20 @@
         {% for competition in mesCompetitions %}
         <div class="competition">
             <div class="nom_competition">
-                <p>{{competition[0][0].upper()}} {{competition[0][1].upper()}} {{competition[0][2].upper()}}, {{competition[0][3]}} {{competition[0][4]}} {{competition[0][5]}}</p>
-
+                <p>{{competition[0][0].upper()}} {{competition[0][1].upper()}} {{competition[0][2].upper()}}, {{competition[0][3]}} {{competition[0][4]}} </p>
             </div>
             <div class="bouton">
-                <button>Lancer</button>
-                <button>Consulter</button>
-                <button class="button_desactivated" disabled>Archiver</button>
+                <form action="{{url_for('boutonLancer')}}", method="GET">
+                    <input type="text" hidden name="nbCompet" value="{{competition[0][5]}}">
+                    <input type="text" hidden name="nbLicense" value={{nbLicense}}>
+                    <input type="submit" value="Lancer">
+                </form>
+                <a href={{url_for()}}></a><button>Consulter</button>
+                <form action="{{url_for('boutonArchiver')}}", method="GET">
+                    <input type="text" hidden name="nbCompet" value="{{competition[0][5]}}">
+                    <input type="text" hidden name="nbLicense" value={{nbLicense}}>
+                    <input type="submit" value="Archiver">
+                </form>
             </div>
         </div>
         {% endfor %}

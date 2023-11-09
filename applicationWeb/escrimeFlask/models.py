@@ -366,22 +366,22 @@ def createCompetition(nomCompete, lieu, categorie, sexe, arme, coef, date, licen
   db.commit()
 
 def archiverCompetition(idCompetition): 
-  requete = "update COMPETITION set estFinie = True where idCompetition = " + idCompetition + ";"
+  requete = "update COMPETITION set estFinie = True where idCompetition = " + str(idCompetition) + ";"
   cursor.execute(requete)
   db.commit()
 
 def lancerCompetition(idCompetition): 
-  requete = "update COMPETITION set dateDebutCompetiton = CURDATE() where idCompetition = " + idCompetition + ";"
+  requete = "update COMPETITION set dateDebutCompetiton = CURDATE() where idCompetition = " + str(idCompetition) + ";"
   cursor.execute(requete)
   db.commit()
 
 def competitionEstFinie(idCompetition): 
-  requete = "select estFinie from COMPETITION where idCompetition = " + idCompetition + " ;"
+  requete = "select estFinie from COMPETITION where idCompetition = " + str(idCompetition) + " ;"
   cursor.execute(requete)
   return cursor.fetchall()
 
 def competitionEstLancer(idCompetition): 
-  requete = "select datediff(dateDebutCompetiton,CURDATE()) from COMPETITION where idCompetition = " + idCompetition + " ;"
+  requete = "select datediff(dateDebutCompetiton,CURDATE()) from COMPETITION where idCompetition = " + str(idCompetition) + " ;"
   cursor.execute(requete)
   return cursor.fetchall() == 0
 
