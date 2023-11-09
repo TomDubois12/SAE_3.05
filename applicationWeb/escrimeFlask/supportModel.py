@@ -62,6 +62,11 @@ def getIdSexeByIdCompetition(idCompetition : int) -> int:
   cursor.execute(requete)
   return cursor.fetchall()
 
+def getIdMaxCompetition() -> int : 
+    requete = "select MAX(idCompetition) from COMPETITION;"
+    cursor.execute(requete)
+    return cursor.fetchall() 
+
 
 if __name__ == "__main__":
     # print(getIdLieuByNom("GRAND EST"))
