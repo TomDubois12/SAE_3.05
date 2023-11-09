@@ -342,14 +342,14 @@ def getStatistique(numLicence):
   return stats
 
 def getCompetitionParOrga(numLicence): 
-  requete = "select * from ORGANISATEURCOMPETITION natural join COMPETITION  where licenseOrganisateur = " + numLicence + ";"
+  requete = "select * from ORGANISATEURCOMPETITION natural join COMPETITION  where licenseOrganisateur = " + numLicence + " order by dateDebutCompetiton DESC;"
   cursor.execute(requete)
   info = cursor.fetchall()
   res = []
   for i in range(len(info)):
     requete2 = """select intituleCompet,typeArme, intituleSexe,intituleCategorie, departement, idCompetition
                  from COMPETITION natural join LIEU natural join ARME natural join SEXE natural join CATEGORIE
-                where  idLieu ="""+ str(info[i][7]) +" and idCategorie ="+ str(info[i][8]) +" and idSexe = "+str(info[i][9]) +" and idArme = "+ str(info[i][10]) +" and idCompetition = "+str(info[i][0]) +";"
+                where  idLieu ="""+ str(info[i][7]) +" and idCategorie ="+ str(info[i][8]) +" and idSexe = "+str(info[i][9]) +" and idArme = "+ str(info[i][10]) +" and idCompetition = "+str(info[i][0]) +" order by dateDebutCompetiton DESC;"
     cursor.execute(requete2) 
     res.append(cursor.fetchall())
   return res
