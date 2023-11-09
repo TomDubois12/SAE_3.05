@@ -72,10 +72,10 @@
                     <p>{{ competition[0][1].upper() }} </p>
                     <p>{{competition[0][3]}}, {{competition[0][4]}} </p>
                 </div>
-                <div class="bouton">
-                    {% if competition in competitionsParticiper %}
+                {% if competition in competitionsParticiper %}
                         <img class="vousavezparticipe1" src="{{url_for('static', filename='images/vousavezparticipe.png')}}" alt="Vous avez participé">
-                    {% endif %}
+                {% endif %}
+                <div class="bouton">
                     <button>Consulter</button>
                 </div>
             </div>
