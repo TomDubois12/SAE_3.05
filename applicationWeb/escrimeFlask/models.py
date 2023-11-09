@@ -17,8 +17,8 @@ import mysql.connector
 #connexion au base de données
 db = mysql.connector.connect(
   host = "localhost",
-  user = "root",
-  password = "1234",
+  user = "nathan",
+  password = "nathan",
   database = "Escrime"
 )
 #Blabla2147
@@ -378,6 +378,15 @@ def createCompetition(nomCompete, lieu, categorie, sexe, arme, coef, date ) :
   cursor.execute(requete1)
   db.commit()
 
+def archiverCompetition(idCompetition): 
+  requete = "update COMPETITION set estFinie = True where idCompetition = " + idCompetition + ";"
+  cursor.execute(requete)
+  db.commit()
+
+def lancerCompetition(idCompetition): 
+  requete = "update COMPETITION set dateDebutCompetiton = CURDATE() where idCompetition = " + idCompetition + ";"
+  cursor.execute(requete)
+  db.commit()
 
 def fichiersDossier(path : str) :
   files = os.listdir(path)
