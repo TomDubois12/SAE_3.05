@@ -9,7 +9,7 @@
 {% include "partials/_header3.html" %}
 {% endblock %}
 {% block main %}
-<form class="creation" action="{{url_for('creationCompetition')}}", method="POST" onsubmit="return validateForm();">
+<form class="creation" action="{{url_for('creationCompetition')}}", method="GET" onsubmit="return validateForm();">
     <h1>CRÉATION D’UNE COMPÉTITION</h1>
     <div class="nomCompet">
         <h2>Nom de la compétition</h2>
@@ -26,17 +26,17 @@
     </div>
     <div class="date">
         <h2>Date</h2>
-        <input required type="datetime-local" id="choisirDate" name="date">
+        <input required type="date" id="choisirDate" name="date">
         <script>
             var dateA = document.getElementById("choisirDate");
             var now = new Date();  // Obtenir la date et l'heure actuelles
-    
+
             // Ajouter 15 jours à la date actuelle
             now.setDate(now.getDate() + 15);
-    
-            // Formater la date et l'heure pour le format ISO 8601 (YYYY-MM-DDTHH:MM)
-            var minDate = now.toISOString().slice(0, 16);
-    
+
+            // Formater la date pour le format ISO 8601 (YYYY-MM-DD)
+            var minDate = now.toISOString().slice(0, 10);
+
             // Définir la valeur "min" de l'élément <input>
             dateA.setAttribute("min", minDate);
         </script>
@@ -44,33 +44,31 @@
     <div class="choix">
         <h2>Catégorie</h2>
         <select name="categorie">
-            <option value="none" selected hidden>Choississez une
-                catégorie</option>
-            <option value="m15">M15</option>
-            <option value="m17">M17</option>
-            <option value="m20">M20</option>
-            <option value="senior">Seniors</option>
-            <option value="veteran1">Vétérans1</option>
-            <option value="veteran2">Vétérans2</option>
-            <option value="veteran3">Vétérans3</option>
-            <option value="veteran4">Vétérans4</option>
+                <option value="none" selected hidden>Choississez une catégorie</option>
+                <option value="U13">U13</option>
+                <option value="U15">U15</option>
+                <option value="U17">U17</option>
+                <option value="U20">U20</option>
+                <option value="Senior">Senior</option>
+                <option value="V1">Vétérans1</option>
+                <option value="V2">Vétérans2</option>
+                <option value="V3">Vétérans3</option>
+                <option value="V4">Vétérans4</option>
         </select>
     </div>
     <div class="choix">
         <h2>Type</h2>
         <div class="type">
             <select required name="sexe">
-                <option value="none" selected hidden>Choississez un
-                    sexe</option>
-                <option value="dames">Dames</option>
-                <option value="homme">Homme</option>
+                <option value="none" selected hidden>Choississez un sexe</option>
+                <option value="Homme">Homme</option>
+                <option value="Dames">Dames</option>
             </select>
             <select required name="arme">
-                <option value="none" selected hidden>Choississez une
-                    arme</option>
-                <option value="epee">Epee</option>
-                <option value="fleuret">Fleuret</option>
-                <option value="sabre">Sabre</option>
+                <option value="none" selected hidden>Choississez une arme</option>
+                <option value="Fleuret">Fleuret</option>
+                <option value="Épée">Épée</option>
+                <option value="Sabre">Sabre</option>
             </select>
         </div>
     </div>

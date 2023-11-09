@@ -222,4 +222,5 @@ def creationCompetition():
     arme=request.args.get("arme")
     coeff=request.args.get("coeff")
     nbLicense=request.args.get("nbLicense")
+    createCompetition(nom,lieu,categorie,sexe,arme,coeff,date,nbLicense)
     return redirect('options_competitions/'+str(nbLicense))

@@ -357,11 +357,11 @@ def getCompetitionParOrga(numLicence):
 def createCompetition(nomCompete, lieu, categorie, sexe, arme, coef, date, licenceOrga ) : 
   if getIdLieuByNom(lieu) is None : setNewLieuByNom(lieu)
   requete1 = """insert into COMPETITION(intituleCompet,saison,estFinie,coefficientCompetition,dateDebutCompetiton,idLieuCompetition,idCategorieCompetition,idSexeCompetition,idArmeCompetition) 
-                values ('""" + str(nomCompete) + "'," + str(corrigerDate(date)[0:4]) + "," + "False" + "," + str(coef) + ",'" + str(corrigerDate(date)) + "'," + str(getIdLieuByNom(lieu)) + "," + str(getIdCategorieByNom(categorie))+ "," + str(getIdSexeByNom(sexe)) +"," + str(getIdArmeByNom(arme)) + ");"""
+                values ('""" + str(nomCompete) + "'," + str((date)[0:4]) + "," + "False" + "," + str(coef) + ",'" + str((date)) + "'," + str(getIdLieuByNom(lieu)) + "," + str(getIdCategorieByNom(categorie))+ "," + str(getIdSexeByNom(sexe)) +"," + str(getIdArmeByNom(arme)) + ");"""
   cursor.execute(requete1)
   db.commit()
   idComp = getIdMaxCompetition() + 1 
-  requete2 = "insert into ORGANISATEURCOMPETITION(idCompetition, licenseOrganisateur) values( " + idComp + "," + licenceOrga + ");"
+  requete2 = "insert into ORGANISATEURCOMPETITION(idCompetition, licenseOrganisateur) values( " + str(idComp) + "," + str(licenceOrga) + ");"
   cursor.execute(requete2)
   db.commit()
 
