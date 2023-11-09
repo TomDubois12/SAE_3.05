@@ -263,12 +263,28 @@ def infoCompetitionFinie(info):
     res.append(cursor.fetchall())
   return res
 
+def infoCompetitionOuverte(info):
+  res = []
+  for i in range(len(info)):
+    
+    requete2 = """select intituleCompet,typeArme, intituleSexe,intituleCategorie, departement, idCompetition
+                 from COMPETITION natural join LIEU natural join ARME natural join SEXE natural join CATEGORIE
+                where estFinie = False and idLieu ="""+ str(info[i][6]) +" and idCategorie ="+ str(info[i][7]) +" and idSexe = "+str(info[i][8]) +" and idArme = "+ str(info[i][9]) +" and idCompetition = "+str(info[i][0]) +"  order by dateDebutCompetiton DESC;"
+    cursor.execute(requete2) 
+    res.append(cursor.fetchall())
+  return res
+
 def getListTournoisAllCLosed():
   requete1 = "select * from COMPETITION where estFinie = True order by dateDebutCompetiton DESC;"
   cursor.execute(requete1)
   info = cursor.fetchall()
   return infoCompetitionFinie(info)
-  
+
+def getTournoisLancer():
+  requete1 = "select * from COMPETITION where estFinie = False and datediff(dateDebutCompetiton,CURDATE()) < 1  and order by dateDebutCompetiton DESC;"
+  cursor.execute(requete1)
+  info = cursor.fetchall()
+  return infoCompetitionOuverte(info)
 
 def getTournoisClosedParticiper(numeroLicence):
   requete1 = "select * from TIREUR_DANS_COMPETITIONS natural join COMPETITION where numeroLicenceTireur = " + str(numeroLicence) + " and estFinie = True  order by dateDebutCompetiton DESC;"
