@@ -1,8 +1,5 @@
 import csv
-try: 
-  from .supportModel import *
-except ImportError:
-  from supportModel import *
+
 
 
 # pip install Flask-MySQLdb
