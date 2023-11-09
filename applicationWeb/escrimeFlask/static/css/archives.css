@@ -99,3 +99,22 @@ input, button {
     margin-right: 10em;
 }
 
+@media screen and (max-width: 1000px) {
+    
+    .titre h3{
+        margin-left: 2em;
+        font-size: 2vh;
+    }
+
+    .selector select {
+        margin-right: 0;
+    }
+
+    .vousavezparticipe1 {
+        display: block;
+        width: 25%;
+        height: 10%;
+        object-fit: fill;
+        margin: 2em;
+    }   
+}
