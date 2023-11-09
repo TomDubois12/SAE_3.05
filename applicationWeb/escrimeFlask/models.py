@@ -241,9 +241,6 @@ def getOrganisateurClub():
   return res
 
 
-
-
-
 def getIdSexeByNumLicence(numeroLicence : int) -> int:
   requete = "select idSexeTireur from TIREUR where numeroLicenceTireur = " + str(numeroLicence) + ";"
   cursor.execute(requete)
@@ -388,6 +385,16 @@ def lancerCompetition(idCompetition):
   requete = "update COMPETITION set dateDebutCompetiton = CURDATE() where idCompetition = " + idCompetition + ";"
   cursor.execute(requete)
   db.commit()
+
+def competitionEstFinie(idCompetition): 
+  requete = "select estFinie from COMPETITION where idCompetition = " + idCompetition + " ;"
+  cursor.execute(requete)
+  return cursor.fetchall()
+
+def competitionEstLancer(idCompetition): 
+  requete = "select datediff(dateDebutCompetiton,CURDATE()) from COMPETITION where idCompetition = " + idCompetition + " ;"
+  cursor.execute(requete)
+  return cursor.fetchall() == 0
 
 def fichiersDossier(path : str) :
   files = os.listdir(path)
