@@ -18,9 +18,13 @@ header>a>img{
     height: 10vmin;
     width:80%;
 }
-header> a{
+header>a{
     min-width:20%;
+}
 
+header>img{
+    margin: 5vmin;
+    height: 10vmin;
 }
 
 nav{

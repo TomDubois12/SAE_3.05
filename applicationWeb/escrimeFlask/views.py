@@ -84,7 +84,8 @@ def creation_competition(nbLicense):
     return render_template('creation_competition.html',
                            title='Création_Compétition',
                            isOrganisateur=estOrganisateur(int(nbLicense)),
-                           nbLicense=int(nbLicense))
+                           nbLicense=int(nbLicense),
+                           villes=getListeComiteReg())
 
 @app.route('/resultats/<nbLicense>&<nbCompet>')
 def resultats(nbLicense,nbCompet):
@@ -209,3 +210,15 @@ def validationConnexion():
     nbCompet=request.args.get("compet")
     nbLicense=request.args.get("nbLicense")
     return redirect('accueil/'+str(nbLicense)+'&'+str(nbCompet))
+
+
+@app.route('/creationCompetition')
+def creationCompetition():
+    nom=request.args.get("nom")
+    lieu=request.args.get("ville")
+    date=request.args.get("date")
+    categorie=request.args.get("categorie")
+    sexe=request.args.get("sexe")
+    arme=request.args.get("arme")
+    nbLicense=request.args.get("nbLicense")
+    return redirect('options_competitions/'+str(nbLicense))

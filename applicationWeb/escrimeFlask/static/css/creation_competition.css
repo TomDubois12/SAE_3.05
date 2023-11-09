@@ -1,11 +1,11 @@
-section{
+form{
     border: solid 1px;
     text-align: center;
     margin-left: 20vw;
     margin-right: 20vw;
 }
 
-section h1{
+form h1{
     color: white;
     background-color: #062656;
     padding: 2vw;
@@ -29,7 +29,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     justify-content: center;
 }
 
-button {
+input[type="submit"] {
     background-color: #062656;
     color: white;
     padding: 0.5em;

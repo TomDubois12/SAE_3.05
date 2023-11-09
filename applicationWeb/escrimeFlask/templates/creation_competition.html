@@ -9,22 +9,24 @@
 {% include "partials/_header3.html" %}
 {% endblock %}
 {% block main %}
-<section class="creation">
+<form class="creation" action="{{url_for('creationCompetition')}}", method="POST" onsubmit="return validateForm();">
     <h1>CRÉATION D’UNE COMPÉTITION</h1>
+    <div class="nomCompet">
+        <h2>Nom de la compétition</h2>
+        <input required type="text" name="nom" id="nom">
+    </div>
     <div class="choix">
         <h2>Lieu</h2>
-        <select>
-            <option>Paris</option>
-            <option>Bordeaux</option>
-            <option>Toulouse</option>
-            <option>Strasbourg</option>
-            <option>Nantes</option>
-            <option>Lille</option>
+        <select name="ville">
+            <option value="none" selected hidden>Choississez une région</option>
+            {% for ville in villes %}
+                <option value="{{ ville }}">{{ ville }}</option>
+            {% endfor %}
         </select>
     </div>
     <div class="date">
         <h2>Date</h2>
-        <input required type="datetime-local" id="choisirDate">
+        <input required type="datetime-local" id="choisirDate" name="date">
         <script>
             var dateA = document.getElementById("choisirDate");
             var now = new Date();  // Obtenir la date et l'heure actuelles
@@ -41,8 +43,8 @@
     </div>
     <div class="choix">
         <h2>Catégorie</h2>
-        <select>
-            <option value="none" selected disabled hidden>Choississez une
+        <select name="categorie">
+            <option value="none" selected hidden>Choississez une
                 catégorie</option>
             <option value="m15">M15</option>
             <option value="m17">M17</option>
@@ -57,14 +59,14 @@
     <div class="choix">
         <h2>Type</h2>
         <div class="type">
-            <select required>
-                <option value="none" selected disabled hidden>Choississez un
-                    type</option>
+            <select required name="sexe">
+                <option value="none" selected hidden>Choississez un
+                    sexe</option>
                 <option value="dames">Dames</option>
                 <option value="homme">Homme</option>
             </select>
-            <select required>
-                <option value="none" selected disabled hidden>Choississez une
+            <select required name="arme">
+                <option value="none" selected hidden>Choississez une
                     arme</option>
                 <option value="epee">Epee</option>
                 <option value="fleuret">Fleuret</option>
@@ -72,6 +74,24 @@
             </select>
         </div>
     </div>
-    <button type="submit">Créer la compétition</button>
-</section>
+    <input hidden name="nbLicense" value="{{ nbLicense }}">
+    <input type="submit" value="Créer la compétition"></input>
+</form>
+
+<script>
+function validateForm() {
+    var villeSelect = document.querySelector('select[name="ville"]');
+    var categorieSelect = document.querySelector('select[name="categorie]');
+    var sexeSelect = document.querySelector('select[name="sexe"]');
+    var armeSelect = document.querySelector('select[name="arme"]');
+
+
+    
+    if (villeSelect.value === "none" || sexeSelect.value === "none" || categorieSelect.value === "none" || armeSelect.value === "none") {
+        alert("Veuillez sélectionner une option valide pour chaque champ.");
+        return false;
+    }
+    return true;
+}
+</script>
 {% endblock %}
