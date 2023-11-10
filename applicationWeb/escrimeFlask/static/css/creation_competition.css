@@ -38,3 +38,44 @@ input[type="submit"] {
     padding-right: 1.5em;
     margin-bottom: 1.5em;
 }
+
+.nomCompet{
+    margin-top: 1.5em;
+}
+
+.coeff{
+    margin-bottom: 1.5em;
+}
+
+@media screen and (max-width: 1000px) and (max-width: 1800px){
+    form{
+        margin-left: 10vw;
+        margin-right: 10vw;
+    }
+
+    h1{
+        font-size: 4em;
+    }
+
+    h2{
+        font-size: 3em;
+    }
+
+    select{
+        line-height: 5em;
+        font-size: 3em;
+    }
+    #valider{
+        font-size: 3em;
+    }
+
+    #coeff{
+        margin-bottom: 1.5em;
+    }
+
+    #nom, #coeff, #choisirDate{
+        font-size: 3em;
+        text-align: center;
+        border: solid #062656;
+    }
+}
