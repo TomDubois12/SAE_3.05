@@ -167,30 +167,6 @@ footer .footer_p2, footer a {
     margin-top: 2vh;
 }
 
-
-
-@media screen and (max-width: 2000px){  
-    .resultats .resultats_p p {
-        font-size: 1.8vh;
-    }
-
-    .classement .classement_p p {
-        font-size: 1.8vh;
-        margin : auto;
-    }
-
-    .archives .archives_p p {
-        font-size: 1.8vh;
-    }
-
-    .profil .profil_p p {
-        font-size: 1.8vh;
-        margin-left: 0.3em;
-        margin-right: 0.3em;
-    }
-}
-
-
 @media screen and (max-width: 1500px){  
     .resultats .resultats_p p {
         font-size: 1.5vh;
