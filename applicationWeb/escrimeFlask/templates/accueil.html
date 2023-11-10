@@ -15,7 +15,7 @@
 <main> 
     <div>  
          
-        <a href="/resultats" class="resultats"> 
+        <a href={{url_for('resultats', nbLicense=nbLicense, nbCompet=nbCompet)}} class="resultats"> 
             <div >
                 <img src="{{url_for('static', filename='images/escrimeur1.png')}}" alt="Image d'escrimeur">
                 <div class="resultats_p">    
@@ -28,7 +28,7 @@
             </div>
         </a>
 
-        <a href="/classement_national" class="classement">
+        <a href={{url_for('classement_national', nbLicense=nbLicense, nbCompet=nbCompet)}} class="classement">
             <div >
                 <div class="classement_p">    
                     <p>Le niveau national d’escrime vous intéresse ?</p>
@@ -40,7 +40,7 @@
             </div>
         </a>
 
-        <a href="/archives" class="archives">
+        <a href={{url_for('archives', nbLicense=nbLicense, nbCompet=nbCompet)}} class="archives">
             <div >  
                 <img src="{{url_for('static', filename='images/escrimeur3.png')}}" alt="Image d'escrimeur">
                 <div class="archives_p">
@@ -53,7 +53,7 @@
             </div>
         </a>
 
-        <a href="/profil" class="profil">
+        <a href={{url_for('profil', nbLicense=nbLicense, nbCompet=nbCompet)}} class="profil">
             <div >
                 <div class="profil_p">   
                     <p>Votre licence FFE renseigné nous permet de récupérer vos informations</p> 
