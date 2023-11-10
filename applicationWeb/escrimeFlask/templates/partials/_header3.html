@@ -13,6 +13,11 @@
         <div class="lien">
             {% if isOrganisateur %}
                 <li>
+                    <a href={{url_for('creation_competition', nbLicense=nbLicense)}} class="create">
+                    <img src="{{url_for('static', filename='images/Add_round_fill.png')}}" alt="Créer une compétition">
+                    Créer une compétition</a>
+                </li>
+                <li>
                     <a href={{url_for('options_competitions', nbLicense=nbLicense)}}>
                     <img src="../../static/images/trophee.png" alt="Image de trophée pour indiquer résultat">
                     Mes compétitions</a>
@@ -89,6 +94,11 @@
             {% if nbLicense==0 %}
                 <a href="/"><img src="../../static/images/flecheRetour.png" alt="Fleche pour revenir en arriere"></a>
             {% endif %}
+            <li>
+                <a href={{url_for('index')}}>
+                <img src="../../static/images/deconnexion.png" alt="Image d'une tete d'escrimeur pour indiquer le profil">
+                Déconnexion</a>
+            </li>
         </div>
         <div class="epee">
             <img class="epee" src="../../static/images/epeeBleu.png" alt="Epée bleu d'escrime">
