@@ -123,6 +123,16 @@ nav img{
     height: 0;
     background-color: rgba(106, 106, 106, 0.596);
 }
+
+.new{
+    margin: 2vmin;
+}
+
+.new img {
+    width: 5.5em;
+    height: 5.5em;
+}
+
 @media screen and (max-width: 1000px) {
     header{
         height:16vh;
