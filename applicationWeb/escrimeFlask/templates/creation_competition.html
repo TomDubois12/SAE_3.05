@@ -74,10 +74,10 @@
     </div>
     <div class="coeff">
         <h2>Coefficient</h2>
-        <input type="number" step="0.01" required name="coeff">
+        <input type="number" step="0.01" required name="coeff" id="coeff" min="0.01">
     </div>
     <input hidden name="nbLicense" value="{{ nbLicense }}">
-    <input type="submit" value="Créer la compétition"></input>
+    <input type="submit" value="Créer la compétition" id="valider"></input>
 </form>
 
 <script>
