@@ -15,45 +15,58 @@
 {% block main %}
 <main>
     <div class="principal">
-        
         <div class="titre">
-            <h3>Compétitions :</h3>
+            <div>
+                <h3>Compétitions :</h3>
+            </div>
             <img class="epee" src="{{url_for('static', filename='images/epeeBleu.png')}}" alt="Epée bleu d'escrime">
         </div>
-        
+        <a href={{url_for('creation_competition', nbLicense=nbLicense)}} class="create"><img src="{{url_for('static', filename='images/Add_round_fill.png')}}" alt="Créer une compétition"></a>
+        {% for competition in mesCompetitions %}
         <div class="competition">
             <div class="nom_competition">
-                <p>Compétition n°1</p>
+                <p>{{competition[0][0].upper()}} {{competition[0][1].upper()}} {{competition[0][2].upper()}}, {{competition[0][3]}} {{competition[0][4]}} </p>
             </div>
             <div class="bouton">
-                <button>Lancer</button>
-                <button>Consulter</button>
-                <button class="button_desactivated" disabled>Archiver</button>
+            {% if competition[0][5] in tournoisLancer %}
+                <form action="{{url_for('boutonLancer')}}", method="GET">
+                    <input type="text" hidden name="nbCompet" value={{competition[0][5]}}>
+                    <input type="text" hidden name="nbLicense" value={{nbLicense}}>
+                    <input class="button_desactivated" disabled type="submit" value="Lancer">
+                </form>
+            {% else %}
+                {% if competition[0][5] in tournoisArchiver %}
+                <form action="{{url_for('boutonLancer')}}", method="GET">
+                    <input type="text" hidden name="nbCompet" value={{competition[0][5]}}>
+                    <input type="text" hidden name="nbLicense" value={{nbLicense}}>
+                    <input class="button_desactivated" disabled type="submit" value="Lancer">
+                </form>
+                {% else %}
+                <form action="{{url_for('boutonLancer')}}", method="GET">
+                    <input type="text" hidden name="nbCompet" value={{competition[0][5]}}>
+                    <input type="text" hidden name="nbLicense" value={{nbLicense}}>
+                    <input class="buttonSubmit" type="submit" value="Lancer">
+                </form>
+                {% endif %}
+            {% endif %}
+                <a class="buttonSubmit" href={{url_for('resultats', nbLicense=nbLicense, nbCompet=competition[0][5])}}>Consulter</a>
+            {% if competition[0][5] in tournoisArchiver %}
+                <form action="{{url_for('boutonArchiver')}}", method="GET">
+                    <input type="text" hidden name="nbCompet" value={{competition[0][5]}}>
+                    <input type="text" hidden name="nbLicense" value={{nbLicense}}>
+                    <input class="button_desactivated" disabled type="submit" value="Archiver">
+                </form>
+            {% else %}
+                <form action="{{url_for('boutonArchiver')}}", method="GET">
+                    <input type="text" hidden name="nbCompet" value={{competition[0][5]}}>
+                    <input type="text" hidden name="nbLicense" value={{nbLicense}}>
+                    <input class="buttonSubmit" type="submit" value="Archiver">
+                </form>
+            {% endif %}
+                
             </div>
         </div>
-
-        <div class="competition">
-            <div class="nom_competition">
-                <p>Compétition n°2</p>
-            </div>
-            <div class="bouton">
-                <button class="button_desactivated" disabled>Lancer</button>
-                <button>Consulter</button>
-                <button>Archiver</button>
-            </div>
-        </div>
-
-        <div class="competition">
-            <div class="nom_competition">
-                <p>Compétition n°3</p>
-            </div>
-            <div class="bouton">
-                <button class="button_desactivated" disabled>Lancer</button>
-                <button>Consulter</button>
-                <button class="button_desactivated" disabled>Archiver</button>
-            </div>
-        </div>
-    
+        {% endfor %}
     </div>
 </main>
 {% endblock %}

@@ -19,34 +19,34 @@
             alt="Epée bleu d'escrime">
         <div>
             <h2>NOM :</h2>
-            <p>profil</p>
+            <p>{{informations[0][0]}}</p>
         </div>
         <div>
             <h2>PRENOM :</h2>
-            <p>Maria</p>
+            <p>{{informations[0][1]}}</p>
         </div>
         <div>
             <h2>DATE DE NAISSANCE</h2>
-            <p>30/05/2589</p>
+            <p>{{informations[0][2]}}</p>
         </div>
         <img class="epeeCroix"
             src="{{url_for('static', filename='images/epeeCroisees.png')}}"
             alt="Deux épee croisés">
         <div>
             <h2>NUMERO DE LICENCE :</h2>
-            <p>Maria</p>
+            <p>{{informations[0][3]}}</p>
         </div>
         <div>
             <h2>NATION :</h2>
-            <p>Maria</p>
+            <p>{{informations[0][4]}}</p>
         </div>
         <div>
             <h2>COMITE REGIONNAL :</h2>
-            <p>Maria</p>
+            <p>{{informations[0][5]}}</p>
         </div>
         <div>
             <h2>CLUB :</h2>
-            <p>Maria</p>
+            <p>{{informations[0][6]}}</p>
         </div>
     </section>
     <section id="statistiques">
@@ -54,28 +54,12 @@
         <img class="epee"
             src="{{url_for('static', filename='images/epeeBleu.png')}}"
             alt="Epée bleu d'escrime">
-        <div class="selectBoxes">
-            <div class="selection">
-                <select name="arme">
-                    <option value="none" selected disabled hidden>Choississez
-                        une arme</option>
-                    <option value="fleuret">Fleuret</option>
-                    <option value="epee">Epée</option>
-                    <option value="sabre">Sabre</option>
-                </select>
-            </div>
-            <div class="selection">
-                <select name="categorie">
-                    <option value="none" selected disabled hidden>Choississez
-                        une catégorie</option>
-                    <option value="categorie1">Catégorie d'âge</option>
-                    <option value="categorie2">Catégorie + 1</option>
-                </select>
-            </div>
-        </div>
         <div class="classement">
-            <p> Points : </p>
-            <p> Rang : </p>
+            {% for stat in stats %}
+                <p>Armes : {{stat[0]}}</p>
+                <p> Points : {{stat[1]}}</p>
+                <p> Rang : {{stat[2]}}</p>
+            {% endfor %}
         </div>
     </section>
 </div>

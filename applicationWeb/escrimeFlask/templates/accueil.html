@@ -13,49 +13,57 @@
 
 {% block main %}
 <main> 
-    <div>   
+    <div>  
+         
+        <a href={{url_for('resultats', nbLicense=nbLicense, nbCompet=nbCompet)}} class="resultats"> 
+            <div >
+                <img src="{{url_for('static', filename='images/escrimeur1.png')}}" alt="Image d'escrimeur">
+                <div class="resultats_p">    
+                    <p>Vous participez à la compétition {{nomCompet}},</p>
+                    <p>Vous voulez consulter les arbres de matchs ?</p>
+                    <p>Voir votre prochain duel ?</p> 
+                    <p class="resultats_p4">Pour suivre cette évolution,</p>
+                    <p>Laissez vous guider vers l’espace prévu à cet effet.</p>
+                </div>
+            </div>
+        </a>
 
-        <div class="resultats">
-            <img src="{{url_for('static', filename='images/escrimeur1.png')}}" alt="Image d'escrimeur">
-            <div class="resultats_p">    
-                <p>Vous participez à la compétition “INSERT NAME”,</p>
-                <p>Vous voulez consulter les arbres de matchs ?</p>
-                <p>Voir votre prochain duel ?</p> 
-                <p class="resultats_p4">Pour suivre cette évolution,</p>
-                <p>Laissez vous guider vers l’espace prévu à cet effet.</p>
-            </div></a>
-        </div>
-        
-        <div class="classement">
-            <div class="classement_p">    
-                <p>Le niveau national d’escrime vous intéresse ?</p>
-                <p>Vous voulez consulter le classement de tout les licenciés français ?</p> 
-                <p class="classement_p3">Une page de notre site est entièrement dédiée à cela,</p> 
-                <p>N’hésitez plus à la consulter.</p>
+        <a href={{url_for('classement_national', nbLicense=nbLicense, nbCompet=nbCompet)}} class="classement">
+            <div >
+                <div class="classement_p">    
+                    <p>Le niveau national d’escrime vous intéresse ?</p>
+                    <p>Vous voulez consulter le classement de tout les licenciés français ?</p> 
+                    <p class="classement_p3">Une page de notre site est entièrement dédiée à cela,</p> 
+                    <p>N’hésitez plus à la consulter.</p>
+                </div>
+                <img src="{{url_for('static', filename='images/escrimeur2.png')}}" alt="Image d'escrimeur">
             </div>
-            <img src="{{url_for('static', filename='images/escrimeur2.png')}}" alt="Image d'escrimeur">
-        </div>
-        
-        <div class="archives">  
-            <img src="{{url_for('static', filename='images/escrimeur3.png')}}" alt="Image d'escrimeur">
-            <div class="archives_p">
-                <p>Vous avez participé à N compétition,</p>
-                <p>Votre classement vous intèresse ?</p>
-                <p>Vous souhaitez revoir les résultats des matchs ?</p>
-                <p>Consulter des compétitions autre que celles auxquelles vous avez participé ?</p>
-                <p class="archives_p5">Dans ce cas, il vous suffit de vous laisser porter vers la page dédiée à cela.</p>
+        </a>
+
+        <a href={{url_for('archives', nbLicense=nbLicense, nbCompet=nbCompet)}} class="archives">
+            <div >  
+                <img src="{{url_for('static', filename='images/escrimeur3.png')}}" alt="Image d'escrimeur">
+                <div class="archives_p">
+                    <p>Vous avez participé à {{nombreCompet}} compétition,</p>
+                    <p>Votre classement vous intèresse ?</p>
+                    <p>Vous souhaitez revoir les résultats des matchs ?</p>
+                    <p>Consulter des compétitions autre que celles auxquelles vous avez participé ?</p>
+                    <p class="archives_p5">Dans ce cas, il vous suffit de vous laisser porter vers la page dédiée à cela.</p>
+                </div>
             </div>
-        </div>
-        
-        <div class="profil">
-            <div class="profil_p">   
-                <p>Votre licence FFE renseigné nous permet de récupérer vos informations</p> 
-                <p>personnelles et vos classements,</p>
-                <p class="profil_p3">Pour les consulter rien de plus simple,</p>
-                <p>Rendez-vous sur votre page de profil.</p>
+        </a>
+
+        <a href={{url_for('profil', nbLicense=nbLicense, nbCompet=nbCompet)}} class="profil">
+            <div >
+                <div class="profil_p">   
+                    <p>Votre licence FFE renseigné nous permet de récupérer vos informations</p> 
+                    <p>personnelles et vos classements,</p>
+                    <p class="profil_p3">Pour les consulter rien de plus simple,</p>
+                    <p>Rendez-vous sur votre page de profil.</p>
+                </div>
+                <img src="{{url_for('static', filename='images/escrimeur4.png')}}" alt="Image d'escrimeur">
             </div>
-            <img src="{{url_for('static', filename='images/escrimeur4.png')}}" alt="Image d'escrimeur">
-        </div>
+        </a>
     </div>
 </main>
 <footer>

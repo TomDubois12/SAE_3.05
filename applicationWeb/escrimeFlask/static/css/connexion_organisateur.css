@@ -169,7 +169,7 @@ form{
     border: solid black thin;
     box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.159);
 }
-.affichage_popup img{
+.affichage_popup > img{
     width:50%;
     height: 100%;
 }
@@ -186,7 +186,6 @@ form{
 }
 .affichage_popup h1{
     margin-bottom: 2em ;
-    color: red;
     text-align: center;
     font-size: 270%;
 }
@@ -205,12 +204,18 @@ form{
     
 }
 .btn-close{
+    background: none;
     position: absolute;
-
+    border-radius: 50%;
+    border: none;
     width:30px;
     height:30px;
-    background-color: red;
     top:2%;
-    right:2%;
+    right:3%;
     transform: translate(50%,0%);
+}
+
+.croixFermer{
+    width:100%;
+    height:100%;
 }

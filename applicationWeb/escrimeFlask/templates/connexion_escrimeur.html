@@ -20,7 +20,7 @@
                     <img class="epee" src="{{url_for('static', filename='images/epeeBleuTourner.png')}}" alt="Epée bleu d'escrime">
                 </div>
                 <input class="nbLicense" type="number" required="required" name="nbLicense" id="nbLicense" placeholder="112853">
-                <input class="submit" type="submit" value="SE CONNECTER" />
+                <input class="submitInscription" type="submit" value="SE CONNECTER" />
             </form>
         </div>
         <p>Pas encore inscrit a une compétition ?</p>
@@ -32,16 +32,18 @@
         <div class="titreConcours">
             <h2>CONCOURS INSCRIT</h2>
         </div>
-        <div class="concoursInfo">
+        <form class="concoursInfo" action="{{url_for("validationConnexion")}}" method="GET">
             {% for x in concoursTireur %}
-                <input type="radio" id="{{x[0][-1]}}" name="compet" required="required" value="{{x[0][-1]}}"> <label for="{{x[0][-1]}}">{{x[0][0].upper()}} {{x[0][1].upper()}} {{x[0][3].upper()}}, {{x[0][4]}}, en tant que TIREUR</label></input>
+                <input type="radio" id="{{x[0][-1]}}" class="input" name="compet" required="required" value="{{x[0][-1]}}"> <label for="{{x[0][-1]}}">{{x[0][0].upper()}} {{x[0][1].upper()}} {{x[0][3].upper()}}, {{x[0][4]}}, en tant que TIREUR</label></input>
                 <span></span>
             {% endfor %}
             {% for x in concoursArbitre %}
-                <input type="radio" id="{{x[0][-1]}}" name="compet" required="required" value="{{x[0][-1]}}"> <label for="{{x[0][-1]}}">{{x[0][0].upper()}} {{x[0][1].upper()}} {{x[0][3].upper()}}, {{x[0][4]}}, en tant qu'ARBITRE</label></input>
+                <input type="radio" id="{{x[0][-1]}}"  class="input" name="compet" required="required" value="{{x[0][-1]}}"> <label for="{{x[0][-1]}}">{{x[0][0].upper()}} {{x[0][1].upper()}} {{x[0][3].upper()}}, {{x[0][4]}}, en tant qu'ARBITRE</label></input>
                 <span></span>
             {% endfor %}
-        </div>
+            <input type="text" hidden name="nbLicense" value="{{nbLicense}}">
+            <input class="submitConcours" type="submit" value="VALIDER" />
+        </form>
     </div>
 {% else %}
     {% if popup %}
@@ -56,7 +58,9 @@
                 </div>
                 
                 <img src="../../static/images/imgConnexionError.png" alt="image illustration escrime">
-                <button class="btn-close" type="button"></button>
+                <button class="btn-close" type="button">
+                    <img src="{{url_for('static', filename='images/imageCroix.png')}}" alt="image bouton fermer pop up" class ="croixFermer">
+                </button>
 
             </div>
         </div>
