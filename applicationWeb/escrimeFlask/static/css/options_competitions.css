@@ -66,13 +66,16 @@
 }
 
 .nom_competition{
+    display: flex;
+    display: inline;
+    flex-wrap: nowrap;
     margin-right: 4em;
     padding-right: 10em;
     padding-top: 0.25em;
     font-size: 125%;
 }
 
-.buttonSubmit {
+.buttonSubmit{
     background-color: #062656;
     color: white;
     padding: 0.5em;
@@ -83,10 +86,25 @@
 
 .button_desactivated {
     background-color: #5E5E5E;
+    color: white;
+    padding: 0.5em;
+    padding-left: 2em;
+    padding-right: 2em;
+    margin-right: 2.5em;
 }
 
 .bouton{
-    margin-left: 5em;
+    justify-content: space-between;
+    margin-left: 8em;
+    margin-right: 8em;
+    margin-top: 2em;
+    margin-bottom: 2em;
+    padding-left: 3em;
+    padding-right: 3em;
     display: flex;
 }
 
+.consulter {
+    display: block;
+    margin-top: 0.5em;
+}

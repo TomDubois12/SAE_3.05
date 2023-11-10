@@ -24,7 +24,8 @@
         {% for competition in mesCompetitions %}
         <div class="competition">
             <div class="nom_competition">
-                <p>{{competition[0][0].upper()}} {{competition[0][1].upper()}} {{competition[0][2].upper()}}, {{competition[0][3]}} {{competition[0][4]}} </p>
+                <p>{{competition[0][0].upper()}} {{competition[0][1].upper()}} {{competition[0][2].upper()}}, </p> 
+                <p>{{competition[0][3]}} {{competition[0][4]}} </p>
             </div>
             <div class="bouton">
             {% if competition[0][5] in tournoisLancer %}
@@ -48,7 +49,9 @@
                 </form>
                 {% endif %}
             {% endif %}
-                <a class="buttonSubmit" href={{url_for('resultats', nbLicense=nbLicense, nbCompet=competition[0][5])}}>Consulter</a>
+                <div class="consulter">
+                    <a class="buttonSubmit" href={{url_for('resultats', nbLicense=nbLicense, nbCompet=competition[0][5])}}>Consulter</a>
+                </div>
             {% if competition[0][5] in tournoisArchiver %}
                 <form action="{{url_for('boutonArchiver')}}", method="GET">
                     <input type="text" hidden name="nbCompet" value={{competition[0][5]}}>
