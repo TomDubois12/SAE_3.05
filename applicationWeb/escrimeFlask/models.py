@@ -523,25 +523,25 @@ def calculer_nombre_poules(liste_choix_part_poule, nb_part, nb_arbitre):
   
   listeRetien = []
   for elem in listeNbPoule : 
-    if elem[1] % nb_arbitre == 0 : 
+    if elem[1] % nb_arbitre and elem[0] != 5 == 0 : 
+      listeRetien.append(elem)
+    if elem[1]-1 % nb_arbitre == 0 and elem[0] == 5:
       listeRetien.append(elem)
 
-  
+  choixR = -1
   if len(listeRetien) > 0 :
-    choixR = None
+    
     for l in listeRetien :
-      if choixR is None or l[2] > choixR[2] :
+      if choixR == -1 or l[2] > choixR[2] :
         choixR = l
   else : 
     for elem in listeNbPoule :
       if elem[2] == 0 : 
+
         return elem
+    return listeNbPoule[2]
       
-  print(listeNbPoule,listeRetien,choixR)
-  return choixR
-      
-  
-    
+  return listeNbPoule,listeRetien,choixR
 
 
 
@@ -551,20 +551,28 @@ def lancerCompetition(idCompetition):
 
   # if nbTireur < 5 or nbArbitre == 0 : return None
  
-  nbTireur =37
+  nbTireur =8
   infosTireur = getInfoTireurs(idCompetition)
-  nbArbitre = 4 
+  nbArbitre = 12
   infosArbitre = getInfoArbitres(idCompetition)
   listeChoixPartPoule = [5,6,7,8,9]
   choixTPP, nbPoule, resteT   = calculer_nombre_poules(listeChoixPartPoule, nbTireur, nbArbitre)
   print(calculer_nombre_poules(listeChoixPartPoule, nbTireur, nbArbitre))
+  print(choixTPP,nbPoule, resteT)
 
   listePoules = []
   ind = 0
 
-  if choixTPP == 5 :
-
+  if choixTPP == 5 and resteT > 0:
     for i in range(nbPoule-1): listePoules.append([])
+    while nbTireur > 0 : 
+      nbTireur -= 1 
+      listePoules[ind].append(nbTireur) 
+      ind += 1
+      if ind >= len(listePoules): ind = 0
+
+  else : 
+    for i in range(nbPoule): listePoules.append([])
     while nbTireur > 0 : 
       nbTireur -= 1 
       listePoules[ind].append(nbTireur) 
