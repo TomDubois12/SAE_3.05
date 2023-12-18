@@ -13,9 +13,9 @@ import mysql.connector
 
 #connexion au base de données
 db = mysql.connector.connect(
-  host = "127.0.0.1",
-  user = "root",
-  password = "1234",
+  host = "localhost",
+  user = "nathan",
+  password = "nathan",
   database = "Escrime"
 )
 #Blabla2147
@@ -479,7 +479,109 @@ def fichiersDossier(path : str) :
     listeChemin.append(name)
   return listeChemin
 
+########################################################################
+########################################################################
+##################### Lancement Competition ############################
+########################################################################
+########################################################################
+
+def getNbTireur(idCompetition): 
+  requete = "select * from COMPETITION natural join TIREUR_DANS_COMPETITIONS where idCompetition = " + str(idCompetition) + " ;"
+  cursor.execute(requete)
+  return len(cursor.fetchall())
+  
+def getNbArbitre(idCompetition):
+  requete = "select * from COMPETITION natural join ARBITRE_DANS_COMPETITIONS where idCompetition = " + str(idCompetition) + " ;"
+  cursor.execute(requete)
+  return len(cursor.fetchall())
+
+def getInfoTireurs(idCompetition): 
+  requete = "select idCompetition, numeroLicenceTireur from COMPETITION natural join TIREUR_DANS_COMPETITIONS where idCompetition = " + str(idCompetition) + " ;"
+  cursor.execute(requete)
+  return cursor.fetchall()
+
+def getInfoArbitres(idCompetition): 
+  requete = "select idCompetition, numeroLicenceArbitre from COMPETITION natural join ARBITRE_DANS_COMPETITIONS where idCompetition = " + str(idCompetition) + " ;"
+  cursor.execute(requete)
+  return cursor.fetchall()
+
+
+def calculer_nombre_poules(liste_choix_part_poule, nb_part, nb_arbitre):
+
+  listeNbPoule = []
+  
+  for choix in liste_choix_part_poule:
+    ind = 0
+    nbPoule = 0
+    nbP = nb_part
+    while nbP >= choix : 
+      nbP -= choix
+      nbPoule += 1
+    if nbP > 0 : 
+      nbPoule += 1
+    listeNbPoule.append([choix,nbPoule,nbP])
+  
+  listeRetien = []
+  for elem in listeNbPoule : 
+    if elem[1] % nb_arbitre == 0 : 
+      listeRetien.append(elem)
+
+  
+  if len(listeRetien) > 0 :
+    choixR = None
+    for l in listeRetien :
+      if choixR is None or l[2] > choixR[2] :
+        choixR = l
+  else : 
+    for elem in listeNbPoule :
+      if elem[2] == 0 : 
+        return elem
+      
+  print(listeNbPoule,listeRetien,choixR)
+  return choixR
+      
+  
+    
+
+
+
+def lancerCompetition(idCompetition): 
+  # nbTireur = getNbTireur(idCompetition)
+  # nbArbitre = getNbArbitre(idCompetition)
+
+  # if nbTireur < 5 or nbArbitre == 0 : return None
+ 
+  nbTireur =37
+  infosTireur = getInfoTireurs(idCompetition)
+  nbArbitre = 4 
+  infosArbitre = getInfoArbitres(idCompetition)
+  listeChoixPartPoule = [5,6,7,8,9]
+  choixTPP, nbPoule, resteT   = calculer_nombre_poules(listeChoixPartPoule, nbTireur, nbArbitre)
+  print(calculer_nombre_poules(listeChoixPartPoule, nbTireur, nbArbitre))
+
+  listePoules = []
+  ind = 0
+
+  if choixTPP == 5 :
+
+    for i in range(nbPoule-1): listePoules.append([])
+    while nbTireur > 0 : 
+      nbTireur -= 1 
+      listePoules[ind].append(nbTireur) 
+      ind += 1
+      if ind >= len(listePoules): ind = 0
+  print(listePoules)
+      
+  
+
+
+
+
+
 if __name__ == "__main__":
+    print(lancerCompetition(1))
+    
+
     #print(inscriptionOuverte())
     
     # print(concourtInscritLicence(521531))
@@ -541,4 +643,6 @@ if __name__ == "__main__":
     # print(getInfoCompetition(1))
     # print(concourtNonFinitInscritTireur(151229))
     
+    # print(getNbArbitre(2))
+    # print(getNbTireur(2))
     pass
