@@ -322,7 +322,7 @@ span:last-child{
 }
 
 
-@media screen and (max-width: 1000px) {
+@media screen and (max-width: 800px) {
 
     .affichage_popup h1{
         margin-bottom: 2em ;
@@ -354,10 +354,6 @@ span:last-child{
         margin-top: 0;
     }
 
-}
-
-@media screen and (max-width:800){
-    
     .affichage_popup > div{
         display: flex;
         justify-content: center;
@@ -367,4 +363,5 @@ span:last-child{
         height: 100%;
         background-color: rgb(255, 255, 255);
     }
+
 }
