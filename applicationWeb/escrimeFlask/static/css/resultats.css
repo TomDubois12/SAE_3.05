@@ -87,4 +87,9 @@ table {
   th {
     background-color: #ccc;
   }
+
   
+  .black{
+    background-color: black;
+    color: white;
+  }

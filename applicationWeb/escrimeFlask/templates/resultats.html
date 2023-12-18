@@ -21,19 +21,15 @@
         <h3>Tableau de votre poule :</h3>
         <img class="petite_epee" src="{{url_for('static', filename='images/epeeBleu.png')}}" alt="Epée bleu d'escrime">
     </div>
+
     <table border="0" width="100%" height="100%">
         <tr>
             <th>Nom</th>
             <th>Club</th>
             <th></th>
-            <th>1</th>
-            <th>2</th>
-            <th>3</th>
-            <th>4</th>
-            <th>5</th>
-            <th>6</th>
-            <th>7</th>
-            <th>8</th>
+            {% for i in range(participants|length) %}
+                <th>{{ i+1 }}</th>
+            {% endfor %}
             <th></th>
             <th>V</th>
             <th>TD</th>
@@ -41,27 +37,33 @@
             <th>TDTR</th>
             <th></th>
             <th>Place</th>
-        </tr>
-        <tr>
-            <td>joueur 1</td>
-            <td>Club 1</td>
-            <td>1</td>
-            <td></td>
-            <td>res1</td>
-            <td>res2</td>
-            <td>res3</td>
-            <td>res4</td>
-            <td>res5</td>
-            <td>res6</td>
-            <td>res7</td>
-            <td></td>
-            <td>Victoire</td>
-            <td>touche donnée</td>
-            <td>touche reçue</td>
-            <td>différence</td>
-            <td></td>
-            <td>nbPlace</td>
-        </tr>
+        </tr>        
+        {% for participant in participants.values() %}
+            <tr>
+                <td>{{ participant[0] }} {{ participant[1] }}</td>
+                <td>{{ participant[2] }}</td>
+                <td>{{ loop.index }}</td>
+                {% for resultat in participant[3] %}
+                    {% if resultat[1] == -1 %}
+                        <td></td>
+                    {% else %}
+                        {% if resultat[1] == -2 %}
+                            <td class="black"></td>
+                        {% else %}
+                            <td>{{ resultat[1] }}</td>
+                        {% endif %}  
+                    {% endif %}
+                {% endfor %}
+                <td></td>
+                <td>{{ participant[6] }}</td>
+                <td>{{ participant[4] }}</td>
+                <td>{{ participant[5] }}</td>
+                <td>{{participant[4] - participant[5]}}</td>
+                <td></td>
+                <td>{{participant[7]}}</td>
+            </tr>
+        {% endfor %}
+
         
     </table>
 

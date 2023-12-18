@@ -95,7 +95,8 @@ def resultats(nbLicense,nbCompet):
                            title='Résultats',
                            isOrganisateur=estOrganisateur(int(nbLicense)),
                            nbCompet=int(nbCompet),
-                           nbLicense=int(nbLicense))
+                           nbLicense=int(nbLicense),
+                           participants=InfosPouleNumLicence(int(nbCompet),int(nbLicense)))
 
 
 ##Fonctions de vérification

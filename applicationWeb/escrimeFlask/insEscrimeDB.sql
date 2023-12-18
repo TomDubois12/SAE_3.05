@@ -120,21 +120,35 @@ insert into TIREUR_DANS_POULE(numeroLicenceTireur,idPoule) values
     (151229,2),
     (213138,1);
 
-insert into MATCHPOULE(nomMatchPoule,licenceTireur1,licenceTireur2,nbPhases,idPoule) value (
+insert into MATCHPOULE(nomMatchPoule,licenceTireur1,licenceTireur2,nbPhases,idPoule,toucheDTireur1,toucheDTireur2) value (
     "Match12",
     315486,
     521531,
     1,
-    1
+    1,
+    5,
+    0
 );
 
 
-insert into MATCHPOULE(nomMatchPoule,licenceTireur1,licenceTireur2,nbPhases,idPoule) value (
+insert into MATCHPOULE(nomMatchPoule,licenceTireur1,licenceTireur2,nbPhases,idPoule,toucheDTireur1,toucheDTireur2) value (
     "Match23",
     521531,
     213138,
     1,
-    1
+    1,
+    4,
+    5
+);
+
+insert into MATCHPOULE(nomMatchPoule,licenceTireur1,licenceTireur2,nbPhases,idPoule,toucheDTireur1,toucheDTireur2) value (
+    "Match13",
+    315486,
+    213138,
+    1,
+    1,
+    2,
+    5
 );
 
 insert into ARBITRE_DANS_COMPETITIONS(numeroLicenceArbitre,idCompetition) values 

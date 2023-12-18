@@ -14,8 +14,8 @@ import mysql.connector
 #connexion au base de données
 db = mysql.connector.connect(
   host = "localhost",
-  user = "nathan",
-  password = "nathan",
+  user = "koko",
+  password = "koko",
   database = "Escrime"
 )
 #Blabla2147
@@ -522,7 +522,7 @@ def getNomClubByLicence(licence) :
   res = cursor.fetchall()[0]
   return res[0]
 
-
+# (numLicence, num) : (nom,prenom,club,[(num,toucheDonnee,toucheRecu)], toucheDonnéeTotal, toucheRecuTotal)
 #(25151,1) :  nathan, escriClub, [(2,5),(3,2)]
 def InfosPouleNumLicence(idCompetition, numLicenceTireur) : 
   listeNumLicencePoule = []
@@ -536,7 +536,6 @@ def InfosPouleNumLicence(idCompetition, numLicenceTireur) :
   dico = dict()
   for numLicence in range(len(listeNumLicencePoule)) : 
     Lo = listeNumLicencePoule[numLicence]
-    print(listeNumLicencePoule)
     requete = "select distinct licenceTireur1,licenceTireur2, toucheDTireur1, toucheDTireur2  from COMPETITION natural join TIREUR_DANS_POULE natural join POULE natural join MATCHPOULE where idCompetition =" + str(idCompetition) + " and ( numeroLicenceTireur = " + str(Lo) + " and licenceTireur1 = " + str(Lo)+") or ( licenceTireur2 = " + str(Lo)+") ;"
     cursor.execute(requete)
     res = cursor.fetchall()
@@ -546,11 +545,49 @@ def InfosPouleNumLicence(idCompetition, numLicenceTireur) :
     listeMatch = []
     for j in range(len(res)) :
       if res[j][0] == Lo : 
-        listeMatch.append((listeNumLicencePoule.index(res[j][1])+1,res[j][2]))
+        listeMatch.append((listeNumLicencePoule.index(res[j][1])+1,res[j][2],res[j][3]))
       else : 
-        listeMatch.append((listeNumLicencePoule.index(res[j][0])+1,res[j][3]))
-    dico[key] = (nom,prenom,club,listeMatch)
+        listeMatch.append((listeNumLicencePoule.index(res[j][0])+1,res[j][3],res[j][2]))
+    listeMatch.reverse()
+    listeMatch.insert(listeNumLicencePoule.index(Lo),(listeNumLicencePoule.index(Lo)+1,-2,-2))
+    nbTotalTouchesDonnees = 0
+    nbTotalTouchesRecues = 0
+    victoire = 0
+    for participant in listeMatch:
+      if participant[1] != -1 and participant[2] != -1 :
+        if participant[1] != -2 and participant[2] != -2 :
+          nbTotalTouchesDonnees += participant[1]
+          nbTotalTouchesRecues += participant[2]
+
+      if participant[1] == 5:
+        victoire+=1
+
+    
+
+    dico[key] = (nom,prenom,club,listeMatch,nbTotalTouchesDonnees,nbTotalTouchesRecues,victoire,0)
   print(dico)
+  dico = placeTireurDansPoule(dico)
+  return dico
+
+def placeTireurDansPoule(dico):
+  #trier du 1 au dernier en fonction du nombre de victoire
+  #si egalité, on regarde la différence de toucheDonnéeTotale - toucheRecuTotale
+
+  #dico = (numLicence, num) : (nom,prenom,club,[(num,toucheDonnee,toucheRecu)], toucheDonnéeTotal, toucheRecuTotal)
+  
+  liste = []
+  for key in dico.keys():
+    liste.append(key)
+  liste.sort(key=lambda x: (dico[x][6],dico[x][4]-dico[x][5]),reverse=True)
+  print(liste)
+  for i in range(len(liste)):
+    dico[liste[i]] = (dico[liste[i]][0],dico[liste[i]][1],dico[liste[i]][2],dico[liste[i]][3],dico[liste[i]][4],dico[liste[i]][5],dico[liste[i]][6],i+1)
+  return dico
+
+        
+
+
+  
 
     
 
