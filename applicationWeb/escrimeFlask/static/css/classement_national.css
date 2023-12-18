@@ -177,6 +177,11 @@ button, input {
         font-style: italic bold;
         color: rgb(24, 24, 123);
     }
+
+    
+    .choisir {
+        margin-right: 15em;
+    }
 }
 
 @media screen and (max-width: 900px) {
@@ -196,6 +201,10 @@ button, input {
         margin-left: 20em;
     }
 
+    .choisir {
+        font-size: 75%;
+    }
+
 }
 
 @media screen and (max-width: 830px) {
@@ -213,6 +222,11 @@ button, input {
         padding-right: 1.5em;
 
         margin-left: 18em;
+    }
+
+    .choisir {
+        margin-top: 8em;
+        font-size: 75%;
     }
 
 }
