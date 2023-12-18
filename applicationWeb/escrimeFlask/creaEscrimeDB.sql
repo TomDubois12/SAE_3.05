@@ -121,6 +121,10 @@ create table POULE(
 create table MATCHPOULE(
     idMatchPoule int not null auto_increment,
     nomMatchPoule varchar(42) not null,
+    licenceTireur1 int not null,
+    toucheDTireur1 int DEFAULT -1,
+    licenceTireur2 int not null,
+    toucheDTireur2 int DEFAULT -1,
     nbPhases int not null,
     idPoule int not null,
     primary key(idMatchPoule),

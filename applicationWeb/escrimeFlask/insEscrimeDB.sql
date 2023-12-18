@@ -106,16 +106,36 @@ insert into TIREUR_DANS_COMPETITIONS(numeroLicenceTireur,idCompetition)values
     (151229,4),
     (151229,5),
     (151229,6),
+    (151229,1),
     (213138,1);
     
 
 insert into POULE(nomPoule,numeroPiste,idCompetition) values 
-    ("Poule 1",1,1);
+    ("Poule 1",1,1),
+    ("Poule 2",1,1);
     
 insert into TIREUR_DANS_POULE(numeroLicenceTireur,idPoule) values 
     (315486,1),
     (521531,1),
+    (151229,2),
     (213138,1);
+
+insert into MATCHPOULE(nomMatchPoule,licenceTireur1,licenceTireur2,nbPhases,idPoule) value (
+    "Match12",
+    315486,
+    521531,
+    1,
+    1
+);
+
+
+insert into MATCHPOULE(nomMatchPoule,licenceTireur1,licenceTireur2,nbPhases,idPoule) value (
+    "Match23",
+    521531,
+    213138,
+    1,
+    1
+);
 
 insert into ARBITRE_DANS_COMPETITIONS(numeroLicenceArbitre,idCompetition) values 
     (654123,1);
