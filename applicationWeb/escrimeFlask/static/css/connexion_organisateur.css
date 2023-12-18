@@ -188,6 +188,7 @@ form{
 }
 .affichage_popup h1{
     margin-bottom: 2em ;
+    color: red;
     text-align: center;
     font-size: 270%;
 }
@@ -226,19 +227,78 @@ form{
     .wrap_card{
         width: 50%;
     }
+
+    .affichage_popup h1{
+        margin-bottom: 2em ;
+        color: red;
+        text-align: center;
+        font-size: 240%;
+    }
+
+    .affichage_popup .imgEscrimeur{
+        margin-top: 5em;
+        width:45%;
+        height: 60%;
+    }
 }
 @media only screen and (max-width: 1100px) {
     .wrap_card{
         width: 58%;
+    }
+
+    .affichage_popup h1{
+        margin-bottom: 2em ;
+        color: red;
+        text-align: center;
+        font-size: 190%;
+    }
+
+    .affichage_popup .imgEscrimeur{
+        margin-top: 5em;
+        width:45%;
+        height: 60%;
     }
 }
 @media only screen and (max-width: 900px) {
     .wrap_card{
         width: 70%;
     }
+
+    .affichage_popup h1{
+        margin-bottom: 2em ;
+        color: red;
+        text-align: center;
+        font-size: 175%;
+    }
+
+    .affichage_popup .imgEscrimeur{
+        margin-top: 4em;
+        width:40%;
+        height: 70%;
+    }
 }
+
+@media only screen and (max-width: 800px) {
+    .btn-close{
+        margin-right: 1em;
+    }
+}
+
 @media only screen and (max-width: 700px) {
     .wrap_card{
         width: 80%;
+    }
+
+    .affichage_popup h1{
+        margin-bottom: 2em ;
+        color: red;
+        text-align: center;
+        font-size: 100%;
+    }
+
+    .affichage_popup .imgEscrimeur{
+        margin-top: 5em;
+        width:45%;
+        height: 60%;
     }
 }
