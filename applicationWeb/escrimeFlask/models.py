@@ -505,6 +505,54 @@ def getInfoArbitres(idCompetition):
   cursor.execute(requete)
   return cursor.fetchall()
 
+def getIdPouleTireur(numLicenceTireur) : 
+  requete = "select idPoule from POULE natural join TIREUR_DANS_POULE where numeroLicenceTireur = " + str(numLicenceTireur) + ";"
+  cursor.execute(requete)
+  return cursor.fetchall()[0][0]
+
+def getNomByLicence(licence) : 
+  requete = "select nomTireur, prenomTireur from TIREUR  where numeroLicenceTireur = " + str(licence) + ";"
+  cursor.execute(requete)
+  res = cursor.fetchall()[0]
+  return res[0], res[1]
+
+def getNomClubByLicence(licence) : 
+  requete = "select nomClub from CLUB natural join TIREUR_DANS_CLUB where numeroLicenceTireur = " + str(licence) + ";"
+  cursor.execute(requete)
+  res = cursor.fetchall()[0]
+  return res[0]
+
+
+#(25151,1) :  nathan, escriClub, [(2,5),(3,2)]
+def InfosPouleNumLicence(idCompetition, numLicenceTireur) : 
+  listeNumLicencePoule = []
+  idPoule = getIdPouleTireur(numLicenceTireur)
+  requete = "select distinct numeroLicenceTireur from COMPETITION natural join TIREUR_DANS_POULE where idCompetition = "+ str(idCompetition) +" and idPoule = " + str(idPoule) + ";"
+  cursor.execute(requete)
+  listeNumLicencePoule = cursor.fetchall()
+  for t in range(len(listeNumLicencePoule)) : 
+    listeNumLicencePoule[t] = listeNumLicencePoule[t][0]
+  # "select licenceTireur1,licenceTireur2, toucheDTireur1  from COMPETITION natural join TIREUR_DANS_POULE natural join POULE natural join MATCHPOULE where idCompetition =" + idCompetition + "and numeroLicenceTireur = " + numLicenceTireur + " and licenceTireur1 = " + numLicenceTireur+";"
+  dico = dict()
+  for numLicence in range(len(listeNumLicencePoule)) : 
+    Lo = listeNumLicencePoule[numLicence]
+    print(listeNumLicencePoule)
+    requete = "select distinct licenceTireur1,licenceTireur2, toucheDTireur1, toucheDTireur2  from COMPETITION natural join TIREUR_DANS_POULE natural join POULE natural join MATCHPOULE where idCompetition =" + str(idCompetition) + " and ( numeroLicenceTireur = " + str(Lo) + " and licenceTireur1 = " + str(Lo)+") or ( licenceTireur2 = " + str(Lo)+") ;"
+    cursor.execute(requete)
+    res = cursor.fetchall()
+    key = (Lo,listeNumLicencePoule.index(Lo)+1)
+    nom, prenom = getNomByLicence(Lo)
+    club = getNomClubByLicence(Lo)
+    listeMatch = []
+    for j in range(len(res)) :
+      if res[j][0] == Lo : 
+        listeMatch.append((listeNumLicencePoule.index(res[j][1])+1,res[j][2]))
+      else : 
+        listeMatch.append((listeNumLicencePoule.index(res[j][0])+1,res[j][3]))
+    dico[key] = (nom,prenom,club,listeMatch)
+  print(dico)
+
+    
 
 def calculer_nombre_poules(liste_choix_part_poule, nb_part, nb_arbitre):
 
@@ -522,54 +570,54 @@ def calculer_nombre_poules(liste_choix_part_poule, nb_part, nb_arbitre):
     listeNbPoule.append([choix,nbPoule,nbP])
   
   listeRetien = []
+  
   for elem in listeNbPoule : 
-    if elem[1] % nb_arbitre == 0 : 
+    if elem[1] % nb_arbitre == 0 and elem[0] != 5 : 
+      listeRetien.append(elem)
+    elif elem[1]-1 % nb_arbitre == 0 and elem[0] == 5:
       listeRetien.append(elem)
 
-  
+  choixR = -1
   if len(listeRetien) > 0 :
-    choixR = None
+    
     for l in listeRetien :
-      if choixR is None or l[2] > choixR[2] :
+      if choixR == -1 or l[2] > choixR[2] :
         choixR = l
+    return choixR[0],choixR[1],choixR[2]
   else : 
     for elem in listeNbPoule :
       if elem[2] == 0 : 
         return elem
-      
-  print(listeNbPoule,listeRetien,choixR)
-  return choixR
-      
-  
-    
+    return listeNbPoule[2]
+
 
 
 
 def lancerCompetition(idCompetition): 
-  # nbTireur = getNbTireur(idCompetition)
-  # nbArbitre = getNbArbitre(idCompetition)
+  nbTireur = getNbTireur(idCompetition)
 
-  # if nbTireur < 5 or nbArbitre == 0 : return None
- 
-  nbTireur =37
+  nbArbitre = getNbArbitre(idCompetition)
+  
+  if nbTireur < 5 or nbArbitre == 0 : return None
+
   infosTireur = getInfoTireurs(idCompetition)
-  nbArbitre = 4 
   infosArbitre = getInfoArbitres(idCompetition)
   listeChoixPartPoule = [5,6,7,8,9]
   choixTPP, nbPoule, resteT   = calculer_nombre_poules(listeChoixPartPoule, nbTireur, nbArbitre)
-  print(calculer_nombre_poules(listeChoixPartPoule, nbTireur, nbArbitre))
-
   listePoules = []
   ind = 0
 
-  if choixTPP == 5 :
-
+# pour le moment les tireurs ne sont pas mit dabs les poules c'est juste des testes pour voir si le model marche
+  if choixTPP == 5 and resteT > 0:
     for i in range(nbPoule-1): listePoules.append([])
+  else : 
+    for i in range(nbPoule): listePoules.append([])
     while nbTireur > 0 : 
       nbTireur -= 1 
       listePoules[ind].append(nbTireur) 
       ind += 1
       if ind >= len(listePoules): ind = 0
+
   print(listePoules)
       
   
@@ -579,8 +627,9 @@ def lancerCompetition(idCompetition):
 
 
 if __name__ == "__main__":
-    print(lancerCompetition(1))
-    
+    print(getNomByLicence(315486))
+    print(InfosPouleNumLicence(1,315486))
+    # print(lancerCompetition(1))
 
     #print(inscriptionOuverte())
     
