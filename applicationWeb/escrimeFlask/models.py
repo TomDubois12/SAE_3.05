@@ -14,8 +14,8 @@ import mysql.connector
 #connexion au base de données
 db = mysql.connector.connect(
   host = "localhost",
-  user = "koko",
-  password = "koko",
+  user = "root",
+  password = "1234",
   database = "Escrime"
 )
 #Blabla2147
@@ -811,7 +811,7 @@ if __name__ == "__main__":
     # print(InfosPouleNumLicence(1,315486))
     # print(getListeidPouleCompetition(1))
 
-    print(lancerCompetition(1)) # Pour creer une competition pour les tests
+    # print(lancerCompetition(1)) # Pour creer une competition pour les tests
     # print(genererMatchPouleIdCompetition(1))
     # print(lancerCompetition(1))
     # setToucherDonneTireur(213138, 315486, 15)
