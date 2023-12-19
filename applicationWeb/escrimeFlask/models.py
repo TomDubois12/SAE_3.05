@@ -41,8 +41,6 @@ def setNewLieuByNom(nomLieu):
     cursor.execute(requete)
     db.commit()
 
-
-
 def getIdCategorieByNom(nomCat): 
     requete = "select idCategorie from CATEGORIE where intituleCategorie = '" + str(nomCat) +"' ;"
     cursor.execute(requete)
@@ -684,6 +682,32 @@ def insArbitreDansPoule(infosArbitre, idCompetition) :
     if i >= nbArbitre : i = 0
     if ind >= len(listeIdPoule) : ind = 0 
 
+def genererMatchPouleIdCompetition(idCompetition) : 
+  listeIdPoule = getListeidPouleCompetition(idCompetition)
+  for idPoule in listeIdPoule : 
+    
+    requete = "select distinct numeroLicenceTireur from COMPETITION natural join TIREUR_DANS_POULE where idCompetition = "+ str(idCompetition) +" and idPoule = " + str(idPoule) + ";"
+    cursor.execute(requete)
+    l = cursor.fetchall()
+    listeNumLicence = []
+    for numL in range(len(l)) : 
+      listeNumLicence.append(l[numL][0])
+
+    indDepart = 1 
+    for i in range(len(listeNumLicence)-1): 
+      for j in range(indDepart,len(listeNumLicence)): 
+        listeNumLicence[i], listeNumLicence[j] 
+        nomMatch = "Match: " + str(getNomByLicence(listeNumLicence[i])[0])+ "-" + str(getNomByLicence(listeNumLicence[j])[0])
+    
+        requete = "insert into MATCHPOULE(nomMatchPoule,licenceTireur1,licenceTireur2,nbPhases,idPoule) value(\" " + nomMatch +" \","+ str(listeNumLicence[i]) + " , "+ str(listeNumLicence[j])+",1, "+str(idPoule)+" );" 
+        cursor.execute(requete)
+        db.commit()
+
+      indDepart += 1 
+
+
+
+
 def lancerCompetition(idCompetition): 
 
   nbTireur,nbArbitre = getNbTireur(idCompetition), getNbArbitre(idCompetition)
@@ -710,7 +734,7 @@ def lancerCompetition(idCompetition):
   createPoule(idCompetition,len(listePoules))
   insTireurDansPoule(infosTireur, idCompetition)
   insArbitreDansPoule(infosArbitre, idCompetition)
- 
+  genererMatchPouleIdCompetition(idCompetition)
 
   # 2) INSERT poule 
   # 3) insertBD TIREURDANSPOULES
@@ -719,15 +743,13 @@ def lancerCompetition(idCompetition):
   # 6) les insert
 
 
-
-
-
 if __name__ == "__main__":
     # print(getNomByLicence(315486))
     # print(InfosPouleNumLicence(1,315486))
     # print(getListeidPouleCompetition(1))
 
     print(lancerCompetition(1))
+    # print(genererMatchPouleIdCompetition(1))
     # print(lancerCompetition(1))
     # print(lancerCompetition(1))
 
