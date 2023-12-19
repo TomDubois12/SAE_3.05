@@ -31,7 +31,7 @@
                 <th>V</th>
                 <th>TD</th>
                 <th>TR</th>
-                <th>TDTR</th>
+                <th>TD-TR</th>
                 <th></th>
                 <th>Place</th>
             </tr>        
@@ -43,7 +43,7 @@
                     {% for resultat in participant[1][3] %}
                         {% if resultat[1] == -1 %}
                             {% if isArbitre %}
-                                <td class="caseBleuClair" contenteditable="true" onblur="updateData(this.innerText, {{participant[0][0]}}, {{resultat[0]}}, {{nbCompet}} )"></td>
+                                <td class="caseBleuClair" contenteditable="true" onblur="updateData(this.innerText, {{participant[0][0]}}, {{resultat[0]}}, {{nbCompet}}, {{1}})"></td>
                             {% else %}
                                 <td></td>
                             {% endif %}
@@ -52,7 +52,7 @@
                                 <td class="black"></td>
                             {% else %}
                                 {% if isArbitre %}
-                                    <td class="caseBleuClair" contenteditable="true" onblur="updateData(this.innerText, {{participant[0][0]}}, {{resultat[0]}}, {{nbCompet}} )">{{resultat[1]}}</td>
+                                    <td class="caseBleuClair" contenteditable="true" onblur="updateData(this.innerText, {{participant[0][0]}}, {{resultat[0]}}, {{nbCompet}}, {{1}} )">{{resultat[1]}}</td>
                                 {% else %}
                                     <td class="caseBleuClair">{{ resultat[1] }}</td>
                                 {% endif %}
