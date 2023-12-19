@@ -14,18 +14,20 @@
 
 {% block main %}
 <main>
-    <div class="principal">
-        <div class="titre">
-            <div>
-                <h3>Compétitions :</h3>
-            </div>
-            <img class="epeeOC" src="{{url_for('static', filename='images/epeeBleu.png')}}" alt="Epée bleu d'escrime">
+    <div class="titre">
+        <div>
+            <h3>Compétitions :</h3>
         </div>
+        <img class="epeeOC" src="{{url_for('static', filename='images/epeeBleu.png')}}" alt="Epée bleu d'escrime">
+    </div>
+    <div class="principal">
+        
         {% for competition in mesCompetitions %}
         <div class="competition">
             <div class="nom_competition">
-                <p>{{competition[0][0].upper()}} {{competition[0][1].upper()}} {{competition[0][2].upper()}}, </p> 
-                <p>{{competition[0][3]}} {{competition[0][4]}} </p>
+                <p>CONCOURS {{ competition[0][0].upper()}}</p>
+                <p>{{ competition[0][1].upper()}} {{competition[0][2].upper()}} </p>
+                <p>{{competition[0][3]}}, {{competition[0][4]}} </p>
             </div>
             <div class="bouton">
             {% if competition[0][5] in tournoisLancer %}
