@@ -14,8 +14,8 @@ import mysql.connector
 #connexion au base de données
 db = mysql.connector.connect(
   host = "localhost",
-  user = "nathan",
-  password = "nathan",
+  user = "koko",
+  password = "koko",
   database = "Escrime"
 )
 #Blabla2147
@@ -508,6 +508,11 @@ def getIdPouleTireur(numLicenceTireur) :
   cursor.execute(requete)
   return cursor.fetchall()[0][0]
 
+def getIdPouleArbitre(numLicenceArbitre) :
+  requete = "select idPoule from POULE natural join ARBITRE_POULE where numeroLicenceArbitre = " + str(numLicenceArbitre) + ";"
+  cursor.execute(requete)
+  return cursor.fetchall()[0][0]
+
 def getNomByLicence(licence) : 
   requete = "select nomTireur, prenomTireur from TIREUR  where numeroLicenceTireur = " + str(licence) + ";"
   cursor.execute(requete)
@@ -531,6 +536,20 @@ def getListeidPouleCompetition(idCompetition) :
   return liste
 
 # (numLicence, num) : (nom,prenom,club,[(num,toucheDonnee,toucheRecu)], toucheDonnéeTotal, toucheRecuTotal,victoire,placeClassement)
+def setToucherDonneTireur(licenceTireur1, licenceTireur2, toucheDTireur) :
+  idPoule=getIdPouleTireur(licenceTireur1)
+  requete = "select licenceTireur1 from MATCHPOULE where licenceTireur1 = " + str(licenceTireur1) + " and licenceTireur2 = " + str(licenceTireur2) + " and idPoule = " + str(idPoule) + ";"
+  cursor.execute(requete)
+  l1 = cursor.fetchall()
+  print(l1)
+  if l1 != [] :
+    requete = "update MATCHPOULE set toucheDTireur1 = " + str(toucheDTireur) + " where licenceTireur1 = " + str(licenceTireur1) + " and licenceTireur2 = " + str(licenceTireur2) + " and idPoule = " + str(idPoule) + ";"
+  else:
+    requete = "update MATCHPOULE set toucheDTireur2 = " + str(toucheDTireur) + " where licenceTireur1 = " + str(licenceTireur2) + " and licenceTireur2 = " + str(licenceTireur1) + " and idPoule = " + str(idPoule) + ";"      
+  cursor.execute(requete)
+  db.commit()
+
+# (numLicence, num) : (nom,prenom,club,[(num,toucheDonnee,toucheRecu)], toucheDonnéeTotal, toucheRecuTotal)
 #(25151,1) :  nathan, escriClub, [(2,5),(3,2)]
 def InfosPouleNumLicence(idCompetition, numLicenceTireur) : 
   listeNumLicencePoule = []
@@ -555,12 +574,11 @@ def InfosPouleNumLicence(idCompetition, numLicenceTireur) :
     listeMatch = []
     for j in range(len(res)) :
       if res[j][0] == Lo : 
-        listeMatch.append((listeNumLicencePoule.index(res[j][1])+1,res[j][2],res[j][3]))
+        listeMatch.append((res[j][1],res[j][2],res[j][3]))
       else : 
-        listeMatch.append((listeNumLicencePoule.index(res[j][0])+1,res[j][3],res[j][2]))
+        listeMatch.append((res[j][0],res[j][3],res[j][2]))
     listeMatch.reverse()
-    listeMatch.insert(listeNumLicencePoule.index(Lo),(listeNumLicencePoule.index(Lo)+1,-2,-2))
-
+    listeMatch.insert(listeNumLicencePoule.index(Lo),(Lo,-2,-2))
     nbTotalTouchesDonnees = 0
     nbTotalTouchesRecues = 0
     victoire = 0
@@ -573,7 +591,52 @@ def InfosPouleNumLicence(idCompetition, numLicenceTireur) :
       if participant[1] == 5:
         victoire+=1
     dico[key] = (nom,prenom,club,listeMatch,nbTotalTouchesDonnees,nbTotalTouchesRecues,victoire,0)
-  print(dico)
+  # print(dico)
+  dico = classementPoule(dico)
+  return dico
+
+def InfosPouleNumLicenceArbitre(idCompetition, numLicenceArbitre) : 
+  listeNumLicencePoule = []
+  idPoule = getIdPouleArbitre(numLicenceArbitre)
+  requete = "select distinct numeroLicenceTireur from COMPETITION natural join TIREUR_DANS_POULE where idCompetition = "+ str(idCompetition) +" and idPoule = " + str(idPoule) + ";"
+  cursor.execute(requete)
+  listeNumLicencePoule = cursor.fetchall()
+  for t in range(len(listeNumLicencePoule)) : 
+    listeNumLicencePoule[t] = listeNumLicencePoule[t][0]
+  # "select licenceTireur1,licenceTireur2, toucheDTireur1  from COMPETITION natural join TIREUR_DANS_POULE natural join POULE natural join MATCHPOULE where idCompetition =" + idCompetition + "and numeroLicenceTireur = " + numLicenceTireur + " and licenceTireur1 = " + numLicenceTireur+";"
+  dico = dict()
+  for numLicence in range(len(listeNumLicencePoule)) : 
+    Lo = listeNumLicencePoule[numLicence]
+    requete = "select distinct licenceTireur1,licenceTireur2, toucheDTireur1, toucheDTireur2  from COMPETITION natural join TIREUR_DANS_POULE natural join POULE natural join MATCHPOULE where idCompetition =" + str(idCompetition) + " and ( numeroLicenceTireur = " + str(Lo) + " and licenceTireur1 = " + str(Lo)+") or ( licenceTireur2 = " + str(Lo)+") ;"
+    cursor.execute(requete)
+    res = cursor.fetchall()
+    key = (Lo,listeNumLicencePoule.index(Lo)+1)
+    nom, prenom = getNomByLicence(Lo)
+    club = getNomClubByLicence(Lo)
+    listeMatch = []
+    for j in range(len(res)) :
+      if res[j][0] == Lo : 
+        listeMatch.append((res[j][1],res[j][2],res[j][3]))
+      else : 
+        listeMatch.append((res[j][0],res[j][3],res[j][2]))
+    listeMatch.reverse()
+    listeMatch.insert(listeNumLicencePoule.index(Lo),(Lo,-2,-2))
+    nbTotalTouchesDonnees = 0
+    nbTotalTouchesRecues = 0
+    victoire = 0
+    for participant in listeMatch:
+      if participant[1] != -1 and participant[2] != -1 :
+        if participant[1] != -2 and participant[2] != -2 :
+          nbTotalTouchesDonnees += participant[1]
+          nbTotalTouchesRecues += participant[2]
+
+      if participant[1] == 5:
+        victoire+=1
+
+    
+
+    dico[key] = (nom,prenom,club,listeMatch,nbTotalTouchesDonnees,nbTotalTouchesRecues,victoire,0)
+  # print(dico)
   dico = classementPoule(dico)
   return dico
 
@@ -748,9 +811,10 @@ if __name__ == "__main__":
     # print(InfosPouleNumLicence(1,315486))
     # print(getListeidPouleCompetition(1))
 
-    print(lancerCompetition(1))
+    # print(lancerCompetition(1))
     # print(genererMatchPouleIdCompetition(1))
     # print(lancerCompetition(1))
+    # setToucherDonneTireur(213138, 315486, 15)
     # print(lancerCompetition(1))
 
     #print(inscriptionOuverte())

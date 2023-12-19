@@ -91,12 +91,36 @@ def creation_competition(nbLicense):
 
 @app.route('/resultats/<nbLicense>&<nbCompet>')
 def resultats(nbLicense,nbCompet):
-    return render_template('resultats.html',
+    listArbitres= getInfoArbitres(int(nbCompet))
+
+    arbitres=[]
+    for arbitre in listArbitres:
+        arbitres.append(arbitre[1])
+    # print('\033[91m' + str(arbitres) + '\033[0m')
+    # print('\033[92m' + str(nbLicense) + '\033[0m')
+    for arbitre in arbitres:
+        if int(nbLicense)==arbitre:
+            isArbitre=True
+            break
+        else:
+            isArbitre=False
+    # print('\033[93m' + str(isArbitre) + '\033[0m')
+    if isArbitre:
+        return render_template('resultats.html',
                            title='Résultats',
                            isOrganisateur=estOrganisateur(int(nbLicense)),
                            nbCompet=int(nbCompet),
                            nbLicense=int(nbLicense),
-                           participants=InfosPouleNumLicence(int(nbCompet),int(nbLicense)))
+                           participants=InfosPouleNumLicenceArbitre(int(nbCompet),int(nbLicense)),
+                           isArbitre=True)
+    else:
+        return render_template('resultats.html',
+                            title='Résultats',
+                            isOrganisateur=estOrganisateur(int(nbLicense)),
+                            nbCompet=int(nbCompet),
+                            nbLicense=int(nbLicense),
+                            participants=InfosPouleNumLicence(int(nbCompet),int(nbLicense)),
+                            isArbitre=False)
 
 
 ##Fonctions de vérification
@@ -238,3 +262,19 @@ def boutonLancer():
 def boutonArchiver():
     archiverCompetition(int(request.args.get("nbCompet")))
     return redirect('options_competitions/'+str(request.args.get("nbLicense")))
+
+@app.route('/update_data', methods=['POST'])
+def update_data():
+    data = request.form.get('data')
+    nbLicenceTireur = request.form.get('nbLicenceTireur')
+    nbLicenceTireurAdverse = request.form.get('nbLicenceTireurAdverse')
+    numCompetition = request.form.get('numCompetition')
+
+    print('\033[93m' + str(data) + '\033[0m')
+    print('\033[93m' + str(nbLicenceTireur) + '\033[0m')
+    print('\033[93m' + str(nbLicenceTireurAdverse) + '\033[0m')
+    print('\033[93m' + str(numCompetition) + '\033[0m')
+
+    setToucherDonneTireur(int(nbLicenceTireur), int(nbLicenceTireurAdverse), int(data))
+
+    return redirect('resultats/'+str(nbLicenceTireur)+'&'+str(numCompetition))
