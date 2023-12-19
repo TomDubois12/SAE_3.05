@@ -47,7 +47,13 @@ input[type="submit"] {
     margin-bottom: 1.5em;
 }
 
-@media screen and (max-width: 1000px) and (max-width: 1800px){
+#nom, #coeff, #choisirDate{
+    font-size: 2em;
+    text-align: center;
+    border: solid #062656;
+}
+
+@media screen and (min-width: 1000px){
     form{
         margin-left: 10vw;
         margin-right: 10vw;
@@ -77,5 +83,26 @@ input[type="submit"] {
         font-size: 3em;
         text-align: center;
         border: solid #062656;
+    }
+}
+
+@media screen and (max-width: 800px){
+    form{
+        margin-left: 10vw;
+        margin-right: 10vw;
+    }  
+
+    #nom, #coeff, #choisirDate{
+        font-size: 1.5em;
+        text-align: center;
+        border: solid #062656;
+    }
+    
+}
+@media screen and (max-width: 500px){
+    form{
+        margin-left: 0;
+        margin-right: 0;
+
     }
 }
