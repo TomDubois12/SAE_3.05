@@ -1,8 +1,17 @@
+body{
+    text-align: center;
+}
+
+main {
+    padding-top: 3em;
+    text-align: center;
+}
+
 form{
     border: solid 1px;
     text-align: center;
-    margin-left: 20vw;
-    margin-right: 20vw;
+    margin-left: 25vw;
+    margin-right: 25vw;
 }
 
 form h1{
@@ -48,31 +57,26 @@ input[type="submit"] {
 }
 
 #nom, #coeff, #choisirDate{
-    font-size: 2em;
+    font-size: 1.5em;
     text-align: center;
     border: solid #062656;
 }
 
 @media screen and (min-width: 1000px){
-    form{
-        margin-left: 10vw;
-        margin-right: 10vw;
-    }
-
     h1{
-        font-size: 4em;
+        font-size: 2em;
     }
 
     h2{
-        font-size: 3em;
+        font-size: 1.5em;
     }
 
     select{
-        line-height: 5em;
-        font-size: 3em;
+        line-height: 2.5em;
+        font-size: 1.5em;
     }
     #valider{
-        font-size: 3em;
+        font-size: 1.5em;
     }
 
     #coeff{
@@ -80,7 +84,7 @@ input[type="submit"] {
     }
 
     #nom, #coeff, #choisirDate{
-        font-size: 3em;
+        font-size: 1.5em;
         text-align: center;
         border: solid #062656;
     }
