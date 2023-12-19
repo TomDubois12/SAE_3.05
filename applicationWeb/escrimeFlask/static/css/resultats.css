@@ -7,14 +7,14 @@ iframe{
 }
 
 /* titre */
-.epee {
+.epeeR {
     position: relative;
     top: -2vmin;
     right: 2vmin;
 
 }
 
-.epee img {
+.epeeR img {
     width: 100%;
     object-fit: fill;
     display: block;
