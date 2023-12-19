@@ -13,10 +13,6 @@
 
 {% block main %}
 <main>
-    <div class="titre">
-        <h3>Résultats :</h3>
-        <img class="epee" src="{{url_for('static', filename='images/epeeBleu.png')}}" alt="Epée bleu d'escrime">
-    </div>
     <div class="petit_titre">
         <h3>Tableau de votre poule :</h3>
         <img class="petite_epee" src="{{url_for('static', filename='images/epeeBleu.png')}}" alt="Epée bleu d'escrime">
@@ -64,34 +60,155 @@
             </tr>
         {% endfor %}
 
-        
+        <tr>
+            <td>Touches Recues</td>
+            <td></td>
+            <td></td>
+            {% for participant in participants.values() %}
+                <td>{{ participant[5] }}</td>
+            {% endfor %}
+        </tr>
     </table>
-
-
-
-    <div class="tableau">
-        <style>
-            /* Ajoutez du style pour ajuster la largeur et les marges de l'iframe */
-            iframe {
-                margin-top: 20px; /* Marge en haut de l'iframe */
-                margin-bottom: 20px; /* Marge en bas de l'iframe */
-                margin-left: 5em;
-                margin-right: 1em;
-                border: solid;
-                border-color: #062656;
-            }
-        </style>
-        <iframe src="https://docs.google.com/spreadsheets/d/1xx-AWUvrlTmytHTLYd0Z8YtdqiY-vYaRnVMFK9OtBrs/edit#gid=0" width="90%" height="800" frameborder="0" scrolling="no"></iframe>
-    </div>
     <div class="petit_titre">
         <h3>Arbre de phase éliminatoire  :</h3>
         <img class="petite_epee" src="{{url_for('static', filename='images/epeeBleu.png')}}" alt="Epée bleu d'escrime">
     </div>
-    <p>ARBRE DE LA PHASE PHASE ÉLIMINATOIRE (dictionnaire ????) </p>
+        <div class="tournament">
+        <!-- tournament logo -->
+        <div class="tournament__logo-container tournament__logo-container--right">
+            <strong class="tournament__logo tournament__logo--gold"></strong>
+        </div>
+        <div class="tournament__grid">
+            <!-- tournament__round 1/8 -->
+            <div class="tournament__round tournament__round--first-round">
+            <div class="tournament__match">
+                <a class="tournament__match__team" href="#">Lorem ipsum.</a>
+                <a class="tournament__match__team" href="#">Lorem ipsum.</a>
+            </div>
+            <div class="tournament__match">
+                <a class="tournament__match__team" href="#">Lorem ipsum.</a>
+                <a class="tournament__match__team" href="#">Lorem ipsum.</a>
+            </div>
+            <div class="tournament__match">
+                <a class="tournament__match__team" href="#">Lorem ipsum.</a>
+                <a class="tournament__match__team" href="#">Lorem ipsum.</a>
+            </div>
+            <div class="tournament__match">
+                <a class="tournament__match__team" href="#">Lorem ipsum.</a>
+                <a class="tournament__match__team" href="#">Lorem ipsum.</a>
+            </div>
+            <div class="tournament__match">
+                <a class="tournament__match__team" href="#">Lorem ipsum.</a>
+                <a class="tournament__match__team" href="#">Lorem ipsum.</a>
+            </div>
+            <div class="tournament__match">
+                <a class="tournament__match__team" href="#">Lorem ipsum.</a>
+                <a class="tournament__match__team" href="#">Lorem ipsum.</a>
+            </div>
+            <div class="tournament__match">
+                <a class="tournament__match__team" href="#">Lorem ipsum.</a>
+                <a class="tournament__match__team" href="#">Lorem ipsum.</a>
+            </div>
+            <div class="tournament__match">
+                <a class="tournament__match__team" href="#">Lorem ipsum.</a>
+                <a class="tournament__match__team" href="#">Lorem ipsum.</a>
+            </div>
+            </div>
+
+            <div class="tournament__round tournament__round--first-round">
+            <div class="tournament__match">
+                <a class="tournament__match__team" href="#">Lorem ipsum.</a>
+                <a class="tournament__match__team" href="#">Lorem ipsum.</a>
+            </div>
+            <div class="tournament__match">
+                <a class="tournament__match__team" href="#">Lorem ipsum.</a>
+                <a class="tournament__match__team" href="#">Lorem ipsum.</a>
+            </div>
+            <div class="tournament__match">
+                <a class="tournament__match__team" href="#">Lorem ipsum.</a>
+                <a class="tournament__match__team" href="#">Lorem ipsum.</a>
+            </div>
+            <div class="tournament__match">
+                <a class="tournament__match__team" href="#">Lorem ipsum.</a>
+                <a class="tournament__match__team" href="#">Lorem ipsum.</a>
+            </div>
+            </div>
+
+            <!-- tournament__round 1/2 -->
+            <div class="tournament__round">
+            <div class="tournament__match">
+                <a class="tournament__match__team" href="#">Lorem ipsum.</a>
+                <a class="tournament__match__team" href="#">Lorem ipsum.</a>
+            </div>
+            <div class="tournament__match">
+                <a class="tournament__match__team" href="#">Lorem ipsum.</a>
+                <a class="tournament__match__team" href="#">Lorem ipsum.</a>
+            </div>
+            </div>
+
+            <!-- tournament__round final -->
+            <div class="tournament__round tournament__round--final">
+            <div class="tournament__match">
+                <a class="tournament__match__team" href="#">Lorem ipsum.</a>
+                <a class="tournament__match__team" href="#">Lorem ipsum.</a>
+            </div>
+            </div>
+
+            <!-- tournament__round winner -->
+            <div class="tournament__round tournament__round--winner">
+            <div class="tournament__match">
+                <a class="tournament__match__team" href="#">Lorem ipsum.</a>
+            </div>
+            </div>
+        </div>
+    </div>
+    
+    
     <div class="petit_titre">
         <h3>Classement  :</h3>
-        <img class="petite_epee" src="{{url_for('static', filename='images/epeeBleu.png')}}" alt="Epée bleu d'escrime">
+        <img class="petite_epee" src="{{url_for('static', filename='images/epeeBleu.png')}}" alt="Epée bleu d'escrime">    
     </div>
-    <p>Votre rang dans ce tournoi : </p>
+    <div class="classement">
+        <table>
+            <tr class="titre-tableau">
+                <td>RANG</td>
+                <td>NOM</td>
+                <td>PRÉNOM</td>
+                <td>COMITE REGIONAL</td>
+                <td>CLUB</td>
+                <td>POINTS</td>
+            </tr>
+            {# <tr>
+                <td>{{tireur[8]}}</td>
+                <td>{{tireur[0]}}</td>
+                <td>{{tireur[1]}}</td>
+                <td>{{tireur[5]}}</td>
+                <td>{{tireur[6]}}</td>
+                <td>{{tireur[7]}}</td>
+            </tr> #}
+        </table>  
+
+        <table>
+            <tr class="titre-tableau">
+                <td>RANG</td>
+                <td>NOM</td>
+                <td>PRÉNOM</td>
+                <td>COMITE REGIONAL</td>
+                <td>CLUB</td>
+                <td>POINTS</td>
+            </tr>
+            {# {% if classement|length> 0  %}
+                {% for joueur in classement %}
+                <tr>
+                    <td>{{joueur[8]}}</td>
+                    <td>{{joueur[0]}}</td>
+                    <td>{{joueur[1]}}</td>
+                    <td>{{joueur[5]}}</td>
+                    <td>{{joueur[6]}}</td>
+                    <td>{{joueur[7]}}</td>
+                </tr>
+                {% endfor %} #}
+        </table>  
+    </div>
 </main>
 {% endblock %}

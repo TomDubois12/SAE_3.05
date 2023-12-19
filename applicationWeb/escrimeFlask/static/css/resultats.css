@@ -93,3 +93,135 @@ table {
     background-color: black;
     color: white;
   }
+
+/* Arbre phase elimination */
+
+:root {
+    --tournament-grid-line-color: rgba(0, 0, 0, 0.2);
+    --tournament-grid-command-height: 32px;
+    --tournament-grid-command-width: auto;
+    --tournament-grid-command-bd-color: rgba(0, 0, 0, 0.2);
+    --team-icon-spacing: 36px;
+    --tournament-round-width: var(--tournament-grid-command-width);
+    --tournament-match-min-height: 100px;
+  }
+  
+  .tournament {
+    position: relative;
+    min-height: 300px;
+    padding: 30px 0 0;
+  }
+  
+  .tournament__grid {
+    font-size: 0;
+    line-height: 0;
+    display: flex;
+    align-items: stretch;
+    min-height: 400px;
+  }
+  
+  .tournament__round {
+    position: relative;
+    flex: 1 0;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .tournament__match {
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    flex: 1 0;
+    align-items: center;
+    min-height: var(--tournament-match-min-height);
+  
+    &:first-child {
+      margin: 0 !important;
+    }
+  
+    .tournament__round--first-round & {
+      padding-left: 0;
+    }
+  
+    .tournament__round--winner & {
+      padding-right: 0;
+      height: var(--tournament-grid-command-height);
+    }
+  
+    &:after {
+      content: '';
+      position: absolute;
+      right: 0;
+      width: 2px;
+      background: var(--tournament-grid-line-color);
+      top: 25%;
+      bottom: 25%;
+  
+      .tournament__round--winner &,
+      .tournament__round--end-point & {
+        display: none;
+      }
+    }
+  }
+  
+  .tournament__match__team {
+    font-size: 14px;
+    font-weight: bold;
+    transition: color 0.3s ease;
+    color: #686868;
+    text-decoration: none;
+  
+    &:focus,
+    &:hover {
+      color: #000;
+    }
+  
+    box-sizing: border-box;
+    background: var(--tournament-grid-command-bd-color);
+    display: block;
+    position: relative;
+    width: var(--tournament-grid-command-width);
+    height: var(--tournament-grid-command-height);
+    line-height: var(--tournament-grid-command-height);
+    padding: 0 var(--team-icon-spacing) 0 var(--team-icon-spacing);
+    margin: auto;
+  
+    &:before,
+    &:after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      width: 999px;
+      height: 2px;
+      margin-top: -1px;
+      background: var(--tournament-grid-line-color);
+    }
+  
+    &:after {
+      left: 100%;
+  
+      .tournament__round:last-child &,
+      .tournament__round--end-point & {
+        display: none;
+      }
+    }
+  
+    &:before {
+      right: 100%;
+  
+      .tournament__round:first-child & {
+        display: none;
+      }
+    }
+  }
+  
+  .classement {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 4em;
+    margin-bottom: 4em;
+  }
