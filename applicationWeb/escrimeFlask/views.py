@@ -270,11 +270,10 @@ def update_data():
     nbLicenceTireurAdverse = request.form.get('nbLicenceTireurAdverse')
     numCompetition = request.form.get('numCompetition')
 
-    print('\033[93m' + str(data) + '\033[0m')
-    print('\033[93m' + str(nbLicenceTireur) + '\033[0m')
-    print('\033[93m' + str(nbLicenceTireurAdverse) + '\033[0m')
-    print('\033[93m' + str(numCompetition) + '\033[0m')
+    # print('\033[93m' + str(data) + '\033[0m')
+    # print('\033[93m' + str(nbLicenceTireur) + '\033[0m')
+    # print('\033[93m' + str(nbLicenceTireurAdverse) + '\033[0m')
+    # print('\033[93m' + str(numCompetition) + '\033[0m')
 
-    setToucherDonneTireur(int(nbLicenceTireur), int(nbLicenceTireurAdverse), int(data))
 
-    return redirect('resultats/'+str(nbLicenceTireur)+'&'+str(numCompetition))
+    return setToucherDonneTireur(int(nbLicenceTireur), int(nbLicenceTireurAdverse), int(data))
