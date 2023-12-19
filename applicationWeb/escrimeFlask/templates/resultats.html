@@ -64,25 +64,16 @@
             </tr>
         {% endfor %}
 
+        <tr>
+            <td>Touches Recues</td>
+            <td></td>
+            <td></td>
+            {% for participant in participants.values() %}
+                <td>{{ participant[5] }}</td>
+            {% endfor %}
+        </tr>
         
     </table>
-
-
-
-    <div class="tableau">
-        <style>
-            /* Ajoutez du style pour ajuster la largeur et les marges de l'iframe */
-            iframe {
-                margin-top: 20px; /* Marge en haut de l'iframe */
-                margin-bottom: 20px; /* Marge en bas de l'iframe */
-                margin-left: 5em;
-                margin-right: 1em;
-                border: solid;
-                border-color: #062656;
-            }
-        </style>
-        <iframe src="https://docs.google.com/spreadsheets/d/1xx-AWUvrlTmytHTLYd0Z8YtdqiY-vYaRnVMFK9OtBrs/edit#gid=0" width="90%" height="800" frameborder="0" scrolling="no"></iframe>
-    </div>
     <div class="petit_titre">
         <h3>Arbre de phase éliminatoire  :</h3>
         <img class="petite_epee" src="{{url_for('static', filename='images/epeeBleu.png')}}" alt="Epée bleu d'escrime">
