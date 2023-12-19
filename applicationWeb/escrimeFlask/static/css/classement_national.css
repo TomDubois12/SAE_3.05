@@ -1,12 +1,12 @@
 /* titre */
-.epee {
+.epeeCN {
     position: relative;
     top: -2vmin;
     right: 2vmin;
 
 }
 
-.epee img {
+.epeeCN img {
     width: 100%;
     object-fit: fill;
     display: block;
