@@ -18,67 +18,70 @@
         <h3>Tableau de votre poule :</h3>
         <img class="petite_epee" src="{{url_for('static', filename='images/epeeBleu.png')}}" alt="Epée bleu d'escrime">
     </div>
-    <table border="0" width="100%" height="100%">
-        <tr>
-            <th>Nom</th>
-            <th>Club</th>
-            <th></th>
-            {% for i in range(participants|length) %}
-                <th>{{ i+1 }}</th>
-            {% endfor %}
-            <th></th>
-            <th>V</th>
-            <th>TD</th>
-            <th>TR</th>
-            <th>TDTR</th>
-            <th></th>
-            <th>Place</th>
-        </tr>        
-        {% for participant in participants.items() %}
+    <section class="tableau">    
+        <table border="0" width="100%" height="100%">
             <tr>
-                <td>{{ participant[1][0] }} {{ participant[1][1] }}</td>
-                <td>{{ participant[1][2] }}</td>
-                <td>{{ loop.index }}</td>
-                {% for resultat in participant[1][3] %}
-                    {% if resultat[1] == -1 %}
-                        {% if isArbitre %}
-                            <td  contenteditable="true" onblur="updateData(this.innerText, {{participant[0][0]}}, {{resultat[0]}}, {{nbCompet}}, {{1}} )"></td>
-
-                        {% else %}
-                            <td></td>
-                        {% endif %}
-                    {% else %}
-                        {% if resultat[1] == -2 %}
-                            <td class="black"></td>
-                        {% else %}
-                            {% if isArbitre %}
-                                <td contenteditable="true" onblur="updateData(this.innerText, {{participant[0][0]}}, {{resultat[0]}}, {{nbCompet}}, {{1}} )">{{resultat[1]}}</td>
-                            {% else %}
-                                <td>{{ resultat[1] }}</td>
-                            {% endif %}
-                        {% endif %}  
-                    {% endif %}
+                <th>Nom</th>
+                <th>Club</th>
+                <th></th>
+                {% for i in range(participants|length) %}
+                    <th>{{ i+1 }}</th>
                 {% endfor %}
-                <td></td>
-                <td>{{ participant[1][6] }}</td>
-                <td>{{ participant[1][4] }}</td>
-                <td>{{ participant[1][5] }}</td>
-                <td>{{participant[1][4] - participant[1][5]}}</td>
-                <td></td>
-                <td>{{participant[1][7]}}</td>
-            </tr>
-        {% endfor %}
-
-        <tr>
-            <td>Touches Recues</td>
-            <td></td>
-            <td></td>
-            {% for participant in participants.values() %}
-                <td>{{ participant[5] }}</td>
+                <th></th>
+                <th>V</th>
+                <th>TD</th>
+                <th>TR</th>
+                <th>TDTR</th>
+                <th></th>
+                <th>Place</th>
+            </tr>        
+            {% for participant in participants.items() %}
+                <tr>
+                    <td class="caseBleuClair">{{ participant[1][0] }} {{ participant[1][1] }}</td>
+                    <td class="caseBleuClair">{{ participant[1][2] }}</td>
+                    <td class="caseBleuFonce">{{ loop.index }}</td>
+                    {% for resultat in participant[1][3] %}
+                        {% if resultat[1] == -1 %}
+                            {% if isArbitre %}
+                                <td class="caseBleuClair" contenteditable="true" onblur="updateData(this.innerText, {{participant[0][0]}}, {{resultat[0]}}, {{nbCompet}} )"></td>
+                            {% else %}
+                                <td></td>
+                            {% endif %}
+                        {% else %}
+                            {% if resultat[1] == -2 %}
+                                <td class="black"></td>
+                            {% else %}
+                                {% if isArbitre %}
+                                    <td class="caseBleuClair" contenteditable="true" onblur="updateData(this.innerText, {{participant[0][0]}}, {{resultat[0]}}, {{nbCompet}} )">{{resultat[1]}}</td>
+                                {% else %}
+                                    <td class="caseBleuClair">{{ resultat[1] }}</td>
+                                {% endif %}
+                            {% endif %}  
+                        {% endif %}
+                    {% endfor %}
+                    <td class="caseBleuFonce"></td>
+                    <td class="caseBleuClair">{{ participant[1][6] }}</td>
+                    <td class="caseBleuClair">{{ participant[1][4] }}</td>
+                    <td class="caseBleuClair">{{ participant[1][5] }}</td>
+                    <td class="caseBleuClair">{{participant[1][4] - participant[1][5]}}</td>
+                    <td class="caseBleuFonce"></td>
+                    <td class="caseRouge">{{participant[1][7]}}</td>
+                </tr>
             {% endfor %}
-        </tr>
-    </table>
-    <button onclick="window.location.reload()">Rafraîchir le tableau des scores</button>
+
+            <tr>
+                <td class="caseBleuFonce">Touches Recues</td>
+                <td class="caseBleuFonce"></td>
+                <td class="caseBleuFonce"></td>
+                {% for participant in participants.values() %}
+                    <td class="caseBleuClair">{{ participant[5] }}</td>
+                {% endfor %}
+            </tr>
+        </table>
+    </section>
+    
+    <button class="boutonRefresh" onclick="window.location.reload()">Rafraîchir le tableau des scores</button>
+    
     <div class="petit_titre">
         <h3>Arbre de phase éliminatoire  :</h3>
         <img class="petite_epee" src="{{url_for('static', filename='images/epeeBleu.png')}}" alt="Epée bleu d'escrime">

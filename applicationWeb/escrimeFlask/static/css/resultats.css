@@ -80,18 +80,47 @@ table {
   }
   
   th, td {
-    border: 1px solid black;
+    border: 2px solid black;
     padding: 5px;
   }
   
   th {
-    background-color: #ccc;
+    color: white;
+    background-color: #062657;
   }
 
+  .tableau{
+    padding: 2em;
+  }
   
   .black{
     background-color: black;
     color: white;
+  }
+
+  .caseBleuClair{
+    background-color: #CFE2F3;
+  }
+
+  .caseBleuFonce{
+    color: white;
+    background-color: #062657;
+    font-weight: bold;
+  }
+
+  .caseRouge{
+    color: white;
+    background-color: #951625;
+    font-weight: bold;
+  }
+
+  .boutonRefresh{
+    background-color: #062656;
+    color: white;
+    padding: 0.5em;
+    padding-left: 1.5em;
+    padding-right: 1.5em;
+    margin-left: 2.5em;
   }
 
 /* Arbre phase elimination */

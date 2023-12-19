@@ -105,7 +105,7 @@ def resultats(nbLicense,nbCompet):
         else:
             isArbitre=False
     # print('\033[93m' + str(isArbitre) + '\033[0m')
-    if isArbitre:
+    if isArbitre :
         return render_template('resultats.html',
                            title='Résultats',
                            isOrganisateur=estOrganisateur(int(nbLicense)),
