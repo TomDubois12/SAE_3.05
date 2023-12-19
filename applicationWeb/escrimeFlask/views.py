@@ -276,4 +276,4 @@ def update_data():
     # print('\033[93m' + str(numCompetition) + '\033[0m')
 
 
-    return setToucherDonneTireur(int(nbLicenceTireur), int(nbLicenceTireurAdverse), int(data))
+    return setToucherDonneTireur(int(nbLicenceTireur), int(nbLicenceTireurAdverse), int(data), int(numCompetition))

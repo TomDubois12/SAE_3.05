@@ -227,7 +227,7 @@
         var numericValue = parseFloat(value);
 
         // Vérifier si la valeur est un nombre compris entre 0 et 5
-        if (!isNaN(numericValue) && numericValue >= 0 && numericValue <= 5) {
+        if (numericValue >= 0 && numericValue <= 5) {
             // Utilisez AJAX pour envoyer la valeur à la fonction Flask
             var xhr = new XMLHttpRequest();
             xhr.open("POST", "/update_data", true);
