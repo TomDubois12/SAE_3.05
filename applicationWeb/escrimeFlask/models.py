@@ -503,13 +503,13 @@ def getInfoArbitres(idCompetition):
   cursor.execute(requete)
   return cursor.fetchall()
 
-def getIdPouleTireur(numLicenceTireur) : 
-  requete = "select idPoule from POULE natural join TIREUR_DANS_POULE where numeroLicenceTireur = " + str(numLicenceTireur) + ";"
+def getIdPouleTireur(numLicenceTireur, idCompetition = 1) : 
+  requete = "select idPoule from POULE natural join TIREUR_DANS_POULE where numeroLicenceTireur = " + str(numLicenceTireur) + "  and idCompetition = " +str(idCompetition) + ";"
   cursor.execute(requete)
   return cursor.fetchall()[0][0]
 
-def getIdPouleArbitre(numLicenceArbitre) :
-  requete = "select idPoule from POULE natural join ARBITRE_POULE where numeroLicenceArbitre = " + str(numLicenceArbitre) + ";"
+def getIdPouleArbitre(numLicenceArbitre, idCompetition) :
+  requete = "select idPoule from POULE natural join ARBITRE_POULE where numeroLicenceArbitre = " + str(numLicenceArbitre) + " and idCompetition = " +str(idCompetition) + " ;"
   cursor.execute(requete)
   return cursor.fetchall()[0][0]
 
@@ -536,16 +536,16 @@ def getListeidPouleCompetition(idCompetition) :
   return liste
 
 # (numLicence, num) : (nom,prenom,club,[(num,toucheDonnee,toucheRecu)], toucheDonnéeTotal, toucheRecuTotal,victoire,placeClassement)
-def setToucherDonneTireur(licenceTireur1, licenceTireur2, toucheDTireur) :
-  idPoule=getIdPouleTireur(licenceTireur1)
+def setToucherDonneTireur(licenceTireur1, licenceTireur2, toucheDTireur, idCompetition, nbPhase) :
+  idPoule = getIdPouleTireur(licenceTireur1, idCompetition)
   requete = "select licenceTireur1 from MATCHPOULE where licenceTireur1 = " + str(licenceTireur1) + " and licenceTireur2 = " + str(licenceTireur2) + " and idPoule = " + str(idPoule) + ";"
   cursor.execute(requete)
   l1 = cursor.fetchall()
   print(l1)
   if l1 != [] :
-    requete = "update MATCHPOULE set toucheDTireur1 = " + str(toucheDTireur) + " where licenceTireur1 = " + str(licenceTireur1) + " and licenceTireur2 = " + str(licenceTireur2) + " and idPoule = " + str(idPoule) + ";"
+    requete = "update MATCHPOULE set toucheDTireur1 = " + str(toucheDTireur) + " where licenceTireur1 = " + str(licenceTireur1) + " and licenceTireur2 = " + str(licenceTireur2) + " and idPoule = " + str(idPoule) + " and nbPhases = "+ str(nbPhase) +";"
   else:
-    requete = "update MATCHPOULE set toucheDTireur2 = " + str(toucheDTireur) + " where licenceTireur1 = " + str(licenceTireur2) + " and licenceTireur2 = " + str(licenceTireur1) + " and idPoule = " + str(idPoule) + ";"      
+    requete = "update MATCHPOULE set toucheDTireur2 = " + str(toucheDTireur) + " where licenceTireur1 = " + str(licenceTireur2) + " and licenceTireur2 = " + str(licenceTireur1) + " and idPoule = " + str(idPoule) + " and nbPhases = "+ str(nbPhase) +";"      
   cursor.execute(requete)
   db.commit()
 
@@ -553,7 +553,7 @@ def setToucherDonneTireur(licenceTireur1, licenceTireur2, toucheDTireur) :
 #(25151,1) :  nathan, escriClub, [(2,5),(3,2)]
 def InfosPouleNumLicence(idCompetition, numLicenceTireur) : 
   listeNumLicencePoule = []
-  idPoule = getIdPouleTireur(numLicenceTireur)
+  idPoule = getIdPouleTireur(numLicenceTireur, idCompetition)
   requete = "select distinct numeroLicenceTireur from COMPETITION natural join TIREUR_DANS_POULE where idCompetition = "+ str(idCompetition) +" and idPoule = " + str(idPoule) + ";"
   cursor.execute(requete)
   listeNumLicencePoule = cursor.fetchall()
@@ -597,7 +597,7 @@ def InfosPouleNumLicence(idCompetition, numLicenceTireur) :
 
 def InfosPouleNumLicenceArbitre(idCompetition, numLicenceArbitre) : 
   listeNumLicencePoule = []
-  idPoule = getIdPouleArbitre(numLicenceArbitre)
+  idPoule = getIdPouleArbitre(numLicenceArbitre, idCompetition)
   requete = "select distinct numeroLicenceTireur from COMPETITION natural join TIREUR_DANS_POULE where idCompetition = "+ str(idCompetition) +" and idPoule = " + str(idPoule) + ";"
   cursor.execute(requete)
   listeNumLicencePoule = cursor.fetchall()
@@ -811,7 +811,9 @@ if __name__ == "__main__":
     # print(InfosPouleNumLicence(1,315486))
     # print(getListeidPouleCompetition(1))
 
-    # print(lancerCompetition(1)) # Pour creer une competition pour les tests
+    print(getIdPouleTireur(315486))
+    #print(lancerCompetition(1)) # Pour creer une competition pour les tests
+
     # print(genererMatchPouleIdCompetition(1))
     # print(lancerCompetition(1))
     # setToucherDonneTireur(213138, 315486, 15)

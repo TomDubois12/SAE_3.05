@@ -44,7 +44,6 @@
                         {% if resultat[1] == -1 %}
                             {% if isArbitre %}
                                 <td class="caseBleuClair" contenteditable="true" onblur="updateData(this.innerText, {{participant[0][0]}}, {{resultat[0]}}, {{nbCompet}} )"></td>
-
                             {% else %}
                                 <td></td>
                             {% endif %}
@@ -96,12 +95,12 @@
             <!-- tournament__round 1/8 -->
             <div class="tournament__round tournament__round--first-round">
             <div class="tournament__match">
-                <a class="tournament__match__team" href="#">Lorem ipsum.</a>
-                <a class="tournament__match__team" href="#">Lorem ipsum.</a>
+                <a class="tournament__match__team" href="#">Boissay Nathan | 5</a>
+                <a class="tournament__match__team" href="#">Deemer Regis | 2</a>
             </div>
             <div class="tournament__match">
-                <a class="tournament__match__team" href="#">Lorem ipsum.</a>
-                <a class="tournament__match__team" href="#">Lorem ipsum.</a>
+                <a class="tournament__match__team" href="#">Georget Korentin | 4</a>
+                <a class="tournament__match__team" href="#">Boissay Robin | 5</a>
             </div>
             <div class="tournament__match">
                 <a class="tournament__match__team" href="#">Lorem ipsum.</a>
@@ -131,8 +130,8 @@
 
             <div class="tournament__round tournament__round--first-round">
             <div class="tournament__match">
-                <a class="tournament__match__team" href="#">Lorem ipsum.</a>
-                <a class="tournament__match__team" href="#">Lorem ipsum.</a>
+                <a class="tournament__match__team" href="#">Boissay Nathan | 4</a>
+                <a class="tournament__match__team" href="#">Boissay Robin | 5</a>
             </div>
             <div class="tournament__match">
                 <a class="tournament__match__team" href="#">Lorem ipsum.</a>
@@ -226,12 +225,12 @@
     </div>
 </main>
 <script>
-    function updateData(value, nbLicenceTireur, nbLicenceTireurAdverse, numCompetition) {
+    function updateData(value, nbLicenceTireur, nbLicenceTireurAdverse, numCompetition, nbPhase) {
         // Convertir la valeur en nombre
         var numericValue = parseFloat(value);
 
         // Vérifier si la valeur est un nombre compris entre 0 et 5
-        if (!isNaN(numericValue) && numericValue >= 0 && numericValue <= 5) {
+        if ( numericValue >= 0 && numericValue <= 5) {
             // Utilisez AJAX pour envoyer la valeur à la fonction Flask
             var xhr = new XMLHttpRequest();
             xhr.open("POST", "/update_data", true);
@@ -244,7 +243,8 @@
                 }
             };
             // Envoyez la valeur et l'index (ou toute autre information nécessaire) à la fonction Flask
-            xhr.send("data=" + numericValue + "&nbLicenceTireur=" + nbLicenceTireur + "&nbLicenceTireurAdverse=" + nbLicenceTireurAdverse + "&numCompetition=" + numCompetition);
+            xhr.send("data=" + numericValue + "&nbLicenceTireur=" + nbLicenceTireur + "&nbLicenceTireurAdverse=" + nbLicenceTireurAdverse + "&numCompetition=" + numCompetition + "&nbPhase=" + nbPhase);
+            console.log("data=" + numericValue + "&nbLicenceTireur=" + nbLicenceTireur + "&nbLicenceTireurAdverse=" + nbLicenceTireurAdverse + "&numCompetition=" + numCompetition + "&nbPhase=" + nbPhase)
             alert("Le score a été enregistré");
 
         } else {
