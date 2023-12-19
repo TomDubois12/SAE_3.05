@@ -124,6 +124,7 @@ button, input {
 }
 
 .choisir{
+    margin-top: 2em;
     position: absolute;
     top: 70%;
     left: 35%;
@@ -270,3 +271,25 @@ button, input {
     }
 
 } 
+
+@media screen and (max-width: 550px) {
+
+    
+    
+    .rechercher{
+        font-size: 1em;
+        padding: 0.5em;
+        padding-left: 1.5em;
+        padding-right: 1.5em;
+
+        margin-left: 10.5em;
+    }
+
+    .choisir {
+        margin-top: 11em;
+    }
+
+    .titre > h3 {
+        font-size: 90%;
+    }
+}
