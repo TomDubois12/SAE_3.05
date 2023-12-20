@@ -813,8 +813,15 @@ def getNomPrenomMatchElimination(idCompetition) :
       else :
         finale[i] = demie[i*2+1]
 
+    gagnant = [0]
+    listeVictorieux = getListeGagnantMatchElimination(5, idCompetition)
+    if finale[0] in listeVictorieux : 
+      gagnant[0] = finale[0]
+    else :
+      gagnant[0] = finale[1]
+
     # print(pat,listeVictorieux,listeTireurClasser,huit,quart,demie,finale)
-    return [getListNomByLicence(huit),getListNomByLicence(quart),getListNomByLicence(demie),getListNomByLicence(finale)]
+    return [getListNomByLicence(huit),getListNomByLicence(quart),getListNomByLicence(demie),getListNomByLicence(finale),getListNomByLicence(gagnant)]
 
 # (numLicence, num) : (nom,prenom,club,[(num,toucheDonnee,toucheRecu)], toucheDonnéeTotal, toucheRecuTotal,victoire,placeClassement)
 def setToucherDonneTireur(licenceTireur1, licenceTireur2, toucheDTireur, idCompetition, nbPhase) :
@@ -1231,7 +1238,7 @@ if __name__ == "__main__":
     # # print(InfosPouleNumLicenceArbitre(1,51061))
     # # print(getClassementApresPoule(1))
 
-    
+    print(getNomPrenomMatchElimination(1))
 
     # print(genererPhase(1,3))
     # print((getIdMatchElim(5387,1)))
