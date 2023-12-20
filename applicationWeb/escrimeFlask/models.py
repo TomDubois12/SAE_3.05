@@ -1054,39 +1054,39 @@ if __name__ == "__main__":
     # print(getNbArbitre(2))
     # print(getNbTireur(2))
 
-    # insertTireurDansBD(45243)
-    # insertTireurDansBD(20840)
-    # insertTireurDansBD(53089)
-    # insertTireurDansBD(40845)
-    # insertTireurDansBD(37189)
-    # insertTireurDansBD(53998)
-    # insertTireurDansBD(54797)
-    # insertTireurDansBD(5387)
-    # insertTireurDansBD(35524)
-    # insertTireurDansBD(20981)
+    insertTireurDansBD(45243)
+    insertTireurDansBD(20840)
+    insertTireurDansBD(53089)
+    insertTireurDansBD(40845)
+    insertTireurDansBD(37189)
+    insertTireurDansBD(53998)
+    insertTireurDansBD(54797)
+    insertTireurDansBD(5387)
+    insertTireurDansBD(35524)
+    insertTireurDansBD(20981)
 
-    # test = [45243,20840,53089,40845,37189,53998,54797,5387,35524,20981]
+    test = [45243,20840,53089,40845,37189,53998,54797,5387,35524,20981]
 
-    # for id in test : 
-    #   requete5 = "insert into TIREUR_DANS_COMPETITIONS (numeroLicenceTireur,idCompetition) values("+str(id)+", 1  );"
-    #   cursor.execute(requete5)
-    #   db.commit()
+    for id in test : 
+      requete5 = "insert into TIREUR_DANS_COMPETITIONS (numeroLicenceTireur,idCompetition) values("+str(id)+", 1  );"
+      cursor.execute(requete5)
+      db.commit()
 
-    # insertArbitreDansBD(51032)
-    # insertArbitreDansBD(51061)
+    insertArbitreDansBD(51032)
+    insertArbitreDansBD(51061)
 
-    # test1 = [51032,51061]
-    # for id in test1 : 
-    #   requete5 = "insert into ARBITRE_DANS_COMPETITIONS (numeroLicenceArbitre,idCompetition) values("+str(id)+", 1  );"
-    #   cursor.execute(requete5)
-    #   db.commit()
+    test1 = [51032,51061]
+    for id in test1 : 
+      requete5 = "insert into ARBITRE_DANS_COMPETITIONS (numeroLicenceArbitre,idCompetition) values("+str(id)+", 1  );"
+      cursor.execute(requete5)
+      db.commit()
 
-    # print(lancerCompetition(1)) # Pour creer une competition pour les tests
+    print(lancerCompetition(1)) # Pour creer une competition pour les tests
 
     # # InfosPouleNumLicence(1, 20981)
     # # print(InfosPouleNumLicenceArbitre(1,51061))
     # # print(getClassementApresPoule(1))
-    print(genererPhase(1,3))
+    # print(genererPhase(1,3))
     # print((getIdMatchElim(5387,1)))
     # print(setToucherDonneTireur(40845, 20981, -1, 1, 2))
     # print(getListeGagnantMatchElimination(2, 1))
