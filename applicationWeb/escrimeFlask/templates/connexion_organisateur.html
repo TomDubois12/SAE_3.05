@@ -15,7 +15,7 @@
 {% block main %}
 <div class="divPrincipale">
     <p>
-        Afin d’accèder à la  création et gestion de concours veuillez entrer votre numéro de license. Pour pouvoir se connecter vous devez être renseigné auprès de la FFE comme un <u>membre organisateur</u>.
+        Afin d’accèder à la  création et gestion de concours veuillez entrer votre numéro de licence. Pour pouvoir se connecter vous devez être renseigné auprès de la FFE comme un <u>membre organisateur</u>.
     </p>
     <div class="wrap_card">
         <h2>Connexion</h2>
@@ -24,7 +24,7 @@
         
         <form class="form" action="{{ url_for("traitement")}}" method="GET">
             <div class="premierInput">
-                <h3>Numéro de license :</h3>
+                <h3>Numéro de licence :</h3>
                 <img class="epee" src="{{url_for('static', filename='images/epeeBleuTourner.png')}}" alt="Epée bleu d'escrime">
             </div>
             <div class="form_nb_license">
@@ -38,7 +38,7 @@
                 <input class="inputForm" type="text" name="nomClub" id="nomClub" placeholder="nomClub" minlength="2" maxlength="20" required />
             </div>
             <div>
-                <input type="submit" value="Se connecter" />
+                <input class="button" type="submit" value="Se connecter" />
             </div>
         </form>
     </div>
@@ -59,7 +59,7 @@
 
         </div>
         
-        <img src="../../static/images/imgInfo1.png" alt="image illustration escrime">
+        <img class = "imgEscrimeur" src="../../static/images/imgInfo1.png" alt="image illustration escrime">
         <button class="btn-close" type="button">
             <img src="{{url_for('static', filename='images/imageCroix.png')}}" alt="image bouton fermer pop up" class ="croixFermer">
         </button>

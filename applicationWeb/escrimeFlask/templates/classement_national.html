@@ -16,21 +16,21 @@
     <div>  
         <div class="titre">
             <h3>Classement National :</h3>
-            <img class="epee" src="{{url_for('static', filename='images/epeeBleu.png')}}" alt="Epée bleu d'escrime">
+            <img class="epeeCN" src="{{url_for('static', filename='images/epeeBleu.png')}}" alt="Epée bleu d'escrime">
         </div>
         <form class="selector" action="{{url_for('rechercheClassement')}}", method="GET" onsubmit="return validateForm();">
-            <select name="arme">
+            <select class = "arme" name="arme">
                 <option value="none" selected disabled hidden>Choisissez une arme</option>
                 <option value="Fleuret">Fleuret</option>
                 <option value="Epée">Épée</option>
                 <option value="Sabre">Sabre</option>
             </select>
-            <select name="sexe">
+            <select class = "sexe" name="sexe">
                 <option value="none" selected disabled hidden>Choisissez un sexe</option>
                 <option value="Homme">Homme</option>
                 <option value="Dames">Dames</option>
             </select>
-            <select name="categorie">
+            <select class = "categorie" name="categorie">
                 <option value="none" selected hidden>Choississez une catégorie</option>
                 <option value="M15">M15</option>
                 <option value="M17">M17</option>
@@ -43,7 +43,7 @@
             </select>
             <input type="text" hidden name="nbLicense" value="{{nbLicense}}">
             <input type="text" hidden name="nbCompet" value="{{nbCompet}}">
-            <input type="submit" value="Rechercher"></input>
+            <input class="rechercher" type="submit" value="Rechercher"></input>
         </form>
         <div class="tableau">
             <table>

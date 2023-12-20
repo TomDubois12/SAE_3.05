@@ -1,12 +1,12 @@
 /* titre */
-.epee {
+.epeeCN {
     position: relative;
     top: -2vmin;
     right: 2vmin;
 
 }
 
-.epee img {
+.epeeCN img {
     width: 100%;
     object-fit: fill;
     display: block;
@@ -94,7 +94,6 @@ select *{
 /* table */
 table {
     width: 90%;
-    margin-top: 3em;
     margin-left: 4.5em;
     margin-right: 4.5em;
     margin-bottom: 3em;
@@ -124,14 +123,42 @@ button, input {
 }
 
 .choisir{
+    margin-top: 2em;
     position: absolute;
     top: 70%;
     left: 35%;
 }
 
+/* css pour ajouter du scroll au tableau et mettre le scrolle en haut*/
+.tableau {
+    transform: rotateX(180deg);
+    overflow-x: scroll;
+    margin-top:1em;
+}
+table{
+    transform: rotateX(180deg);
+}
+@media screen and (max-width: 1300px) {
+    .selector{
+        margin-left: 6em;
+    }
+
+    .selector select{
+        margin-left: 0.25em;
+        margin-right: 0.25em;    
+    }
+
+    .selector button{
+        font-size: 1em;
+        padding: 1em;
+        padding-left: 1.5em;
+        padding-right: 1.5em;
+    }
+}
+
 @media screen and (max-width: 1000px) {
     .titre h3 {
-        font-size: 2.5em;
+        font-size: 1.75em;
         margin-left: 1em;
         margin-right: 1em;
     }
@@ -150,13 +177,6 @@ button, input {
         margin-right: 0.25em;
     }
 
-    .selector button{
-        font-size: 1em;
-        padding: 1em;
-        padding-left: 1.5em;
-        padding-right: 1.5em;
-    }
-
     table{
         margin : 3em;
     }
@@ -166,23 +186,118 @@ button, input {
         font-style: italic bold;
         color: rgb(24, 24, 123);
     }
+
+    
+    .choisir {
+        margin-right: 15em;
+    }
 }
 
-@media screen and (max-width: 1300px) {
-    .selector{
-        margin-left: 6em;
-    }
+@media screen and (max-width: 900px) {
 
     .selector select{
-        margin-left: 0.25em;
-        margin-right: 0.25em;    
+        margin-left: 1.80em;
+        margin-right: 0.25em;
+        margin-bottom: 2em;
     }
 
-    .selector button{
+    .rechercher{
         font-size: 1em;
-        padding: 1em;
+        padding: 0.5em;
         padding-left: 1.5em;
         padding-right: 1.5em;
+
+        margin-left: 20em;
     }
-  
+
+    .choisir {
+        font-size: 75%;
+    }
+
+}
+
+@media screen and (max-width: 830px) {
+
+
+    .selector{
+        text-align: center;    
+    }
+
+    .rechercher{
+        display: block;
+        font-size: 1em;
+        padding: 0.5em;
+        padding-left: 1.5em;
+        padding-right: 1.5em;
+
+        margin-left: 18em;
+    }
+
+    .choisir {
+        margin-top: 8em;
+        font-size: 75%;
+    }
+
+}
+
+
+@media screen and (max-width: 750px) {
+    .titre h3 {
+        font-size: 1.25em;
+        margin-left: 1em;
+        margin-right: 1em;
+    }
+    
+    .selector{
+        text-align: center;    
+    }
+
+    .rechercher{
+        font-size: 1em;
+        padding: 0.5em;
+        padding-left: 1.5em;
+        padding-right: 1.5em;
+
+        margin-left: 18em;
+    }
+
+    table {
+        text-align: center;
+    }
+
+}
+
+@media screen and (max-width: 700px) {
+
+    .rechercher{
+        font-size: 1em;
+        padding: 0.5em;
+        padding-left: 1.5em;
+        padding-right: 1.5em;
+
+        margin-left: 16em;
+    }
+
+} 
+
+@media screen and (max-width: 550px) {
+
+    
+    
+    .rechercher{
+        font-size: 1em;
+        padding: 0.5em;
+        padding-left: 1.5em;
+        padding-right: 1.5em;
+
+        margin-left: 10.5em;
+    }
+
+    .choisir {
+        margin-top: 11em;
+    }
+
+    .titre > h3 {
+        font-size: 90%;
+    }
 }

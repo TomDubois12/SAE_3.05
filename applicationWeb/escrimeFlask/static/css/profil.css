@@ -2,10 +2,14 @@ main {
     flex-wrap: wrap;
     display: flex;
 }
+body{
+    width:100%;
+}
 
 .profil {
     flex-grow: 1;
     flex-basis: 70%;
+    width:100%;
 }
 
 .image {
@@ -21,7 +25,7 @@ section>h1 {
     position: absolute;
     margin-left: 10%;
     font-size: 400%;
-    transform: translateY(-80%);
+    transform: translateY(-50%);
 }
 
 section>img {
@@ -47,6 +51,8 @@ section>img {
     background-color: lightgray;
     font-size: x-large;
     margin-left: 2vw;
+    padding-left: 10px;
+    border-radius: 0.3em;
 }
 
 .epeeCroix {
@@ -59,22 +65,28 @@ section>img {
 
 .selectBoxes,
 .classement {
-    display: flex;
-    flex-wrap: wrap;
+    display: grid;
     justify-content: space-around;
     padding-left: 6vw;
     padding-right: 6vw;
     padding-bottom: 3vh;
+    grid-template-columns: 1fr 1fr 1fr;
+}
+.classement p {
+    font-size: 1.5em;
+}
+h2{
+    font-size:2vmax;
 }
 
-@media screen and (max-width: 1000px) and (max-width: 1800px) {
+@media screen and (max-width: 1000px) {
     .image {
         flex-basis: 25%;
         display: none;
     }
 
     #informations div h2, #informations div p, #statistiques div p{
-        font-size: 2em;
+        font-size: 3.5vmin;
     }
 
     div{
@@ -90,4 +102,19 @@ section>img {
         font-size: 1.5em;
         margin-bottom: 2%;
     }
+
+    section>h1 {
+        margin-left: 100px;
+        font-size: 6vmin;
+        transform: translateY(-40%);
+    }
 }
+
+@media screen and (max-width: 700px) {
+    section>h1 {
+        margin-left: 3em;
+        font-size: 6vmin;
+        transform: translateY(-20%);
+    }
+}
+

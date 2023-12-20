@@ -9,7 +9,7 @@
 {% endblock %}
 
 {% block main %}
-    <form action="{{url_for("verifInscription")}}" method="get">
+    <form class="form" action="{{url_for("verifInscription")}}" method="get">
         <div class="open">
             <div class="titreOpen">
                 <h2>INSCRIPTIONS OUVERTES</h2>
@@ -82,7 +82,7 @@
                     de licence.</p>
                 </div>
                 
-                <img src="../../static/images/imgLicenseIntrouvable.png" alt="image illustration escrime">
+                <img class="imgEscrimeur" src="../../static/images/imgLicenseIntrouvable.png" alt="image illustration escrime">
                 <button class="btn-close" type="button">
                     <img src="{{url_for('static', filename='images/imageCroix.png')}}" alt="image bouton fermer pop up" class ="croixFermer">
                 </button>
@@ -129,7 +129,7 @@
         
         <div class="affichage_popup">
             <div>
-                <h1>Bravo vous êtes inscrit a la compétition</h1>
+                <h1>Bravo vous êtes inscrit à la compétition</h1>
                 <p>Vous pouvez maintenant vous connecter pour voir vos informations.</p>
             </div>
             

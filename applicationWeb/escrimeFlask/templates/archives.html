@@ -18,7 +18,7 @@
         
         <div class="titre">
             <h3>Archives :</h3>
-            <img class="epee" src="{{url_for('static', filename='images/epeeBleu.png')}}" alt="Epée bleu d'escrime">
+            <img class="epeeA" src="{{url_for('static', filename='images/epeeBleu.png')}}" alt="Epée bleu d'escrime">
         </div>
         <div class="t">
             <div class="texte">
@@ -44,12 +44,12 @@
                 <option value="Épée">Épée</option>
                 <option value="Sabre">Sabre</option>
             </select>
-            <select name="sexe">
+            <select class="sexe" name="sexe">
                 <option value="none" selected hidden>Choississez un sexe</option>
                 <option value="Homme">Homme</option>
                 <option value="Dames">Dames</option>
             </select>
-            <select name="categorie">
+            <select class= "categorie" name="categorie">
                 <option value="none" selected hidden>Choississez une catégorie</option>
                 <option value="U13">U13</option>
                 <option value="U15">U15</option>
@@ -61,7 +61,7 @@
                 <option value="V3">Vétérans3</option>
                 <option value="V4">Vétérans4</option>
             </select>
-            <select name="ville">
+            <select class= "region" name="ville">
                 <option value="none" selected hidden>Choississez une région</option>
                 {% for ville in villes %}
                     <option value="{{ ville }}">{{ ville }}</option>
@@ -69,13 +69,13 @@
             </select>
             <input type="text" hidden name="nbLicense" value="{{nbLicense}}">
             <input type="text" hidden name="nbCompet" value="{{nbCompet}}">
-            <input type="submit" value="Rechercher"></input>
+            <input class="rechercher" type="submit" value="Rechercher"></input>
         </form>
         {% for competition in competitions %}
             <div class="competition">
                 <div class="concours">
                     <p>CONCOURS {{ competition[0][0].upper()}}</p>
-                    <p>{{ competition[0][1].upper() }} </p>
+                    <p>{{ competition[0][1].upper()}} {{competition[0][2].upper()}} </p>
                     <p>{{competition[0][3]}}, {{competition[0][4]}} </p>
                 </div>
                 {% if competition in competitionsParticiper %}
