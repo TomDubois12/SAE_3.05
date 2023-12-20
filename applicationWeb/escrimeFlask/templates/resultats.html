@@ -86,14 +86,16 @@
         <h3>Arbre de phase éliminatoire  :</h3>
         <img class="petite_epee" src="{{url_for('static', filename='images/epeeBleu.png')}}" alt="Epée bleu d'escrime">
     </div>
-    {{nbPhase}}
         <div class="tournament">
-        <form action="{{url_for('genererEliminations')}}", method="POST">
-            <input type="text" hidden name="nbCompet" value="{{nbCompet}}">
-            <input type="text" hidden name="nbLicense" value="{{nbLicense}}">
-            <input type="text" hidden name="nbPhase" value="{{nbPhase}}">
-            <button class="boutonRefresh" type="submit">Générer les prochaines phases d'eliminations</button>
-        </form>
+        {% if isArbitre %}
+            <form action="{{url_for('genererEliminations')}}", method="POST">
+                <input type="text" hidden name="nbCompet" value="{{nbCompet}}">
+                <input type="text" hidden name="nbLicense" value="{{nbLicense}}">
+                <input type="text" hidden name="nbPhase" value="{{nbPhase}}">
+                <button class="boutonRefresh" type="submit">Générer les prochaines phases d'eliminations</button>
+            </form>   
+        {% endif %}
+        
         <div class="tournament__grid">
             <!-- tournament__round 1/8 -->
             {% if nbPhase >= 2 %}
