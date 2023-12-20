@@ -35,8 +35,9 @@ main{
 
 .titre h3 {
     padding-bottom: 0;
-    margin-left: 10vh;
-    font-size: 5vh;
+    margin-left: 80px;
+    font-size: 4vmax;
+    transform: translateY(30%);
     font-family: 'Average', sans-serif;
 }
 
@@ -137,7 +138,7 @@ main{
 @media only screen and (max-width: 1000px){
 
     .bouton > * {
-        width: 30%;
+        width: 35%;
         height: 40%;
     
     }
@@ -147,12 +148,19 @@ main{
 @media only screen and (max-width: 700px){
 
     .bouton > * {
+        width: 50%;
         height: 4vmax;
-    
+
     }
 
     .bouton{
         flex-direction: column;
         row-gap: 1em;
+    }
+
+    .titre h3{
+        font-size: 6vmin;
+        margin-left: 60px;
+        transform: translateY(20%);
     }
 }
