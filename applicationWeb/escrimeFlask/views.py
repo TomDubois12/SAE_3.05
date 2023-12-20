@@ -91,19 +91,10 @@ def creation_competition(nbLicense):
 
 @app.route('/resultats/<nbLicense>&<nbCompet>')
 def resultats(nbLicense,nbCompet):
-    listArbitres= getInfoArbitres(int(nbCompet))
-    isArbitre=False
-    arbitres=[]
-    for arbitre in listArbitres:
-        arbitres.append(arbitre[1])
-    # print('\033[91m' + str(arbitres) + '\033[0m')
-    # print('\033[92m' + str(nbLicense) + '\033[0m')
-    for arbitre in arbitres:
-        if int(nbLicense)==arbitre:
-            isArbitre=True
-            break
-    # print('\033[93m' + str(isArbitre) + '\033[0m')
-    if isArbitre :
+    listArbitres= getNumeroLicenceArbitres(int(nbCompet))
+    listLicense=affichageGenererPhaseEliminations(int(nbCompet), getNbPhase(int(nbCompet)))
+    licence = listLicense[3]+listLicense[4]+listLicense[5]+listLicense[6]
+    if int(nbLicense) in listArbitres:
         return render_template('resultats.html',
                            title='Résultats',
                            isOrganisateur=estOrganisateur(int(nbLicense)),
@@ -112,7 +103,8 @@ def resultats(nbLicense,nbCompet):
                            participants=InfosPouleNumLicenceArbitre(int(nbCompet),int(nbLicense)),
                            isArbitre=True,
                            nbPhase=getNbPhase(int(nbCompet)),
-                           matchs=getNomPrenomMatchElimination(int(nbCompet)))
+                           matchs=getNomPrenomMatchElimination(int(nbCompet)),
+                           score=getListeToucheByListLicence(licence, int(getNbPhase(int(nbCompet)), int(nbCompet))))
     else:
         return render_template('resultats.html',
                             title='Résultats',
@@ -122,7 +114,8 @@ def resultats(nbLicense,nbCompet):
                             participants=InfosPouleNumLicence(int(nbCompet),int(nbLicense)),
                             isArbitre=False,
                             nbPhase=getNbPhase(int(nbCompet)),
-                            matchs=getNomPrenomMatchElimination(int(nbCompet)))
+                            matchs=getNomPrenomMatchElimination(int(nbCompet)),
+                             score=getListeToucheByListLicence(licence, int(getNbPhase(int(nbCompet)), int(nbCompet))))
 
 
 ##Fonctions de vérification
@@ -272,11 +265,11 @@ def update_data():
     nbLicenceTireurAdverse = request.form.get('nbLicenceTireurAdverse')
     numCompetition = request.form.get('numCompetition')
     nbPhase = request.form.get('nbPhase')
-    print('\033[93m' + str(data) + '\033[0m')
-    print('\033[93m' + str(nbLicenceTireur) + '\033[0m')
-    print('\033[93m' + str(nbLicenceTireurAdverse) + '\033[0m')
-    print('\033[93m' + str(numCompetition) + '\033[0m')
-    print('\033[93m' + str(nbPhase) + '\033[0m')
+    # print('\033[93m' + str(data) + '\033[0m')
+    # print('\033[93m' + str(nbLicenceTireur) + '\033[0m')
+    # print('\033[93m' + str(nbLicenceTireurAdverse) + '\033[0m')
+    # print('\033[93m' + str(numCompetition) + '\033[0m')
+    # print('\033[93m' + str(nbPhase) + '\033[0m')
 
 
     return setToucherDonneTireur(int(nbLicenceTireur), int(nbLicenceTireurAdverse), int(data), int(numCompetition), int(nbPhase))
@@ -285,7 +278,8 @@ def update_data():
 def genererEliminations():
     nbCompet = int(request.form.get('nbCompet'))
     nbPhase = int(request.form.get('nbPhase'))
-    print('\033[93m' + str(nbCompet) + '\033[0m')
-    print('\033[93m' + str(nbPhase) + '\033[0m')
+    nbLicense = int(request.form.get('nbLicense'))
+    # print('\033[93m' + str(nbCompet) + '\033[0m')
+    # print('\033[93m' + str(nbPhase) + '\033[0m')
     genererPhaseEliminations(int(nbCompet), int(nbPhase)+1)
-    return redirect('resultats/'+str(request.form.get("nbLicense"))+'&'+str(nbCompet))
+    return redirect('resultats/'+str(nbLicense)+'&'+str(nbCompet))

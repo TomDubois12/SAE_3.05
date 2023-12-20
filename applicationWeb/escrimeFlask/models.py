@@ -596,6 +596,15 @@ def getInfoArbitres(idCompetition):
   cursor.execute(requete)
   return cursor.fetchall()
 
+def getNumeroLicenceArbitres(idCompetition):
+  requete = "select numeroLicenceArbitre from COMPETITION natural join ARBITRE_DANS_COMPETITIONS where idCompetition = " + str(idCompetition) + " ;"
+  cursor.execute(requete)
+  res = cursor.fetchall()
+  liste = []
+  for elem in res : 
+    liste.append(elem[0])
+  return liste
+
 def getIdPouleTireur(numLicenceTireur, idCompetition) : 
   requete = "select idPoule from POULE natural join TIREUR_DANS_POULE where numeroLicenceTireur = " + str(numLicenceTireur) + "  and idCompetition = " +str(idCompetition) + ";"
   cursor.execute(requete)
@@ -805,6 +814,42 @@ def genererPhaseEliminations(idCompetition, nbPhase) :
         maFonctionTropBelle(4, idCompetition,demie)
       case 5 : 
         maFonctionTropBelle(5, idCompetition,finale)
+    
+    return (pat,listeVictorieux,listeTireurClasser,huit,quart,demie,finale)
+
+def affichageGenererPhaseEliminations(idCompetition, nbPhase) :
+    listeTireurClasser = getClassementApresPoule(idCompetition)[:16]
+    pat = [1,16,5,12,7,10,4,13,3,14,8,9,6,11,2,15]
+    huit = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
+    for i in range(16) : 
+      try  :
+        huit[i] = listeTireurClasser[pat[i]-1]
+      except IndexError : 
+        huit[i] = 0
+
+    quart = [0,0,0,0,0,0,0,0]
+    listeVictorieux = getListeGagnantMatchElimination(2, idCompetition)
+    for i in range(8) : 
+      if huit[i*2] in listeVictorieux : 
+        quart[i] = huit[i*2]
+      else :
+        quart[i] = huit[i*2+1]
+
+    demie = [0,0,0,0]
+    listeVictorieux = getListeGagnantMatchElimination(3, idCompetition)
+    for i in range(4) : 
+      if quart[i*2] in listeVictorieux : 
+        demie[i] = quart[i*2]
+      else :
+        demie[i] = quart[i*2+1]
+
+    finale = [0,0]
+    listeVictorieux = getListeGagnantMatchElimination(4, idCompetition)
+    for i in range(2) : 
+      if demie[i*2] in listeVictorieux : 
+        finale[i] = demie[i*2]
+      else :
+        finale[i] = demie[i*2+1]
     
     return (pat,listeVictorieux,listeTireurClasser,huit,quart,demie,finale)
 
