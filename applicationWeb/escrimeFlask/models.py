@@ -553,7 +553,7 @@ def getIdPouleTireur(numLicenceTireur, idCompetition = 1) :
   return cursor.fetchall()[0][0]
 
 def getIdMatchElim(numLicenceTireur, idCompetition, nbPhases) : 
-  requete = "select idMatchElimination from MATCHELIMINATION where licenceTireur1 = " + str(numLicenceTireur) + " OR licenceTireur2 = " +str(numLicenceTireur)+ " and idCompetition = " +str(idCompetition) + " and nbPhases = " + str(nbPhases) +";"
+  requete = "select idMatchElimination from MATCHELIMINATION where  nbPhases = " + str(nbPhases) +" and licenceTireur1 = " + str(numLicenceTireur) + " OR licenceTireur2 = " +str(numLicenceTireur)+ " and idCompetition = " +str(idCompetition) + ";"
   cursor.execute(requete)
   return cursor.fetchall()[0][0]
 
@@ -620,81 +620,112 @@ def getListeGagnantMatchElimination(nbPhase, idCompetition) :
 
   return listeTrie
 
-def genererPhase(idCompetition, nbPhase):
+def genererPhase(nbPhase, idCompetition,listeLicMatchACreer):
   if nbPhase == 2 :
-    listePatern = [(1,16),(5,12),(7,10),(4,13),(3,14),(8,9),(6,11),(2,15)]
-    listeNumLicenceTireurTrier = getClassementApresPoule(idCompetition)[:16]
-    for patern in listePatern :
-      if patern[1] <= len(listeNumLicenceTireurTrier) and patern[0] <= len(listeNumLicenceTireurTrier) :
-        
-        nomMatch = "Match élimination: " + str(getNomByLicence(listeNumLicenceTireurTrier[patern[0]-1])[0])+ "-" + str(getNomByLicence(listeNumLicenceTireurTrier[patern[1]-1])[0])
-        req = "insert into MATCHELIMINATION(nomMatchElimination,licenceTireur1,licenceTireur2,nbPhases,idCompetition) value ('" + str(nomMatch) +"' , " +str(listeNumLicenceTireurTrier[patern[0]-1])+ "," + str(listeNumLicenceTireurTrier[patern[1]-1])+" , 2 , " +str(idCompetition) +  ");"
-        cursor.execute(req)
-        db.commit()
-
-      else : 
-        if patern[1] <= len(listeNumLicenceTireurTrier) and patern[0] > len(listeNumLicenceTireurTrier) :
-          nomMatch = "Match élimination: " + str(getNomByLicence(0)[0])+ "-" + str(getNomByLicence(listeNumLicenceTireurTrier[patern[1]-1])[0])
-          req = "insert into MATCHELIMINATION(nomMatchElimination,licenceTireur1,licenceTireur2,nbPhases,idCompetition,toucheDTireur2,toucheDTireur1) value ('" + str(nomMatch) +"' , " +str(0)+ "," + str(listeNumLicenceTireurTrier[patern[1]-1])+" , 2 , " +str(idCompetition) +  ", 5,0);"
+    for k in range(int(len(listeLicMatchACreer)/2)) : 
+        if listeLicMatchACreer[k*2] == 0 :
+          idPoule = getIdPouleTireur(listeLicMatchACreer[k*2+1])
+          nomMatch = "Match élimination: " + str(getNomByLicence(0)[0])+ "-" + str(getNomByLicence(listeLicMatchACreer[k*2+1])[0])
+          req = "insert into MATCHPOULE(nomMatchPoule,licenceTireur1,licenceTireur2,nbPhases,idPoule,toucheDTireur1,toucheDTireur2) value ('" + str(nomMatch) +"' , " +str(0)+ "," + str(listeLicMatchACreer[k*2+1])+" , "+ str(nbPhase)+" , " +str(idCompetition) +  ",0,5);"
           cursor.execute(req)
           db.commit()
-
-        elif patern[1] > len(listeNumLicenceTireurTrier) and patern[0] <= len(listeNumLicenceTireurTrier) :
-          nomMatch = "Match élimination: " + str(getNomByLicence(listeNumLicenceTireurTrier[patern[0]-1])[0])+ "-" + str(getNomByLicence(0)[0])
-          req = "insert into MATCHELIMINATION(nomMatchElimination,licenceTireur1,licenceTireur2,nbPhases,idCompetition,toucheDTireur1,toucheDTireur2) value ('" + str(nomMatch) +"' , " +str(listeNumLicenceTireurTrier[patern[0]-1])+ "," + str(0)+" , 2 , " +str(idCompetition) +  ",5,0);"
+        elif listeLicMatchACreer[k*2+1] == 0 : 
+          idPoule = getIdPouleTireur(listeLicMatchACreer[k*2])
+          nomMatch = "Match élimination: " + str(getNomByLicence(listeLicMatchACreer[k*2])[0])+ "-" + str(getNomByLicence(0)[0])
+          req = "insert into MATCHPOULE(nomMatchPoule,licenceTireur1,licenceTireur2,nbPhases,idPoule,toucheDTireur1,toucheDTireur2) value ('" + str(nomMatch) +"' , " +str(listeLicMatchACreer[k*2])+ "," + str(0)+" , "+ str(nbPhase)+" , " +str(idPoule) +  ",5,0);"
           cursor.execute(req)
           db.commit()
         else :
-          nomMatch = "Match élimination: " + str(getNomByLicence(0)[0])+ "-" + str(getNomByLicence(0)[0])
-          req = "insert into MATCHELIMINATION(nomMatchElimination,licenceTireur1,licenceTireur2,nbPhases,idCompetition,toucheDTireur1,toucheDTireur2) value ('" + str(nomMatch) +"' , " +str(0)+ "," + str(0)+" , 2 , " +str(idCompetition) +  ",5,0);"
+          nomMatch = "Match élimination: " + str(getNomByLicence(listeLicMatchACreer[k*2])[0])+ "-" + str(getNomByLicence(listeLicMatchACreer[k*2+1])[0])
+          idPoule = getIdPouleTireur(listeLicMatchACreer[k*2])
+          req = "insert into MATCHPOULE(nomMatchPoule,licenceTireur1,licenceTireur2,nbPhases,idPoule) value ('" + str(nomMatch) +"' , " +str(listeLicMatchACreer[k*2])+ "," + str(listeLicMatchACreer[k*2+1])+" , "+ str(nbPhase)+" , " +str(idPoule) +  ");"
+          cursor.execute(req)
+          db.commit()
+
+  else : 
+    for k in range(int(len(listeLicMatchACreer)/2)) : 
+        if listeLicMatchACreer[k*2] == 0 :
+          nomMatch = "Match élimination: " + str(getNomByLicence(0)[0])+ "-" + str(getNomByLicence(listeLicMatchACreer[k*2+1])[0])
+          req = "insert into MATCHELIMINATION(nomMatchElimination,licenceTireur1,licenceTireur2,nbPhases,idCompetition,toucheDTireur1,toucheDTireur2) value ('" + str(nomMatch) +"' , " +str(0)+ "," + str(listeLicMatchACreer[k*2+1])+" , "+ str(nbPhase)+" , " +str(idCompetition) +  ",0,5);"
+          cursor.execute(req)
+          db.commit()
+        elif listeLicMatchACreer[k*2+1] == 0 : 
+          nomMatch = "Match élimination: " + str(getNomByLicence(listeLicMatchACreer[k*2])[0])+ "-" + str(getNomByLicence(0)[0])
+          req = "insert into MATCHELIMINATION(nomMatchElimination,licenceTireur1,licenceTireur2,nbPhases,idCompetition,toucheDTireur1,toucheDTireur2) value ('" + str(nomMatch) +"' , " +str(listeLicMatchACreer[k*2])+ "," + str(0)+" , "+ str(nbPhase)+" , " +str(idCompetition) +  ",5,0);"
+          cursor.execute(req)
+          db.commit()
+        else :
+          nomMatch = "Match élimination: " + str(getNomByLicence(listeLicMatchACreer[k*2])[0])+ "-" + str(getNomByLicence(listeLicMatchACreer[k*2+1])[0])
+          req = "insert into MATCHELIMINATION(nomMatchElimination,licenceTireur1,licenceTireur2,nbPhases,idCompetition) value ('" + str(nomMatch) +"' , " +str(listeLicMatchACreer[k*2])+ "," + str(listeLicMatchACreer[k*2+1])+" , "+ str(nbPhase)+" , " +str(idCompetition) +  ");"
           cursor.execute(req)
           db.commit()
 
 
+def maFonctionTropBelle(nbPhase, idCompetition,listeLicMatchACreer): 
+  
+  for k in range(int(len(listeLicMatchACreer)/2)) : 
+    if listeLicMatchACreer[k*2] == 0 :
+      nomMatch = "Match élimination: " + str(getNomByLicence(0)[0])+ "-" + str(getNomByLicence(listeLicMatchACreer[k*2+1])[0])
+      req = "insert into MATCHELIMINATION(nomMatchElimination,licenceTireur1,licenceTireur2,nbPhases,idCompetition,toucheDTireur1,toucheDTireur2) value ('" + str(nomMatch) +"' , " +str(0)+ "," + str(listeLicMatchACreer[k*2+1])+" , "+ str(nbPhase)+" , " +str(idCompetition) +  ",0,5);"
+      cursor.execute(req)
+      db.commit()
+    elif listeLicMatchACreer[k*2+1] == 0 : 
+      nomMatch = "Match élimination: " + str(getNomByLicence(listeLicMatchACreer[k*2])[0])+ "-" + str(getNomByLicence(0)[0])
+      req = "insert into MATCHELIMINATION(nomMatchElimination,licenceTireur1,licenceTireur2,nbPhases,idCompetition,toucheDTireur1,toucheDTireur2) value ('" + str(nomMatch) +"' , " +str(listeLicMatchACreer[k*2])+ "," + str(0)+" , "+ str(nbPhase)+" , " +str(idCompetition) +  ",5,0);"
+      cursor.execute(req)
+      db.commit()
+    else :
+      nomMatch = "Match élimination: " + str(getNomByLicence(listeLicMatchACreer[k*2])[0])+ "-" + str(getNomByLicence(listeLicMatchACreer[k*2+1])[0])
+      req = "insert into MATCHELIMINATION(nomMatchElimination,licenceTireur1,licenceTireur2,nbPhases,idCompetition) value ('" + str(nomMatch) +"' , " +str(listeLicMatchACreer[k*2])+ "," + str(listeLicMatchACreer[k*2+1])+" , "+ str(nbPhase)+" , " +str(idCompetition) +  ");"
+      cursor.execute(req)
+      db.commit()
 
-  elif nbPhase == 3 : 
-    listeVictorieux = getListeGagnantMatchElimination(nbPhase-1, idCompetition)
-
-    listeNumLicenceTireurTrier = getClassementApresPoule(idCompetition)[:16]
-    listePatern = [1,16,5,12,7,10,4,13,3,14,8,9,6,11,2,15]
-    maListe =     [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
+def testDeTes(idCompetition, nbPhase) :
+    listeTireurClasser = getClassementApresPoule(idCompetition)[:16]
+    pat = [1,16,5,12,7,10,4,13,3,14,8,9,6,11,2,15]
+    huit = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
     for i in range(16) : 
       try  :
-        maListe[i] = listeNumLicenceTireurTrier[listePatern[i]-1]
+        huit[i] = listeTireurClasser[pat[i]-1]
       except IndexError : 
-        maListe[i] = 0
+        huit[i] = 0
 
-    listeLicMatchACreer = []  
-    ind = 0
-    for j in range(int(len(maListe)/2)):
-      if maListe[ind] != 0 and maListe[ind] in listeVictorieux : 
-        listeLicMatchACreer.append(maListe[ind])
-      elif maListe[ind+1] != 0 and  maListe[ind+1] in listeVictorieux  : 
-        listeLicMatchACreer.append(maListe[ind+1])
-      else : 
-        listeLicMatchACreer.append(0)
-      ind += 2
-    
-    ind = 0
-    for k in range(int(len(listeLicMatchACreer)/2)) : 
-      if listeLicMatchACreer[ind] == 0 :
-        nomMatch = "Match élimination: " + str(getNomByLicence(0)[0])+ "-" + str(getNomByLicence(listeLicMatchACreer[ind+1])[0])
-        req = "insert into MATCHELIMINATION(nomMatchElimination,licenceTireur1,licenceTireur2,nbPhases,idCompetition,toucheDTireur1,toucheDTireur2) value ('" + str(nomMatch) +"' , " +str(0)+ "," + str(listeLicMatchACreer[ind+1])+" , 3 , " +str(idCompetition) +  ",0,5);"
-        cursor.execute(req)
-        db.commit()
-      elif listeLicMatchACreer[ind+1] == 0 : 
-        nomMatch = "Match élimination: " + str(getNomByLicence(listeLicMatchACreer[ind])[0])+ "-" + str(getNomByLicence(0)[0])
-        req = "insert into MATCHELIMINATION(nomMatchElimination,licenceTireur1,licenceTireur2,nbPhases,idCompetition,toucheDTireur1,toucheDTireur2) value ('" + str(nomMatch) +"' , " +str(listeLicMatchACreer[ind])+ "," + str(0)+" , 3 , " +str(idCompetition) +  ",5,0);"
-        cursor.execute(req)
-        db.commit()
+    quart = [0,0,0,0,0,0,0,0]
+    listeVictorieux = getListeGagnantMatchElimination(2, idCompetition)
+    for i in range(8) : 
+      if huit[i*2] in listeVictorieux : 
+        quart[i] = huit[i*2]
       else :
-        nomMatch = "Match élimination: " + str(getNomByLicence(listeLicMatchACreer[ind])[0])+ "-" + str(getNomByLicence(listeLicMatchACreer[ind+1])[0])
-        req = "insert into MATCHELIMINATION(nomMatchElimination,licenceTireur1,licenceTireur2,nbPhases,idCompetition) value ('" + str(nomMatch) +"' , " +str(listeLicMatchACreer[ind])+ "," + str(listeLicMatchACreer[ind+1])+" , 3 , " +str(idCompetition) +  ");"
-        cursor.execute(req)
-        db.commit()
-      ind += 2
+        quart[i] = huit[i*2+1]
 
-    
+    demie = [0,0,0,0]
+    listeVictorieux = getListeGagnantMatchElimination(3, idCompetition)
+    for i in range(4) : 
+      if quart[i*2] in listeVictorieux : 
+        demie[i] = quart[i*2]
+      else :
+        demie[i] = quart[i*2+1]
+
+    finale = [0,0]
+    listeVictorieux = getListeGagnantMatchElimination(4, idCompetition)
+    for i in range(2) : 
+      if demie[i*2] in listeVictorieux : 
+        finale[i] = demie[i*2]
+      else :
+        finale[i] = demie[i*2+1]
+
+    match nbPhase : 
+      case 2 : 
+        maFonctionTropBelle(2, idCompetition,huit)
+      case 3 : 
+        maFonctionTropBelle(3, idCompetition,quart)
+      case 4 : 
+        maFonctionTropBelle(4, idCompetition,demie)
+      case 5 : 
+        maFonctionTropBelle(5, idCompetition,finale)
+
+    print(pat,listeVictorieux,listeTireurClasser,huit,quart,demie,finale)
+
 
 # (numLicence, num) : (nom,prenom,club,[(num,toucheDonnee,toucheRecu)], toucheDonnéeTotal, toucheRecuTotal,victoire,placeClassement)
 def setToucherDonneTireur(licenceTireur1, licenceTireur2, toucheDTireur, idCompetition, nbPhase) :
@@ -712,6 +743,7 @@ def setToucherDonneTireur(licenceTireur1, licenceTireur2, toucheDTireur, idCompe
     db.commit()
   else :
     idMatchElim = getIdMatchElim(licenceTireur1,idCompetition, nbPhase)
+    print(idMatchElim)
     requete = "select licenceTireur1 from MATCHELIMINATION where licenceTireur1 = " + str(licenceTireur1) + " and licenceTireur2 = " + str(licenceTireur2) + " and idMatchElimination = " + str(idMatchElim) + ";"
     cursor.execute(requete)
     l1 = cursor.fetchall()
@@ -834,6 +866,10 @@ def calculer_nombre_poules(liste_choix_part_poule, nb_part, nb_arbitre):
 
   listeNbPoule = []
   
+  if nb_part in liste_choix_part_poule : 
+    return [nb_part,1,0]
+
+
   for choix in liste_choix_part_poule:
     ind = 0
     nbPoule = 0
@@ -846,7 +882,7 @@ def calculer_nombre_poules(liste_choix_part_poule, nb_part, nb_arbitre):
     listeNbPoule.append([choix,nbPoule,nbP])
   
   listeRetien = []
-
+  print(listeNbPoule)
   if nb_arbitre == 0 : nb_arbitre = 1
 
   for elem in listeNbPoule : 
@@ -856,8 +892,8 @@ def calculer_nombre_poules(liste_choix_part_poule, nb_part, nb_arbitre):
       listeRetien.append(elem)
 
   choixR = -1
+  
   if len(listeRetien) > 0 :
-    
     for l in listeRetien :
       if choixR == -1 or l[2] > choixR[2] :
         choixR = l
@@ -920,6 +956,7 @@ def insArbitreDansPoule(infosArbitre, idCompetition) :
 
 def genererMatchPouleIdCompetition(idCompetition) : 
   listeIdPoule = getListeidPouleCompetition(idCompetition)
+  print(listeIdPoule)
   for idPoule in listeIdPoule : 
     
     requete = "select distinct numeroLicenceTireur from COMPETITION natural join TIREUR_DANS_POULE where idCompetition = "+ str(idCompetition) +" and idPoule = " + str(idPoule) + ";"
@@ -967,9 +1004,13 @@ def lancerCompetition(idCompetition):
   # 1) gener nbPoule en fonction nbTIreur et Arbitre
   listeChoixPartPoule, listePoules = [5,6,7,8,9], []
   choixTPP, nbPoule, resteT   = calculer_nombre_poules(listeChoixPartPoule, nbTireur, nbArbitre)
+
   # pour le moment les tireurs ne sont pas mit dabs les poules c'est juste des testes pour voir si le model marche
+
   for i in range(nbPoule - 1 if choixTPP == 5 and resteT > 0 else nbPoule):
     listePoules.append([])
+
+  print(choixTPP, nbPoule, resteT, nbTireur)
 
   createPoule(idCompetition,len(listePoules))
   insTireurDansPoule(infosTireur, idCompetition)
@@ -983,7 +1024,9 @@ if __name__ == "__main__":
     # print(InfosPouleNumLicence(1,315486))
     # print(getListeidPouleCompetition(1))
     #print(getIdPouleTireur(315486))
-    
+
+    # print(calculer_nombre_poules([5,6,7,8,9], 7, 2))
+
 
     # print(genererMatchPouleIdCompetition(1))
     # print(lancerCompetition(1))
@@ -1054,39 +1097,53 @@ if __name__ == "__main__":
     # print(getNbArbitre(2))
     # print(getNbTireur(2))
 
-    # insertTireurDansBD(45243)
-    # insertTireurDansBD(20840)
-    # insertTireurDansBD(53089)
-    # insertTireurDansBD(40845)
-    # insertTireurDansBD(37189)
-    # insertTireurDansBD(53998)
-    # insertTireurDansBD(54797)
-    # insertTireurDansBD(5387)
-    # insertTireurDansBD(35524)
-    # insertTireurDansBD(20981)
+    insertTireurDansBD(45243)
+    insertTireurDansBD(20840)
+    insertTireurDansBD(53089)
+    insertTireurDansBD(40845)
+    insertTireurDansBD(37189)
+    insertTireurDansBD(53998)
+    insertTireurDansBD(54797)
+    insertTireurDansBD(5387)
+    insertTireurDansBD(35524)
+    insertTireurDansBD(20981)
 
-    # test = [45243,20840,53089,40845,37189,53998,54797,5387,35524,20981]
+    test = [45243,20840,53089,40845,37189,53998,54797,5387,35524,20981]
 
-    # for id in test : 
-    #   requete5 = "insert into TIREUR_DANS_COMPETITIONS (numeroLicenceTireur,idCompetition) values("+str(id)+", 1  );"
-    #   cursor.execute(requete5)
-    #   db.commit()
+    for id in test : 
+      requete5 = "insert into TIREUR_DANS_COMPETITIONS (numeroLicenceTireur,idCompetition) values("+str(id)+", 1  );"
+      cursor.execute(requete5)
+      db.commit()
 
-    # insertArbitreDansBD(51032)
-    # insertArbitreDansBD(51061)
+    insertArbitreDansBD(51032)
+    insertArbitreDansBD(51061)
 
-    # test1 = [51032,51061]
-    # for id in test1 : 
-    #   requete5 = "insert into ARBITRE_DANS_COMPETITIONS (numeroLicenceArbitre,idCompetition) values("+str(id)+", 1  );"
-    #   cursor.execute(requete5)
-    #   db.commit()
+    test1 = [51032,51061]
+    for id in test1 : 
+      requete5 = "insert into ARBITRE_DANS_COMPETITIONS (numeroLicenceArbitre,idCompetition) values("+str(id)+", 1  );"
+      cursor.execute(requete5)
+      db.commit()
 
-    # print(lancerCompetition(1)) # Pour creer une competition pour les tests
+    print(lancerCompetition(1)) # Pour creer une competition pour les tests
+    
+    # testDeTes(1,2)
+    
 
+
+    # genererPhase(1,3)
+    # print(setToucherDonneTireur(5387, 20981, 5, 1, 4))
+    # print(setToucherDonneTireur(35524, 53089, 5, 1, 4))
+    # print(setToucherDonneTireur(53089, 20840, 5, 1, 3))
+    # print(setToucherDonneTireur(35524, 54797, 5, 1, 3))
+    # testDeTes(1,5)
+    # genererPhase(1,4)
+    # print(testDeTes(1,2))
     # # InfosPouleNumLicence(1, 20981)
     # # print(InfosPouleNumLicenceArbitre(1,51061))
     # # print(getClassementApresPoule(1))
-    print(genererPhase(1,3))
+
+    
+
     # print((getIdMatchElim(5387,1)))
     # print(setToucherDonneTireur(40845, 20981, -1, 1, 2))
     # print(getListeGagnantMatchElimination(2, 1))
