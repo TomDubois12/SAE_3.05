@@ -98,30 +98,64 @@ def resultats(nbLicense,nbCompet):
     licence.append(listLicense[4])
     licence.append(listLicense[5])
     licence.append(listLicense[6])
-
-    print('\033[93m' + str(licence) + '\033[0m')
-    if int(nbLicense) in listArbitres:
-        return render_template('resultats.html',
-                           title='Résultats',
-                           isOrganisateur=estOrganisateur(int(nbLicense)),
-                           nbCompet=int(nbCompet),
-                           nbLicense=int(nbLicense),
-                           participants=InfosPouleNumLicenceArbitre(int(nbCompet),int(nbLicense)),
-                           isArbitre=True,
-                           nbPhase=getNbPhase(int(nbCompet)),
-                           matchs=getNomPrenomMatchElimination(int(nbCompet)),
-                           scores=getListeToucheByListLicence(licence, int(getNbPhase(int(nbCompet))), int(nbCompet)))
+    lancer=False
+    if int(nbCompet) in getListIdCompetitionTournoisLancer():
+        lancer=True
+        # print('\033[93m' + str(lancer) + '\033[0m')
+    if int(nbCompet) in getListIdCompetitionTournoisClosed():
+        lancer=True
+        # print('\033[93m' + str(lancer) + '\033[0m')
+    # print('\033[93m' + str(lancer) + '\033[0m')
+    if lancer:
+        if int(nbLicense) in listArbitres:
+            return render_template('resultats.html',
+                            title='Résultats',
+                            isOrganisateur=estOrganisateur(int(nbLicense)),
+                            nbCompet=int(nbCompet),
+                            nbLicense=int(nbLicense),
+                            participants=InfosPouleNumLicenceArbitre(int(nbCompet),int(nbLicense)),
+                            isArbitre=True,
+                            nbPhase=getNbPhase(int(nbCompet)),
+                            matchs=getNomPrenomMatchElimination(int(nbCompet)),
+                            scores=getListeToucheByListLicence(licence, int(getNbPhase(int(nbCompet))), int(nbCompet)),
+                            lancer=lancer)
+        elif estParticipant(int(nbLicense), int(nbCompet)):
+            return render_template('resultats.html',
+                                title='Résultats',
+                                isOrganisateur=estOrganisateur(int(nbLicense)),
+                                nbCompet=int(nbCompet),
+                                nbLicense=int(nbLicense),
+                                participants=InfosPouleNumLicence(int(nbCompet),int(nbLicense)),
+                                isArbitre=False,
+                                nbPhase=getNbPhase(int(nbCompet)),
+                                matchs=getNomPrenomMatchElimination(int(nbCompet)),
+                                scores=getListeToucheByListLicence(licence, int(getNbPhase(int(nbCompet))), int(nbCompet)),
+                                lancer=lancer)
+        else:
+            return render_template('resultats.html',
+                                title='Résultats',
+                                isOrganisateur=estOrganisateur(int(nbLicense)),
+                                nbCompet=int(nbCompet),
+                                nbLicense=int(nbLicense),
+                                participants=InfosPouleSansLicence(int(nbCompet)),
+                                isArbitre=False,
+                                nbPhase=getNbPhase(int(nbCompet)),
+                                matchs=getNomPrenomMatchElimination(int(nbCompet)),
+                                scores=getListeToucheByListLicence(licence, int(getNbPhase(int(nbCompet))), int(nbCompet)),
+                                lancer=lancer)
+            
     else:
         return render_template('resultats.html',
                             title='Résultats',
                             isOrganisateur=estOrganisateur(int(nbLicense)),
                             nbCompet=int(nbCompet),
                             nbLicense=int(nbLicense),
-                            participants=InfosPouleNumLicence(int(nbCompet),int(nbLicense)),
+                            participants=[],
                             isArbitre=False,
                             nbPhase=getNbPhase(int(nbCompet)),
                             matchs=getNomPrenomMatchElimination(int(nbCompet)),
-                            scores=getListeToucheByListLicence(licence, int(getNbPhase(int(nbCompet))), int(nbCompet)))
+                            scores=getListeToucheByListLicence(licence, int(getNbPhase(int(nbCompet))), int(nbCompet)),
+                            lancer=lancer)
 
 
 ##Fonctions de vérification

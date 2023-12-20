@@ -259,3 +259,23 @@ table {
     gap: 4em;
     margin-bottom: 4em;
   }
+
+  .fondBlur {
+    position: fixed;
+    height: 100vh;
+    width: 100vw;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    backdrop-filter: blur(5px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .fondBlur h1 {
+    font-size: 5em;
+    color: red;
+    font-family: 'Average', sans-serif;
+  }
+  
