@@ -202,7 +202,7 @@ table {
     font-size: 14px;
     font-weight: bold;
     transition: color 0.3s ease;
-    color: #686868;
+    color: #000;
     text-decoration: none;
     border: 2px solid;
     border-color: #062657;
