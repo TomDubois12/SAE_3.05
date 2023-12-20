@@ -19,7 +19,6 @@ insert into ARME(typeArme,descriptionArme) values
     ('Fleuret','Fleuret'),
     ('Épée','Épée'),
     ('Sabre','Sabre');
-   
  
 insert into SEXE(intituleSexe) values
     ('Homme'),

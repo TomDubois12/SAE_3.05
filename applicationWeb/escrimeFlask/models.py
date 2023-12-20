@@ -14,8 +14,8 @@ import mysql.connector
 #connexion au base de données
 db = mysql.connector.connect(
   host = "localhost",
-  user = "root",
-  password = "1234",
+  user = "nathan",
+  password = "nathan",
   database = "Escrime"
 )
 #Blabla2147
@@ -108,6 +108,41 @@ def tireurDansClub(licenceTireur) :
   cursor.execute(requete)
   res = cursor.fetchall()
   return len(res) > 0
+
+########################################################################
+########################################################################
+########################################################################
+########################################################################
+######################################################################## 
+
+# On gère les orga ici 
+
+def getInfoOrgaFromBDNational() -> list :
+  return classementFile("./escrimeFlask/csvOrga/orga.csv")
+   
+def orgaDansClub(licOrga, nomClub) :    
+  idClub = getIdClubByNom(nomClub)
+  requete = "select * from CLUB natural join ORGANISATEURDANSCLUB where idClub = '" + str(idClub) +"' and licenseOrganisateur = "+str(licOrga) + " ;"
+  cursor.execute(requete)
+  res = cursor.fetchall()
+  return len(res) == 1
+
+def setOrgaDansClub(licenceOrga, nomClub) : 
+  if clubExist(nomClub) == False :
+    setNewClub(nomClub)
+  if orgaDansClub(licenceOrga, nomClub) == False :
+    idClub = getIdClubByNom(nomClub) 
+    requete5 = "insert into ORGANISATEURDANSCLUB (licenseOrganisateur,idClub) values(%s,%s);"
+    cursor.execute(requete5, (licenceOrga, idClub))
+    db.commit()
+
+def insOrgaDansBD() : 
+  listeOrga = getInfoOrgaFromBDNational()
+  for orga in listeOrga : 
+    requete5 = "insert into ORGANISATEUR (nomOrganisateur,prenomOrganisateur, licenseOrganisateur) values(%s,%s,%s);"
+    cursor.execute(requete5, (orga[0],orga[1], orga[3]))
+    db.commit()
+    setOrgaDansClub(orga[3], orga[6])
 
 ########################################################################
 ########################################################################
@@ -1097,34 +1132,35 @@ if __name__ == "__main__":
     # print(getNbArbitre(2))
     # print(getNbTireur(2))
 
-    insertTireurDansBD(45243)
-    insertTireurDansBD(20840)
-    insertTireurDansBD(53089)
-    insertTireurDansBD(40845)
-    insertTireurDansBD(37189)
-    insertTireurDansBD(53998)
-    insertTireurDansBD(54797)
-    insertTireurDansBD(5387)
-    insertTireurDansBD(35524)
-    insertTireurDansBD(20981)
+    # insertTireurDansBD(45243)
+    # insertTireurDansBD(20840)
+    # insertTireurDansBD(53089)
+    # insertTireurDansBD(40845)
+    # insertTireurDansBD(37189)
+    # insertTireurDansBD(53998)
+    # insertTireurDansBD(54797)
+    # insertTireurDansBD(5387)
+    # insertTireurDansBD(35524)
+    # insertTireurDansBD(20981)
+    # print(getIdPouleTireur(45243, 4))
+    # test = [45243,20840,53089,40845,37189,53998,54797,5387,35524,20981]
 
-    test = [45243,20840,53089,40845,37189,53998,54797,5387,35524,20981]
+    # for id in test : 
+    #   requete5 = "insert into TIREUR_DANS_COMPETITIONS (numeroLicenceTireur,idCompetition) values("+str(id)+", 1  );"
+    #   cursor.execute(requete5)
+    #   db.commit()
 
-    for id in test : 
-      requete5 = "insert into TIREUR_DANS_COMPETITIONS (numeroLicenceTireur,idCompetition) values("+str(id)+", 1  );"
-      cursor.execute(requete5)
-      db.commit()
+    # insertArbitreDansBD(51032)
+    # insertArbitreDansBD(51061)
 
-    insertArbitreDansBD(51032)
-    insertArbitreDansBD(51061)
+    # test1 = [51032,51061]
+    # for id in test1 : 
+    #   requete5 = "insert into ARBITRE_DANS_COMPETITIONS (numeroLicenceArbitre,idCompetition) values("+str(id)+", 1  );"
+    #   cursor.execute(requete5)
+    #   db.commit()
 
-    test1 = [51032,51061]
-    for id in test1 : 
-      requete5 = "insert into ARBITRE_DANS_COMPETITIONS (numeroLicenceArbitre,idCompetition) values("+str(id)+", 1  );"
-      cursor.execute(requete5)
-      db.commit()
-
-    print(lancerCompetition(1)) # Pour creer une competition pour les tests
+    # print(lancerCompetition(1)) # Pour creer une competition pour les tests
+    insOrgaDansBD()
     
     # testDeTes(1,2)
     
@@ -1148,4 +1184,5 @@ if __name__ == "__main__":
     # print((getIdMatchElim(5387,1)))
     # print(setToucherDonneTireur(40845, 20981, -1, 1, 2))
     # print(getListeGagnantMatchElimination(2, 1))
+    
     pass
