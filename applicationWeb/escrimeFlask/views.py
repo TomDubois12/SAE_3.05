@@ -92,7 +92,7 @@ def creation_competition(nbLicense):
 @app.route('/resultats/<nbLicense>&<nbCompet>')
 def resultats(nbLicense,nbCompet):
     listArbitres= getInfoArbitres(int(nbCompet))
-
+    isArbitre=False
     arbitres=[]
     for arbitre in listArbitres:
         arbitres.append(arbitre[1])
@@ -102,8 +102,6 @@ def resultats(nbLicense,nbCompet):
         if int(nbLicense)==arbitre:
             isArbitre=True
             break
-        else:
-            isArbitre=False
     # print('\033[93m' + str(isArbitre) + '\033[0m')
     if isArbitre :
         return render_template('resultats.html',
@@ -112,7 +110,9 @@ def resultats(nbLicense,nbCompet):
                            nbCompet=int(nbCompet),
                            nbLicense=int(nbLicense),
                            participants=InfosPouleNumLicenceArbitre(int(nbCompet),int(nbLicense)),
-                           isArbitre=True)
+                           isArbitre=True,
+                           nbPhase=getNbPhase(int(nbCompet)),
+                           matchs=getNomPrenomMatchElimination(int(nbCompet)))
     else:
         return render_template('resultats.html',
                             title='Résultats',
@@ -120,7 +120,9 @@ def resultats(nbLicense,nbCompet):
                             nbCompet=int(nbCompet),
                             nbLicense=int(nbLicense),
                             participants=InfosPouleNumLicence(int(nbCompet),int(nbLicense)),
-                            isArbitre=False)
+                            isArbitre=False,
+                            nbPhase=getNbPhase(int(nbCompet)),
+                            matchs=getNomPrenomMatchElimination(int(nbCompet)))
 
 
 ##Fonctions de vérification
@@ -278,3 +280,12 @@ def update_data():
 
 
     return setToucherDonneTireur(int(nbLicenceTireur), int(nbLicenceTireurAdverse), int(data), int(numCompetition), int(nbPhase))
+
+@app.route('/genererEliminations', methods=['POST'])
+def genererEliminations():
+    nbCompet = int(request.form.get('nbCompet'))
+    nbPhase = int(request.form.get('nbPhase'))
+    print('\033[93m' + str(nbCompet) + '\033[0m')
+    print('\033[93m' + str(nbPhase) + '\033[0m')
+    genererPhaseEliminations(int(nbCompet), int(nbPhase)+1)
+    return redirect('resultats/'+str(request.form.get("nbLicense"))+'&'+str(nbCompet))

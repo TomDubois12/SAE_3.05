@@ -10,8 +10,8 @@ import mysql.connector
 #connexion au base de données
 db = mysql.connector.connect(
   host = "localhost",
-  user = "nathan",
-  password = "nathan",
+  user = "koko",
+  password = "koko",
   database = "Escrime"
 )
 #Blabla2147
@@ -567,6 +567,15 @@ def fichiersDossier(path : str) :
 ########################################################################
 ########################################################################
 
+def getNbPhase(idCompetition) :
+  requete = "select max(nbPhases) from MATCHELIMINATION where idCompetition = " + str(idCompetition) + " ;"
+  cursor.execute(requete)
+  nb = cursor.fetchall()
+  if nb[0][0] == None : 
+    return 1
+  else :
+    return nb[0][0]
+
 def getNbTireur(idCompetition): 
   requete = "select * from COMPETITION natural join TIREUR_DANS_COMPETITIONS where idCompetition = " + str(idCompetition) + " ;"
   cursor.execute(requete)
@@ -587,7 +596,7 @@ def getInfoArbitres(idCompetition):
   cursor.execute(requete)
   return cursor.fetchall()
 
-def getIdPouleTireur(numLicenceTireur, idCompetition = 1) : 
+def getIdPouleTireur(numLicenceTireur, idCompetition) : 
   requete = "select idPoule from POULE natural join TIREUR_DANS_POULE where numeroLicenceTireur = " + str(numLicenceTireur) + "  and idCompetition = " +str(idCompetition) + ";"
   cursor.execute(requete)
   return cursor.fetchall()[0][0]
@@ -753,7 +762,7 @@ def maFonctionTropBelle(nbPhase, idCompetition,listeLicMatchACreer):
       cursor.execute(req)
       db.commit()
 
-def genererPhaseElimination(idCompetition, nbPhase) :
+def genererPhaseEliminations(idCompetition, nbPhase) :
     listeTireurClasser = getClassementApresPoule(idCompetition)[:16]
     pat = [1,16,5,12,7,10,4,13,3,14,8,9,6,11,2,15]
     huit = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
@@ -1321,9 +1330,9 @@ if __name__ == "__main__":
     # print(setToucherDonneTireur(35524, 53089, 5, 1, 4))
     # print(setToucherDonneTireur(53089, 20840, 5, 1, 3))
     # print(setToucherDonneTireur(35524, 54797, 5, 1, 3))
-    # testDeTes(1,5)
+    # genererPhaseEliminations(1,5)
     # genererPhase(1,4)
-    # print(testDeTes(1,2))
+    # print(genererPhaseEliminations(1,2))
     # # InfosPouleNumLicence(1, 20981)
     # # print(InfosPouleNumLicenceArbitre(1,51061))
     # # print(getClassementApresPoule(1))
