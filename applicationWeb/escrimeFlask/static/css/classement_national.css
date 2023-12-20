@@ -94,7 +94,6 @@ select *{
 /* table */
 table {
     width: 90%;
-    margin-top: 3em;
     margin-left: 4.5em;
     margin-right: 4.5em;
     margin-bottom: 3em;
@@ -130,6 +129,15 @@ button, input {
     left: 35%;
 }
 
+/* css pour ajouter du scroll au tableau et mettre le scrolle en haut*/
+.tableau {
+    transform: rotateX(180deg);
+    overflow-x: scroll;
+    margin-top:1em;
+}
+table{
+    transform: rotateX(180deg);
+}
 @media screen and (max-width: 1300px) {
     .selector{
         margin-left: 6em;
