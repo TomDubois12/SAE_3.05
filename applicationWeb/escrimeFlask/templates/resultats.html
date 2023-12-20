@@ -91,7 +91,7 @@
         </section>
 
     {% endfor %}
-    <button class="boutonRefresh" onclick="window.location.reload()">Rafraîchir les score du tableau</button>
+    {# <button class="boutonRefresh" onclick="window.location.reload()">Rafraîchir les score du tableau</button> #}
     <div class="petit_titre">
         <h3>Arbre de phase éliminatoire  :</h3>
         <img class="petite_epee" src="{{url_for('static', filename='images/epeeBleu.png')}}" alt="Epée bleu d'escrime">
@@ -105,7 +105,7 @@
                 <button class="boutonRefresh" type="button" onclick="confirmerChoix()">Générer les prochaines phases d'éliminations</button>
             </form>
         {% endif %}
-        <button class="boutonRefresh" onclick="window.location.reload()">Rafraîchir les score de l'arbre</button>
+        {# <button class="boutonRefresh" onclick="window.location.reload()">Rafraîchir les score de l'arbre</button> #}
         <div class="tournament__grid">
             <!-- tournament__round 1/8 -->
             {% if nbPhase >= 2 %}
