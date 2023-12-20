@@ -126,10 +126,13 @@ table {
 /* Arbre phase elimination */
 
 :root {
-    --tournament-grid-line-color: rgba(0, 0, 0, 0.2);
+  /* lignes entre les cases   */
+  /* --tournament-grid-line-color: rgba(0, 0, 0, 0.2); */
+    --tournament-grid-line-color: #062657;
     --tournament-grid-command-height: 32px;
     --tournament-grid-command-width: auto;
-    --tournament-grid-command-bd-color: rgba(0, 0, 0, 0.2);
+    /* --tournament-grid-command-bd-color: rgba(0, 0, 0, 0.2); */
+    --tournament-grid-command-bd-color: #CFE2F3;
     --team-icon-spacing: 36px;
     --tournament-round-width: var(--tournament-grid-command-width);
     --tournament-match-min-height: 100px;
@@ -201,6 +204,8 @@ table {
     transition: color 0.3s ease;
     color: #686868;
     text-decoration: none;
+    border: 2px solid;
+    border-color: #062657;
   
     &:focus,
     &:hover {
