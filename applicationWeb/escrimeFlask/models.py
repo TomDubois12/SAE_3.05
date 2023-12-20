@@ -334,14 +334,17 @@ def classementFile(filename :str) -> list:
 
 def getClassementNationnal(arme,sexe,categorie) : 
   print(categorie)
-  if categorie == 'Vétérans3' or categorie == 'Vétérans4' : 
-    try :
+  if (categorie == 'Vétérans3' or categorie == 'Vétérans4') and arme == "Epée" and sexe == "Homme" : 
+      print("ici")
       return classementFile("./escrimeFlask/csvEscrimeur/classement_" + arme + "_" + sexe + "_" + categorie +".csv")
-    except IndexError :
-      return classementFile("./escrimeFlask/csvEscrimeur/classement_" + arme + "_" + sexe + "_Vétérans3_4.csv")
+  elif categorie == 'Vétérans3' or categorie == 'Vétérans4' : 
+    print("la")
+    return classementFile("./escrimeFlask/csvEscrimeur/classement_" + arme + "_" + sexe + "_Vétérans3-4.csv")
   else : 
-    return classementFile("./escrimeFlask/csvEscrimeur/classement_" + arme + "_" + sexe + "_" + categorie +".csv")
+    print("pas la")
+    return classementFile("./escrimeFlask/csvEscrimeur/classement_" + arme + "_" + sexe + "_" +categorie+ ".csv")
   
+#print(getClassementNationnal("Epée","Femme","Vétérans3"))
 def inscriptionOuverte() -> list:
   requete1 = "select * from COMPETITION where datediff(dateDebutCompetiton, CURDATE()) > 14 and estFinie = False;"
   cursor.execute(requete1)
@@ -1213,11 +1216,9 @@ if __name__ == "__main__":
     # print(lancerCompetition(1)) # Pour creer une competition pour les tests
     # insOrgaDansBD()
     
-    print(getNomPrenomMatchElimination(1)) # pour les nomETprenom
-    print(genererPhaseElimination(1,2)) # pour generer une phase et get liste avec licene
+    # print(getNomPrenomMatchElimination(1)) # pour les nomETprenom
+    # print(genererPhaseElimination(1,2)) # pour generer une phase et get liste avec licene
     
-
-
     # genererPhase(1,3)
     # print(setToucherDonneTireur(5387, 20981, 5, 1, 4))
     # print(setToucherDonneTireur(35524, 53089, 5, 1, 4))
