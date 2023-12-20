@@ -120,7 +120,7 @@ def resultats(nbLicense,nbCompet):
                             matchs=getNomPrenomMatchElimination(int(nbCompet)),
                             scores=getListeToucheByListLicence(licence, int(getNbPhase(int(nbCompet))), int(nbCompet)),
                             lancer=lancer,
-                            classement=classementFinale(int(nbCompet),getNbPhase(int(nbCompet))),
+                            classements=classementFinale(int(nbCompet),getNbPhase(int(nbCompet))),
                             joueur=False)
         
         elif estParticipant(int(nbLicense), int(nbCompet)):
@@ -150,7 +150,7 @@ def resultats(nbLicense,nbCompet):
                                 matchs=getNomPrenomMatchElimination(int(nbCompet)),
                                 scores=getListeToucheByListLicence(licence, int(getNbPhase(int(nbCompet))), int(nbCompet)),
                                 lancer=lancer,
-                                classement=classementFinale(int(nbCompet),getNbPhase(int(nbCompet))),
+                                classements=classementFinale(int(nbCompet),getNbPhase(int(nbCompet))),
                                 joueur=False)
     else:
         return render_template('resultats.html',
