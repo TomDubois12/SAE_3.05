@@ -671,17 +671,21 @@ def getListeGagnantMatchElimination(nbPhase, idCompetition) :
 
 
 def getListeToucheByListLicence(listelisteLicence, nbPhases, idCompetition) : 
-  listeTouche = [[],[],[],[]]
+  listeTouche = []
+  for i in range(len(listelisteLicence)): listeTouche.append([])
   ind = 0
   for listeLicence in listelisteLicence :
-    for licence in listeLicence[ind]:
+    for licence in listeLicence:
       requete = " select licenceTireur1, toucheDTireur1, licenceTireur2, toucheDTireur2 from MATCHELIMINATION where idCompetition = "+ str(idCompetition) +" and nbPhases = "+str(ind + 2)+" and (licenceTireur1 = "+str(licence)+" or licenceTireur2 = "+str(licence)+");"
       cursor.execute(requete)
       l1 = cursor.fetchall()
-      if l1[0][0] == licence :
-        listeTouche[ind].append(l1[0][1])
+      if l1 != [] : 
+        if l1[0][0] == licence :
+          listeTouche[ind].append(l1[0][1])
+        else :
+          listeTouche[ind].append(l1[0][3])
       else :
-        listeTouche[ind].append(l1[0][3])
+        listeTouche[ind].append(0)
     ind += 1
   return listeTouche
 
@@ -1192,49 +1196,50 @@ if __name__ == "__main__":
     # print(getNbArbitre(2))
     # print(getNbTireur(2))
 
-    insertTireurDansBD(45243)
-    insertTireurDansBD(20840)
-    insertTireurDansBD(53089)
-    insertTireurDansBD(40845)
-    insertTireurDansBD(37189)
-    insertTireurDansBD(53998)
-    insertTireurDansBD(54797)
-    insertTireurDansBD(5387)
-    insertTireurDansBD(35524)
-    insertTireurDansBD(20981)
+    # insertTireurDansBD(45243)
+    # insertTireurDansBD(20840)
+    # insertTireurDansBD(53089)
+    # insertTireurDansBD(40845)
+    # insertTireurDansBD(37189)
+    # insertTireurDansBD(53998)
+    # insertTireurDansBD(54797)
+    # insertTireurDansBD(5387)
+    # insertTireurDansBD(35524)
+    # insertTireurDansBD(20981)
 
-    insertTireurDansBD(2889)
-    insertTireurDansBD(7006)
-    insertTireurDansBD(119662)
-    insertTireurDansBD(41337)
-    insertTireurDansBD(37332)
-    insertTireurDansBD(5529)
-    insertTireurDansBD(72333)
-    insertTireurDansBD(658)
-    insertTireurDansBD(34193)
+    # insertTireurDansBD(2889)
+    # insertTireurDansBD(7006)
+    # insertTireurDansBD(119662)
+    # insertTireurDansBD(41337)
+    # insertTireurDansBD(37332)
+    # insertTireurDansBD(5529)
+    # insertTireurDansBD(72333)
+    # insertTireurDansBD(658)
+    # insertTireurDansBD(34193)
 
-    test = [45243,20840,53089,40845,37189,53998,54797,5387,35524,20981,2889,7006,119662,41337,37332,5529,72333,658,34193]
+    # test = [45243,20840,53089,40845,37189,53998,54797,5387,35524,20981,2889,7006,119662,41337,37332,5529,72333,658,34193]
 
-    for id in test : 
-      requete5 = "insert into TIREUR_DANS_COMPETITIONS (numeroLicenceTireur,idCompetition) values("+str(id)+", 1  );"
-      cursor.execute(requete5)
-      db.commit()
+    # for id in test : 
+    #   requete5 = "insert into TIREUR_DANS_COMPETITIONS (numeroLicenceTireur,idCompetition) values("+str(id)+", 1  );"
+    #   cursor.execute(requete5)
+    #   db.commit()
 
-    insertArbitreDansBD(51032)
-    insertArbitreDansBD(51061)
+    # insertArbitreDansBD(51032)
+    # insertArbitreDansBD(51061)
 
-    test1 = [51032,51061]
-    for id in test1 : 
-      requete5 = "insert into ARBITRE_DANS_COMPETITIONS (numeroLicenceArbitre,idCompetition) values("+str(id)+", 1  );"
-      cursor.execute(requete5)
-      db.commit()
+    # test1 = [51032,51061]
+    # for id in test1 : 
+    #   requete5 = "insert into ARBITRE_DANS_COMPETITIONS (numeroLicenceArbitre,idCompetition) values("+str(id)+", 1  );"
+    #   cursor.execute(requete5)
+    #   db.commit()
 
-    print(lancerCompetition(1)) # Pour creer une competition pour les tests
-    insOrgaDansBD()
+    # print(lancerCompetition(1)) # Pour creer une competition pour les tests
+    # insOrgaDansBD()
     
     # # print(getNomPrenomMatchElimination(1)) # pour les nomETprenom
-    # print(genererPhaseElimination(1,2)) # pour generer une phase et get liste avec licene
-    
+
+    # print(genererPhaseElimination(1,3)) # pour generer une phase et get liste avec licene
+    print(getListeToucheByListLicence([[53998, 119662, 5387, 658, 41337, 2889, 45243, 35524, 72333, 37332, 40845, 7006, 20981, 37189, 53089, 54797], [53998, 54797, 41337, 7006, 45243, 37332, 658, 20981, 5387, 37189, 35524, 72333, 2889, 40845, 119662, 53089], [54797, 7006, 37332, 20981, 37189, 72333, 40845, 53089], [7006, 20981, 72333, 53089], [20981, 53089]],2,1))
 
 
     #print(getListeToucheByListLicence([45243,20840,53089,40845,37189,53998,54797,5387,35524,20981], 2, 1))
