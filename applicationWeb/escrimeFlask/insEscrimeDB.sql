@@ -19,7 +19,6 @@ insert into ARME(typeArme,descriptionArme) values
     ('Fleuret','Fleuret'),
     ('Épée','Épée'),
     ('Sabre','Sabre');
-   
  
 insert into SEXE(intituleSexe) values
     ('Homme'),
@@ -27,6 +26,15 @@ insert into SEXE(intituleSexe) values
 
 insert into CLUB(nomClub) values 
     ('EscriClub'),
+    ('ISSY MOUSQUE'),
+    ('ANTONY'),
+    ('BLR92'),
+    ('CE RUEIL'),
+    ('NICE OGC'),
+    ('LYON SE'),
+    ('MELUN VDS'),
+    ('TEAM FLEURET'),
+    ('PAYS AIX'),
     ('EscriNais'),
     ("EscrimeClubBoulay"),
     ('EscrimeClubPatay');
@@ -45,22 +53,26 @@ insert into ORGANISATEURDANSCLUB(licenseOrganisateur, idClub) values
    
 insert into TIREUR(nomTireur,prenomTireur,numeroLicenceTireur,classement,idSexeTireur,dateNaissanceTireur,nationTireur,comiteRegionalTireur) values
     ("Georget","Korentin",315486,45534,1,'2004-05-23','France','CENTRE VAL DE LOIRE'),
+    ("Forfeit","Forfeit",0,0,1,'2000-01-01','Forfeit','Forfeit'),
     ("Boissay","Robin",521531,7,1,'2004-12-14','France','CENTRE VAL DE LOIRE'),
     ("Boissay","Nathan",213138,5689,1,'2004-12-14','France','CENTRE VAL DE LOIRE'),
     ("Dubois","Tom",324832,12,1,'2004-06-02','France','CENTRE VAL DE LOIRE'),
     ("Brion","Adèle",465486,43000,2,'2003-10-30','France','CENTRE VAL DE LOIRE'),
+    
+    ("teste","testee",151230,152412,1,'2003-11-30','France','CENTRE VAL DE LOIRE'),
     ("DEEMER","Regis",151229,18742,1,"1964-07-15","FRANCE","ILE DE FRANCE Est");
 
 insert into TIREUR_DANS_CLUB(numeroLicenceTireur,idClub) values 
     (315486,3),
     (521531,3), 
     (151229,1),
+    (151230,1),
     (213138,3);
 
-insert into ARBITRE(nomArbitre,prenomArbitre,numeroLicenceArbitre) values 
-    ("Orhant","Killian",654123),
-    ("Farcy","Adam",947613),
-    ("Boissay","Gatien",542446);
+-- insert into ARBITRE(nomArbitre,prenomArbitre,numeroLicenceArbitre) values 
+--     ("Orhant","Killian",654123),
+--     ("Farcy","Adam",947613),
+--     ("Boissay","Gatien",542446);
 
 insert into COMPETITION(intituleCompet,saison,estFinie,coefficientCompetition,dateDebutCompetiton,idLieuCompetition,idCategorieCompetition,idSexeCompetition,idArmeCompetition) values
     ("Tournois hivernale 2023","2023",False,0.2,"2023-12-14",2,5,1,1),
@@ -99,26 +111,58 @@ insert into ORGANISATEURCOMPETITION(idCompetition, licenseOrganisateur) values
     (14,254612),
     (15,734212);
 
-insert into TIREUR_DANS_COMPETITIONS(numeroLicenceTireur,idCompetition)values 
-    (315486,1),
-    (315486,2),
-    (521531,1),
-    (151229,4),
-    (151229,5),
-    (151229,6),
-    (213138,1);
+-- insert into TIREUR_DANS_COMPETITIONS(numeroLicenceTireur,idCompetition)values 
+--     (315486,1),
+--     (315486,2),
+--     (521531,1),
+--     (151229,4),
+--     (151229,5),
+--     (151229,6),
+--     (151229,1),
+--     (151230,1),
+--     (213138,1);
     
+-- insert into ARBITRE_DANS_COMPETITIONS(numeroLicenceArbitre,idCompetition) values 
+--     (654123,1);
 
-insert into POULE(nomPoule,numeroPiste,idCompetition) values 
-    ("Poule 1",1,1);
+-- insert into POULE(nomPoule,numeroPiste,idCompetition) values 
+--     ("Poule 1",1,1),
+--     ("Poule 2",1,1);
     
-insert into TIREUR_DANS_POULE(numeroLicenceTireur,idPoule) values 
-    (315486,1),
-    (521531,1),
-    (213138,1);
+-- insert into TIREUR_DANS_POULE(numeroLicenceTireur,idPoule) values 
+--     (315486,1),
+--     (521531,1),
+--     (151229,2),
+--     (213138,1);
 
-insert into ARBITRE_DANS_COMPETITIONS(numeroLicenceArbitre,idCompetition) values 
-    (654123,1);
+-- insert into MATCHPOULE(nomMatchPoule,licenceTireur1,licenceTireur2,nbPhases,idPoule,toucheDTireur1,toucheDTireur2) value (
+--     "Match12",
+--     315486,
+--     521531,
+--     1,
+--     1,
+--     5,
+--     0
+-- );
+-- insert into MATCHPOULE(nomMatchPoule,licenceTireur1,licenceTireur2,nbPhases,idPoule,toucheDTireur1,toucheDTireur2) value (
+--     "Match23",
+--     521531,
+--     213138,
+--     1,
+--     1,
+--     4,
+--     5
+-- );
+-- insert into MATCHPOULE(nomMatchPoule,licenceTireur1,licenceTireur2,nbPhases,idPoule,toucheDTireur1,toucheDTireur2) value (
+--     "Match13",
+--     315486,
+--     213138,
+--     1,
+--     1,
+--     2,
+--     5
+-- );
 
-insert into ARBITRE_POULE(numeroLicenceArbitre,idPoule) values 
-   (654123,1);
+
+-- insert into ARBITRE_POULE(numeroLicenceArbitre,idPoule) values 
+--    (654123,1);

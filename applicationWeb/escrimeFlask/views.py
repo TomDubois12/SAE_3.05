@@ -91,12 +91,80 @@ def creation_competition(nbLicense):
 
 @app.route('/resultats/<nbLicense>&<nbCompet>')
 def resultats(nbLicense,nbCompet):
-    return render_template('resultats.html',
-                           title='Résultats',
-                           isOrganisateur=estOrganisateur(int(nbLicense)),
-                           nbCompet=int(nbCompet),
-                           nbLicense=int(nbLicense))
-
+    listArbitres= getNumeroLicenceArbitres(int(nbCompet))
+    listLicense=affichageGenererPhaseEliminations(int(nbCompet), getNbPhase(int(nbCompet)))
+    licence=[]
+    licence.append(listLicense[3])
+    licence.append(listLicense[4])
+    licence.append(listLicense[5])
+    licence.append(listLicense[6])
+    lancer=False
+    if int(nbCompet) in getListIdCompetitionTournoisLancer():
+        lancer=True
+        # print('\033[93m' + str(lancer) + '\033[0m')
+    if int(nbCompet) in getListIdCompetitionTournoisClosed():
+        lancer=True
+        # print('\033[93m' + str(lancer) + '\033[0m')
+    # print('\033[93m' + str(lancer) + '\033[0m')
+    print('\033[92m' + str(classementFinale(int(nbCompet),getNbPhase(int(nbCompet)))) + '\033[0m')
+    if lancer:
+        if int(nbLicense) in listArbitres:
+            return render_template('resultats.html',
+                            title='Résultats',
+                            isOrganisateur=estOrganisateur(int(nbLicense)),
+                            nbCompet=int(nbCompet),
+                            nbLicense=int(nbLicense),
+                            participants=InfosPouleNumLicenceArbitre(int(nbCompet),int(nbLicense)),
+                            isArbitre=True,
+                            nbPhase=getNbPhase(int(nbCompet)),
+                            matchs=getNomPrenomMatchElimination(int(nbCompet)),
+                            scores=getListeToucheByListLicence(licence, int(getNbPhase(int(nbCompet))), int(nbCompet)),
+                            lancer=lancer,
+                            classement=classementFinale(int(nbCompet),getNbPhase(int(nbCompet))),
+                            joueur=False)
+        
+        elif estParticipant(int(nbLicense), int(nbCompet)):
+            return render_template('resultats.html',
+                                title='Résultats',
+                                isOrganisateur=estOrganisateur(int(nbLicense)),
+                                nbCompet=int(nbCompet),
+                                nbLicense=int(nbLicense),
+                                participants=InfosPouleNumLicence(int(nbCompet),int(nbLicense)),
+                                isArbitre=False,
+                                nbPhase=getNbPhase(int(nbCompet)),
+                                matchs=getNomPrenomMatchElimination(int(nbCompet)),
+                                scores=getListeToucheByListLicence(licence, int(getNbPhase(int(nbCompet))), int(nbCompet)),
+                                lancer=lancer,
+                                classements=classementFinale(int(nbCompet),getNbPhase(int(nbCompet))),
+                                classementPerso=monClassementAMoi(int(nbCompet), int(nbLicense),getNbPhase(int(nbCompet))),
+                                joueur=True)
+        else:
+            return render_template('resultats.html',
+                                title='Résultats',
+                                isOrganisateur=estOrganisateur(int(nbLicense)),
+                                nbCompet=int(nbCompet),
+                                nbLicense=int(nbLicense),
+                                participants=InfosPouleSansLicence(int(nbCompet)),
+                                isArbitre=False,
+                                nbPhase=getNbPhase(int(nbCompet)),
+                                matchs=getNomPrenomMatchElimination(int(nbCompet)),
+                                scores=getListeToucheByListLicence(licence, int(getNbPhase(int(nbCompet))), int(nbCompet)),
+                                lancer=lancer,
+                                classement=classementFinale(int(nbCompet),getNbPhase(int(nbCompet))),
+                                joueur=False)
+    else:
+        return render_template('resultats.html',
+                            title='Résultats',
+                            isOrganisateur=estOrganisateur(int(nbLicense)),
+                            nbCompet=int(nbCompet),
+                            nbLicense=int(nbLicense),
+                            participants=[],
+                            isArbitre=False,
+                            nbPhase=getNbPhase(int(nbCompet)),
+                            matchs=getNomPrenomMatchElimination(int(nbCompet)),
+                            scores=getListeToucheByListLicence(licence, int(getNbPhase(int(nbCompet))), int(nbCompet)),
+                            lancer=lancer,
+                            joueur=False)
 
 ##Fonctions de vérification
 
@@ -237,3 +305,24 @@ def boutonLancer():
 def boutonArchiver():
     archiverCompetition(int(request.args.get("nbCompet")))
     return redirect('options_competitions/'+str(request.args.get("nbLicense")))
+
+@app.route('/update_data', methods=['POST'])
+def update_data():
+    data = request.form.get('data')
+    nbLicenceTireur = request.form.get('nbLicenceTireur')
+    nbLicenceTireurAdverse = request.form.get('nbLicenceTireurAdverse')
+    numCompetition = request.form.get('numCompetition')
+    nbPhase = request.form.get('nbPhase')
+    setToucherDonneTireur(int(nbLicenceTireur), int(nbLicenceTireurAdverse), int(data), int(numCompetition), int(nbPhase))
+    return redirect('resultats/'+str(nbLicenceTireur)+'&'+str(numCompetition))
+
+
+@app.route('/genererEliminations', methods=['POST'])
+def genererEliminations():
+    nbCompet = int(request.form.get('nbCompet'))
+    nbPhase = int(request.form.get('nbPhase'))
+    nbLicense = int(request.form.get('nbLicense'))
+    # print('\033[93m' + str(nbCompet) + '\033[0m')
+    # print('\033[93m' + str(nbPhase) + '\033[0m')
+    genererPhaseEliminations(int(nbCompet), int(nbPhase)+1)
+    return redirect('resultats/'+str(nbLicense)+'&'+str(nbCompet))
