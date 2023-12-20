@@ -106,6 +106,7 @@ def resultats(nbLicense,nbCompet):
         lancer=True
         # print('\033[93m' + str(lancer) + '\033[0m')
     # print('\033[93m' + str(lancer) + '\033[0m')
+    print('\033[92m' + str(classementFinale(int(nbCompet),getNbPhase(int(nbCompet)))) + '\033[0m')
     if lancer:
         if int(nbLicense) in listArbitres:
             return render_template('resultats.html',
@@ -118,7 +119,10 @@ def resultats(nbLicense,nbCompet):
                             nbPhase=getNbPhase(int(nbCompet)),
                             matchs=getNomPrenomMatchElimination(int(nbCompet)),
                             scores=getListeToucheByListLicence(licence, int(getNbPhase(int(nbCompet))), int(nbCompet)),
-                            lancer=lancer)
+                            lancer=lancer,
+                            classement=classementFinale(int(nbCompet),getNbPhase(int(nbCompet))),
+                            joueur=False)
+        
         elif estParticipant(int(nbLicense), int(nbCompet)):
             return render_template('resultats.html',
                                 title='Résultats',
@@ -130,7 +134,10 @@ def resultats(nbLicense,nbCompet):
                                 nbPhase=getNbPhase(int(nbCompet)),
                                 matchs=getNomPrenomMatchElimination(int(nbCompet)),
                                 scores=getListeToucheByListLicence(licence, int(getNbPhase(int(nbCompet))), int(nbCompet)),
-                                lancer=lancer)
+                                lancer=lancer,
+                                classements=classementFinale(int(nbCompet),getNbPhase(int(nbCompet))),
+                                classementPerso=monClassementAMoi(int(nbCompet), int(nbLicense),getNbPhase(int(nbCompet))),
+                                joueur=True)
         else:
             return render_template('resultats.html',
                                 title='Résultats',
@@ -142,8 +149,9 @@ def resultats(nbLicense,nbCompet):
                                 nbPhase=getNbPhase(int(nbCompet)),
                                 matchs=getNomPrenomMatchElimination(int(nbCompet)),
                                 scores=getListeToucheByListLicence(licence, int(getNbPhase(int(nbCompet))), int(nbCompet)),
-                                lancer=lancer)
-            
+                                lancer=lancer,
+                                classement=classementFinale(int(nbCompet),getNbPhase(int(nbCompet))),
+                                joueur=False)
     else:
         return render_template('resultats.html',
                             title='Résultats',
@@ -155,8 +163,8 @@ def resultats(nbLicense,nbCompet):
                             nbPhase=getNbPhase(int(nbCompet)),
                             matchs=getNomPrenomMatchElimination(int(nbCompet)),
                             scores=getListeToucheByListLicence(licence, int(getNbPhase(int(nbCompet))), int(nbCompet)),
-                            lancer=lancer)
-
+                            lancer=lancer,
+                            joueur=False)
 
 ##Fonctions de vérification
 

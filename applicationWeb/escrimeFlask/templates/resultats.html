@@ -294,45 +294,45 @@
             <img class="petite_epee" src="{{url_for('static', filename='images/epeeBleu.png')}}" alt="Epée bleu d'escrime">    
         </div>
         <div class="classement">
-            <table>
-                <tr class="titre-tableau">
-                    <td>RANG</td>
-                    <td>NOM</td>
-                    <td>PRÉNOM</td>
-                    <td>COMITE REGIONAL</td>
-                    <td>CLUB</td>
-                    <td>POINTS</td>
-                </tr>
-                {# <tr>
-                    <td>{{tireur[8]}}</td>
-                    <td>{{tireur[0]}}</td>
-                    <td>{{tireur[1]}}</td>
-                    <td>{{tireur[5]}}</td>
-                    <td>{{tireur[6]}}</td>
-                    <td>{{tireur[7]}}</td>
-                </tr> #}
-            </table>  
-
-            <table>
-                <tr class="titre-tableau">
-                    <td>RANG</td>
-                    <td>NOM</td>
-                    <td>PRÉNOM</td>
-                    <td>COMITE REGIONAL</td>
-                    <td>CLUB</td>
-                    <td>POINTS</td>
-                </tr>
-                {# {% if classement|length> 0  %}
-                    {% for joueur in classement %}
-                    <tr>
-                        <td>{{joueur[8]}}</td>
-                        <td>{{joueur[0]}}</td>
-                        <td>{{joueur[1]}}</td>
-                        <td>{{joueur[5]}}</td>
-                        <td>{{joueur[6]}}</td>
-                        <td>{{joueur[7]}}</td>
+            {% if joueur %}
+                <table>
+                    <tr class="titre-tableau">
+                        <td>RANG</td>
+                        <td>NOM</td>
+                        <td>PRÉNOM</td>
+                        <td>COMITE REGIONAL</td>
+                        <td>CLUB</td>
+                        <td>POINTS</td>
                     </tr>
-                    {% endfor %} #}
+                    <tr>
+                        <td>{{classementPerso[0]}}</td>
+                        <td>{{classementPerso[1]}}</td>
+                        <td>{{classementPerso[2]}}</td>
+                        <td>{{classementPerso[3]}}</td>
+                        <td>{{classementPerso[4]}}</td>
+                        <td>{{classementPerso[5]}}</td>
+                    </tr>
+                </table>  
+            {% endif %}
+            <table>
+                <tr class="titre-tableau">
+                    <td>RANG</td>
+                    <td>NOM</td>
+                    <td>PRÉNOM</td>
+                    <td>COMITE REGIONAL</td>
+                    <td>CLUB</td>
+                    <td>POINTS</td>
+                </tr>
+                {% for classement in classements %}
+                    <tr>
+                        <td>{{classement[0]}}</td>
+                        <td>{{classement[1]}}</td>
+                        <td>{{classement[2]}}</td>
+                        <td>{{classement[3]}}</td>
+                        <td>{{classement[4]}}</td>
+                        <td>{{classement[5]}}</td>
+                    </tr>
+                {% endfor %}
             </table>  
         </div>
     </main>

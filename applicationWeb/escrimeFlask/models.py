@@ -10,8 +10,8 @@ import mysql.connector
 #connexion au base de données
 db = mysql.connector.connect(
   host = "localhost",
-  user = "nathan",
-  password = "nathan",
+  user = "koko",
+  password = "koko",
   database = "Escrime"
 )
 #Blabla2147
@@ -687,34 +687,38 @@ def getClassementPhase(idCompetition):
     listeTrie.append(elem[0]) 
   return listeTrie
 
-def trierCeClass(classement,idComp) : 
+def trierCeClass(classement,idComp,nbPhase) : 
   ran = [[2,3,4],[4,7,3],[8,15,2]]
-  classementFinit = [classement[0], classement[1]]
-  listeT = []
-  for ind in ran :
-    listeT2 = []
-    for i in range(0,ind[1] - ind[0] +1) :
-      listeT.append(classement[ind[0] + i])
-    for licence in listeT : 
-      requete = "select licenceTireur1, toucheDTireur1, licenceTireur2, toucheDTireur2 from MATCHELIMINATION where idCompetition = "+str(idComp)+" and nbPhases = "+str(ind[2])+" and (licenceTireur1 = "+str(licence)+" OR licenceTireur2 = "+str(licence)+") ;"
-      cursor.execute(requete)
-      l2 = cursor.fetchall()
-      lt1 = l2[0][0]
-      lt2 = l2[0][2]
-      td1 = l2[0][1]
-      td2 = l2[0][3]
-      if lt1 == licence : 
-        listeT2.append((lt1,td1))
-      elif lt2 == licence : 
-        listeT2.append((lt2,td2))
-    listeT2 = sorted(listeT2, key=lambda touche: touche[1])
-    listeT2 = listeT2[::-1]
-    for elem in listeT2 :
-      classementFinit.append(elem[0])
+  if nbPhase==5:
+    classementFinit = [classement[0], classement[1]]
     listeT = []
-  return classementFinit
+    for ind in ran :
+      listeT2 = []
+      for i in range(0,ind[1] - ind[0] +1) :
+        listeT.append(classement[ind[0] + i])
+      for licence in listeT : 
+        requete = "select licenceTireur1, toucheDTireur1, licenceTireur2, toucheDTireur2 from MATCHELIMINATION where idCompetition = "+str(idComp)+" and nbPhases = "+str(ind[2])+" and (licenceTireur1 = "+str(licence)+" OR licenceTireur2 = "+str(licence)+") ;"
+        cursor.execute(requete)
+        l2 = cursor.fetchall()
+        lt1 = l2[0][0]
+        lt2 = l2[0][2]
+        td1 = l2[0][1]
+        td2 = l2[0][3]
+        if lt1 == licence : 
+          listeT2.append((lt1,td1))
+        elif lt2 == licence : 
+          listeT2.append((lt2,td2))
+      listeT2 = sorted(listeT2, key=lambda touche: touche[1])
+      listeT2 = listeT2[::-1]
+      for elem in listeT2 :
+        classementFinit.append(elem[0])
+      listeT = []
+    print('\033[91m' + str(classementFinit) + '\033[0m')
+    return classementFinit
+  else:
+    return []
 
-def classementFinale(idCompetition) :
+def classementFinale(idCompetition,nbPhase) :
   classement = []
   liste16Meilleur = getClassementApresPoule(idCompetition)[:16]
   requete = "select * from MATCHELIMINATION where idCompetition = 1 order by nbPhases DESC"
@@ -744,7 +748,7 @@ def classementFinale(idCompetition) :
         classement.append(lt2)
         liste16Meilleur.remove(lt2)
 
-  classement = trierCeClass(classement,idCompetition)
+  classement = trierCeClass(classement,idCompetition,nbPhase)
   classement += getClassementApresPoule(idCompetition)[16:]
   ind = 1 
   listeRenvoi = []
@@ -752,10 +756,11 @@ def classementFinale(idCompetition) :
     
     listeRenvoi.append([ind,getInfoFromBDNational(licence)[1][0],getInfoFromBDNational(licence)[1][1],getInfoFromBDNational(licence)[1][5],getInfoFromBDNational(licence)[1][6],getInfoFromBDNational(licence)[1][7],licence ])
     ind += 1
+  print('\033[91m' + str(listeRenvoi) + '\033[0m')
   return listeRenvoi
 
-def monClassementAMoi(idCompetition, licence) : 
-  liste = classementFinale(idCompetition)
+def monClassementAMoi(idCompetition, licence, nbPhase) : 
+  liste = classementFinale(idCompetition,nbPhase)
   for elem in liste : 
     if elem[6] == licence : 
       return elem
@@ -1421,8 +1426,8 @@ if __name__ == "__main__":
     # print(genererPhaseEliminations(1,2))
     # print(genererPhaseEliminations(1,3))
     #print(genererPhaseEliminations(1,5))
-    print(classementFinale(1))
-    print(monClassementAMoi(1, 5529))
+    # print(classementFinale(1))
+    # print(monClassementAMoi(1, 5529))
 
     # DEMEER;Regis;15/07/1964;151229;FRANCE;ILE DE FRANCE Est;LE PERREUX;18742;20
     # requete1 = 'insert into COMPETITION(intituleCompet,saison,estFinie,coefficientCompetition,dateDebutCompetiton,idLieuCompetition,idCategorieCompetition,idSexeCompetition,idArmeCompetition) values ("Test06/11/23","2023",True,0.2,"2023-11-06",2,5,1,5)'
