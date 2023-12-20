@@ -673,6 +673,19 @@ def getListeGagnantMatchElimination(nbPhase, idCompetition) :
 
   return listeTrie
 
+
+def getListeToucheByListLicence(listeLicence, nbPhases, idCompetition) : 
+  listeTouche = []
+  for licence in listeLicence :
+    requete = " select licenceTireur1, toucheDTireur1, licenceTireur2, toucheDTireur2 from MATCHELIMINATION where idCompetition = "+ str(idCompetition) +" and nbPhases = "+str(nbPhases)+" and (licenceTireur1 = "+str(licence)+" or licenceTireur2 = "+str(licence)+");"
+    cursor.execute(requete)
+    l1 = cursor.fetchall()
+    if l1[0][0] == licence :
+      listeTouche.append(l1[0][1])
+    else :
+      listeTouche.append(l1[0][3])
+  return listeTouche
+
 def genererPhase(nbPhase, idCompetition,listeLicMatchACreer):
   if nbPhase == 2 :
     for k in range(int(len(listeLicMatchACreer)/2)) : 
@@ -1193,39 +1206,40 @@ if __name__ == "__main__":
     # print(getNbArbitre(2))
     # print(getNbTireur(2))
 
-    # insertTireurDansBD(45243)
-    # insertTireurDansBD(20840)
-    # insertTireurDansBD(53089)
-    # insertTireurDansBD(40845)
-    # insertTireurDansBD(37189)
-    # insertTireurDansBD(53998)
-    # insertTireurDansBD(54797)
-    # insertTireurDansBD(5387)
-    # insertTireurDansBD(35524)
-    # insertTireurDansBD(20981)
-    # print(getIdPouleTireur(45243, 4))
-    # test = [45243,20840,53089,40845,37189,53998,54797,5387,35524,20981]
+    insertTireurDansBD(45243)
+    insertTireurDansBD(20840)
+    insertTireurDansBD(53089)
+    insertTireurDansBD(40845)
+    insertTireurDansBD(37189)
+    insertTireurDansBD(53998)
+    insertTireurDansBD(54797)
+    insertTireurDansBD(5387)
+    insertTireurDansBD(35524)
+    insertTireurDansBD(20981)
+    test = [45243,20840,53089,40845,37189,53998,54797,5387,35524,20981]
 
-    # for id in test : 
-    #   requete5 = "insert into TIREUR_DANS_COMPETITIONS (numeroLicenceTireur,idCompetition) values("+str(id)+", 1  );"
-    #   cursor.execute(requete5)
-    #   db.commit()
+    for id in test : 
+      requete5 = "insert into TIREUR_DANS_COMPETITIONS (numeroLicenceTireur,idCompetition) values("+str(id)+", 1  );"
+      cursor.execute(requete5)
+      db.commit()
 
-    # insertArbitreDansBD(51032)
-    # insertArbitreDansBD(51061)
+    insertArbitreDansBD(51032)
+    insertArbitreDansBD(51061)
 
-    # test1 = [51032,51061]
-    # for id in test1 : 
-    #   requete5 = "insert into ARBITRE_DANS_COMPETITIONS (numeroLicenceArbitre,idCompetition) values("+str(id)+", 1  );"
-    #   cursor.execute(requete5)
-    #   db.commit()
+    test1 = [51032,51061]
+    for id in test1 : 
+      requete5 = "insert into ARBITRE_DANS_COMPETITIONS (numeroLicenceArbitre,idCompetition) values("+str(id)+", 1  );"
+      cursor.execute(requete5)
+      db.commit()
 
-    # print(lancerCompetition(1)) # Pour creer une competition pour les tests
-    # insOrgaDansBD()
+    print(lancerCompetition(1)) # Pour creer une competition pour les tests
+    insOrgaDansBD()
     
-    # print(getNomPrenomMatchElimination(1)) # pour les nomETprenom
+    # # print(getNomPrenomMatchElimination(1)) # pour les nomETprenom
     # print(genererPhaseElimination(1,2)) # pour generer une phase et get liste avec licene
     
+
+    #print(getListeToucheByListLicence([45243,20840,53089,40845,37189,53998,54797,5387,35524,20981], 2, 1))
     # genererPhase(1,3)
     # print(setToucherDonneTireur(5387, 20981, 5, 1, 4))
     # print(setToucherDonneTireur(35524, 53089, 5, 1, 4))
@@ -1238,7 +1252,7 @@ if __name__ == "__main__":
     # # print(InfosPouleNumLicenceArbitre(1,51061))
     # # print(getClassementApresPoule(1))
 
-    print(getNomPrenomMatchElimination(1))
+    #print(getNomPrenomMatchElimination(1))
 
     # print(genererPhase(1,3))
     # print((getIdMatchElim(5387,1)))
