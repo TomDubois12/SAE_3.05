@@ -110,7 +110,7 @@ def resultats(nbLicense,nbCompet):
                            isArbitre=True,
                            nbPhase=getNbPhase(int(nbCompet)),
                            matchs=getNomPrenomMatchElimination(int(nbCompet)),
-                           score=getListeToucheByListLicence(licence, int(getNbPhase(int(nbCompet))), int(nbCompet)))
+                           scores=getListeToucheByListLicence(licence, int(getNbPhase(int(nbCompet))), int(nbCompet)))
     else:
         return render_template('resultats.html',
                             title='Résultats',
@@ -121,7 +121,7 @@ def resultats(nbLicense,nbCompet):
                             isArbitre=False,
                             nbPhase=getNbPhase(int(nbCompet)),
                             matchs=getNomPrenomMatchElimination(int(nbCompet)),
-                            score=getListeToucheByListLicence(licence, int(getNbPhase(int(nbCompet)), int(nbCompet))))
+                            scores=getListeToucheByListLicence(licence, int(getNbPhase(int(nbCompet)), int(nbCompet))))
 
 
 ##Fonctions de vérification

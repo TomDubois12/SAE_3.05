@@ -95,42 +95,41 @@
                 <button class="boutonRefresh" type="submit">Générer les prochaines phases d'eliminations</button>
             </form>   
         {% endif %}
-        
         <div class="tournament__grid">
             <!-- tournament__round 1/8 -->
             {% if nbPhase >= 2 %}
                 <div class="tournament__round tournament__round--first-round">
                 <div class="tournament__match">
-                    <a class="tournament__match__team" href="#">{{matchs[0][0][0]}} {{matchs[0][0][1]}}</a>
-                    <a class="tournament__match__team" href="#">{{matchs[0][1][0]}} {{matchs[0][1][1]}}</a>
+                    <a class="tournament__match__team" href="#">{{matchs[0][0][0]}} {{matchs[0][0][1]}} | {{scores[0][0]}}</a>
+                    <a class="tournament__match__team" href="#">{{matchs[0][1][0]}} {{matchs[0][1][1]}} | {{scores[0][1]}}</a>
                 </div>
                 <div class="tournament__match">
-                    <a class="tournament__match__team" href="#">{{matchs[0][2][0]}} {{matchs[0][2][1]}}</a>
-                    <a class="tournament__match__team" href="#">{{matchs[0][3][0]}} {{matchs[0][3][1]}}</a>
+                    <a class="tournament__match__team" href="#">{{matchs[0][2][0]}} {{matchs[0][2][1]}} | {{scores[0][2]}}</a>
+                    <a class="tournament__match__team" href="#">{{matchs[0][3][0]}} {{matchs[0][3][1]}} | {{scores[0][3]}}</a>
                 </div>
                 <div class="tournament__match">
-                    <a class="tournament__match__team" href="#">{{matchs[0][4][0]}} {{matchs[0][4][1]}}</a>
-                    <a class="tournament__match__team" href="#">{{matchs[0][5][0]}} {{matchs[0][5][1]}}</a>
+                    <a class="tournament__match__team" href="#">{{matchs[0][4][0]}} {{matchs[0][4][1]}} | {{scores[0][4]}}</a>
+                    <a class="tournament__match__team" href="#">{{matchs[0][5][0]}} {{matchs[0][5][1]}} | {{scores[0][5]}}</a>
                 </div>
                 <div class="tournament__match">
-                    <a class="tournament__match__team" href="#">{{matchs[0][6][0]}} {{matchs[0][6][1]}}</a>
-                    <a class="tournament__match__team" href="#">{{matchs[0][7][0]}} {{matchs[0][7][1]}}</a>
+                    <a class="tournament__match__team" href="#">{{matchs[0][6][0]}} {{matchs[0][6][1]}} | {{scores[0][6]}}</a>
+                    <a class="tournament__match__team" href="#">{{matchs[0][7][0]}} {{matchs[0][7][1]}} | {{scores[0][7]}}</a>
                 </div>
                 <div class="tournament__match">
-                    <a class="tournament__match__team" href="#">{{matchs[0][8][0]}} {{matchs[0][8][1]}}</a>
-                    <a class="tournament__match__team" href="#">{{matchs[0][9][0]}} {{matchs[0][9][1]}}</a>
+                    <a class="tournament__match__team" href="#">{{matchs[0][8][0]}} {{matchs[0][8][1]}} | {{scores[0][8]}}</a>
+                    <a class="tournament__match__team" href="#">{{matchs[0][9][0]}} {{matchs[0][9][1]}} | {{scores[0][9]}}</a>
                 </div>
                 <div class="tournament__match">
-                    <a class="tournament__match__team" href="#">{{matchs[0][10][0]}} {{matchs[0][10][1]}}</a>
-                    <a class="tournament__match__team" href="#">{{matchs[0][11][0]}} {{matchs[0][11][1]}}</a>
+                    <a class="tournament__match__team" href="#">{{matchs[0][10][0]}} {{matchs[0][10][1]}} | {{scores[0][10]}}</a>
+                    <a class="tournament__match__team" href="#">{{matchs[0][11][0]}} {{matchs[0][11][1]}} | {{scores[0][11]}}</a>
                 </div>
                 <div class="tournament__match">
-                    <a class="tournament__match__team" href="#">{{matchs[0][12][0]}} {{matchs[0][12][1]}}</a>
-                    <a class="tournament__match__team" href="#">{{matchs[0][13][0]}} {{matchs[0][13][1]}}</a>
+                    <a class="tournament__match__team" href="#">{{matchs[0][12][0]}} {{matchs[0][12][1]}} | {{scores[0][12]}}</a>
+                    <a class="tournament__match__team" href="#">{{matchs[0][13][0]}} {{matchs[0][13][1]}} | {{scores[0][13]}}</a>
                 </div>
                 <div class="tournament__match">
-                    <a class="tournament__match__team" href="#">{{matchs[0][14][0]}} {{matchs[0][14][1]}}</a>
-                    <a class="tournament__match__team" href="#">{{matchs[0][15][0]}} {{matchs[0][15][1]}}</a>
+                    <a class="tournament__match__team" href="#">{{matchs[0][14][0]}} {{matchs[0][14][1]}} | {{scores[0][14]}}</a>
+                    <a class="tournament__match__team" href="#">{{matchs[0][15][0]}} {{matchs[0][15][1]}} | {{scores[0][15]}}</a>
                 </div>
                 </div>
             {% else %}
@@ -174,20 +173,20 @@
             {% if nbPhase >= 3 %}
                 <div class="tournament__round tournament__round--first-round">
                 <div class="tournament__match">
-                    <a class="tournament__match__team" href="#">{{matchs[1][0][0]}} {{matchs[1][0][1]}}</a>
-                    <a class="tournament__match__team" href="#">{{matchs[1][1][0]}} {{matchs[1][1][1]}}</a>
+                    <a class="tournament__match__team" href="#">{{matchs[1][0][0]}} {{matchs[1][0][1]}} | {{scores[1][0]}}</a>
+                    <a class="tournament__match__team" href="#">{{matchs[1][1][0]}} {{matchs[1][1][1]}} | {{scores[1][1]}}</a>
                 </div>
                 <div class="tournament__match">
-                    <a class="tournament__match__team" href="#">{{matchs[1][2][0]}} {{matchs[1][2][1]}}</a>
-                    <a class="tournament__match__team" href="#">{{matchs[1][3][0]}} {{matchs[1][3][1]}}</a>
+                    <a class="tournament__match__team" href="#">{{matchs[1][2][0]}} {{matchs[1][2][1]}} | {{scores[1][2]}}</a>
+                    <a class="tournament__match__team" href="#">{{matchs[1][3][0]}} {{matchs[1][3][1]}} | {{scores[1][3]}}</a>
                 </div>
                 <div class="tournament__match">
-                    <a class="tournament__match__team" href="#">{{matchs[1][4][0]}} {{matchs[1][4][1]}}</a>
-                    <a class="tournament__match__team" href="#">{{matchs[1][5][0]}} {{matchs[1][5][1]}}</a>
+                    <a class="tournament__match__team" href="#">{{matchs[1][4][0]}} {{matchs[1][4][1]}} | {{scores[1][4]}}</a>
+                    <a class="tournament__match__team" href="#">{{matchs[1][5][0]}} {{matchs[1][5][1]}} | {{scores[1][5]}}</a>
                 </div>
                 <div class="tournament__match">
-                    <a class="tournament__match__team" href="#">{{matchs[1][6][0]}} {{matchs[1][6][1]}}</a>
-                    <a class="tournament__match__team" href="#">{{matchs[1][7][0]}} {{matchs[1][7][1]}}</a>
+                    <a class="tournament__match__team" href="#">{{matchs[1][6][0]}} {{matchs[1][6][1]}} | {{scores[1][6]}}</a>
+                    <a class="tournament__match__team" href="#">{{matchs[1][7][0]}} {{matchs[1][7][1]}} | {{scores[1][7]}}</a>
                 </div>
                 </div>
             {% else %}
@@ -216,12 +215,12 @@
             {% if nbPhase >= 4 %}
                 <div class="tournament__round">
                 <div class="tournament__match">
-                    <a class="tournament__match__team" href="#">{{matchs[2][0][0]}} {{matchs[2][0][1]}}</a>
-                    <a class="tournament__match__team" href="#">{{matchs[2][1][0]}} {{matchs[2][1][1]}}</a>
+                    <a class="tournament__match__team" href="#">{{matchs[2][0][0]}} {{matchs[2][0][1]}} | {{scores[2][0]}}</a>
+                    <a class="tournament__match__team" href="#">{{matchs[2][1][0]}} {{matchs[2][1][1]}} | {{scores[2][1]}}</a>
                 </div>
                 <div class="tournament__match">
-                    <a class="tournament__match__team" href="#">{{matchs[2][2][0]}} {{matchs[2][2][1]}}</a>
-                    <a class="tournament__match__team" href="#">{{matchs[2][3][0]}} {{matchs[2][3][1]}}</a>
+                    <a class="tournament__match__team" href="#">{{matchs[2][2][0]}} {{matchs[2][2][1]}} | {{scores[2][2]}}</a>
+                    <a class="tournament__match__team" href="#">{{matchs[2][3][0]}} {{matchs[2][3][1]}} | {{scores[2][3]}}</a>
                 </div>
                 </div>    
             {% else %}
@@ -242,8 +241,8 @@
             {% if nbPhase >= 5 %}
                 <div class="tournament__round tournament__round--final">
                 <div class="tournament__match">
-                    <a class="tournament__match__team" href="#">{{matchs[3][0][0]}} {{matchs[3][0][1]}}</a>
-                    <a class="tournament__match__team" href="#">{{matchs[3][1][0]}} {{matchs[3][1][1]}}</a>
+                    <a class="tournament__match__team" href="#">{{matchs[3][0][0]}} {{matchs[3][0][1]}} | {{scores[3][0]}}</a>
+                    <a class="tournament__match__team" href="#">{{matchs[3][1][0]}} {{matchs[3][1][1]}} | {{scores[3][1]}}</a>
                 </div>
                 </div>
             {% else %}
