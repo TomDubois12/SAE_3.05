@@ -14,8 +14,8 @@ import mysql.connector
 #connexion au base de données
 db = mysql.connector.connect(
   host = "localhost",
-  user = "nathan",
-  password = "nathan",
+  user = "root",
+  password = "1234",
   database = "Escrime"
 )
 #Blabla2147
@@ -1144,6 +1144,7 @@ if __name__ == "__main__":
 
     
 
+    # print(genererPhase(1,3))
     # print((getIdMatchElim(5387,1)))
     # print(setToucherDonneTireur(40845, 20981, -1, 1, 2))
     # print(getListeGagnantMatchElimination(2, 1))
