@@ -121,7 +121,7 @@ def resultats(nbLicense,nbCompet):
                             isArbitre=False,
                             nbPhase=getNbPhase(int(nbCompet)),
                             matchs=getNomPrenomMatchElimination(int(nbCompet)),
-                            scores=getListeToucheByListLicence(licence, int(getNbPhase(int(nbCompet)), int(nbCompet))))
+                            scores=getListeToucheByListLicence(licence, int(getNbPhase(int(nbCompet))), int(nbCompet)))
 
 
 ##Fonctions de vérification
@@ -276,9 +276,10 @@ def update_data():
     # print('\033[93m' + str(nbLicenceTireurAdverse) + '\033[0m')
     # print('\033[93m' + str(numCompetition) + '\033[0m')
     # print('\033[93m' + str(nbPhase) + '\033[0m')
+    # print('\033[92m' + str(nbLicenceTireur) +str(nbLicenceTireurAdverse) +str(data)+ str(numCompetition)+ str(nbPhase) + '\033[0m')
+    setToucherDonneTireur(int(nbLicenceTireur), int(nbLicenceTireurAdverse), int(data), int(numCompetition), int(nbPhase))
+    return redirect(url_for('resultats', nbLicense=nbLicenceTireur, nbCompet=numCompetition))
 
-
-    return setToucherDonneTireur(int(nbLicenceTireur), int(nbLicenceTireurAdverse), int(data), int(numCompetition), int(nbPhase))
 
 @app.route('/genererEliminations', methods=['POST'])
 def genererEliminations():
