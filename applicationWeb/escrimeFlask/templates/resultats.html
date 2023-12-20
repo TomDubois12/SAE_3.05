@@ -47,10 +47,11 @@
                                 {% if isArbitre %}
                                     {% if nbPhase == 1 %}
                                         <td class="caseBleuClair" contenteditable="true" onblur="updateData(this.innerText, {{p[0][0]}}, {{resultat[0]}}, {{nbCompet}}, {{1}})"></td>
+                                    {% else %}
+                                        <td class="caseBleuClair"></td>
                                     {% endif %}
-                                        <td></td>
                                 {% else %}
-                                    <td></td>
+                                    <td class="caseBleuClair"></td>
                                 {% endif %}
                             {% else %}
                                 {% if resultat[1] == -2 %}
@@ -59,8 +60,9 @@
                                     {% if isArbitre %}
                                         {% if nbPhase == 1 %}
                                             <td class="caseBleuClair" contenteditable="true" onblur="updateData(this.innerText, {{p[0][0]}}, {{resultat[0]}}, {{nbCompet}}, {{1}} )">{{resultat[1]}}</td>
-                                        {% endif %}
+                                        {% else %}
                                             <td class="caseBleuClair">{{ resultat[1] }}</td>
+                                        {% endif %}
                                     {% else %}
                                         <td class="caseBleuClair">{{ resultat[1] }}</td>
                                     {% endif %}
@@ -78,7 +80,7 @@
                 {% endfor %}
 
                 <tr>
-                    <td class="caseBleuFonce">Touches Recues</td>
+                    <td class="caseBleuFonce">Touches Reçues</td>
                     <td class="caseBleuFonce"></td>
                     <td class="caseBleuFonce"></td>
                     {% for p in participant.values() %}
@@ -346,31 +348,33 @@ Cette action est irréversible. et vous ne pourrez plus modifier les scores des 
         var numericValue = parseFloat(value);
 
         // Vérifier si la valeur est un nombre compris entre 0 et 5
-        if ( numericValue >= 0 && numericValue <= 5) {
+        if (numericValue >= 0 && numericValue <= 5) {
             // Utilisez AJAX pour envoyer la valeur à la fonction Flask
             var xhr = new XMLHttpRequest();
             xhr.open("POST", "/update_data", true);
             xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
             xhr.onreadystatechange = function () {
-                if (xhr.readyState === 4 && xhr.status === 200) {
-                    // Traitement de la réponse du serveur si nécessaire
-                    console.log(xhr.responseText);
-                    // popup pour voir si ça fonctionne
+                if (xhr.readyState === 4) {
+                    if (xhr.status === 200) {
+                        // Traitement de la réponse du serveur si nécessaire
+                        console.log(xhr.responseText);
+                        // Rafraîchir la page après avoir envoyé les données avec succès
+                        location.reload();
+                    } else {
+                        // Gérer les erreurs si nécessaire
+                        alert("Erreur lors de l'envoi des données.");
+                    }
                 }
             };
             // Envoyez la valeur et l'index (ou toute autre information nécessaire) à la fonction Flask
             xhr.send("data=" + numericValue + "&nbLicenceTireur=" + nbLicenceTireur + "&nbLicenceTireurAdverse=" + nbLicenceTireurAdverse + "&numCompetition=" + numCompetition + "&nbPhase=" + nbPhase);
-            // alert("data=" + numericValue + "&nbLicenceTireur=" + nbLicenceTireur + "&nbLicenceTireurAdverse=" + nbLicenceTireurAdverse + "&numCompetition=" + numCompetition + "&nbPhase=" + nbPhase)
-            // alert("Le score a été enregistré");
-            
-
         } else {
-            // Afficher un message d'erreur ou réinitialiser la valeur
             alert("Veuillez saisir un nombre entre 0 et 5");
-            // Vous pouvez également réinitialiser la valeur à 0, par exemple :
-            // document.getElementById("votreID").innerText = 0;
+            location.reload();
+
         }
     }
+
 
     function changerScore(nbLicenceTireur, numCompetition, nbPhase) {
         {% if isArbitre %}

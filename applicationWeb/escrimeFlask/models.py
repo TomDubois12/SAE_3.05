@@ -1244,7 +1244,7 @@ if __name__ == "__main__":
     # print(getCompetitionParOrga(254612))
     # print(getClassementNationnal("Sabre","Dames","Seniors"))
     # print(getProfil(151229))
-    print(InfosPouleNumLicenceArbitre(1,51032))
+    # print(InfosPouleNumLicenceArbitre(1,51032))
     #################################
     # insertTireurDansBD(45243)
     # insertTireurDansBD(20840)

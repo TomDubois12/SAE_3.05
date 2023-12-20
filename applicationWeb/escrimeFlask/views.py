@@ -271,14 +271,8 @@ def update_data():
     nbLicenceTireurAdverse = request.form.get('nbLicenceTireurAdverse')
     numCompetition = request.form.get('numCompetition')
     nbPhase = request.form.get('nbPhase')
-    # print('\033[93m' + str(data) + '\033[0m')
-    # print('\033[93m' + str(nbLicenceTireur) + '\033[0m')
-    # print('\033[93m' + str(nbLicenceTireurAdverse) + '\033[0m')
-    # print('\033[93m' + str(numCompetition) + '\033[0m')
-    # print('\033[93m' + str(nbPhase) + '\033[0m')
-    # print('\033[92m' + str(nbLicenceTireur) +str(nbLicenceTireurAdverse) +str(data)+ str(numCompetition)+ str(nbPhase) + '\033[0m')
     setToucherDonneTireur(int(nbLicenceTireur), int(nbLicenceTireurAdverse), int(data), int(numCompetition), int(nbPhase))
-    return redirect(url_for('resultats', nbLicense=nbLicenceTireur, nbCompet=numCompetition))
+    return redirect('resultats/'+str(nbLicenceTireur)+'&'+str(numCompetition))
 
 
 @app.route('/genererEliminations', methods=['POST'])
