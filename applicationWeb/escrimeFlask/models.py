@@ -333,9 +333,15 @@ def classementFile(filename :str) -> list:
     return res
 
 def getClassementNationnal(arme,sexe,categorie) : 
-  return classementFile("./escrimeFlask/csvEscrimeur/classement_" + arme + "_" + sexe + "_" + categorie +".csv")
-
-
+  print(categorie)
+  if categorie == 'Vétérans3' or categorie == 'Vétérans4' : 
+    try :
+      return classementFile("./escrimeFlask/csvEscrimeur/classement_" + arme + "_" + sexe + "_" + categorie +".csv")
+    except IndexError :
+      return classementFile("./escrimeFlask/csvEscrimeur/classement_" + arme + "_" + sexe + "_Vétérans3_4.csv")
+  else : 
+    return classementFile("./escrimeFlask/csvEscrimeur/classement_" + arme + "_" + sexe + "_" + categorie +".csv")
+  
 def inscriptionOuverte() -> list:
   requete1 = "select * from COMPETITION where datediff(dateDebutCompetiton, CURDATE()) > 14 and estFinie = False;"
   cursor.execute(requete1)
@@ -603,6 +609,15 @@ def getNomByLicence(licence) :
   res = cursor.fetchall()[0]
   return res[0], res[1]
 
+def getListNomByLicence(licences) : 
+  res = []
+  for lic in licences : 
+    requete = "select nomTireur, prenomTireur from TIREUR  where numeroLicenceTireur = " + str(lic) + ";"
+    cursor.execute(requete)
+    r = cursor.fetchall()[0]
+    res.append((r[0],r[1]))
+  return res
+
 def getNomClubByLicence(licence) : 
   requete = "select nomClub from CLUB natural join TIREUR_DANS_CLUB where numeroLicenceTireur = " + str(licence) + ";"
   cursor.execute(requete)
@@ -715,7 +730,7 @@ def maFonctionTropBelle(nbPhase, idCompetition,listeLicMatchACreer):
       cursor.execute(req)
       db.commit()
 
-def testDeTes(idCompetition, nbPhase) :
+def genererPhaseElimination(idCompetition, nbPhase) :
     listeTireurClasser = getClassementApresPoule(idCompetition)[:16]
     pat = [1,16,5,12,7,10,4,13,3,14,8,9,6,11,2,15]
     huit = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
@@ -758,9 +773,45 @@ def testDeTes(idCompetition, nbPhase) :
         maFonctionTropBelle(4, idCompetition,demie)
       case 5 : 
         maFonctionTropBelle(5, idCompetition,finale)
+    
+    return (pat,listeVictorieux,listeTireurClasser,huit,quart,demie,finale)
 
-    print(pat,listeVictorieux,listeTireurClasser,huit,quart,demie,finale)
+def getNomPrenomMatchElimination(idCompetition) :
+    listeTireurClasser = getClassementApresPoule(idCompetition)[:16]
+    pat = [1,16,5,12,7,10,4,13,3,14,8,9,6,11,2,15]
+    huit = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
+    for i in range(16) : 
+      try  :
+        huit[i] = listeTireurClasser[pat[i]-1]
+      except IndexError : 
+        huit[i] = 0
 
+    quart = [0,0,0,0,0,0,0,0]
+    listeVictorieux = getListeGagnantMatchElimination(2, idCompetition)
+    for i in range(8) : 
+      if huit[i*2] in listeVictorieux : 
+        quart[i] = huit[i*2]
+      else :
+        quart[i] = huit[i*2+1]
+
+    demie = [0,0,0,0]
+    listeVictorieux = getListeGagnantMatchElimination(3, idCompetition)
+    for i in range(4) : 
+      if quart[i*2] in listeVictorieux : 
+        demie[i] = quart[i*2]
+      else :
+        demie[i] = quart[i*2+1]
+
+    finale = [0,0]
+    listeVictorieux = getListeGagnantMatchElimination(4, idCompetition)
+    for i in range(2) : 
+      if demie[i*2] in listeVictorieux : 
+        finale[i] = demie[i*2]
+      else :
+        finale[i] = demie[i*2+1]
+
+    # print(pat,listeVictorieux,listeTireurClasser,huit,quart,demie,finale)
+    return [getListNomByLicence(huit),getListNomByLicence(quart),getListNomByLicence(demie),getListNomByLicence(finale)]
 
 # (numLicence, num) : (nom,prenom,club,[(num,toucheDonnee,toucheRecu)], toucheDonnéeTotal, toucheRecuTotal,victoire,placeClassement)
 def setToucherDonneTireur(licenceTireur1, licenceTireur2, toucheDTireur, idCompetition, nbPhase) :
@@ -1160,9 +1211,10 @@ if __name__ == "__main__":
     #   db.commit()
 
     # print(lancerCompetition(1)) # Pour creer une competition pour les tests
-    insOrgaDansBD()
+    # insOrgaDansBD()
     
-    # testDeTes(1,2)
+    print(getNomPrenomMatchElimination(1)) # pour les nomETprenom
+    print(genererPhaseElimination(1,2)) # pour generer une phase et get liste avec licene
     
 
 
