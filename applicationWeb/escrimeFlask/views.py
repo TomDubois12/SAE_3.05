@@ -93,7 +93,13 @@ def creation_competition(nbLicense):
 def resultats(nbLicense,nbCompet):
     listArbitres= getNumeroLicenceArbitres(int(nbCompet))
     listLicense=affichageGenererPhaseEliminations(int(nbCompet), getNbPhase(int(nbCompet)))
-    licence = listLicense[3]+listLicense[4]+listLicense[5]+listLicense[6]
+    licence=[]
+    licence.append(listLicense[3])
+    licence.append(listLicense[4])
+    licence.append(listLicense[5])
+    licence.append(listLicense[6])
+
+    print('\033[93m' + str(licence) + '\033[0m')
     if int(nbLicense) in listArbitres:
         return render_template('resultats.html',
                            title='Résultats',
@@ -104,7 +110,7 @@ def resultats(nbLicense,nbCompet):
                            isArbitre=True,
                            nbPhase=getNbPhase(int(nbCompet)),
                            matchs=getNomPrenomMatchElimination(int(nbCompet)),
-                           score=getListeToucheByListLicence(licence, int(getNbPhase(int(nbCompet)), int(nbCompet))))
+                           score=getListeToucheByListLicence(licence, int(getNbPhase(int(nbCompet))), int(nbCompet)))
     else:
         return render_template('resultats.html',
                             title='Résultats',
@@ -115,7 +121,7 @@ def resultats(nbLicense,nbCompet):
                             isArbitre=False,
                             nbPhase=getNbPhase(int(nbCompet)),
                             matchs=getNomPrenomMatchElimination(int(nbCompet)),
-                             score=getListeToucheByListLicence(licence, int(getNbPhase(int(nbCompet)), int(nbCompet))))
+                            score=getListeToucheByListLicence(licence, int(getNbPhase(int(nbCompet)), int(nbCompet))))
 
 
 ##Fonctions de vérification

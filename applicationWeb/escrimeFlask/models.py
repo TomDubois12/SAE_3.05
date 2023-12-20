@@ -904,7 +904,7 @@ def setToucherDonneTireur(licenceTireur1, licenceTireur2, toucheDTireur, idCompe
     requete = "select licenceTireur1 from MATCHPOULE where licenceTireur1 = " + str(licenceTireur1) + " and licenceTireur2 = " + str(licenceTireur2) + " and idPoule = " + str(idPoule) + ";"
     cursor.execute(requete)
     l1 = cursor.fetchall()
-    print(l1)
+    # print(l1)
     if l1 != [] :
       requete = "update MATCHPOULE set toucheDTireur1 = " + str(toucheDTireur) + " where licenceTireur1 = " + str(licenceTireur1) + " and licenceTireur2 = " + str(licenceTireur2) + " and idPoule = " + str(idPoule) + " and nbPhases = "+ str(nbPhase) +";"
     else:
@@ -913,11 +913,11 @@ def setToucherDonneTireur(licenceTireur1, licenceTireur2, toucheDTireur, idCompe
     db.commit()
   else :
     idMatchElim = getIdMatchElim(licenceTireur1,idCompetition, nbPhase)
-    print(idMatchElim)
+    # print(idMatchElim)
     requete = "select licenceTireur1 from MATCHELIMINATION where licenceTireur1 = " + str(licenceTireur1) + " and licenceTireur2 = " + str(licenceTireur2) + " and idMatchElimination = " + str(idMatchElim) + ";"
     cursor.execute(requete)
     l1 = cursor.fetchall()
-    print(l1)
+    # print(l1)
     if l1 != [] :
       requete = "update MATCHELIMINATION set toucheDTireur1 = " + str(toucheDTireur) + " where licenceTireur1 = " + str(licenceTireur1) + " and licenceTireur2 = " + str(licenceTireur2) + " and idMatchElimination = " + str(idMatchElim) + " and nbPhases = "+ str(nbPhase) +";"
     else:
