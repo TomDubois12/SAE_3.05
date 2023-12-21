@@ -119,6 +119,14 @@ table {
     color: white;
   }
 
+  .classementDispo{
+    text-align: center;
+  }
+
+  .caseJaune{
+    background-color: #F9F871;
+  }
+
   .caseBleuClair{
     background-color: #CFE2F3;
   }
