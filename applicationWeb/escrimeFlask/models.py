@@ -10,8 +10,8 @@ import mysql.connector
 #connexion au base de données
 db = mysql.connector.connect(
   host = "localhost",
-  user = "koko",
-  password = "koko",
+  user = "root",
+  password = "1234",
   database = "Escrime"
 )
 #Blabla2147
@@ -1411,8 +1411,6 @@ if __name__ == "__main__":
     # print(getProfil(151229))
     # print(InfosPouleNumLicenceArbitre(1,51032))
 
-
-    #################################
     # insertTireurDansBD(45243)
     # insertTireurDansBD(20840)
     # insertTireurDansBD(53089)
@@ -1453,9 +1451,10 @@ if __name__ == "__main__":
     # insOrgaDansBD()
     # ###############
     
+
     # print(genererPhaseEliminations(1,2))
 
-    print(phasesFinie(1,2))
+    #print(phasesFinie(1,2))
 
     # print(genererPhaseEliminations(1,3))
     #print(genererPhaseEliminations(1,5))
