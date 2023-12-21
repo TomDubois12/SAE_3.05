@@ -10,8 +10,8 @@ import mysql.connector
 #connexion au base de données
 db = mysql.connector.connect(
   host = "localhost",
-  user = "koko",
-  password = "koko",
+  user = "nathan",
+  password = "nathan",
   database = "Escrime"
 )
 #Blabla2147
@@ -22,7 +22,7 @@ cursor = db.cursor()
 ########################################################################
 ########################################################################
 ########################################################################
-########################################################################
+#######œ#################################################################
 
 def getIdLieuByNom(nomLieu): 
     try :
@@ -793,7 +793,6 @@ def getListeGagnantMatchElimination(nbPhase, idCompetition) :
 
   return listeTrie
 
-
 def getListeToucheByListLicence(listelisteLicence, nbPhases, idCompetition) : 
   listeTouche = []
   for i in range(len(listelisteLicence)): listeTouche.append([])
@@ -856,6 +855,24 @@ def genererPhase(nbPhase, idCompetition,listeLicMatchACreer):
           req = "insert into MATCHELIMINATION(nomMatchElimination,licenceTireur1,licenceTireur2,nbPhases,idCompetition) value ('" + str(nomMatch) +"' , " +str(listeLicMatchACreer[k*2])+ "," + str(listeLicMatchACreer[k*2+1])+" , "+ str(nbPhase)+" , " +str(idCompetition) +  ");"
           cursor.execute(req)
           db.commit()
+
+def phasesFinie(idCompetition, nbPhases ) : 
+  res = True 
+  if nbPhases == 1 :
+    requete = "select * from MATCHPOULE natural join POULE where idCompetition = " + str(idCompetition) + " ;"
+    cursor.execute(requete)
+    infos = cursor.fetchall()
+    for ligne in infos :
+      if ligne[4] < 5 and ligne[6] < 5 : return False 
+  else :
+    match = affichageGenererPhaseEliminations(idCompetition, nbPhases)[nbPhases + 1]
+    
+    for licence in match : 
+      requete = "select * from MATCHELIMINATION where nbPhases = " + str(nbPhases) + " and idCompetition = " + str(idCompetition) + " and (licenceTireur1 = "+str(licence)+" OR licenceTireur2 = "+str(licence)+") ;"
+      cursor.execute(requete)
+      ligne = cursor.fetchall()
+      if ligne[4] < 5 and ligne[6] < 5 : return False 
+  return res 
 
 
 def maFonctionTropBelle(nbPhase, idCompetition,listeLicMatchACreer): 
@@ -1436,9 +1453,12 @@ if __name__ == "__main__":
 
     # print(lancerCompetition(1)) # Pour creer une competition pour les tests
     # insOrgaDansBD()
-    ################
-
+    # ###############
+    
     # print(genererPhaseEliminations(1,2))
+
+    print(phasesFinie(1,1))
+
     # print(genererPhaseEliminations(1,3))
     #print(genererPhaseEliminations(1,5))
     # print(classementFinale(1))
