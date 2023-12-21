@@ -14,13 +14,18 @@
 
 {% block main %}
 {% if lancer %}
-    
+<section class="sectionnomCompet">  
+<h3 class="titreCompet">Compétition : </h3> 
+<p class="nomCompet">
 {{nomCompet[0]}} 
 {{nomCompet[1]}} {{nomCompet[2]}}
 {{nomCompet[3]}}
+</p>
+</section>
+<h3 class="titreArbitres">Arbitre(s) de la compétition : </h3>
 <ul>
     {% for arbitre in arbitres %}
-        <li>{{arbitre[0]}} {{arbitre[1]}}</li>
+        <li class="nomsArbitres">{{arbitre[0]}} {{arbitre[1]}}</li>
     {% endfor %}
 </ul>
     <main>
@@ -48,11 +53,12 @@
                         <th>Place</th>
                     </tr>        
                     {% for p in participant.items() %}
+                    {# {{p}} #}
                         <tr>
                             <td class="caseBleuClair">{{ p[1][0] }} {{ p[1][1] }}</td>
                             <td class="caseBleuClair">{{ p[1][2] }}</td>
                             <td class="caseBleuFonce">{{ loop.index }}</td>
-                            {% for resultat in p[1][3] %}
+                            {% for resultat in p[1][3] %}                                
                                 {% if resultat[1] == -1 %}
                                     {% if isArbitre %}
                                         {% if nbPhase == 1 %}
@@ -306,52 +312,52 @@
             {% if joueur %}
                 <table>
                     <tr class="titre-tableau">
-                        <td>RANG</td>
-                        <td>NOM</td>
-                        <td>PRÉNOM</td>
-                        <td>COMITE REGIONAL</td>
-                        <td>CLUB</td>
-                        <td>POINTS</td>
+                        <td class="caseBleuFonce">RANG</td>
+                        <td class="caseBleuFonce">NOM</td>
+                        <td class="caseBleuFonce">PRÉNOM</td>
+                        <td class="caseBleuFonce">COMITE REGIONAL</td>
+                        <td class="caseBleuFonce">CLUB</td>
+                        <td class="caseBleuFonce">POINTS</td>
                     </tr>
-                    {% if classements|length > 0 %}
+                    {% if classements|length > 0 and nbPhase == 5 %}
                         <tr>
-                            <td>{{classementPerso[0]}}</td>
-                            <td>{{classementPerso[1]}}</td>
-                            <td>{{classementPerso[2]}}</td>
-                            <td>{{classementPerso[3]}}</td>
-                            <td>{{classementPerso[4]}}</td>
-                            <td>{{classementPerso[5]}}</td>
+                            <td class="caseRouge">{{classementPerso[0]}}</td>
+                            <td class="caseBleuClair">{{classementPerso[1]}}</td>
+                            <td class="caseBleuClair">{{classementPerso[2]}}</td>
+                            <td class="caseBleuClair">{{classementPerso[3]}}</td>
+                            <td class="caseBleuClair">{{classementPerso[4]}}</td>
+                            <td class="caseJaune">{{classementPerso[5]}}</td>
                         </tr>
                     {% else %}
                         <tr>
-                            <td colspan="6">Classement disponible à la fin de la compétition</td>
+                            <td class="classementDispo" colspan="6">Classement disponible à la fin de la compétition</td>
                         </tr>
                     {% endif %}
                 </table>  
             {% endif %}
             <table>
-                <tr class="titre-tableau">
-                    <td>RANG</td>
-                    <td>NOM</td>
-                    <td>PRÉNOM</td>
-                    <td>COMITE REGIONAL</td>
-                    <td>CLUB</td>
-                    <td>POINTS</td>
+                <tr>
+                    <td class="caseBleuFonce">RANG</td>
+                    <td class="caseBleuFonce">NOM</td>
+                    <td class="caseBleuFonce">PRÉNOM</td>
+                    <td class="caseBleuFonce">COMITE REGIONAL</td>
+                    <td class="caseBleuFonce">CLUB</td>
+                    <td class="caseBleuFonce">POINTS</td>
                 </tr>
-                {% if classements|length > 0 %}
+                {% if classements|length > 0 and nbPhase == 5 %}
                     {% for classement in classements %}
                     <tr>
-                        <td>{{classement[0]}}</td>
-                        <td>{{classement[1]}}</td>
-                        <td>{{classement[2]}}</td>
-                        <td>{{classement[3]}}</td>
-                        <td>{{classement[4]}}</td>
-                        <td>{{classement[5]}}</td>
+                        <td class="caseRouge">{{classement[0]}}</td>
+                        <td class="caseBleuClair">{{classement[1]}}</td>
+                        <td class="caseBleuClair">{{classement[2]}}</td>
+                        <td class="caseBleuClair">{{classement[3]}}</td>
+                        <td class="caseBleuClair">{{classement[4]}}</td>
+                        <td class="caseJaune">{{classement[5]}}</td>
                     </tr>
                     {% endfor %}
                 {% else %}
                     <tr>
-                        <td colspan="6">Classement disponible à la fin de la compétition</td>
+                        <td class="classementDispo" colspan="6">Classement disponible à la fin de la compétition</td>
                     </tr>
                 {% endif %}
                 
