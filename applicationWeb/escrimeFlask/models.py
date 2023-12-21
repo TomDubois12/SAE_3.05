@@ -10,8 +10,8 @@ import mysql.connector
 #connexion au base de données
 db = mysql.connector.connect(
   host = "localhost",
-  user = "nathan",
-  password = "nathan",
+  user = "koko",
+  password = "koko",
   database = "Escrime"
 )
 #Blabla2147
@@ -863,7 +863,7 @@ def phasesFinie(idCompetition, nbPhases ) :
     cursor.execute(requete)
     infos = cursor.fetchall()
     for ligne in infos :
-      if ligne[3] < 5 and ligne[5] < 5 : return False 
+      if ligne[4] < 5 and ligne[6] < 5 : return False 
   else :
     requete = "select * from MATCHELIMINATION where nbPhases = " + str(nbPhases) + " and idCompetition = " + str(idCompetition) + " ;"
     cursor.execute(requete)
