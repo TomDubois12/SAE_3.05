@@ -53,6 +53,7 @@
                         <th>Place</th>
                     </tr>        
                     {% for p in participant.items() %}
+                    {{p}}
                         <tr>
                             <td class="caseBleuClair">{{ p[1][0] }} {{ p[1][1] }}</td>
                             <td class="caseBleuClair">{{ p[1][2] }}</td>
@@ -119,6 +120,7 @@
                     <input type="text" hidden name="nbPhase" value="{{nbPhase}}">
                     {% if phaseFinie %}
                         <button class="boutonRefresh" type="button" onclick="confirmerChoix()">Générer les prochaines phases d'éliminations</button>
+                        
                     {% else %}
                         <button class="boutonRefresh" type="button" onclick="alert('Tous les matchs ne sont pas finis.')">Générer les prochaines phases d'éliminations</button>
                     {% endif %}
