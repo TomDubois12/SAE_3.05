@@ -10,8 +10,8 @@ import mysql.connector
 #connexion au base de données
 db = mysql.connector.connect(
   host = "localhost",
-  user = "koko",
-  password = "koko",
+  user = "root",
+  password = "1234",
   database = "Escrime"
 )
 #Blabla2147
@@ -1398,44 +1398,44 @@ if __name__ == "__main__":
 
 
     #################################
-    # insertTireurDansBD(45243)
-    # insertTireurDansBD(20840)
-    # insertTireurDansBD(53089)
-    # insertTireurDansBD(40845)
-    # insertTireurDansBD(37189)
-    # insertTireurDansBD(53998)
-    # insertTireurDansBD(54797)
-    # insertTireurDansBD(5387)
-    # insertTireurDansBD(35524)
-    # insertTireurDansBD(20981)
-    # insertTireurDansBD(2889)
-    # insertTireurDansBD(7006)
-    # insertTireurDansBD(119662)
-    # insertTireurDansBD(41337)
-    # insertTireurDansBD(37332)
-    # insertTireurDansBD(5529)
-    # insertTireurDansBD(72333)
-    # insertTireurDansBD(658)
-    # insertTireurDansBD(34193)
+    insertTireurDansBD(45243)
+    insertTireurDansBD(20840)
+    insertTireurDansBD(53089)
+    insertTireurDansBD(40845)
+    insertTireurDansBD(37189)
+    insertTireurDansBD(53998)
+    insertTireurDansBD(54797)
+    insertTireurDansBD(5387)
+    insertTireurDansBD(35524)
+    insertTireurDansBD(20981)
+    insertTireurDansBD(2889)
+    insertTireurDansBD(7006)
+    insertTireurDansBD(119662)
+    insertTireurDansBD(41337)
+    insertTireurDansBD(37332)
+    insertTireurDansBD(5529)
+    insertTireurDansBD(72333)
+    insertTireurDansBD(658)
+    insertTireurDansBD(34193)
 
-    # test = [45243,20840,53089,40845,37189,53998,54797,5387,35524,20981,2889,7006,119662,41337,37332,5529,72333,658,34193]
+    test = [45243,20840,53089,40845,37189,53998,54797,5387,35524,20981,2889,7006,119662,41337,37332,5529,72333,658,34193]
 
-    # for id in test : 
-    #   requete5 = "insert into TIREUR_DANS_COMPETITIONS (numeroLicenceTireur,idCompetition) values("+str(id)+", 1  );"
-    #   cursor.execute(requete5)
-    #   db.commit()
+    for id in test : 
+      requete5 = "insert into TIREUR_DANS_COMPETITIONS (numeroLicenceTireur,idCompetition) values("+str(id)+", 1  );"
+      cursor.execute(requete5)
+      db.commit()
 
-    # insertArbitreDansBD(51032)
-    # insertArbitreDansBD(51061)
+    insertArbitreDansBD(51032)
+    insertArbitreDansBD(51061)
 
-    # test1 = [51032,51061]
-    # for id in test1 : 
-    #   requete5 = "insert into ARBITRE_DANS_COMPETITIONS (numeroLicenceArbitre,idCompetition) values("+str(id)+", 1  );"
-    #   cursor.execute(requete5)
-    #   db.commit()
+    test1 = [51032,51061]
+    for id in test1 : 
+      requete5 = "insert into ARBITRE_DANS_COMPETITIONS (numeroLicenceArbitre,idCompetition) values("+str(id)+", 1  );"
+      cursor.execute(requete5)
+      db.commit()
 
-    # print(lancerCompetition(1)) # Pour creer une competition pour les tests
-    # insOrgaDansBD()
+    print(lancerCompetition(1)) # Pour creer une competition pour les tests
+    insOrgaDansBD()
     ################
 
     # print(genererPhaseEliminations(1,2))
