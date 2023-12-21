@@ -22,7 +22,7 @@ cursor = db.cursor()
 ########################################################################
 ########################################################################
 ########################################################################
-########################################################################
+#######œ#################################################################
 
 def getIdLieuByNom(nomLieu): 
     try :
@@ -793,7 +793,6 @@ def getListeGagnantMatchElimination(nbPhase, idCompetition) :
 
   return listeTrie
 
-
 def getListeToucheByListLicence(listelisteLicence, nbPhases, idCompetition) : 
   listeTouche = []
   for i in range(len(listelisteLicence)): listeTouche.append([])
@@ -856,6 +855,22 @@ def genererPhase(nbPhase, idCompetition,listeLicMatchACreer):
           req = "insert into MATCHELIMINATION(nomMatchElimination,licenceTireur1,licenceTireur2,nbPhases,idCompetition) value ('" + str(nomMatch) +"' , " +str(listeLicMatchACreer[k*2])+ "," + str(listeLicMatchACreer[k*2+1])+" , "+ str(nbPhase)+" , " +str(idCompetition) +  ");"
           cursor.execute(req)
           db.commit()
+
+def phasesFinie(idCompetition, nbPhases ) : 
+  res = True 
+  if nbPhases == 1 :
+    requete = "select * from MATCHPOULE natural join POULE where idCompetition = " + str(idCompetition) + " ;"
+    cursor.execute(requete)
+    infos = cursor.fetchall()
+    for ligne in infos :
+      if ligne[4] < 5 and ligne[6] < 5 : return False 
+  else :
+    requete = "select * from MATCHELIMINATION where nbPhases = " + str(nbPhases) + " and idCompetition = " + str(idCompetition) + " ;"
+    cursor.execute(requete)
+    infos = cursor.fetchall()
+    for ligne in infos :
+      if ligne[3] < 5 and ligne[5] < 5 : return False 
+  return res 
 
 
 def maFonctionTropBelle(nbPhase, idCompetition,listeLicMatchACreer): 
@@ -1396,49 +1411,51 @@ if __name__ == "__main__":
     # print(getProfil(151229))
     # print(InfosPouleNumLicenceArbitre(1,51032))
 
+    # insertTireurDansBD(45243)
+    # insertTireurDansBD(20840)
+    # insertTireurDansBD(53089)
+    # insertTireurDansBD(40845)
+    # insertTireurDansBD(37189)
+    # insertTireurDansBD(53998)
+    # insertTireurDansBD(54797)
+    # insertTireurDansBD(5387)
+    # insertTireurDansBD(35524)
+    # insertTireurDansBD(20981)
+    # insertTireurDansBD(2889)
+    # insertTireurDansBD(7006)
+    # insertTireurDansBD(119662)
+    # insertTireurDansBD(41337)
+    # insertTireurDansBD(37332)
+    # insertTireurDansBD(5529)
+    # insertTireurDansBD(72333)
+    # insertTireurDansBD(658)
+    # insertTireurDansBD(34193)
 
-    #################################
-    insertTireurDansBD(45243)
-    insertTireurDansBD(20840)
-    insertTireurDansBD(53089)
-    insertTireurDansBD(40845)
-    insertTireurDansBD(37189)
-    insertTireurDansBD(53998)
-    insertTireurDansBD(54797)
-    insertTireurDansBD(5387)
-    insertTireurDansBD(35524)
-    insertTireurDansBD(20981)
-    insertTireurDansBD(2889)
-    insertTireurDansBD(7006)
-    insertTireurDansBD(119662)
-    insertTireurDansBD(41337)
-    insertTireurDansBD(37332)
-    insertTireurDansBD(5529)
-    insertTireurDansBD(72333)
-    insertTireurDansBD(658)
-    insertTireurDansBD(34193)
+    # test = [45243,20840,53089,40845,37189,53998,54797,5387,35524,20981,2889,7006,119662,41337,37332,5529,72333,658,34193]
 
-    test = [45243,20840,53089,40845,37189,53998,54797,5387,35524,20981,2889,7006,119662,41337,37332,5529,72333,658,34193]
+    # for id in test : 
+    #   requete5 = "insert into TIREUR_DANS_COMPETITIONS (numeroLicenceTireur,idCompetition) values("+str(id)+", 1  );"
+    #   cursor.execute(requete5)
+    #   db.commit()
 
-    for id in test : 
-      requete5 = "insert into TIREUR_DANS_COMPETITIONS (numeroLicenceTireur,idCompetition) values("+str(id)+", 1  );"
-      cursor.execute(requete5)
-      db.commit()
+    # insertArbitreDansBD(51032)
+    # insertArbitreDansBD(51061)
 
-    insertArbitreDansBD(51032)
-    insertArbitreDansBD(51061)
+    # test1 = [51032,51061]
+    # for id in test1 : 
+    #   requete5 = "insert into ARBITRE_DANS_COMPETITIONS (numeroLicenceArbitre,idCompetition) values("+str(id)+", 1  );"
+    #   cursor.execute(requete5)
+    #   db.commit()
 
-    test1 = [51032,51061]
-    for id in test1 : 
-      requete5 = "insert into ARBITRE_DANS_COMPETITIONS (numeroLicenceArbitre,idCompetition) values("+str(id)+", 1  );"
-      cursor.execute(requete5)
-      db.commit()
-
-    print(lancerCompetition(1)) # Pour creer une competition pour les tests
-    insOrgaDansBD()
-    ################
+    # print(lancerCompetition(1)) # Pour creer une competition pour les tests
+    # insOrgaDansBD()
+    # ###############
+    
 
     # print(genererPhaseEliminations(1,2))
+
+    #print(phasesFinie(1,2))
+
     # print(genererPhaseEliminations(1,3))
     #print(genererPhaseEliminations(1,5))
     # print(classementFinale(1))
