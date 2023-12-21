@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block linkcss %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/options_competitions.css')}}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/select.css')}}">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Average" rel="stylesheet">
+{% endblock %}
+
+{% block header %}
+{% include "partials/_header3.html" %}
+{% endblock %}
+
+{% block main %}
+<h2>{{participants|length}} Tireurs :</h2>
+<ul>
+    {% for participant in participants %}
+        <li>{{participant[0]}} {{participant[1]}}</li>
+    {% endfor %}
+</ul>
+<h2>{{arbitres|length}} Arbitres :</h2>
+<ul>
+    {% for arbitre in arbitres %}
+        <li>{{arbitre[0]}} {{arbitre[1]}}</li>
+    {% endfor %}
+</ul>
+{% endblock %}

@@ -22,47 +22,53 @@
     </div>
     <div class="principal">
         
+        {% if mesCompetitions|length > 0 %}
+            
+
         {% for competition in mesCompetitions %}
         <div class="competition">
             <div class="nom_competition">
                 <p>CONCOURS {{ competition[0][0].upper()}}</p>
                 <p>{{ competition[0][1].upper()}} {{competition[0][2].upper()}} </p>
-                <p>{{competition[0][3]}}, {{competition[0][4]}} </p>
+                <p>{{competition[0][3]}}, {{competition[0][4]}}  </p>
+                <p>{{competition[0][5]}}</p>
             </div>
             <div class="bouton">
-            {% if competition[0][5] in tournoisLancer %}
+            <a href={{url_for('infoCompetition', nbLicense=nbLicense, nbCompet=competition[0][6])}} class="buttonSubmit">Voir Participants</a>
+            {% if competition[0][6] in tournoisLancer %}
                 <form action="{{url_for('boutonLancer')}}", method="GET">
-                    <input type="text" hidden name="nbCompet" value={{competition[0][5]}}>
+                    <input type="text" hidden name="nbCompet" value={{competition[0][6]}}>
                     <input type="text" hidden name="nbLicense" value={{nbLicense}}>
                     <input class="button_desactivated" disabled type="submit" value="Lancer">
                 </form>
             {% else %}
-                {% if competition[0][5] in tournoisArchiver %}
+                {% if competition[0][6] in tournoisArchiver %}
                 <form action="{{url_for('boutonLancer')}}", method="GET">
-                    <input type="text" hidden name="nbCompet" value={{competition[0][5]}}>
+                    <input type="text" hidden name="nbCompet" value={{competition[0][6]}}>
                     <input type="text" hidden name="nbLicense" value={{nbLicense}}>
                     <input class="button_desactivated" disabled type="submit" value="Lancer">
                 </form>
                 {% else %}
                 <form action="{{url_for('boutonLancer')}}", method="GET">
-                    <input type="text" hidden name="nbCompet" value={{competition[0][5]}}>
+                    <input type="text" hidden name="nbCompet" value={{competition[0][6]}}>
                     <input type="text" hidden name="nbLicense" value={{nbLicense}}>
                     <input class="buttonSubmit" type="submit" value="Lancer">
                 </form>
                 {% endif %}
             {% endif %}
                 <div class="consulter">
-                    <a class="buttonSubmit" href={{url_for('resultats', nbLicense=nbLicense, nbCompet=competition[0][5])}}>Consulter</a>
+                    <a class="buttonSubmit" href={{url_for('resultats', nbLicense=nbLicense, nbCompet=competition[0][6])}}>Consulter</a>
                 </div>
-            {% if competition[0][5] in tournoisArchiver %}
+            {% if competition[0][6] in tournoisArchiver %}
                 <form action="{{url_for('boutonArchiver')}}", method="GET">
-                    <input type="text" hidden name="nbCompet" value={{competition[0][5]}}>
+                    <input type="text" hidden name="nbCompet" value={{competition[0][6]}}>
                     <input type="text" hidden name="nbLicense" value={{nbLicense}}>
                     <input class="button_desactivated" disabled type="submit" value="Archiver">
                 </form>
             {% else %}
+            
                 <form action="{{url_for('boutonArchiver')}}", method="GET">
-                    <input type="text" hidden name="nbCompet" value={{competition[0][5]}}>
+                    <input type="text" hidden name="nbCompet" value={{competition[0][6]}}>
                     <input type="text" hidden name="nbLicense" value={{nbLicense}}>
                     <input class="buttonSubmit" type="submit" value="Archiver">
                 </form>
@@ -71,6 +77,13 @@
             </div>
         </div>
         {% endfor %}
+    {% else %}
+        <div class="competition">
+            <div class="nom_competition">
+                <p>Vous n'avez pas encore de compétition</p>
+            </div>
+        </div>
+    {% endif %}
     </div>
 </main>
 {% endblock %}

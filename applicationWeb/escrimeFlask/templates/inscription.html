@@ -16,7 +16,7 @@
             </div>
             <div class="contentOpen">
                 {% for x in competitions %}
-                    <input type="radio" id="{{x[0][-1]}}" name="compet" required value="{{x[0][-1]}}"> <label for="{{x[0][-1]}}">{{x[0][0].upper()}} {{x[0][1].upper()}} {{x[0][3].upper()}}, {{x[0][4]}}</label></input>
+                    <input type="radio" id="{{x[0][-1]}}" name="compet" required value="{{x[0][-1]}}"> <label for="{{x[0][-1]}}">{{x[0][0].upper()}} {{x[0][1].upper()}} {{x[0][2].upper()}} {{x[0][3].upper()}}, {{x[0][4]}} {{x[0][5]}}</label></input>
                     <span></span>
                 {% endfor %}
             </div>
@@ -32,21 +32,22 @@
                         <input type="number" name="nbLicence" id="nbLicence" required="required" placeholder="112853">
                     </div>
                     <p>Veuillez vous assurer qu'il s'agisse bien de vous avant de vous inscrire.</p>
+                    <p>Les champs suivants ne sont pas obligatoires.</p>
                     <div class="nomPrenom">
                         <p>Nom prénom :</p>
                         <div>
-                            <input type="text" name="nom" id="nom" required="required" placeholder="TOSCANE">
-                            <input type="text" name="prenom" id="prenom" required="required" placeholder="Tori">
+                            <input type="text" name="nom" id="nom" placeholder="TOSCANE">
+                            <input type="text" name="prenom" id="prenom" placeholder="Tori">
                         </div>
                     </div>
                     <div class="naissanceClub">
                         <div class="naissance">
                             <p>Naissance:</p>
-                            <input type="date" name="naissance" id="naissance" required="required">
+                            <input type="date" name="naissance" id="naissance">
                         </div>
                         <div class="club">
                             <p>Club:</p>
-                            <input type="text" name="club" id="club" required="required" placeholder="CHARENTON">
+                            <input type="text" name="club" id="club" placeholder="CHARENTON">
                         </div>
                     </div>
                     <div class="role">

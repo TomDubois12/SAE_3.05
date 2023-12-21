@@ -15,8 +15,14 @@
 {% block main %}
 {% if lancer %}
     
-
-
+{{nomCompet[0]}} 
+{{nomCompet[1]}} {{nomCompet[2]}}
+{{nomCompet[3]}}
+<ul>
+    {% for arbitre in arbitres %}
+        <li>{{arbitre[0]}} {{arbitre[1]}}</li>
+    {% endfor %}
+</ul>
     <main>
         <div class="petit_titre">
             <h3>Tableau de votre poule :</h3>
@@ -303,14 +309,20 @@
                         <td>CLUB</td>
                         <td>POINTS</td>
                     </tr>
-                    <tr>
-                        <td>{{classementPerso[0]}}</td>
-                        <td>{{classementPerso[1]}}</td>
-                        <td>{{classementPerso[2]}}</td>
-                        <td>{{classementPerso[3]}}</td>
-                        <td>{{classementPerso[4]}}</td>
-                        <td>{{classementPerso[5]}}</td>
-                    </tr>
+                    {% if classements|length > 0 %}
+                        <tr>
+                            <td>{{classementPerso[0]}}</td>
+                            <td>{{classementPerso[1]}}</td>
+                            <td>{{classementPerso[2]}}</td>
+                            <td>{{classementPerso[3]}}</td>
+                            <td>{{classementPerso[4]}}</td>
+                            <td>{{classementPerso[5]}}</td>
+                        </tr>
+                    {% else %}
+                        <tr>
+                            <td colspan="6">Classement disponible à la fin de la compétition</td>
+                        </tr>
+                    {% endif %}
                 </table>  
             {% endif %}
             <table>
@@ -322,7 +334,8 @@
                     <td>CLUB</td>
                     <td>POINTS</td>
                 </tr>
-                {% for classement in classements %}
+                {% if classements|length > 0 %}
+                    {% for classement in classements %}
                     <tr>
                         <td>{{classement[0]}}</td>
                         <td>{{classement[1]}}</td>
@@ -331,7 +344,13 @@
                         <td>{{classement[4]}}</td>
                         <td>{{classement[5]}}</td>
                     </tr>
-                {% endfor %}
+                    {% endfor %}
+                {% else %}
+                    <tr>
+                        <td colspan="6">Classement disponible à la fin de la compétition</td>
+                    </tr>
+                {% endif %}
+                
             </table>  
         </div>
     </main>
