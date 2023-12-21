@@ -146,7 +146,7 @@ def insOrgaDansBD() :
 ########################################################################
 ########################################################################
 
-def insertTireurDansCompetition(nom : str, prenom : str,numeroLicence : int , dateNaissanceTireur : str, nomCLub :str, idCompetition: int, ToA : str) -> bool:
+def insertTireurDansCompetition(numeroLicence : int ,idCompetition: int, ToA : str) -> bool:
     try :
         if estDansBDNational(numeroLicence) :
           try :
@@ -154,23 +154,22 @@ def insertTireurDansCompetition(nom : str, prenom : str,numeroLicence : int , da
             infoTireur = getInfoFromBDNational(numeroLicence)
             if infoTireur != False : # si le numéro de licence est dans la BD national
               infs = infoTireur[1] # On prend la infos de la personne qui veut s'inscrire 
-              if infs[0].lower() == nom.lower() and infs[1].lower() == prenom.lower() and corrigerDate(infs[2]) == dateNaissanceTireur and infs[6].lower() == nomCLub.lower() : # On regarde si les infos passé correspondent au csv
-                # Il manque de vérifié le genre de la compète et idSexe + si arbitre ou tireur est passé en paremètre
-                if ToA.upper() == 'TIREUR' : 
-                  insertTireurDansBD(numeroLicence)
-                  if getIdSexeByIdCompetition(idCompetition) == getIdSexeByNumLicence(numeroLicence) :
-                    requete5 = "insert into TIREUR_DANS_COMPETITIONS (numeroLicenceTireur,idCompetition) values(%s,%s);"
-                    cursor.execute(requete5, (numeroLicence,idCompetition))
-                    db.commit()
-                    return True  
-                  else : 
-                    return False #pas le bon idSexe
-                else : 
-                  insertArbitreDansBD(numeroLicence)
-                  requete5 = "insert into ARBITRE_DANS_COMPETITIONS(numeroLicenceArbitre,idCompetition) values(%s,%s);"
+              # Il manque de vérifié le genre de la compète et idSexe + si arbitre ou tireur est passé en paremètre
+              if ToA.upper() == 'TIREUR' : 
+                insertTireurDansBD(numeroLicence)
+                if getIdSexeByIdCompetition(idCompetition) == getIdSexeByNumLicence(numeroLicence) :
+                  requete5 = "insert into TIREUR_DANS_COMPETITIONS (numeroLicenceTireur,idCompetition) values(%s,%s);"
                   cursor.execute(requete5, (numeroLicence,idCompetition))
                   db.commit()
                   return True  
+                else : 
+                  return False #pas le bon idSexe
+              else : 
+                insertArbitreDansBD(numeroLicence)
+                requete5 = "insert into ARBITRE_DANS_COMPETITIONS(numeroLicenceArbitre,idCompetition) values(%s,%s);"
+                cursor.execute(requete5, (numeroLicence,idCompetition))
+                db.commit()
+                return True  
             return False # au moins une des autre close qui vas pas 
           except Exception as mysql_error:
             print(mysql_error)
@@ -283,7 +282,7 @@ def concourtNonFinitInscritTireur(licenceTireur) :
   info = cursor.fetchall()
   res = []
   for i in range(len(info)):
-    requete2 = """select intituleCompet,typeArme, intituleSexe,intituleCategorie, departement, idCompetition
+    requete2 = """select intituleCompet,typeArme, intituleSexe,intituleCategorie, departement, dateDebutCompetiton, idCompetition
                   from COMPETITION natural join LIEU natural join ARME natural join SEXE natural join CATEGORIE
                   where estFinie = False and idLieu ="""+ str(info[i][7]) +" and idCategorie ="+ str(info[i][8]) +" and idSexe = "+str(info[i][9]) +" and idArme = "+ str(info[i][10]) +" and idCompetition = "+str(info[i][0]) +";"
     cursor.execute(requete2) 
@@ -298,7 +297,7 @@ def concourtNonFinitInscritArbitre(licenceArbitre) :
   info = cursor.fetchall()
   res = []
   for i in range(len(info)):
-    requete2 = """select intituleCompet,typeArme, intituleSexe,intituleCategorie, departement, idCompetition
+    requete2 = """select intituleCompet,typeArme, intituleSexe,intituleCategorie, departement, dateDebutCompetiton, idCompetition
                   from COMPETITION natural join LIEU natural join ARME natural join SEXE natural join CATEGORIE
                   where estFinie = False and idLieu ="""+ str(info[i][7]) +" and idCategorie ="+ str(info[i][8]) +" and idSexe = "+str(info[i][9]) +" and idArme = "+ str(info[i][10]) +" and idCompetition = "+str(info[i][0]) +";"
     cursor.execute(requete2) 
@@ -347,7 +346,7 @@ def inscriptionOuverte() -> list:
   info = cursor.fetchall()
   res = []
   for i in range(len(info)):
-    requete2 = """select intituleCompet,typeArme, intituleSexe,intituleCategorie, departement, idCompetition
+    requete2 = """select intituleCompet,typeArme, intituleSexe,intituleCategorie, departement, dateDebutCompetiton, idCompetition
                   from COMPETITION natural join LIEU natural join ARME natural join SEXE natural join CATEGORIE
                   where datediff(dateDebutCompetiton ,CURDATE()) > 14 and estFinie = False and idLieu ="""+ str(info[i][6]) +" and idCategorie ="+ str(info[i][7]) +" and idSexe = "+str(info[i][8]) +" and idArme = "+ str(info[i][9]) +" and idCompetition = "+str(info[i][0]) +";"
     cursor.execute(requete2) 
@@ -515,7 +514,7 @@ def getCompetitionParOrga(numLicence):
   info = cursor.fetchall()
   res = []
   for i in range(len(info)):
-    requete2 = """select intituleCompet,typeArme, intituleSexe,intituleCategorie, departement, idCompetition
+    requete2 = """select intituleCompet,typeArme, intituleSexe,intituleCategorie, departement, dateDebutCompetiton, idCompetition
                  from COMPETITION natural join LIEU natural join ARME natural join SEXE natural join CATEGORIE
                 where  idLieu ="""+ str(info[i][7]) +" and idCategorie ="+ str(info[i][8]) +" and idSexe = "+str(info[i][9]) +" and idArme = "+ str(info[i][10]) +" and idCompetition = "+str(info[i][0]) +" order by dateDebutCompetiton DESC;"
     cursor.execute(requete2) 
@@ -575,6 +574,12 @@ def getNbPhase(idCompetition) :
   else :
     return nb[0][0]
 
+def getInfoCompet(idCompetition) :
+  # intituleCompet, armes, sexe, categorie
+  requete = "select intituleCompet, typeArme, intituleSexe, intituleCategorie from COMPETITION natural join LIEU natural join ARME natural join SEXE natural join CATEGORIE where idCompetition = " + str(idCompetition) + " ;"
+  cursor.execute(requete)
+  return cursor.fetchall()[0]
+
 def getNbTireur(idCompetition): 
   requete = "select * from COMPETITION natural join TIREUR_DANS_COMPETITIONS where idCompetition = " + str(idCompetition) + " ;"
   cursor.execute(requete)
@@ -590,8 +595,18 @@ def getInfoTireurs(idCompetition):
   cursor.execute(requete)
   return cursor.fetchall()
 
+def getNomTireurs(idCompetition):
+  requete = "select nomTireur, prenomTireur from COMPETITION natural join TIREUR_DANS_COMPETITIONS natural join TIREUR where idCompetition = " + str(idCompetition) + " order by classement DESC;"
+  cursor.execute(requete)
+  return cursor.fetchall()
+
 def getInfoArbitres(idCompetition): 
   requete = "select idCompetition, numeroLicenceArbitre from COMPETITION natural join ARBITRE_DANS_COMPETITIONS where idCompetition = " + str(idCompetition) + " ;"
+  cursor.execute(requete)
+  return cursor.fetchall()
+
+def getNomArbitre(idCompetition):
+  requete = "select nomArbitre, prenomArbitre from COMPETITION natural join ARBITRE_DANS_COMPETITIONS natural join ARBITRE where idCompetition = " + str(idCompetition) + " ;"
   cursor.execute(requete)
   return cursor.fetchall()
 
@@ -1452,7 +1467,7 @@ if __name__ == "__main__":
     # print(getNbArbitre(2))
     # print(getNbTireur(2))
 
-
+    # print(getNomArbitre(1))
     # # print(getNomPrenomMatchElimination(1)) # pour les nomETprenom
 
     # print(genererPhaseElimination(1,2)) # pour generer une phase et get liste avec licene

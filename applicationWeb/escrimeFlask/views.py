@@ -81,6 +81,16 @@ def options_competitions(nbLicense):
                            tournoisArchiver=getListIdCompetitionTournoisClosed(),
                            tournoisLancer=getListIdCompetitionTournoisLancer())
 
+@app.route('/infoCompetition/<nbLicense>&<nbCompet>')
+def infoCompetition(nbLicense,nbCompet):
+    return render_template('infoCompetition.html',
+                           title='Info_Competition',
+                           isOrganisateur=estOrganisateur(int(nbLicense)),
+                            nbLicense=int(nbLicense),
+                            participants=getNomTireurs(int(nbCompet)),
+                            nomCompet=getInfoCompet(int(nbCompet)),
+                            arbitres=getNomArbitre(int(nbCompet)))
+
 @app.route('/creation_competition/<nbLicense>')
 def creation_competition(nbLicense):
     return render_template('creation_competition.html',
@@ -121,7 +131,9 @@ def resultats(nbLicense,nbCompet):
                             scores=getListeToucheByListLicence(licence, int(getNbPhase(int(nbCompet))), int(nbCompet)),
                             lancer=lancer,
                             classements=classementFinale(int(nbCompet),getNbPhase(int(nbCompet))),
-                            joueur=False)
+                            joueur=False,
+                            nomCompet=getInfoCompet(int(nbCompet)),
+                            arbitres=getNomArbitre(int(nbCompet)))
         
         elif estParticipant(int(nbLicense), int(nbCompet)):
             return render_template('resultats.html',
@@ -137,7 +149,9 @@ def resultats(nbLicense,nbCompet):
                                 lancer=lancer,
                                 classements=classementFinale(int(nbCompet),getNbPhase(int(nbCompet))),
                                 classementPerso=monClassementAMoi(int(nbCompet), int(nbLicense),getNbPhase(int(nbCompet))),
-                                joueur=True)
+                                joueur=True,
+                                nomCompet=getInfoCompet(int(nbCompet)),
+                                arbitres=getNomArbitre(int(nbCompet)))
         else:
             return render_template('resultats.html',
                                 title='Résultats',
@@ -151,7 +165,9 @@ def resultats(nbLicense,nbCompet):
                                 scores=getListeToucheByListLicence(licence, int(getNbPhase(int(nbCompet))), int(nbCompet)),
                                 lancer=lancer,
                                 classements=classementFinale(int(nbCompet),getNbPhase(int(nbCompet))),
-                                joueur=False)
+                                joueur=False,
+                                nomCompet=getInfoCompet(int(nbCompet)),
+                                arbitres=getNomArbitre(int(nbCompet)))
     else:
         return render_template('resultats.html',
                             title='Résultats',
@@ -164,7 +180,9 @@ def resultats(nbLicense,nbCompet):
                             matchs=getNomPrenomMatchElimination(int(nbCompet)),
                             scores=getListeToucheByListLicence(licence, int(getNbPhase(int(nbCompet))), int(nbCompet)),
                             lancer=lancer,
-                            joueur=False)
+                            joueur=False,
+                            nomCompet=getInfoCompet(int(nbCompet)),
+                            arbitres=getNomArbitre(int(nbCompet)))
 
 ##Fonctions de vérification
 
@@ -173,7 +191,7 @@ def resultats(nbLicense,nbCompet):
 def verifInscription():
      if estDansBDNational(int(request.args.get("nbLicence"))):
         print(estDansBDNational(int(request.args.get("nbLicence"))))
-        if insertTireurDansCompetition(str(request.args.get("nom")), str(request.args.get("prenom")),  int(request.args.get("nbLicence")), str(request.args.get("naissance")), str(request.args.get("club")), int(request.args.get("compet")), str(request.args.get("role"))):
+        if insertTireurDansCompetition(int(request.args.get("nbLicence")), int(request.args.get("compet")), str(request.args.get("role"))):
             return render_template('inscription.html',
                             title='Inscription',
                             competitions=inscriptionOuverte(),
