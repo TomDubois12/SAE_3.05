@@ -133,7 +133,8 @@ def resultats(nbLicense,nbCompet):
                             classements=classementFinale(int(nbCompet),getNbPhase(int(nbCompet))),
                             joueur=False,
                             nomCompet=getInfoCompet(int(nbCompet)),
-                            arbitres=getNomArbitre(int(nbCompet)))
+                            arbitres=getNomArbitre(int(nbCompet)),
+                            phaseFinie=phasesFinie(int(nbCompet),int(getNbPhase(int(nbCompet)))))
         
         elif estParticipant(int(nbLicense), int(nbCompet)):
             return render_template('resultats.html',
@@ -151,7 +152,8 @@ def resultats(nbLicense,nbCompet):
                                 classementPerso=monClassementAMoi(int(nbCompet), int(nbLicense),getNbPhase(int(nbCompet))),
                                 joueur=True,
                                 nomCompet=getInfoCompet(int(nbCompet)),
-                                arbitres=getNomArbitre(int(nbCompet)))
+                                arbitres=getNomArbitre(int(nbCompet)),
+                                phaseFinie=phasesFinie(int(nbCompet),int(getNbPhase(int(nbCompet)))))
         else:
             return render_template('resultats.html',
                                 title='Résultats',
@@ -167,7 +169,8 @@ def resultats(nbLicense,nbCompet):
                                 classements=classementFinale(int(nbCompet),getNbPhase(int(nbCompet))),
                                 joueur=False,
                                 nomCompet=getInfoCompet(int(nbCompet)),
-                                arbitres=getNomArbitre(int(nbCompet)))
+                                arbitres=getNomArbitre(int(nbCompet)),
+                                phaseFinie=phasesFinie(int(nbCompet),int(getNbPhase(int(nbCompet)))))
     else:
         return render_template('resultats.html',
                             title='Résultats',
@@ -182,7 +185,8 @@ def resultats(nbLicense,nbCompet):
                             lancer=lancer,
                             joueur=False,
                             nomCompet=getInfoCompet(int(nbCompet)),
-                            arbitres=getNomArbitre(int(nbCompet)))
+                            arbitres=getNomArbitre(int(nbCompet)),
+                            phaseFinie=phasesFinie(int(nbCompet),int(getNbPhase(int(nbCompet)))))
 
 ##Fonctions de vérification
 
