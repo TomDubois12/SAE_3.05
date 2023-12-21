@@ -10,8 +10,8 @@ import mysql.connector
 #connexion au base de données
 db = mysql.connector.connect(
   host = "localhost",
-  user = "root",
-  password = "1234",
+  user = "koko",
+  password = "koko",
   database = "Escrime"
 )
 #Blabla2147
@@ -1019,12 +1019,13 @@ def getNomPrenomMatchElimination(idCompetition) :
     return [getListNomByLicence(huit),getListNomByLicence(quart),getListNomByLicence(demie),getListNomByLicence(finale),getListNomByLicence(gagnant)]
 
 def setToucherDonneTireur(licenceTireur1, licenceTireur2, toucheDTireur, idCompetition, nbPhase) :
+  print('\033[91m' + str(licenceTireur1) + " " + str(licenceTireur2) + '\033[0m')
   if int(nbPhase) == 1:
     idPoule = getIdPouleTireur(licenceTireur1, idCompetition)
     requete = "select licenceTireur1 from MATCHPOULE where licenceTireur1 = " + str(licenceTireur1) + " and licenceTireur2 = " + str(licenceTireur2) + " and idPoule = " + str(idPoule) + ";"
     cursor.execute(requete)
     l1 = cursor.fetchall()
-    print('\033[91m' + str(l1) + '\033[0m')
+    
     if l1 != [] :
       requete = "update MATCHPOULE set toucheDTireur1 = " + str(toucheDTireur) + " where licenceTireur1 = " + str(licenceTireur1) + " and licenceTireur2 = " + str(licenceTireur2) + " and idPoule = " + str(idPoule) + " and nbPhases = "+ str(nbPhase) +";"
     else:
@@ -1073,7 +1074,6 @@ def InfosPouleNumLicence(idCompetition, numLicenceTireur) :
         listeMatch.append((res[j][1],res[j][2],res[j][3]))
       else : 
         listeMatch.append((res[j][0],res[j][3],res[j][2]))
-    listeMatch.reverse()
     listeMatch.insert(listeNumLicencePoule.index(Lo),(Lo,-2,-2))
     nbTotalTouchesDonnees = 0
     nbTotalTouchesRecues = 0
@@ -1125,7 +1125,6 @@ def InfosPouleNumLicenceArbitre(idCompetition, numLicenceArbitre) :
           listeMatch.append((res[j][1],res[j][2],res[j][3]))
         else : 
           listeMatch.append((res[j][0],res[j][3],res[j][2]))
-      listeMatch.reverse()
       listeMatch.insert(listeNumLicence.index(Lo),(Lo,-2,-2))
       nbTotalTouchesDonnees = 0
       nbTotalTouchesRecues = 0
@@ -1182,7 +1181,6 @@ def InfosPouleSansLicence(idCompetition) :
           listeMatch.append((res[j][1],res[j][2],res[j][3]))
         else : 
           listeMatch.append((res[j][0],res[j][3],res[j][2]))
-      listeMatch.reverse()
       listeMatch.insert(listeNumLicence.index(Lo),(Lo,-2,-2))
       nbTotalTouchesDonnees = 0
       nbTotalTouchesRecues = 0
@@ -1411,44 +1409,44 @@ if __name__ == "__main__":
     # print(getProfil(151229))
     # print(InfosPouleNumLicenceArbitre(1,51032))
 
-    # insertTireurDansBD(45243)
-    # insertTireurDansBD(20840)
-    # insertTireurDansBD(53089)
-    # insertTireurDansBD(40845)
-    # insertTireurDansBD(37189)
-    # insertTireurDansBD(53998)
-    # insertTireurDansBD(54797)
-    # insertTireurDansBD(5387)
-    # insertTireurDansBD(35524)
-    # insertTireurDansBD(20981)
-    # insertTireurDansBD(2889)
-    # insertTireurDansBD(7006)
-    # insertTireurDansBD(119662)
-    # insertTireurDansBD(41337)
-    # insertTireurDansBD(37332)
-    # insertTireurDansBD(5529)
-    # insertTireurDansBD(72333)
-    # insertTireurDansBD(658)
-    # insertTireurDansBD(34193)
+    insertTireurDansBD(45243)
+    insertTireurDansBD(20840)
+    insertTireurDansBD(53089)
+    insertTireurDansBD(40845)
+    insertTireurDansBD(37189)
+    insertTireurDansBD(53998)
+    insertTireurDansBD(54797)
+    insertTireurDansBD(5387)
+    insertTireurDansBD(35524)
+    insertTireurDansBD(20981)
+    insertTireurDansBD(2889)
+    insertTireurDansBD(7006)
+    insertTireurDansBD(119662)
+    insertTireurDansBD(41337)
+    insertTireurDansBD(37332)
+    insertTireurDansBD(5529)
+    insertTireurDansBD(72333)
+    insertTireurDansBD(658)
+    insertTireurDansBD(34193)
 
-    # test = [45243,20840,53089,40845,37189,53998,54797,5387,35524,20981,2889,7006,119662,41337,37332,5529,72333,658,34193]
+    test = [45243,20840,53089,40845,37189,53998,54797,5387,35524,20981,2889,7006,119662,41337,37332,5529,72333,658,34193]
 
-    # for id in test : 
-    #   requete5 = "insert into TIREUR_DANS_COMPETITIONS (numeroLicenceTireur,idCompetition) values("+str(id)+", 1  );"
-    #   cursor.execute(requete5)
-    #   db.commit()
+    for id in test : 
+      requete5 = "insert into TIREUR_DANS_COMPETITIONS (numeroLicenceTireur,idCompetition) values("+str(id)+", 1  );"
+      cursor.execute(requete5)
+      db.commit()
 
-    # insertArbitreDansBD(51032)
-    # insertArbitreDansBD(51061)
+    insertArbitreDansBD(51032)
+    insertArbitreDansBD(51061)
 
-    # test1 = [51032,51061]
-    # for id in test1 : 
-    #   requete5 = "insert into ARBITRE_DANS_COMPETITIONS (numeroLicenceArbitre,idCompetition) values("+str(id)+", 1  );"
-    #   cursor.execute(requete5)
-    #   db.commit()
+    test1 = [51032,51061]
+    for id in test1 : 
+      requete5 = "insert into ARBITRE_DANS_COMPETITIONS (numeroLicenceArbitre,idCompetition) values("+str(id)+", 1  );"
+      cursor.execute(requete5)
+      db.commit()
 
-    # print(lancerCompetition(1)) # Pour creer une competition pour les tests
-    # insOrgaDansBD()
+    print(lancerCompetition(1)) # Pour creer une competition pour les tests
+    insOrgaDansBD()
     # ###############
     
 
