@@ -10,8 +10,8 @@ import mysql.connector
 #connexion au base de données
 db = mysql.connector.connect(
   host = "localhost",
-  user = "koko",
-  password = "koko",
+  user = "nathan",
+  password = "nathan",
   database = "Escrime"
 )
 #Blabla2147
@@ -495,17 +495,17 @@ def getStatistique(numLicence):
       infoFichier = classementFile("./escrimeFlask/csvEscrimeur/" + f)
       for ligne in infoFichier :
         if int(ligne[3]) == numLicence :
-          stats.append(("Épée",ligne[7],ligne[8]))
+          stats.append(("Épée",ligne[7],ligne[8],f.split("_")[-1][0:-4]))
     if "Sabre" in f  :
       infoFichier = classementFile("./escrimeFlask/csvEscrimeur/" + f)
       for ligne in infoFichier :
         if int(ligne[3]) == numLicence :
-          stats.append(("Sabre",ligne[7],ligne[8]))
+          stats.append(("Sabre",ligne[7],ligne[8],f.split("_")[-1][0:-4]))
     if "Fleuret" in f  :
       infoFichier = classementFile("./escrimeFlask/csvEscrimeur/" + f)
       for ligne in infoFichier :
         if int(ligne[3]) == numLicence :
-          stats.append(("Fleuret",ligne[7],ligne[8]))
+          stats.append(("Fleuret",ligne[7],ligne[8],f.split("_")[-1][0:-4]))
   return stats
 
 def getCompetitionParOrga(numLicence): 
@@ -1019,12 +1019,14 @@ def getNomPrenomMatchElimination(idCompetition) :
     return [getListNomByLicence(huit),getListNomByLicence(quart),getListNomByLicence(demie),getListNomByLicence(finale),getListNomByLicence(gagnant)]
 
 def setToucherDonneTireur(licenceTireur1, licenceTireur2, toucheDTireur, idCompetition, nbPhase) :
+  print('\033[91m' +str(licenceTireur1) + "  " +   str(licenceTireur2) + '\033[0m')
   if int(nbPhase) == 1:
     idPoule = getIdPouleTireur(licenceTireur1, idCompetition)
     requete = "select licenceTireur1 from MATCHPOULE where licenceTireur1 = " + str(licenceTireur1) + " and licenceTireur2 = " + str(licenceTireur2) + " and idPoule = " + str(idPoule) + ";"
     cursor.execute(requete)
     l1 = cursor.fetchall()
-    print('\033[91m' + str(l1) + '\033[0m')
+
+
     if l1 != [] :
       requete = "update MATCHPOULE set toucheDTireur1 = " + str(toucheDTireur) + " where licenceTireur1 = " + str(licenceTireur1) + " and licenceTireur2 = " + str(licenceTireur2) + " and idPoule = " + str(idPoule) + " and nbPhases = "+ str(nbPhase) +";"
     else:
@@ -1366,8 +1368,8 @@ def lancerCompetition(idCompetition):
   for i in range(nbPoule - 1 if choixTPP == 5 and resteT > 0 else nbPoule):
     listePoules.append([])
 
-  print(choixTPP, nbPoule, resteT, nbTireur,listePoules)
-  print(infosTireur)
+  # print(choixTPP, nbPoule, resteT, nbTireur,listePoules)
+  # print(infosTireur)
   createPoule(idCompetition,len(listePoules))
   insTireurDansPoule(infosTireur, idCompetition)
   insArbitreDansPoule(infosArbitre, idCompetition)
@@ -1455,7 +1457,7 @@ if __name__ == "__main__":
     
     # print(genererPhaseEliminations(1,2))
 
-    print(phasesFinie(1,2))
+    #print(phasesFinie(1,2))
 
     # print(genererPhaseEliminations(1,3))
     #print(genererPhaseEliminations(1,5))
@@ -1507,7 +1509,53 @@ if __name__ == "__main__":
     #print(getNomPrenomMatchElimination(1))
     # print(genererPhase(1,3))
     # print((getIdMatchElim(5387,1)))
-    # print(setToucherDonneTireur(40845, 20981, -1, 1, 2))
+    # print(setToucherDonneTireur(40845, 20981, -1, 1, 2))<
     # print(getListeGagnantMatchElimination(2, 1))
-    
+
+
+    #################################
+    #########Jeu de Données##########
+    #################################
+    insertTireurDansBD(45243)
+    insertTireurDansBD(20840)
+    insertTireurDansBD(53089)
+    insertTireurDansBD(40845)
+    insertTireurDansBD(37189)
+    insertTireurDansBD(53998)
+    insertTireurDansBD(54797)
+    insertTireurDansBD(5387)
+    insertTireurDansBD(35524)
+    insertTireurDansBD(20981)
+    # insertTireurDansBD(2889)
+    # insertTireurDansBD(7006)
+    # insertTireurDansBD(119662)
+    # insertTireurDansBD(41337)
+    # insertTireurDansBD(37332)
+    # insertTireurDansBD(5529)
+    # insertTireurDansBD(72333)
+    # insertTireurDansBD(658)
+    # insertTireurDansBD(34193)
+
+    #,5529,72333,658,34193 ,2889,7006,119662,41337,37332
+    test = [45243,20840,53089,40845,37189,53998,54797,5387,35524,20981]
+
+    for id in test : 
+      requete5 = "insert into TIREUR_DANS_COMPETITIONS (numeroLicenceTireur,idCompetition) values("+str(id)+", 1  );"
+      cursor.execute(requete5)
+      db.commit()
+
+    insertArbitreDansBD(51032)
+    insertArbitreDansBD(51061)
+
+
+    test1 = [51032,51061]
+    for id in test1 : 
+      requete5 = "insert into ARBITRE_DANS_COMPETITIONS (numeroLicenceArbitre,idCompetition) values("+str(id)+", 1  );"
+      cursor.execute(requete5)
+      db.commit()
+
+    print(lancerCompetition(1)) # Pour creer une competition pour les tests
+    # insOrgaDansBD() 
+
+
     pass
