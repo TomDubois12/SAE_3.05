@@ -6,6 +6,8 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Average" rel="stylesheet">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/infoCompetition.css') }}">
+
 {% endblock %}
 
 {% block header %}
@@ -13,16 +15,20 @@
 {% endblock %}
 
 {% block main %}
-<h2>{{participants|length}} Tireurs :</h2>
-<ul>
-    {% for participant in participants %}
-        <li>{{participant[0]}} {{participant[1]}}</li>
-    {% endfor %}
-</ul>
-<h2>{{arbitres|length}} Arbitres :</h2>
-<ul>
-    {% for arbitre in arbitres %}
-        <li>{{arbitre[0]}} {{arbitre[1]}}</li>
-    {% endfor %}
-</ul>
+<div class="wrapper_participant">
+    <h2>{{participants|length}} Tireurs</h2>
+    <ul class="listeParticipant">
+        {% for participant in participants %}
+            <li><b>{{participant[0]}}</b> {{participant[1]}}</li>
+        {% endfor %}
+    </ul>
+</div>
+<div class="wrapper_arbitre">
+    <h2>{{arbitres|length}} Arbitres</h2>
+    <ul class="listeArbitre">
+        {% for arbitre in arbitres %}
+            <li><b>{{arbitre[0]}}</b> {{arbitre[1]}}</li>
+        {% endfor %}
+    </ul>
+</div>
 {% endblock %}
