@@ -15,6 +15,16 @@
 {% endblock %}
 
 {% block main %}
+
+<section class="sectionnomCompet">  
+    <h3 class="titreCompet">Compétition : </h3> 
+    <p class="nomCompet">
+    {{nomCompet[0]}} 
+    {{nomCompet[1]}} {{nomCompet[2]}}
+    {{nomCompet[3]}}
+    </p>
+</section>
+
 <div class="wrapper_participant">
     <h2>{{participants|length}} Tireurs</h2>
     <ul class="listeParticipant">
