@@ -863,15 +863,13 @@ def phasesFinie(idCompetition, nbPhases ) :
     cursor.execute(requete)
     infos = cursor.fetchall()
     for ligne in infos :
-      if ligne[4] < 5 and ligne[6] < 5 : return False 
+      if ligne[3] < 5 and ligne[5] < 5 : return False 
   else :
-    match = affichageGenererPhaseEliminations(idCompetition, nbPhases)[nbPhases + 1]
-    
-    for licence in match : 
-      requete = "select * from MATCHELIMINATION where nbPhases = " + str(nbPhases) + " and idCompetition = " + str(idCompetition) + " and (licenceTireur1 = "+str(licence)+" OR licenceTireur2 = "+str(licence)+") ;"
-      cursor.execute(requete)
-      ligne = cursor.fetchall()
-      if ligne[4] < 5 and ligne[6] < 5 : return False 
+    requete = "select * from MATCHELIMINATION where nbPhases = " + str(nbPhases) + " and idCompetition = " + str(idCompetition) + " ;"
+    cursor.execute(requete)
+    infos = cursor.fetchall()
+    for ligne in infos :
+      if ligne[3] < 5 and ligne[5] < 5 : return False 
   return res 
 
 
@@ -1457,7 +1455,7 @@ if __name__ == "__main__":
     
     # print(genererPhaseEliminations(1,2))
 
-    print(phasesFinie(1,1))
+    print(phasesFinie(1,2))
 
     # print(genererPhaseEliminations(1,3))
     #print(genererPhaseEliminations(1,5))
