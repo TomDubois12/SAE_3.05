@@ -32,6 +32,7 @@ main{
     background-color: #edededac;
     border-radius: 0.5em;
     box-shadow: 4px 4px 0.5em rgb(106, 106, 106);
+    margin-bottom: 5vh;
 }
 
 .wrapper_arbitre{
@@ -43,7 +44,8 @@ main{
 
     border-radius: 0.5em;
 
-    box-shadow: 4px 4px 0.5em rgb(106, 106, 106)
+    box-shadow: 4px 4px 0.5em rgb(106, 106, 106);
+    margin-bottom: 5vh;
 }
 
 .wrapper_participant > h2, .wrapper_arbitre > h2{
