@@ -38,6 +38,27 @@ iframe{
 }
 
 
+/* nom compet et nom arbitre */
+
+.nomCompet{
+  margin-left: 5em;
+  margin-bottom: 3em;
+  font-weight: bold;
+}
+
+.titreArbitres, .titreCompet{
+  padding-bottom: 0;
+  margin-left: 4vh;
+  margin-bottom: 1vw;
+  font-size: 3vh;
+  font-family: 'Average', sans-serif;
+}
+
+.nomsArbitres{
+  margin-left: 5em;
+}
+
+
 /* petit_titre */
 .petite_epee {
     position: relative;
@@ -279,3 +300,10 @@ table {
     font-family: 'Average', sans-serif;
   }
   
+
+
+  /* tableau classement */
+
+  .titre-tableau{
+    background-color: #CFE2F3;
+  }

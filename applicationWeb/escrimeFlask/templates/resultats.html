@@ -14,13 +14,18 @@
 
 {% block main %}
 {% if lancer %}
-    
+<section class="sectionnomCompet">  
+<h3 class="titreCompet">Compétition : </h3> 
+<p class="nomCompet">
 {{nomCompet[0]}} 
 {{nomCompet[1]}} {{nomCompet[2]}}
 {{nomCompet[3]}}
+</p>
+</section>
+<h3 class="titreArbitres">Arbitre(s) de la compétition : </h3>
 <ul>
     {% for arbitre in arbitres %}
-        <li>{{arbitre[0]}} {{arbitre[1]}}</li>
+        <li class="nomsArbitres">{{arbitre[0]}} {{arbitre[1]}}</li>
     {% endfor %}
 </ul>
     <main>
@@ -314,8 +319,8 @@
                         <td>POINTS</td>
                     </tr>
                     {% if classements|length > 0 %}
-                        <tr>
-                            <td>{{classementPerso[0]}}</td>
+                        <tr class="titre-tableau">
+                            <td class="titre-tableau">{{classementPerso[0]}}</td>
                             <td>{{classementPerso[1]}}</td>
                             <td>{{classementPerso[2]}}</td>
                             <td>{{classementPerso[3]}}</td>
@@ -341,7 +346,7 @@
                 {% if classements|length > 0 %}
                     {% for classement in classements %}
                     <tr>
-                        <td>{{classement[0]}}</td>
+                        <td class="titre-tableau">{{classement[0]}}</td>
                         <td>{{classement[1]}}</td>
                         <td>{{classement[2]}}</td>
                         <td>{{classement[3]}}</td>
