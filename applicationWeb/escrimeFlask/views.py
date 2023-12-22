@@ -239,6 +239,35 @@ def verifConnexionEscrimeur():
                            affichageConcours=False,
                            popup2=True,
                            nbLicense=request.args.get("nbLicense"))
+    
+@app.route('/consulterArchive')
+def consulterArchive():
+    nbLicense = request.args.get("nbLicense")
+    nbCompet = request.args.get("nbCompet")
+    ancienNbCompet = request.args.get("ancienNbCompet")
+    listLicense=affichageGenererPhaseEliminations(int(nbCompet), getNbPhase(int(nbCompet)))
+    licence=[]
+    licence.append(listLicense[3])
+    licence.append(listLicense[4])
+    licence.append(listLicense[5])
+    licence.append(listLicense[6])
+    return render_template('resultats.html',
+                                title='Résultats',
+                                isOrganisateur=estOrganisateur(int(nbLicense)),
+                                nbCompet=int(nbCompet),
+                                nbLicense=int(nbLicense),
+                                participants=InfosPouleSansLicence(int(nbCompet)),
+                                isArbitre=False,
+                                nbPhase=getNbPhase(int(nbCompet)),
+                                matchs=getNomPrenomMatchElimination(int(nbCompet)),
+                                scores=getListeToucheByListLicence(licence, int(getNbPhase(int(nbCompet))), int(nbCompet)),
+                                lancer=True,
+                                classements=classementFinale(int(nbCompet),getNbPhase(int(nbCompet))),
+                                joueur=False,
+                                nomCompet=getInfoCompet(int(nbCompet)),
+                                arbitres=getNomArbitre(int(nbCompet)),
+                                phaseFinie=phasesFinie(int(nbCompet),int(getNbPhase(int(nbCompet)))),
+                                ancienNbCompet=ancienNbCompet)
 
 @app.route('/traitement')
 def traitement():
