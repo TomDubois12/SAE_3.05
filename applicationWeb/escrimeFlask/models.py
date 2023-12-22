@@ -739,7 +739,7 @@ def trierCeClass(classement,idComp,nbPhase) :
 def classementFinale(idCompetition,nbPhase) :
   classement = []
   liste16Meilleur = getClassementApresPoule(idCompetition)[:16]
-  requete = "select * from MATCHELIMINATION where idCompetition = 1 order by nbPhases DESC"
+  requete = "select * from MATCHELIMINATION where idCompetition = "+ str(idCompetition)+ " order by nbPhases DESC"
   cursor.execute(requete)
   l1 = cursor.fetchall()
   for i in range(len(l1)) :
@@ -765,7 +765,7 @@ def classementFinale(idCompetition,nbPhase) :
     elif lt2 in liste16Meilleur:
         classement.append(lt2)
         liste16Meilleur.remove(lt2)
-
+  
   classement = trierCeClass(classement,idCompetition,nbPhase)
   classement += getClassementApresPoule(idCompetition)[16:]
   ind = 1 
@@ -1453,7 +1453,7 @@ if __name__ == "__main__":
     # print(lancerCompetition(1)) # Pour creer une competition pour les tests
     # insOrgaDansBD()
     # ###############
-    print(trierCeClass([54797, 20840, 53089, 20981, 45243, 37189, 40845, 53998, 35524, 5387, 0, 0, 0, 0, 0, 0],1,5))
+    # print(trierCeClass([5387, 0, 37189, 53998, 45243, 20840, 20981, 0, 40845, 0, 35524, 53089, 37332, 2889, 54797, 0],1,5))
 
     # print(genererPhaseEliminations(1,2))
 
@@ -1556,6 +1556,45 @@ if __name__ == "__main__":
 
     # print(lancerCompetition(1)) # Pour creer une competition pour les tests
     # insOrgaDansBD() 
+    #########Jeu de Données##########
+    #################################
+    # insertTireurDansBD(45243)
+    # insertTireurDansBD(20840)
+    # insertTireurDansBD(53089)
+    # insertTireurDansBD(40845)
+    # insertTireurDansBD(37189)
+    # insertTireurDansBD(53998)
+    # insertTireurDansBD(54797)
+    # insertTireurDansBD(5387)
+    # insertTireurDansBD(35524)
+    # insertTireurDansBD(20981)
+    # insertTireurDansBD(2889)
+    # # insertTireurDansBD(7006)
+    # # insertTireurDansBD(119662)
+    # # insertTireurDansBD(41337)
+    # # insertTireurDansBD(37332)
+    # # 37332
 
+    # test = [45243,20840,53089,40845,37189,53998,54797,5387,35524,20981,2889]
 
+    # for id in test : 
+    #   requete5 = "insert into TIREUR_DANS_COMPETITIONS (numeroLicenceTireur,idCompetition) values("+str(id)+", 16  );"
+    #   cursor.execute(requete5)
+    #   db.commit()
+
+    # # insertArbitreDansBD(51032)
+    # # insertArbitreDansBD(51061)
+
+    # # 51061
+
+    # # test1 = [51032,51061]
+    # # for id in test1 : 
+    # #   requete5 = "insert into ARBITRE_DANS_COMPETITIONS (numeroLicenceArbitre,idCompetition) values("+str(id)+", 17  );"
+    # #   cursor.execute(requete5)
+    # #   db.commit()
+
+    # # print(lancerCompetition(16)) # Pour creer une competition pour les tests
+    # insOrgaDansBD() 
+    print(classementFinale(16,5))
+    #print(trierCeClass([45243,20840,53089,40845,37189,53998,54797,5387,35524,20981,2889,37332],16,5))
     pass
