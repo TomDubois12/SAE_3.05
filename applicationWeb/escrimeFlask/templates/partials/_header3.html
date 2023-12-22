@@ -6,6 +6,11 @@
 {% else %}
     <a href={{url_for('accueil', nbLicense=nbLicense, nbCompet=nbCompet)}}><img src="../../static/images/LogoEscrime.png" alt="Logo de l'escrime"></a>
 {% endif %}
+
+{% if ancienNbCompet %}
+    {% set nbCompet = ancienNbCompet %}
+{% endif %}
+
 <nav>
     <input type="checkbox" id="menu-toggle">
     <label for="menu-toggle" class="menu-icon">&#9776;</label>
