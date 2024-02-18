@@ -1,5 +1,5 @@
 # SAE_3.05
-Projet SAE_3.05 : Conception d'une appplication de gestion de commpétition d'escrime
+Projet SAE_3.05 : Conception d'une appplication de gestion de compétition d'escrime
 
 ## Membres du groupes
 - **DUBOIS Tom** (Responsables du groupe)
