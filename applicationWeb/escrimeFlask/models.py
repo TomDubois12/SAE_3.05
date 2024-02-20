@@ -716,29 +716,31 @@ def trierCeClass(classement,idComp,nbPhase) :
     for i in range(len(classement),16): classement.append(0)
   ran = [[2,3,4],[4,7,3],[8,15,2]]
 
-  if nbPhase==6:
+  print(classement)
+  if nbPhase==5:
     classementFinit = [classement[0], classement[1]]
     listeT = []
     for ind in ran :
-      print(classementFinit)
+      print(classementFinit, ind)
       listeT2 = []
       for i in range(0,ind[1] - ind[0] +1) :
         listeT.append(classement[ind[0] + i])
+      print(listeT,nbPhase)
       for licence in listeT : 
-        print(listeT)
         requete = "select licenceTireur1, toucheDTireur1, licenceTireur2, toucheDTireur2 from MATCHELIMINATION where idCompetition = "+str(idComp)+" and nbPhases = "+str(ind[2])+" and (licenceTireur1 = "+str(licence)+" OR licenceTireur2 = "+str(licence)+") ;"
         cursor.execute(requete)
         l2 = cursor.fetchall()
-        lt1 = l2[0][0]
-        lt2 = l2[0][2]
-        td1 = l2[0][1]
-        td2 = l2[0][3]
-        if lt1 == licence  and licence != 0 : 
-          listeT2.append((lt1,td1))
-        elif lt2 == licence and licence != 0 : 
-          listeT2.append((lt2,td2))
-        else :
-          listeT2.append((0,-2))
+        if len(l2) == 1: 
+          lt1 = l2[0][0]
+          lt2 = l2[0][2]
+          td1 = l2[0][1]
+          td2 = l2[0][3]
+          if lt1 == licence  and licence != 0 : 
+            listeT2.append((lt1,td1))
+          elif lt2 == licence and licence != 0 : 
+            listeT2.append((lt2,td2))
+          else :
+            listeT2.append((0,-2))
       listeT2 = sorted(listeT2, key=lambda touche: touche[1])
       listeT2 = listeT2[::-1]
       for elem in listeT2 :
@@ -893,7 +895,7 @@ def phasesFinie(idCompetition, nbPhases ) :
     infos = cursor.fetchall()
     for ligne in infos :
       print(ligne)
-      if ligne[3] < 5 and ligne[5] < 5 : return False 
+      if ligne[3] < 15 and ligne[5] < 15 : return False 
   return res 
 
 
@@ -1338,7 +1340,6 @@ def insArbitreDansPoule(infosArbitre, idCompetition) :
 
 def genererMatchPouleIdCompetition(idCompetition) : 
   listeIdPoule = getListeidPouleCompetition(idCompetition)
-  print(listeIdPoule)
   for idPoule in listeIdPoule : 
     
     requete = "select distinct numeroLicenceTireur from COMPETITION natural join TIREUR_DANS_POULE where idCompetition = "+ str(idCompetition) +" and idPoule = " + str(idPoule) + ";"
@@ -1628,6 +1629,6 @@ if __name__ == "__main__":
 
     #print(getNomPrenomMatchElimination(16))
     #print(getListeToucheByListLicence(affichageGenererPhaseEliminations(16, getNbPhase(16)), getNbPhase(16), 16))
-      
-    print(getNbParticipent(16))
+    print(trierCeClass(getClassementPhase(16),16,5))
+
     pass
