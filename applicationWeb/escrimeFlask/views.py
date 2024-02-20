@@ -119,6 +119,17 @@ def creation_competition(nbLicense):
 
 @app.route('/resultats/<nbLicense>&<nbCompet>')
 def resultats(nbLicense,nbCompet):
+    nbPartipant = getNbParticipant(int(nbCompet))
+    nbTotalPhase = nbPartipant
+    
+    trouve = False
+    i=0
+    while not trouve:
+        if nbPartipant <= 2**i:
+            nbTotalPhase = i
+            trouve = True
+        i+=1
+
     listArbitres= getNumeroLicenceArbitres(int(nbCompet))
     listLicense=affichageGenererPhaseEliminations(int(nbCompet), getNbPhase(int(nbCompet)))
     licence=[]
@@ -152,7 +163,8 @@ def resultats(nbLicense,nbCompet):
                             joueur=False,
                             nomCompet=getInfoCompet(int(nbCompet)),
                             arbitres=getNomArbitre(int(nbCompet)),
-                            phaseFinie=phasesFinie(int(nbCompet),int(getNbPhase(int(nbCompet)))))
+                            phaseFinie=phasesFinie(int(nbCompet),int(getNbPhase(int(nbCompet)))),
+                            nbTotalPhase=nbTotalPhase)
         
         elif estParticipant(int(nbLicense), int(nbCompet)):
             return render_template('resultats.html',
@@ -171,7 +183,8 @@ def resultats(nbLicense,nbCompet):
                                 joueur=True,
                                 nomCompet=getInfoCompet(int(nbCompet)),
                                 arbitres=getNomArbitre(int(nbCompet)),
-                                phaseFinie=phasesFinie(int(nbCompet),int(getNbPhase(int(nbCompet)))))
+                                phaseFinie=phasesFinie(int(nbCompet),int(getNbPhase(int(nbCompet)))),
+                                nbTotalPhase=nbTotalPhase)
         else:
             return render_template('resultats.html',
                                 title='Résultats',
@@ -188,7 +201,8 @@ def resultats(nbLicense,nbCompet):
                                 joueur=False,
                                 nomCompet=getInfoCompet(int(nbCompet)),
                                 arbitres=getNomArbitre(int(nbCompet)),
-                                phaseFinie=phasesFinie(int(nbCompet),int(getNbPhase(int(nbCompet)))))
+                                phaseFinie=phasesFinie(int(nbCompet),int(getNbPhase(int(nbCompet)))),
+                                nbTotalPhase=nbTotalPhase)
     else:
         return render_template('resultats.html',
                             title='Résultats',
@@ -204,7 +218,8 @@ def resultats(nbLicense,nbCompet):
                             joueur=False,
                             nomCompet=getInfoCompet(int(nbCompet)),
                             arbitres=getNomArbitre(int(nbCompet)),
-                            phaseFinie=phasesFinie(int(nbCompet),int(getNbPhase(int(nbCompet)))))
+                            phaseFinie=phasesFinie(int(nbCompet),int(getNbPhase(int(nbCompet)))),
+                            nbTotalPhase=nbTotalPhase)
 
 @app.route('/resultats_equipe/<nbLicense>&<nbCompet>')
 def resultats_equipe(nbLicense,nbCompet):
