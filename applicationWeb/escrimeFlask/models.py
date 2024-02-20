@@ -708,6 +708,7 @@ def getClassementPhase(idCompetition):
 def trierCeClass(classement,idComp,nbPhase) : 
   if len(classement) < 16 : 
     for i in range(len(classement),16): classement.append(0)
+  print(classement)
   ran = [[2,3,4],[4,7,3],[8,15,2]]
   if nbPhase==5:
     classementFinit = [classement[0], classement[1]]
@@ -791,11 +792,18 @@ def getListeGagnantMatchElimination(nbPhase, idCompetition) :
   cursor.execute(requete)
   l1 = cursor.fetchall()
   listeTrie = []
-  for elem in l1 : 
-    if elem[1] == 5 : 
-      listeTrie.append(elem[0]) 
-    elif elem[3] == 5 :
-      listeTrie.append(elem[2])
+  if nbPhase == 1 : 
+    for elem in l1 : 
+      if elem[1] == 5 : 
+        listeTrie.append(elem[0]) 
+      elif elem[3] == 5 :
+        listeTrie.append(elem[2])
+  else : 
+    for elem in l1 : 
+      if elem[1] == 15 : 
+        listeTrie.append(elem[0]) 
+      elif elem[3] == 15 :
+        listeTrie.append(elem[2])
 
   return listeTrie
 
@@ -869,12 +877,14 @@ def phasesFinie(idCompetition, nbPhases ) :
     cursor.execute(requete)
     infos = cursor.fetchall()
     for ligne in infos :
+      print(ligne)
       if ligne[4] < 5 and ligne[6] < 5 : return False 
   else :
     requete = "select * from MATCHELIMINATION where nbPhases = " + str(nbPhases) + " and idCompetition = " + str(idCompetition) + " ;"
     cursor.execute(requete)
     infos = cursor.fetchall()
     for ligne in infos :
+      print(ligne)
       if ligne[3] < 5 and ligne[5] < 5 : return False 
   return res 
 
@@ -884,12 +894,12 @@ def maFonctionTropBelle(nbPhase, idCompetition,listeLicMatchACreer):
   for k in range(int(len(listeLicMatchACreer)/2)) : 
     if listeLicMatchACreer[k*2] == 0 :
       nomMatch = "Match élimination: " + str(getNomByLicence(0)[0])+ "-" + str(getNomByLicence(listeLicMatchACreer[k*2+1])[0])
-      req = "insert into MATCHELIMINATION(nomMatchElimination,licenceTireur1,licenceTireur2,nbPhases,idCompetition,toucheDTireur1,toucheDTireur2) value ('" + str(nomMatch) +"' , " +str(0)+ "," + str(listeLicMatchACreer[k*2+1])+" , "+ str(nbPhase)+" , " +str(idCompetition) +  ",0,5);"
+      req = "insert into MATCHELIMINATION(nomMatchElimination,licenceTireur1,licenceTireur2,nbPhases,idCompetition,toucheDTireur1,toucheDTireur2) value ('" + str(nomMatch) +"' , " +str(0)+ "," + str(listeLicMatchACreer[k*2+1])+" , "+ str(nbPhase)+" , " +str(idCompetition) +  ",0,15);"
       cursor.execute(req)
       db.commit()
     elif listeLicMatchACreer[k*2+1] == 0 : 
       nomMatch = "Match élimination: " + str(getNomByLicence(listeLicMatchACreer[k*2])[0])+ "-" + str(getNomByLicence(0)[0])
-      req = "insert into MATCHELIMINATION(nomMatchElimination,licenceTireur1,licenceTireur2,nbPhases,idCompetition,toucheDTireur1,toucheDTireur2) value ('" + str(nomMatch) +"' , " +str(listeLicMatchACreer[k*2])+ "," + str(0)+" , "+ str(nbPhase)+" , " +str(idCompetition) +  ",5,0);"
+      req = "insert into MATCHELIMINATION(nomMatchElimination,licenceTireur1,licenceTireur2,nbPhases,idCompetition,toucheDTireur1,toucheDTireur2) value ('" + str(nomMatch) +"' , " +str(listeLicMatchACreer[k*2])+ "," + str(0)+" , "+ str(nbPhase)+" , " +str(idCompetition) +  ",15,0);"
       cursor.execute(req)
       db.commit()
     else :
@@ -1562,33 +1572,33 @@ if __name__ == "__main__":
     #########Jeu de Données##########
     #################################
 
-    insOrgaDansBD() 
+    #insOrgaDansBD() 
     
     ##Cree compete
 
-    # insertTireurDansBD(45243)
-    # insertTireurDansBD(20840)
-    # insertTireurDansBD(53089)
-    # insertTireurDansBD(40845)
-    # insertTireurDansBD(37189)
-    # insertTireurDansBD(53998)
-    # insertTireurDansBD(54797)
-    # insertTireurDansBD(5387)
-    # insertTireurDansBD(35524)
-    # insertTireurDansBD(20981)
-    # insertTireurDansBD(2889)
-    # # # insertTireurDansBD(7006)
-    # # # insertTireurDansBD(119662)
-    # # # insertTireurDansBD(41337)
-    # # # insertTireurDansBD(37332)
-    # # # 37332
+    insertTireurDansBD(45243)
+    insertTireurDansBD(20840)
+    insertTireurDansBD(53089)
+    insertTireurDansBD(40845)
+    insertTireurDansBD(37189)
+    insertTireurDansBD(53998)
+    insertTireurDansBD(54797)
+    insertTireurDansBD(5387)
+    insertTireurDansBD(35524)
+    insertTireurDansBD(20981)
+    insertTireurDansBD(2889)
+    # # insertTireurDansBD(7006)
+    # # insertTireurDansBD(119662)
+    # # insertTireurDansBD(41337)
+    # # insertTireurDansBD(37332)
+    # # 37332
 
-    # test = [45243,20840,53089,40845,37189,53998,54797,5387,35524,20981,2889]
+    test = [45243,20840,53089,40845,37189,53998,54797,5387,35524,20981,2889]
 
-    # for id in test : 
-    #   requete5 = "insert into TIREUR_DANS_COMPETITIONS (numeroLicenceTireur,idCompetition) values("+str(id)+", 16  );"
-    #   cursor.execute(requete5)
-    #   db.commit()
+    for id in test : 
+      requete5 = "insert into TIREUR_DANS_COMPETITIONS (numeroLicenceTireur,idCompetition) values("+str(id)+", 16  );"
+      cursor.execute(requete5)
+      db.commit()
 
     # insertArbitreDansBD(51032)
     # insertArbitreDansBD(51061)
@@ -1606,4 +1616,8 @@ if __name__ == "__main__":
 
     # print(classementFinale(16,5))
     #print(trierCeClass([45243,20840,53089,40845,37189,53998,54797,5387,35524,20981,2889,37332],16,5))
+
+
+    #print(getNomPrenomMatchElimination(16))
+    #print(getListeToucheByListLicence(affichageGenererPhaseEliminations(16, getNbPhase(16)), getNbPhase(16), 16))
     pass

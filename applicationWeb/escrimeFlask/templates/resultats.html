@@ -381,7 +381,8 @@
             var numericValue = parseFloat(value);
 
             // Vérifier si la valeur est un nombre compris entre 0 et 5
-            if (numericValue >= 0 && numericValue <= 5) {
+            if (nbPhase == 1){
+                if (numericValue >= 0 && numericValue <= 5) {
                 // Utilisez AJAX pour envoyer la valeur à la fonction Flask
                 var xhr = new XMLHttpRequest();
                 xhr.open("POST", "/update_data", true);
@@ -406,13 +407,47 @@
                 location.reload();
 
             }
+            }else {
+                if (numericValue >= 0 && numericValue <= 15) {
+                // Utilisez AJAX pour envoyer la valeur à la fonction Flask
+                var xhr = new XMLHttpRequest();
+                xhr.open("POST", "/update_data", true);
+                xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+                xhr.onreadystatechange = function () {
+                    if (xhr.readyState === 4) {
+                        if (xhr.status === 200) {
+                            // Traitement de la réponse du serveur si nécessaire
+                            console.log(xhr.responseText);
+                            // Rafraîchir la page après avoir envoyé les données avec succès
+                            location.reload();
+                        } else {
+                            // Gérer les erreurs si nécessaire
+                            alert("Erreur lors de l'envoi des données.");
+                        }
+                    }
+                };
+                // Envoyez la valeur et l'index (ou toute autre information nécessaire) à la fonction Flask
+                xhr.send("data=" + numericValue + "&nbLicenceTireur=" + nbLicenceTireur + "&nbLicenceTireurAdverse=" + nbLicenceTireurAdverse + "&numCompetition=" + numCompetition + "&nbPhase=" + nbPhase);
+            } else {
+                alert("Veuillez saisir un nombre entre 0 et 15");
+                location.reload();
+
+            }
+            }
+            
         }
 
 
         function changerScore(nbLicenceTireur, numCompetition, nbPhase) {
             {% if isArbitre %}
-                var score = prompt("Veuillez saisir un chiffre entre 0 et 5:");
-                updateData(score, nbLicenceTireur, 0, numCompetition, nbPhase);
+                if (nbPhase != 1){
+                    var score = prompt("Veuillez saisir un chiffre entre 0 et 15:");
+                    updateData(score, nbLicenceTireur, 0, numCompetition, nbPhase);
+                }else {
+                    var score = prompt("Veuillez saisir un chiffre entre 0 et 5:");
+                    updateData(score, nbLicenceTireur, 0, numCompetition, nbPhase);
+                }
+                
                 {% else %}
                 alert("Vous n'êtes pas arbitre");
             {% endif %}
