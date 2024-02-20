@@ -24,39 +24,57 @@
         <div class="blockInscription">
             <div class="inscription">
                 <div class="titreInscription">
-                    <h2>INSCRIPTION ARBITRE</h2>
+                    <h2>INSCRIPTION D'EQUIPE</h2>
                 </div>
                 <div class="infoInscription">
                     <div class="numLicence">
-                        <p>Numéro de licence : </p>
+                        <p>Licence organisateur : </p>
                         <input type="number" name="nbLicence" id="nbLicence" required="required" placeholder="112853">
                     </div>
-                    <p>Veuillez vous assurer qu'il s'agisse bien de vous avant de vous inscrire.</p>
-                    <p>Les champs suivants ne sont pas obligatoires.</p>
-                    <div class="nomPrenom">
-                        <p>Nom prénom :</p>
-                        <div>
-                            <input type="text" name="nom" id="nom" placeholder="TOSCANE">
-                            <input type="text" name="prenom" id="prenom" placeholder="Tori">
-                        </div>
+                    <div class="numLicence"> <!--ICI J'AI LAISSÉ 'numLicence' pour le css donc touche pas-->
+                        <p>Nom de l'équipe : </p>
+                        <input type="text" name="nomEquipe" id="nomEquipe" required="required" placeholder="RobGOAT">  <!--J'AI CHANGÉ LES ID ICI DUCOUP TU EN FAIS CE QUE TU VEUX-->
                     </div>
-                    <div class="naissanceClub">
-                        <div class="naissance">
-                            <p>Naissance:</p>
-                            <input type="date" name="naissance" id="naissance">
+                    
+                    
+                    
+                    <div class="titulaireA">
+                    
+                        
+                    
+                        <div class="titulaire1">
+                            <p>Titulaire n°1 :</p>
+                            <input type="number" name="titulaire1" id="titulaire1" placeholder="485853">
                         </div>
-                        <div class="club">
-                            <p>Club:</p>
-                            <input type="text" name="club" id="club" placeholder="CHARENTON">
+                        <div class="titulaire2">
+                            <p>Titulaire n°2 :</p>
+                            <input type="number" name="titulaire2" id="titulaire2" placeholder="485854">
                         </div>
+                    
                     </div>
+                    
+                    <div class="titulaireA">
+                        
+                        <div class="titulaire3">
+                            <p>Titulaire n°3 :</p>
+                            <input type="number" name="naissance" id="titulaire3" placeholder="485855">
+                        </div>
+                        
+                        <div class="remplacant">
+                            <p>Remplaçant :</p>
+                            <input type="number" name="club" id="club" placeholder="485856">
+                        </div>
+                    
+                    </div>
+                    
+                    
                     <div class="submit">
-                        <input type="submit" value="INSCRIRE L'ARBITRE">
-                    </div>  
+                        <input type="submit" value="INSCRIRE L'ÉQUIPE">
+                    </div>
                 </div>   
             </div>
-            <p>Inscrire une équipe à la compétition ?</p>
-            <a href="./inscription_equipe">Inscription équipe</a>
+            <p>Inscrire un arbitre à la compétition ?</p>
+            <a href="./inscription_arbitre">Inscription Arbitre</a>
         </div>
     </form>
 

@@ -75,7 +75,7 @@ form{
     margin-bottom: 0.5em;
 }
 
-.nomPrenom{
+.nomPrenom, .titulaire1, .titulaire2, .titulaire3, .remplacant{
     display: flex;
     flex-direction: column;
     margin-bottom: 1em;
@@ -87,13 +87,17 @@ form{
 
 }
 
-.nomPrenom input{
+.nomPrenom input, .titulaireA input{    
     width: 35%;
     background-color: #EDEDED;
     padding-left: 0.5em;
 }
 
-.naissanceClub{
+.titulaireA input{
+    width: 75%;
+}
+
+.naissanceClub, .titulaireA{
     display: flex;
     justify-content: space-between;
     margin-bottom: 1em;
@@ -183,7 +187,7 @@ form{
 
 .contentOpen [type="radio"] {
     opacity: 0;
-  }
+}
 
 span{
     border: #062656 2px solid;
