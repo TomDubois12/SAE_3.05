@@ -1,0 +1,146 @@
+{% extends "base.html" %}
+{% block linkcss %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/inscription.css')}}">
+    <script src="{{ url_for('static',filename='js/popup.js')}}"> </script>
+{% endblock %}
+
+{% block header %}
+    {% include "partials/_header2.html" %}
+{% endblock %}
+
+{% block main %}
+    <form class="form" action="{{url_for("verifInscription")}}" method="get">
+        <div class="open">
+            <div class="titreOpen">
+                <h2>INSCRIPTIONS OUVERTES</h2>
+            </div>
+            <div class="contentOpen">
+                {% for x in competitions %}
+                    <input type="radio" id="{{x[0][-1]}}" name="compet" required value="{{x[0][-1]}}"> <label for="{{x[0][-1]}}">{{x[0][0].upper()}} {{x[0][1].upper()}} {{x[0][2].upper()}} {{x[0][3].upper()}}, {{x[0][4]}} {{x[0][5]}}</label></input>
+                    <span></span>
+                {% endfor %}
+            </div>
+        </div>
+        <div class="blockInscription">
+            <div class="inscription">
+                <div class="titreInscription">
+                    <h2>INSCRIPTION D'EQUIPE</h2>
+                </div>
+                <div class="infoInscription">
+                    <div class="numLicence">
+                        <p>Licence organisateur : </p>
+                        <input type="number" name="nbLicence" id="nbLicence" required="required" placeholder="112853">
+                    </div>
+                    <div class="numLicence"> <!--ICI J'AI LAISSÉ 'numLicence' pour le css donc touche pas-->
+                        <p>Nom de l'équipe : </p>
+                        <input type="text" name="nomEquipe" id="nomEquipe" required="required" placeholder="RobGOAT">  <!--J'AI CHANGÉ LES ID ICI DUCOUP TU EN FAIS CE QUE TU VEUX-->
+                    </div>
+                    
+                    <div class="titulaireA">
+                        <div class="titulaire1">
+                            <p>Titulaire n°1 :</p>
+                            <input type="number" name="titulaire1" id="titulaire1" placeholder="485853">
+                        </div>
+                        <div class="titulaire2">
+                            <p>Titulaire n°2 :</p>
+                            <input type="number" name="titulaire2" id="titulaire2" placeholder="485854">
+                        </div>
+                    </div>
+                    <div class="titulaireA">
+                        <div class="titulaire3">
+                            <p>Titulaire n°3 :</p>
+                            <input type="number" name="naissance" id="titulaire3" placeholder="485855">
+                        </div>
+                        <div class="remplacant">
+                            <p>Remplaçant :</p>
+                            <input type="number" name="club" id="club" placeholder="485856">
+                        </div>
+                    </div>
+                    
+                    <div class="submit">
+                        <input type="submit" value="INSCRIRE L'ÉQUIPE">
+                    </div>
+                </div>   
+            </div>
+            <p>Inscrire un arbitre à la compétition ?</p>
+            <a href="./inscription_arbitre">Inscription Arbitre</a>
+        </div>
+    </form>
+
+    {% if popup %}
+        <div class="wrap_popup">
+            <div class="cover"> </div>
+            
+            <div class="affichage_popup">
+                <div>
+                    <h1>NUMERO DE LICENCE INTROUVABLE</h1>
+                    <p>Le numéro {{nbLicence}} ne correspond à aucune licence existante dans nos fichiers de la Fédération Française d’Escrime.</p>
+                    <p>Vérifiez que vous n’avez pas fait d’erreur lors de la saisie ou contactez votre centre de formation pour vous renseigner votre numéro 
+                    de licence.</p>
+                </div>
+                
+                <img class="imgEscrimeur" src="../../static/images/imgLicenseIntrouvable.png" alt="image illustration escrime">
+                <button class="btn-close" type="button">
+                    <img src="{{url_for('static', filename='images/imageCroix.png')}}" alt="image bouton fermer pop up" class ="croixFermer">
+                </button>
+
+            </div>
+        </div>
+    {% else %}
+        <style> 
+        .popup{
+            visibility: hidden;
+        }
+        </style>
+    {% endif %}
+    {% if popup2 %}
+        <div class="wrap_popup">
+            <div class="cover"> </div>
+            
+            <div class="affichage_popup">
+                <div>
+                    <h1>CRITERES DE COMPETITION NON RESPECTES</h1>
+                    <p>Veuillez vous assurer de respecter les critères d’inscriptions à cette compétition.</p>
+
+                    <p>Une femme ne peut pas concourir avec les hommes et inversement.</p>
+
+                    <p>Vous ne pouvez concourir qu’à votre catégorie ou bien une catégorie au-dessus de la vôtre.
+                    (ordre des catégories : U13, U15, U20, senior, V1, V2, V3, V4)</p>
+                </div>
+                
+                <img src="../../static/images/imgConnexionError.png" alt="image illustration escrime">
+                <button class="btn-close" type="button"></button>
+
+            </div>
+        </div>
+    {% else %}
+        <style> 
+        .popup{
+            visibility: hidden;
+        }
+        </style>
+    {% endif %}
+    {% if popup3 %}
+    <div class="wrap_popup">
+        <div class="cover"> </div>
+        
+        <div class="affichage_popup">
+            <div>
+                <h1>Bravo vous êtes inscrit à la compétition</h1>
+                <p>Vous pouvez maintenant vous connecter pour voir vos informations.</p>
+            </div>
+            
+            <img src="../../static/images/imgConnexionError.png" alt="image illustration escrime">
+            <button class="btn-close" type="button"></button>
+
+        </div>
+    </div>
+{% else %}
+    <style> 
+    .popup{
+        visibility: hidden;
+    }
+    </style>
+{% endif %}
+
+{% endblock %}
