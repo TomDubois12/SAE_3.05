@@ -19,10 +19,12 @@
             <p>S’INSCRIRE A UNE COMPETITION EN SOLO</p>
         </div>
         <a href={{url_for('inscription_equipe')}}>
+        <a href={{url_for('connexion_escrimeur')}}>
         <div class="connection">
             <img src="{{url_for('static', filename='images/epeeGris.png')}}" alt="Épée grise d'escrime">
             <p>S’INSCRIRE A UNE COMPETITION EN EQUIPE</p>
         </div>
         </a>
     </div>
+    <p class="info">En savoir plus sur l’escrime ? Voici <a href="/information">un petit lien</a> pour vous aider</p>
 {% endblock %}
