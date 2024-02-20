@@ -440,9 +440,14 @@
 
         function changerScore(nbLicenceTireur, numCompetition, nbPhase) {
             {% if isArbitre %}
+                if (nbPhase != 1){
+                    var score = prompt("Veuillez saisir un chiffre entre 0 et 15:");
+                    updateData(score, nbLicenceTireur, 0, numCompetition, nbPhase);
+                }else {
+                    var score = prompt("Veuillez saisir un chiffre entre 0 et 5:");
+                    updateData(score, nbLicenceTireur, 0, numCompetition, nbPhase);
+                }
                 
-                var score = prompt("Veuillez saisir un chiffre entre 0 et 5:");
-                updateData(score, nbLicenceTireur, 0, numCompetition, nbPhase);
                 {% else %}
                 alert("Vous n'êtes pas arbitre");
             {% endif %}
