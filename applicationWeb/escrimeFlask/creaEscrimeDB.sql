@@ -86,6 +86,7 @@ create table COMPETITION(
     idCategorieCompetition int not null,
     idSexeCompetition int not null,
     idArmeCompetition int not null,
+    typeCompetition varchar(20) not null,
     primary key (idCompetition),
     Foreign key(idLieuCompetition) references LIEU(idLieu),
     Foreign key(idCategorieCompetition) references CATEGORIE(idCategorie),
@@ -191,6 +192,35 @@ create table ARBITRE_ELIMINATION(
 );
 
 
+create table EQUIPE(
+    idEquipe int not null auto_increment, 
+    idCompetition int not null,
+    nomEquipe varchar(255) not null, 
+    licenceChefEquipe int not null,
+    primary key (idEquipe, idCompetition),
+    Foreign key(idCompetition) references COMPETITION(idCompetition),
+    Foreign key (licenceChefEquipe) references ORGANISATEUR(licenseOrganisateur)
+);
+
+create table TIREUR_EQUIPE(
+    idEquipe int not null,
+    licenceTireur int not null,
+    primary key (idEquipe, idCompetition, licenceTireur),
+    Foreign key (idEquipe) references EQUIPE(idEquipe),
+    Foreign key (licenceTireur) references TIREUR(numeroLicenceTireur)
+);
+
+create table MATCH_EQUIPE(
+    idCompetition int not null,
+    idEquipe1 int not null,
+    scoreEquipe1 int not null,
+    idEquipe2 int not null,
+    scoreEquipe2 int not null,
+    nbPhases int not null,
+    primary key (idCompetition, idEquipe1, idEquipe2, nbPhases),
+    Foreign key (idEquipe1) references EQUIPE(idEquipe),
+    Foreign key (idEquipe2) references EQUIPE(idEquipe)
+);
 ------------------------------------------------------------------------------------
 ------------------------------------------------------------------------------------
 -----------------------------Trigger------------------------------------------------
