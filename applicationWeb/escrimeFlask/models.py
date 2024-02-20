@@ -10,8 +10,8 @@ import mysql.connector
 #connexion au base de données
 db = mysql.connector.connect(
   host = "localhost",
-  user = "koko",
-  password = "koko",
+  user = "nathan",
+  password = "nathan",
   database = "Escrime"
 )
 #Blabla2147
@@ -514,6 +514,9 @@ def getCompetitionParOrga(numLicence):
   info = cursor.fetchall()
   res = []
   for i in range(len(info)):
+    #print(inscriptionOuverte())
+    # print(concourtInscritLicence(521531))
+    # print(getOrganisateurClub())
     requete2 = """select intituleCompet,typeArme, intituleSexe,intituleCategorie, departement, dateDebutCompetiton, idCompetition
                  from COMPETITION natural join LIEU natural join ARME natural join SEXE natural join CATEGORIE
                 where  idLieu ="""+ str(info[i][7]) +" and idCategorie ="+ str(info[i][8]) +" and idSexe = "+str(info[i][9]) +" and idArme = "+ str(info[i][10]) +" and idCompetition = "+str(info[i][0]) +" order by dateDebutCompetiton DESC;"
@@ -521,10 +524,10 @@ def getCompetitionParOrga(numLicence):
     res.append(cursor.fetchall())
   return res
 
-def createCompetition(nomCompete, lieu, categorie, sexe, arme, coef, date, licenceOrga ) : 
+def createCompetition(nomCompete, lieu, categorie, sexe, arme, coef, date, licenceOrga, typeCompetition = "individuel" ) : 
   if getIdLieuByNom(lieu) is None : setNewLieuByNom(lieu)
-  requete1 = """insert into COMPETITION(intituleCompet,saison,estFinie,coefficientCompetition,dateDebutCompetiton,idLieuCompetition,idCategorieCompetition,idSexeCompetition,idArmeCompetition) 
-                values ('""" + str(nomCompete) + "'," + str((date)[0:4]) + "," + "False" + "," + str(coef) + ",'" + str((date)) + "'," + str(getIdLieuByNom(lieu)) + "," + str(getIdCategorieByNom(categorie))+ "," + str(getIdSexeByNom(sexe)) +"," + str(getIdArmeByNom(arme)) + ");"""
+  requete1 = """insert into COMPETITION(intituleCompet,saison,estFinie,coefficientCompetition,dateDebutCompetiton,idLieuCompetition,idCategorieCompetition,idSexeCompetition,idArmeCompetition,typeCompetition) 
+                values ('""" + str(nomCompete) + "'," + str((date)[0:4]) + "," + "False" + "," + str(coef) + ",'" + str((date)) + "'," + str(getIdLieuByNom(lieu)) + "," + str(getIdCategorieByNom(categorie))+ "," + str(getIdSexeByNom(sexe)) +"," + str(getIdArmeByNom(arme)) + ", '" + str(typeCompetition)+"' );"""
   cursor.execute(requete1)
   db.commit()
   idComp = int(getIdMaxCompetition())
@@ -1558,6 +1561,11 @@ if __name__ == "__main__":
     # insOrgaDansBD() 
     #########Jeu de Données##########
     #################################
+
+    insOrgaDansBD() 
+    
+    ##Cree compete
+
     # insertTireurDansBD(45243)
     # insertTireurDansBD(20840)
     # insertTireurDansBD(53089)
@@ -1569,11 +1577,11 @@ if __name__ == "__main__":
     # insertTireurDansBD(35524)
     # insertTireurDansBD(20981)
     # insertTireurDansBD(2889)
-    # # insertTireurDansBD(7006)
-    # # insertTireurDansBD(119662)
-    # # insertTireurDansBD(41337)
-    # # insertTireurDansBD(37332)
-    # # 37332
+    # # # insertTireurDansBD(7006)
+    # # # insertTireurDansBD(119662)
+    # # # insertTireurDansBD(41337)
+    # # # insertTireurDansBD(37332)
+    # # # 37332
 
     # test = [45243,20840,53089,40845,37189,53998,54797,5387,35524,20981,2889]
 
@@ -1582,19 +1590,20 @@ if __name__ == "__main__":
     #   cursor.execute(requete5)
     #   db.commit()
 
-    # # insertArbitreDansBD(51032)
-    # # insertArbitreDansBD(51061)
+    # insertArbitreDansBD(51032)
+    # insertArbitreDansBD(51061)
 
-    # # 51061
+    # 51061
 
-    # # test1 = [51032,51061]
-    # # for id in test1 : 
-    # #   requete5 = "insert into ARBITRE_DANS_COMPETITIONS (numeroLicenceArbitre,idCompetition) values("+str(id)+", 17  );"
-    # #   cursor.execute(requete5)
-    # #   db.commit()
+    # test1 = [51032,51061]
+    # for id in test1 : 
+    #   requete5 = "insert into ARBITRE_DANS_COMPETITIONS (numeroLicenceArbitre,idCompetition) values("+str(id)+", 17  );"
+    #   cursor.execute(requete5)
+    #   db.commit()
 
-    # # print(lancerCompetition(16)) # Pour creer une competition pour les tests
-    # insOrgaDansBD() 
-    print(classementFinale(16,5))
+    # print(lancerCompetition(16)) # Pour creer une competition pour les tests
+  
+
+    # print(classementFinale(16,5))
     #print(trierCeClass([45243,20840,53089,40845,37189,53998,54797,5387,35524,20981,2889,37332],16,5))
     pass
