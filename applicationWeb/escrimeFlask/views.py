@@ -37,6 +37,12 @@ def inscription_equipe():
                            title='Inscription Equipe',
                            competitions=inscriptionOuverte())
 
+@app.route('/inscriptionSoloEquipe')
+def inscriptionSoloEquipe():
+    return render_template('inscriptionSoloEquipe.html',
+                           title='Inscription',
+                           competitions=inscriptionOuverte())
+
 @app.route('/connexion_organisateur')
 def connexion_organisateur():
     return render_template('connexion_organisateur.html',
