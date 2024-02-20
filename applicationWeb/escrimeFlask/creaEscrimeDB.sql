@@ -205,7 +205,7 @@ create table EQUIPE(
 create table TIREUR_EQUIPE(
     idEquipe int not null,
     licenceTireur int not null,
-    primary key (idEquipe, idCompetition, licenceTireur),
+    primary key (idEquipe, licenceTireur),
     Foreign key (idEquipe) references EQUIPE(idEquipe),
     Foreign key (licenceTireur) references TIREUR(numeroLicenceTireur)
 );
