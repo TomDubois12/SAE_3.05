@@ -35,7 +35,7 @@ def inscription_arbitre():
 def inscription_equipe():
     return render_template('inscription_equipe.html',
                            title='Inscription Equipe')
-                           
+
 @app.route('/inscriptionSoloEquipe')
 def inscriptionSoloEquipe():
     return render_template('inscriptionSoloEquipe.html',
