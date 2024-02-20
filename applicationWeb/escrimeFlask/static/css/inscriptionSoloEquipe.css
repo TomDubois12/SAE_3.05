@@ -20,9 +20,7 @@ main{
 .haut div {
     display: flex;
 }
-a img{
-    width:20%;
-}
+
 div p {
     color: #FFFFFF;
     font-size: 3.2vmin;
@@ -177,7 +175,7 @@ main>p a {
     font-size: 16px;
 }
 .info{
-    margin-top: 1em;
+    margin-top: 4em;
 }
 
 @media screen and (max-width: 1700px) {
