@@ -1,0 +1,19 @@
+.boutonImprimer{
+    position: fixed;
+    top: 85vh;
+    left:50vw;
+    transform: translate(-50%,-50%);
+    z-index: 5;
+    padding: 15px;
+    border-radius: 20px;
+    background-color: blue;
+    color: white;
+    font-size: 26px;
+    border: none;
+}
+
+.boutonImprimer:hover{
+    padding: 18px;
+    font-size: 28px;
+    background-color: rgb(3, 3, 175);
+}
