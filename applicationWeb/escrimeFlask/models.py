@@ -1773,6 +1773,24 @@ def maFonctionPlusBelleQueLautreAvecPhase( idCompetition , nbPhase):
     listeDesMatch.append([getNomEquipeByIdEquipe(match[2]),getNomEquipeByIdEquipe(match[4]),getNomClubByIdEquipe(match[2]),getNomClubByIdEquipe(match[4]),match[3],match[5]])
   return listeDesMatch
 
+def getInfosMatchEquipeNumLicence(idCompetition, numeroLicence) : 
+  #Renvoie pour une competition dans la vue d'arbitre tout les matchs
+  listeDesMatch = []
+  dico = dicoCompeteEquipe(idCompetition)
+  nomEquipe = " "
+  for key in dico.keys():
+    if numeroLicence in dico.get(key)[4] : 
+      nomEquipe = key
+
+  id1 = getIdEquipeByNomEquipeAndCompetition(nomEquipe, idCompetition)
+  print(id1)
+  requete = "select * from MATCH_EQUIPE where idCompetition = "+str(idCompetition)+" and (idEquipe2 = "+str(id1)+" OR idEquipe1 = "+str(id1)+") ;" 
+  cursor.execute(requete)
+  res = cursor.fetchall()
+  for match in res :
+    #nom Equipe1, nomEquipe2, nomClub Equipe1, nomClub equipe2, score equipe1, score equipe2
+    listeDesMatch.append([getNomEquipeByIdEquipe(match[2]),getNomEquipeByIdEquipe(match[4]),getNomClubByIdEquipe(match[2]),getNomClubByIdEquipe(match[4]),match[3],match[5]])
+  return listeDesMatch
 
 
 def getNomClubByIdEquipe(idEquipe) :
@@ -1849,7 +1867,8 @@ def lancerCompetitionEquipe(idCompetition) :
 
 
 if __name__ == "__main__":
-    print(affichageGenererPhaseEliminations(25,2))
+    print(getInfosMatchEquipeNumLicence(17,40845))
+    #print(affichageGenererPhaseEliminations(25,2))
     #print(getNbPhase(17))
     # print(subPointMatchEquipe(17,1,"Les 4","Les 2"))
     # print(maFonctionPlusBelleQueLautre(17))
@@ -1857,7 +1876,7 @@ if __name__ == "__main__":
 #     print(lancerCompetitionEquipe(17))
     #print(equipeListeTrierDico(dicoCompeteEquipe(17),17))
     # print(int(len(equipeListeTrierDico(dicoCompeteEquipe(17),17))/2))
-    # print(dicoCompeteEquipe(17))
+    #print(dicoCompeteEquipe(17))
     # print(getClassementEquipe("Les 1", 17))
     # print(equipeListeTrierDico(dicoCompeteEquipe(17),17))  # Renvoi les noms d'équipe par ordre de classement décroissant 
     #print(concourtNonFinitInscritTireur(20840))
