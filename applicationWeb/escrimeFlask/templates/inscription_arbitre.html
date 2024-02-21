@@ -16,7 +16,8 @@
             </div>
             <div class="contentOpen">
                 {% for x in competitions %}
-                    <input type="radio" id="{{x[0][-1]}}" name="compet" required value="{{x[0][-1]}}"> <label for="{{x[0][-1]}}">{{x[0][0].upper()}} {{x[0][1].upper()}} {{x[0][2].upper()}} {{x[0][3].upper()}}, {{x[0][4]}} {{x[0][5]}}</label></input>
+                    <input type="radio" id="{{x[0][-1]}}" name="compet" required value="{{x[0][-1]}}"> 
+                    <label for="{{x[0][-1]}}">{{x[0][0].upper()}} {{x[0][1].upper()}} {{x[0][2].upper()}} {{x[0][3].upper()}}, {{x[0][4]}} {{x[0][5]}}</label></input>
                     <span></span>
                 {% endfor %}
             </div>
@@ -55,6 +56,8 @@
                     </div>  
                 </div>   
             </div>
+            <p>Inscrire une équipe à la compétition ?</p>
+            <a href={{url_for('inscription_equipe')}}>Inscription équipe</a>
         </div>
     </form>
 
