@@ -1561,6 +1561,11 @@ def getNomEquipeByIdEquipe(idEquipe) :
   nomEquipe =cursor.fetchall()[0][0]
   return nomEquipe
 
+def getIdEquipeByNomEquipeAndCompetition(nomEquipe, idCompetition) : 
+  infosMatch = "select idEquipe from EQUIPE where nomEquipe = "+str(nomEquipe)+" and idCompetition = "+str(idCompetition)+";"
+  cursor.execute(infosMatch)
+  nomEquipe =cursor.fetchall()[0][0]
+  return nomEquipe
 
 
 ## au début de la compète il faut générer un nombre de phases en fonction du nombre d'équipe, calculer pour chaque équipe leur classement avec la sommes des 4 joueurs et trier ça 
