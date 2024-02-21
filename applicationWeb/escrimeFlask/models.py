@@ -361,7 +361,7 @@ def inscriptionOuverteSolo() -> list:
   for i in range(len(info)):
     requete2 = """select intituleCompet,typeArme, intituleSexe,intituleCategorie, departement, dateDebutCompetiton, typeCompetition, idCompetition
                   from COMPETITION natural join LIEU natural join ARME natural join SEXE natural join CATEGORIE
-                  where datediff(dateDebutCompetiton ,CURDATE()) > 14 and estFinie = False and idLieu ="""+ str(info[i][6]) +" and idCategorie ="+ str(info[i][7]) +" and idSexe = "+str(info[i][8]) +" and idArme = "+ str(info[i][9]) +" and typeCompetition = 'equipe' and idCompetition = "+str(info[i][0]) +";"
+                  where datediff(dateDebutCompetiton ,CURDATE()) > 14 and estFinie = False and idLieu ="""+ str(info[i][6]) +" and idCategorie ="+ str(info[i][7]) +" and idSexe = "+str(info[i][8]) +" and idArme = "+ str(info[i][9]) +" and typeCompetition = 'solo' and idCompetition = "+str(info[i][0]) +";"
     cursor.execute(requete2) 
     res.append(cursor.fetchall())
   return res
@@ -763,13 +763,13 @@ def getClassementApresPoule(idCompetition):
   return listeTrie
 
 def getNbParticipant(idCompetition): 
-  requete = "select count(*) from TIREUR_DANS_COMPETITIONS where idCompetition ="+ str(idCompetition) +  " and typeCompetition = 'solo' ;"
+  requete = "select count(*) from TIREUR_DANS_COMPETITIONS where idCompetition ="+ str(idCompetition) +  ";"
   cursor.execute(requete)
   l1 = cursor.fetchall()
   return l1[0][0]
 
 def getNbEquipe(idCompetition) : 
-  requete = "select count(*) from EQUIPE where idCompetition ="+ str(idCompetition) +  "  and typeCompetition = 'equipe' ;"
+  requete = "select count(*) from EQUIPE where idCompetition ="+ str(idCompetition) +  ";"
   cursor.execute(requete)
   l1 = cursor.fetchall()
   return l1[0][0]
@@ -1511,6 +1511,17 @@ def dicoCompeteEquipe(idCompetition):
 
     return dico
 
+def nomEquipeInixistantDansCompetition(nomEquipe, idCompetition):
+  try :
+    requete = "select nomEquipe from EQUIPE where idCompetition = "+str(idCompetition)+" and nomEquipe = '"+str(nomEquipe)+"';"
+    cursor.execute(requete)
+    cla = cursor.fetchall()
+    if len(cla) >=1 : 
+      return False
+    return True
+  except Exception :
+    return False
+
 def insererEquipeDansCompetition(idCompetition, nomEquipe, licenceChef): 
   try :
     requete = "insert into EQUIPE(idCompetition,nomEquipe,licenceChefEquipe) value("+str(idCompetition)+",'"+str(nomEquipe)+"',"+str(licenceChef)+");" 
@@ -1562,7 +1573,7 @@ def getNomEquipeByIdEquipe(idEquipe) :
   return nomEquipe
 
 def getIdEquipeByNomEquipeAndCompetition(nomEquipe, idCompetition) : 
-  infosMatch = "select idEquipe from EQUIPE where nomEquipe = "+str(nomEquipe)+" and idCompetition = "+str(idCompetition)+";"
+  infosMatch = "select idEquipe from EQUIPE where nomEquipe = '"+str(nomEquipe)+"' and idCompetition = "+str(idCompetition)+";"
   cursor.execute(infosMatch)
   nomEquipe =cursor.fetchall()[0][0]
   return nomEquipe
@@ -1578,8 +1589,15 @@ if __name__ == "__main__":
     # print(dicoCompeteEquipe(17))
     # print(getCompetitionParOrga(4029))
     # print(getTournoisNonLancerEquipe())
-    print(getTournoisClosedParticiperSolo(2889))
-    # insOrgaDansBD() 
+    #print(getTournoisClosedParticiperSolo(2889))
+
+    #print(getIdEquipeByNomEquipeAndCompetition("Les 1", 17))
+    print(nomEquipeInixistantDansCompetition("Les 1", 17))
+    #insOrgaDansBD() 
+    # insererTireurDansEquipe(5,45243)
+    # insererTireurDansEquipe(5,20840)
+    # insererTireurDansEquipe(5,53089)
+    # insererTireurDansEquipe(5,40845)
     # print(addPointMatchEquipe(1,1))
 
     #print(getNomEquipeByIdEquipe(1))
@@ -1815,5 +1833,5 @@ if __name__ == "__main__":
     #print(trierCeClass(getClassementPhase(16),16,5))
 
       
-    print(getNbParticipant(16))
+    #print(getNbParticipant(16))
     pass

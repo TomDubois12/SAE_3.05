@@ -74,25 +74,27 @@ insert into TIREUR_DANS_CLUB(numeroLicenceTireur,idClub) values
 --     ("Farcy","Adam",947613),
 --     ("Boissay","Gatien",542446);
 
-insert into COMPETITION(intituleCompet,saison,estFinie,coefficientCompetition,dateDebutCompetiton,idLieuCompetition,idCategorieCompetition,idSexeCompetition,idArmeCompetition) values
-    ("Tournois hivernale 2023","2023",False,0.2,"2023-12-14",2,5,1,1),
-    ("Tournois hivernale 2024","2024",False,0.2,"2024-12-14",2,5,1,2),
-    ("Tournois hivernale 2022","2022",True,0.2,"2022-12-14",2,5,1,3),
+insert into COMPETITION(intituleCompet,saison,estFinie,coefficientCompetition,dateDebutCompetiton,idLieuCompetition,idCategorieCompetition,idSexeCompetition,idArmeCompetition,typeCompetition) values
+    ("Tournois hivernale 2023","2023",False,0.2,"2023-12-14",2,5,1,1,'solo'),
+    ("Tournois hivernale 2024","2024",False,0.2,"2024-12-14",2,5,1,2,'solo'),
+    ("Tournois hivernale 2022","2022",True,0.2,"2022-12-14",2,5,1,3,'solo'),
 
-    ("Tournois printemps 2020","2020",True,0.2,"2020-11-14",1,5,1,1),
-    ("Tournois automn 2020","2020",True,0.2,"2020-04-14",2,5,1,2),
-    ("Tournois hiver 2020","2020",True,0.4,"2020-12-23",3,5,1,3),
-    ("Tournois été 2020","2020",True,0.2,"2020-07-22",4,5,2,1),
+    ("Tournois printemps 2020","2020",True,0.2,"2020-11-14",1,5,1,1,'solo'),
+    ("Tournois automn 2020","2020",True,0.2,"2020-04-14",2,5,1,2,'solo'),
+    ("Tournois hiver 2020","2020",True,0.4,"2020-12-23",3,5,1,3,'solo'),
+    ("Tournois été 2020","2020",True,0.2,"2020-07-22",4,5,2,1,'solo'),
 
-    ("Tournois printemps 2021","202",True,0.2,"2021-11-14",2,1,1,2),
-    ("Tournois automn 2021","2021",True,0.2,"2021-04-14",2,2,1,3),
-    ("Tournois hiver 2021","2021",True,0.4,"2021-12-23",2,3,1,1),
-    ("Tournois été 2021","2021",True,0.2,"2021-07-22",2,4,2,2),
+    ("Tournois printemps 2021","202",True,0.2,"2021-11-14",2,1,1,2,'solo'),
+    ("Tournois automn 2021","2021",True,0.2,"2021-04-14",2,2,1,3,'solo'),
+    ("Tournois hiver 2021","2021",True,0.4,"2021-12-23",2,3,1,1,'solo'),
+    ("Tournois été 2021","2021",True,0.2,"2021-07-22",2,4,2,2,'solo'),
 
-    ("Tournois printemps 2019","2019",True,0.2,"2019-11-14",2,1,1,3),
-    ("Tournois automn 2019","2019",True,0.2,"2019-04-14",2,2,2,1),
-    ("Tournois hiver 2019","2019",True,0.4,"2019-12-23",2,3,2,2),
-    ("Tournois été 2019","2019",True,0.2,"2019-07-22",2,4,2,3);
+    ("Tournois printemps 2019","2019",True,0.2,"2019-11-14",2,1,1,3,'solo'),
+    ("Tournois automn 2019","2019",True,0.2,"2019-04-14",2,2,2,1,'solo'),
+    ("Tournois hiver 2019","2019",True,0.4,"2019-12-23",2,3,2,2,'solo'),
+    ("Tournois été 2019","2019",True,0.2,"2019-07-22",2,4,2,3,'solo'),
+    ("Tournois été 2025","2025",False,0.2,"2025-07-22",2,4,2,3,'equipe'),
+    ("Tournois été 2026","2026",False,0.2,"2026-07-22",2,4,2,3,'equipe');
 
 insert into ORGANISATEURCOMPETITION(idCompetition, licenseOrganisateur) values 
     (1,241354),
@@ -117,11 +119,11 @@ insert into EQUIPE(idCompetition, nomEquipe, licenceChefEquipe) value
     (17,"Les 3", 605),
     (17,"Les 4", 31646);
 
-insert into TIREUR_EQUIPE(idEquipe, licenceTireur) value 
-    (9, 45243),
-    (9, 20840),
-    (9, 53089),
-    (9, 40845);
+-- insert into TIREUR_EQUIPE(idEquipe, licenceTireur) value 
+--     (5, 45243),
+--     (5, 20840),
+--     (5, 53089),
+--     (5, 40845);
 
 -- insert into TIREUR_DANS_COMPETITIONS(numeroLicenceTireur,idCompetition)values 
 --     (315486,1),
