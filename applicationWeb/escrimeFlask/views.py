@@ -34,12 +34,13 @@ def inscriptionSoloEquipe():
 def inscription_arbitre():
     return render_template('inscription_arbitre.html',
                            title='Inscription Arbitre',
-                           competitions=inscriptionOuverte())
+                           competitions=inscriptionOuverteEquipe())
 
 @app.route('/inscription_equipe')
 def inscription_equipe():
     return render_template('inscription_equipe.html',
-                           title='Inscription Equipe')
+                           title='Inscription Equipe',
+                           competitions=inscriptionOuverteEquipe())
 
 @app.route('/connexion_organisateur')
 def connexion_organisateur():
@@ -330,6 +331,27 @@ def verifInscription():
                            popup=True,
                            competitions=inscriptionOuverte(),
                            nbLicence=request.args.get("nbLicence"))
+        
+@app.route('/verifInscriptionEquipe')
+def verifInscriptionEquipe():
+    if estOrganisateur(int(request.args.get("nbLicence"))):
+        if insererEquipeDansCompetition(int(request.args.get("compet")), str(request.args.get("nomEquipe")), int(request.args.get("nbLicence"))):
+            insererTireurDansEquipe(request.args.get("compet"), [request.args.get("titulaire1"), request.args.get("titulaire2"), request.args.get("titulaire3"), request.args.get("remplacant")])
+            return render_template('inscription_equipe.html',
+                            title='Inscription Equipe',
+                            competitions=inscriptionOuverteEquipe(),
+                            popup3=True)
+        else:
+            return render_template('inscription_equipe.html',
+                            title='Inscription Equipe',
+                            competitions=inscriptionOuverteEquipe(),
+                            popup2=True)
+    else:
+        return render_template('inscription_equipe.html',
+                           title='Inscription Equipe',
+                           popup=True,
+                           competitions=inscriptionOuverteEquipe(),
+                           nbLicence=request.args.get("nbLicence"))
 
 
 @app.route('/verifConnexionEscrimeur')
@@ -462,7 +484,8 @@ def creationCompetition():
     arme=request.args.get("arme")
     coeff=request.args.get("coeff")
     nbLicense=request.args.get("nbLicense")
-    createCompetition(nom,lieu,categorie,sexe,arme,coeff,date,nbLicense)
+    typeCompetition=request.args.get("typeCompetition")
+    createCompetition(nom,lieu,categorie,sexe,arme,coeff,date,nbLicense,typeCompetition)
     return redirect('options_competitions/'+str(nbLicense))
 
 
