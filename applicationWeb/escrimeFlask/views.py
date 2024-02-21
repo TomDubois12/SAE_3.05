@@ -24,6 +24,11 @@ def inscription():
     return render_template('inscription.html',
                            title='Inscription',
                            competitions=inscriptionOuverte())
+    
+@app.route('/inscriptionSoloEquipe')
+def inscriptionSoloEquipe():
+    return render_template('inscriptionSoloEquipe.html',
+                           title='Inscription_Solo_Equipe')
 
 @app.route('/inscription_arbitre')
 def inscription_arbitre():
