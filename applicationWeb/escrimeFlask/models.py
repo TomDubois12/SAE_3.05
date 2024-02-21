@@ -1,4 +1,5 @@
 import csv
+import math
 # pip install Flask-MySQLdb
 #sudo apt-get install python3-dev default-libmysqlclient-dev build-essential pkg-config
 from operator import itemgetter
@@ -1489,31 +1490,44 @@ def metAJourInfoTireurDansPoule(dico, idCompetition) :
     print(elem[0] , tdmtr , placePoule,nbVictoire)
     pass
 
+
 def lancerCompetition(idCompetition): 
-  lancerCompetitionDate(idCompetition)
-  nbTireur,nbArbitre = getNbTireur(idCompetition), getNbArbitre(idCompetition)
-  #if nbTireur < 5 or nbArbitre == 0 : return None
-  infosTireur, infosArbitre = getInfoTireurs(idCompetition), getInfoArbitres(idCompetition)
+  if isEquipe(idCompetition):
+    lancerCompetitionEquipe(idCompetition)
+  else :
 
-  # 1) gener nbPoule en fonction nbTIreur et Arbitre
-  listeChoixPartPoule, listePoules = [5,6,7,8,9], []
-  choixTPP, nbPoule, resteT   = calculer_nombre_poules(listeChoixPartPoule, nbTireur, nbArbitre)
+    lancerCompetitionDate(idCompetition)
+    nbTireur,nbArbitre = getNbTireur(idCompetition), getNbArbitre(idCompetition)
+    #if nbTireur < 5 or nbArbitre == 0 : return None
+    infosTireur, infosArbitre = getInfoTireurs(idCompetition), getInfoArbitres(idCompetition)
 
-  # pour le moment les tireurs ne sont pas mit dabs les poules c'est juste des testes pour voir si le model marche
+    # 1) gener nbPoule en fonction nbTIreur et Arbitre
+    listeChoixPartPoule, listePoules = [5,6,7,8,9], []
+    choixTPP, nbPoule, resteT   = calculer_nombre_poules(listeChoixPartPoule, nbTireur, nbArbitre)
 
-  for i in range(nbPoule - 1 if choixTPP == 5 and resteT > 0 else nbPoule):
-    listePoules.append([])
+    # pour le moment les tireurs ne sont pas mit dabs les poules c'est juste des testes pour voir si le model marche
 
-  # print(choixTPP, nbPoule, resteT, nbTireur,listePoules)
-  # print(infosTireur)
-  createPoule(idCompetition,len(listePoules))
-  insTireurDansPoule(infosTireur, idCompetition)
-  insArbitreDansPoule(infosArbitre, idCompetition)
-  genererMatchPouleIdCompetition(idCompetition)
+    for i in range(nbPoule - 1 if choixTPP == 5 and resteT > 0 else nbPoule):
+      listePoules.append([])
+
+    # print(choixTPP, nbPoule, resteT, nbTireur,listePoules)
+    # print(infosTireur)
+    createPoule(idCompetition,len(listePoules))
+    insTireurDansPoule(infosTireur, idCompetition)
+    insArbitreDansPoule(infosArbitre, idCompetition)
+    genererMatchPouleIdCompetition(idCompetition)
 
 ################################################################
 #############Gestion des equipes ###############################
 ################################################################
+
+
+def isEquipe(idCompetition) : 
+  infosMatch = "select typeCompetition from COMPETITION where idCompetition = "+str(idCompetition)+";"
+  cursor.execute(infosMatch)
+  nomEquipe =cursor.fetchall()[0][0]
+  if nomEquipe == 'equipe' : return True
+  else : return False
 
 def isCompetitionEquipe(idCompetition):
   requete = "select * from COMPETITION where idCompetition = "+str(idCompetition)+";"
@@ -1525,6 +1539,7 @@ def isCompetitionEquipe(idCompetition):
     return True
   return False
   
+
 
 
 def genererMatchEquipe(idCompetiton): 
@@ -1561,11 +1576,36 @@ def dicoCompeteEquipe(idCompetition):
 
     return dico
 
+
+def getClassementEquipe(nomEquipe, idCompetition) : 
+  dico = dicoCompeteEquipe(idCompetition)
+  try : 
+    return dico[nomEquipe][3]
+  except Exception : 
+    return 0
+  
+def equipeListeTrierDico(dico, idCompetition) : 
+  listeReturn = []
+  for key in dico.keys() :
+    score = dico[key][3]
+    if len(listeReturn) == 0 :
+      listeReturn.append(key)
+    else : 
+      for i in range(len(listeReturn)) : 
+        if score > getClassementEquipe(listeReturn[i], idCompetition) : 
+          listeReturn.insert(i, key)
+          break
+        elif i == len(listeReturn)-1 : 
+          listeReturn.insert(len(listeReturn), key)
+  return listeReturn
+
+
 def getIdEquipeByNomEquipeAndCompetition(nomEquipe, idCompetition) : 
   infosMatch = "select idEquipe from EQUIPE where nomEquipe = '"+str(nomEquipe)+"' and idCompetition = "+str(idCompetition)+";"
   cursor.execute(infosMatch)
   nomEquipe =cursor.fetchall()[0][0]
   return nomEquipe
+
 
 def nomEquipeInixistantDansCompetition(nomEquipe, idCompetition):
   try :
@@ -1580,16 +1620,21 @@ def nomEquipeInixistantDansCompetition(nomEquipe, idCompetition):
 
 def insererEquipeDansCompetition(idCompetition, nomEquipe, licenceChef): 
   try :
-    requete = "insert into EQUIPE(idCompetition,nomEquipe,licenceChefEquipe) value("+str(idCompetition)+",'"+str(nomEquipe)+"',"+str(licenceChef)+");" 
-    cursor.execute(requete)
-    db.commit()
-    return True
+    if nomEquipe != "" :
+      requete = "insert into EQUIPE(idCompetition,nomEquipe,licenceChefEquipe) value("+str(idCompetition)+",'"+str(nomEquipe)+"',"+str(licenceChef)+");" 
+      cursor.execute(requete)
+      db.commit()
+      return True
+    else : 
+      return False
   except Exception :
     return False
 
 def insererTireurDansEquipe(idEquipe, listeLicenceTireur): 
   try :
     for licence in listeLicenceTireur : 
+
+
       if estDansBDNational(licence): 
         insertTireurDansBD(licence)
     for licence in listeLicenceTireur : 
@@ -1628,6 +1673,8 @@ def addPointMatchEquipe(idMatchElimination, idEquipe) :
     return True
   return False
 
+def getIdMatchEliminationByNomsAndIdCompetition(idCompetition, nom1, nom2):
+  pass
 def getNomEquipeByIdEquipe(idEquipe) : 
   infosMatch = "select nomEquipe from EQUIPE where idEquipe = "+str(idEquipe)+" ;"
   cursor.execute(infosMatch)
@@ -1640,6 +1687,49 @@ def getIdEquipeByNomEquipeAndCompetition(nomEquipe, idCompetition) :
   nomEquipe =cursor.fetchall()[0][0]
   return nomEquipe
 
+def createMatchEquipe(idCompetition, phase, nom1, nom2) :
+
+  if (nom1 and nom2) != "" : 
+    idE1= getIdEquipeByNomEquipeAndCompetition(nom1, idCompetition)
+    idE2 = getIdEquipeByNomEquipeAndCompetition(nom2, idCompetition)
+    requete = "insert into MATCH_EQUIPE(idCompetition, idEquipe1, scoreEquipe1, idEquipe2, scoreEquipe2, nbPhases) value("+str(idCompetition)+","+str(idE1)+",0,"+str(idE2)+",0,"+str(phase)+");" 
+    cursor.execute(requete)
+    db.commit()
+  elif nom1 == "" :
+    idE1= getIdEquipeByNomEquipeAndCompetition("", idCompetition)
+    idE2 = getIdEquipeByNomEquipeAndCompetition(nom2, idCompetition)    
+    requete = "insert into MATCH_EQUIPE(idCompetition, idEquipe1, scoreEquipe1, idEquipe2, scoreEquipe2, nbPhases) value("+str(idCompetition)+","+str(idE1)+",0,"+str(idE2)+",0,"+str(phase)+");" 
+    cursor.execute(requete)
+    db.commit()
+
+  else: 
+    idE1= getIdEquipeByNomEquipeAndCompetition(nom1, idCompetition)
+    idE2 = getIdEquipeByNomEquipeAndCompetition("", idCompetition)
+    requete = "insert into MATCH_EQUIPE(idCompetition, idEquipe1, scoreEquipe1, idEquipe2, scoreEquipe2, nbPhases) value("+str(idCompetition)+","+str(idE1)+",0,"+str(idE2)+",0,"+str(phase)+");" 
+    cursor.execute(requete)
+    db.commit()
+  
+
+
+def lancerCompetitionEquipe(idCompetition) : 
+  dico = dicoCompeteEquipe(idCompetition)
+  phase = 1
+  #lancerCompetitionDate(idCompetition)
+  listeNomEquipeTrier = equipeListeTrierDico(dicoCompeteEquipe(idCompetition),idCompetition)
+  puissanceDeDeux = math.floor(math.log2(len(listeNomEquipeTrier))) # renvoie 2 pour taille de 4
+
+  if 2**puissanceDeDeux != len(listeNomEquipeTrier) :
+    requete = "insert into EQUIPE(idCompetition,nomEquipe,licenceChefEquipe) value("+str(idCompetition)+",'',"+str(0)+");" 
+    cursor.execute(requete)
+    db.commit()
+    for j in range(len(listeNomEquipeTrier), 2**(puissanceDeDeux + 1)):
+      listeNomEquipeTrier.append("")
+
+
+  for i in range(int(len(listeNomEquipeTrier)/2)):
+    print(i,listeNomEquipeTrier[i], listeNomEquipeTrier[-(i+1)] )
+    createMatchEquipe(idCompetition, phase, listeNomEquipeTrier[i], listeNomEquipeTrier[-(i+1)])
+
 
 ## au début de la compète il faut générer un nombre de phases en fonction du nombre d'équipe, calculer pour chaque équipe leur classement avec la sommes des 4 joueurs et trier ça 
 ## 
@@ -1647,8 +1737,16 @@ def getIdEquipeByNomEquipeAndCompetition(nomEquipe, idCompetition) :
 ##
 ##
 
+
 if __name__ == "__main__":
+#     print(lancerCompetitionEquipe(17))
+    #print(equipeListeTrierDico(dicoCompeteEquipe(17),17))
+    # print(int(len(equipeListeTrierDico(dicoCompeteEquipe(17),17))/2))
     # print(dicoCompeteEquipe(17))
+    # print(getClassementEquipe("Les 1", 17))
+    # print(equipeListeTrierDico(dicoCompeteEquipe(17),17))  # Renvoi les noms d'équipe par ordre de classement décroissant 
+    #print(concourtNonFinitInscritTireur(20840))
+    #print(insertTireurDansCompetition(20840,1,'TIREUR'))
     
     # print(getCompetitionParOrga(4029))
 
@@ -1666,7 +1764,14 @@ if __name__ == "__main__":
     # print(getTournoisNonLancerEquipe())
     #print(getTournoisClosedParticiperSolo(2889))
     #print(getIdEquipeByNomEquipeAndCompetition("Les 1", 17))
-    # print(nomEquipeInixistantDansCompetition("Les 1", 17))
+
+    #print(nomEquipeInixistantDansCompetition("Les 1", 17))
+    #insOrgaDansBD() 
+    # insererTireurDansEquipe(5,[45243])
+    # insererTireurDansEquipe(5,[20840])
+    # insererTireurDansEquipe(5,[53089])
+    # insererTireurDansEquipe(5,[40845])
+
     
     insOrgaDansBD() 
     createCompetition('Tournois été 2025','Orléans','11','2024-05-23','4029','equipe')
