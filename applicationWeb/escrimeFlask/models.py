@@ -784,13 +784,13 @@ def getClassementApresPoule(idCompetition):
   return listeTrie
 
 def getNbParticipant(idCompetition): 
-  requete = "select count(*) from TIREUR_DANS_COMPETITIONS where idCompetition ="+ str(idCompetition) +  " and typeCompetition = 'solo' ;"
+  requete = "select count(*) from TIREUR_DANS_COMPETITIONS where idCompetition ="+ str(idCompetition) +  ";"
   cursor.execute(requete)
   l1 = cursor.fetchall()
   return l1[0][0]
 
 def getNbEquipe(idCompetition) : 
-  requete = "select count(*) from EQUIPE where idCompetition ="+ str(idCompetition) +  "  and typeCompetition = 'equipe' ;"
+  requete = "select count(*) from EQUIPE where idCompetition ="+ str(idCompetition) +  ";"
   cursor.execute(requete)
   l1 = cursor.fetchall()
   return l1[0][0]
@@ -1546,6 +1546,17 @@ def getIdEquipeByNomEquipeAndCompetition(nomEquipe, idCompetition) :
   nomEquipe =cursor.fetchall()[0][0]
   return nomEquipe
 
+def nomEquipeInixistantDansCompetition(nomEquipe, idCompetition):
+  try :
+    requete = "select nomEquipe from EQUIPE where idCompetition = "+str(idCompetition)+" and nomEquipe = '"+str(nomEquipe)+"';"
+    cursor.execute(requete)
+    cla = cursor.fetchall()
+    if len(cla) >=1 : 
+      return False
+    return True
+  except Exception :
+    return False
+
 def insererEquipeDansCompetition(idCompetition, nomEquipe, licenceChef): 
   try :
     requete = "insert into EQUIPE(idCompetition,nomEquipe,licenceChefEquipe) value("+str(idCompetition)+",'"+str(nomEquipe)+"',"+str(licenceChef)+");" 
@@ -1602,6 +1613,11 @@ def getNomEquipeByIdEquipe(idEquipe) :
   nomEquipe =cursor.fetchall()[0][0]
   return nomEquipe
 
+def getIdEquipeByNomEquipeAndCompetition(nomEquipe, idCompetition) : 
+  infosMatch = "select idEquipe from EQUIPE where nomEquipe = '"+str(nomEquipe)+"' and idCompetition = "+str(idCompetition)+";"
+  cursor.execute(infosMatch)
+  nomEquipe =cursor.fetchall()[0][0]
+  return nomEquipe
 
 
 ## au début de la compète il faut générer un nombre de phases en fonction du nombre d'équipe, calculer pour chaque équipe leur classement avec la sommes des 4 joueurs et trier ça 
@@ -1612,7 +1628,9 @@ def getNomEquipeByIdEquipe(idEquipe) :
 
 if __name__ == "__main__":
     # print(dicoCompeteEquipe(17))
+    
     # print(getCompetitionParOrga(4029))
+
     # print(inscriptionOuverteSolo())
     # print(inscriptionOuverteEquipe())
     print(isCompetitionEquipe(19))
@@ -1621,8 +1639,20 @@ if __name__ == "__main__":
 
     # print(getTournoisNonLancerEquipe())
     # print(getTournoisClosedParticiperSolo(2889))
+    print(inscriptionOuverte())
+    print(inscriptionOuverteEquipe())
+    
+    # print(getTournoisNonLancerEquipe())
+    #print(getTournoisClosedParticiperSolo(2889))
+    #print(getIdEquipeByNomEquipeAndCompetition("Les 1", 17))
+    print(nomEquipeInixistantDansCompetition("Les 1", 17))
+    
+    #insOrgaDansBD() 
+    # insererTireurDansEquipe(5,45243)
+    # insererTireurDansEquipe(5,20840)
+    # insererTireurDansEquipe(5,53089)
+    # insererTireurDansEquipe(5,40845)
 
-    # insOrgaDansBD() 
     # print(addPointMatchEquipe(1,1))
 
     #print(getNomEquipeByIdEquipe(1))
@@ -1857,6 +1887,6 @@ if __name__ == "__main__":
     # #print(getListeToucheByListLicence(affichageGenererPhaseEliminations(16, getNbPhase(16)), getNbPhase(16), 16))
     # #print(trierCeClass(getClassementPhase(16),16,5))
 
-      
-    # print(getNbParticipant(16))
+    #print(getNbParticipant(16))
+
     pass
