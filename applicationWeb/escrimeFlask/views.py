@@ -383,28 +383,6 @@ def verifInscriptionEquipe():
                            popup=True,
                            competitions=inscriptionOuverteEquipe(),
                            nbLicence=request.args.get("nbLicence"))
-        
-@app.route('/verifInscriptionEquipe')
-def verifInscriptionEquipe():
-    if estOrganisateur(int(request.args.get("nbLicence"))):
-        if insererEquipeDansCompetition(int(request.args.get("compet")), str(request.args.get("nomEquipe")), int(request.args.get("nbLicence"))):
-            idEquipe=getIdEquipeByNomEquipeAndCompetition(str(request.args.get("nomEquipe")), int(request.args.get("compet")))
-            insererTireurDansEquipe(idEquipe, [int(request.args.get("titulaire1")), int(request.args.get("titulaire2")), int(request.args.get("titulaire3")), int(request.args.get("remplacant"))])
-            return render_template('inscription_equipe.html',
-                            title='Inscription Equipe',
-                            competitions=inscriptionOuverteEquipe(),
-                            popup3=True)
-        else:
-            return render_template('inscription_equipe.html',
-                            title='Inscription Equipe',
-                            competitions=inscriptionOuverteEquipe(),
-                            popup2=True)
-    else:
-        return render_template('inscription_equipe.html',
-                           title='Inscription Equipe',
-                           popup=True,
-                           competitions=inscriptionOuverteEquipe(),
-                           nbLicence=request.args.get("nbLicence"))
 
 
 @app.route('/verifConnexionEscrimeur')

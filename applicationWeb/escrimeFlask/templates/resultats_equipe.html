@@ -66,80 +66,34 @@
             </tbody>
         </table>
     </section>
-
     {% for participant in participants %}
 
     <section class="tableau">
         <table border="0" width="100%" height="100%">
-            <tr>
-                <th>Nom</th>
-                <th>Club</th>
-                <th></th>
-                {% for i in range(participant|length) %}
-                <th>{{ i+1 }}</th>
+            <thead>
+                <tr>
+                    <th>Nom</th>
+                    <th>Club</th>
+                    <th class="black"></th>
+                    <th></th>
+                    <th>Score</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for p in participant.items() %}
+                    <tr>
+                        <td class="caseBleuClair">{{p[0]}}</td>
+                        <td class="caseBleuClair">{{p[1]}}</td>
+                        <td class="black"></td>
+                        <td class="caseBleuClair"><a> - </a></td>
+                        <td class="caseBleuClair">{{p[3]}}</td>
+                        <td class="caseBleuClair"><a> + </a></td>
+                    </tr>
                 {% endfor %}
-                <th></th>
-                <th>V</th>
-                <th>TD</th>
-                <th>TR</th>
-                <th>TD-TR</th>
-                <th></th>
-                <th>Place</th>
-            </tr>
-            {% for p in participant.items() %}
-            {# {{p}} #}
-            <tr>
-                <td class="caseBleuClair">{{ p[1][0] }} {{ p[1][1] }}</td>
-                <td class="caseBleuClair">{{ p[1][2] }}</td>
-                <td class="caseBleuFonce">{{ loop.index }}</td>
-                {% for resultat in p[1][3] %}
-                {% if resultat[1] == -1 %}
-                {% if isArbitre %}
-                {% if nbPhase == 1 %}
-                <td class="caseBleuClair" contenteditable="true"
-                    onblur="updateData(this.innerText, {{p[0][0]}}, {{resultat[0]}}, {{nbCompet}}, {{1}})"></td>
-                {% else %}
-                <td class="caseBleuClair"></td>
-                {% endif %}
-                {% else %}
-                <td class="caseBleuClair"></td>
-                {% endif %}
-                {% else %}
-                {% if resultat[1] == -2 %}
-                <td class="black"></td>
-                {% else %}
-                {% if isArbitre %}
-                {% if nbPhase == 1 %}
-                <td class="caseBleuClair" contenteditable="true"
-                    onblur="updateData(this.innerText, {{p[0][0]}}, {{resultat[0]}}, {{nbCompet}}, {{1}} )">
-                    {{resultat[1]}}</td>
-                {% else %}
-                <td class="caseBleuClair">{{ resultat[1] }}</td>
-                {% endif %}
-                {% else %}
-                <td class="caseBleuClair">{{ resultat[1] }}</td>
-                {% endif %}
-                {% endif %}
-                {% endif %}
-                {% endfor %}
-                <td class="caseBleuFonce"></td>
-                <td class="caseBleuClair">{{ p[1][6] }}</td>
-                <td class="caseBleuClair">{{ p[1][4] }}</td>
-                <td class="caseBleuClair">{{ p[1][5] }}</td>
-                <td class="caseBleuClair">{{p[1][4] - p[1][5]}}</td>
-                <td class="caseBleuFonce"></td>
-                <td class="caseRouge">{{p[1][7]}}</td>
-            </tr>
-            {% endfor %}
-
-            <tr>
-                <td class="caseBleuFonce">Touches Reçues</td>
-                <td class="caseBleuFonce"></td>
-                <td class="caseBleuFonce"></td>
-                {% for p in participant.values() %}
-                <td class="caseBleuClair">{{ p[5] }}</td>
-                {% endfor %}
-            </tr>
+                
+            </tbody>
+            
         </table>
     </section>
 
