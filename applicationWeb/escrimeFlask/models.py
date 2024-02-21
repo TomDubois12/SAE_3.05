@@ -1523,6 +1523,9 @@ def insererEquipeDansCompetition(idCompetition, nomEquipe, licenceChef):
 def insererTireurDansEquipe(idEquipe, listeLicenceTireur): 
   try :
     for licence in listeLicenceTireur : 
+      if estDansBDNational(licence): 
+        insertTireurDansBD(licence)
+    for licence in listeLicenceTireur : 
       requete = "insert into TIREUR_EQUIPE(idEquipe, licenceTireur) value("+str(idEquipe)+","+str(licence)+");" 
       cursor.execute(requete)
       db.commit()
