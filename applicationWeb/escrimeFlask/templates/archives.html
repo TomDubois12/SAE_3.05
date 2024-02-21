@@ -84,7 +84,7 @@
                 <div class="bouton">
                     {# <a href={{url_for('resultats', nbLicense=nbLicense, nbCompet=competition[0][5])}}>Consulter</a> #}
                     <form action="{{ url_for("consulterArchive")}}">
-                        <input type="text" hidden name="nbCompet" value="{{competition[0][5]}}">
+                        <input type="text" hidden name="nbCompet" value="{{competition[0][-1]}}">
                         <input type="text" hidden name="nbLicense" value="{{nbLicense}}">
                         <input type="text" hidden name="ancienNbCompet" value="{{nbCompet}}">
                         <input type="submit" value="Consulter">

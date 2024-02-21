@@ -31,12 +31,20 @@
             {% else %}
                 {% if nbLicense==0 %}
                     
-                {% else %}       
+                {% else %}
+                    {% if isCompetitionEquipe %}
+                    <li>
+                        <a href={{url_for('resultats_equipe', nbLicense=nbLicense, nbCompet=nbCompet)}}>
+                        <img src="../../static/images/trophee.png" alt="Image de trophée pour indiquer résultat">
+                        Résultats</a>
+                    </li>
+                    {% else %}       
                     <li>
                         <a href={{url_for('resultats', nbLicense=nbLicense, nbCompet=nbCompet)}}>
                         <img src="../../static/images/trophee.png" alt="Image de trophée pour indiquer résultat">
                         Résultats</a>
                     </li>
+                    {% endif %}
                 {% endif %}
             {% endif %}
             

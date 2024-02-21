@@ -57,7 +57,12 @@
                 {% endif %}
             {% endif %}
                 <div class="consulter">
-                    <a class="buttonSubmit" href={{url_for('resultats', nbLicense=nbLicense, nbCompet=competition[0][6])}}>Consulter</a>
+                    {% if competition[0][7] == "equipe" %}
+                        <a class="buttonSubmit" href={{url_for('resultats_equipe', nbLicense=nbLicense, nbCompet=competition[0][6])}}>Consulter</a>
+                    {% else %}
+                        <a class="buttonSubmit" href={{url_for('resultats', nbLicense=nbLicense, nbCompet=competition[0][6])}}>Consulter</a>
+                    {% endif %}
+                    
                 </div>
             {% if competition[0][6] in tournoisArchiver %}
                 <form action="{{url_for('boutonArchiver')}}", method="GET">

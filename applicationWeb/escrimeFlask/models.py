@@ -11,8 +11,8 @@ import mysql.connector
 #connexion au base de données
 db = mysql.connector.connect(
   host = "localhost",
-  user = "nathan",
-  password = "nathan",
+  user = "koko",
+  password = "koko",
   database = "Escrime"
 )
 #Blabla2147
@@ -381,6 +381,19 @@ def inscriptionOuverteSolo() -> list:
     res.append(cursor.fetchall())
   return res
 
+def inscriptionOuverteEquipe(): 
+  requete1 = "select * from COMPETITION where datediff(dateDebutCompetiton, CURDATE()) > 14 and estFinie = False and typeCompetition = 'equipe';"
+  cursor.execute(requete1)
+  info = cursor.fetchall()
+  res = []
+  for i in range(len(info)):
+    requete2 = """select intituleCompet,typeArme, intituleSexe,intituleCategorie, departement, dateDebutCompetiton, typeCompetition, idCompetition
+                  from COMPETITION natural join LIEU natural join ARME natural join SEXE natural join CATEGORIE
+                  where datediff(dateDebutCompetiton ,CURDATE()) > 14 and estFinie = False and idLieu ="""+ str(info[i][6]) +" and idCategorie ="+ str(info[i][7]) +" and idSexe = "+str(info[i][8]) +" and idArme = "+ str(info[i][9]) +" and typeCompetition = 'equipe' and idCompetition = "+str(info[i][0]) +";"
+    cursor.execute(requete2) 
+    res.append(cursor.fetchall())
+  return res
+
 def getOrganisateurClub():
   requete1 = "select * from ORGANISATEURDANSCLUB natural join CLUB ;"
   cursor.execute(requete1)
@@ -450,7 +463,7 @@ def getListIdCompetitionTournoisClosed():
   listeIdCompetition = []
   liste = getListTournoisAllCLosed()
   for i in range(len(liste))  : 
-    listeIdCompetition.append(liste[i][0][5])
+    listeIdCompetition.append(liste[i][0][-1])
   return listeIdCompetition
 
 def getTournoisLancer():
@@ -475,7 +488,7 @@ def getListIdCompetitionTournoisLancer():
   listeIdCompetition = []
   liste = getTournoisLancer()
   for i in range(len(liste)): 
-    listeIdCompetition.append(liste[i][0][5])
+    listeIdCompetition.append(liste[i][0][-1])
   return listeIdCompetition
 
 def getTournoisClosedParticiper(numeroLicence):
@@ -492,10 +505,7 @@ def getTournoisClosedParticiper(numeroLicence):
     res.append(cursor.fetchall())
   return res
 
-def inscriptionOuverteEquipe(): 
-  requete1 = "select * from COMPETITION where datediff(dateDebutCompetiton, CURDATE()) > 14 and estFinie = False and typeCompetition = 'equipe';"
-
-  def getTournoisClosedParticiperEquipe(numeroLicence):
+def getTournoisClosedParticiperEquipe(numeroLicence):
   requete1 = "select * from TIREUR_DANS_COMPETITIONS natural join COMPETITION where numeroLicenceTireur = " + str(numeroLicence) + " and estFinie = True and typeCompetition = 'equipe'  order by dateDebutCompetiton DESC;"
   cursor.execute(requete1)
   info = cursor.fetchall()
@@ -669,9 +679,14 @@ def getNbPhase(idCompetition) :
   else :
     return nb[0][0]
 
-def getInfoCompet(idCompetition) :
-  # intituleCompet, armes, sexe, categorie
-  requete = "select intituleCompet, typeArme, intituleSexe, intituleCategorie from COMPETITION natural join LIEU natural join ARME natural join SEXE natural join CATEGORIE where idCompetition = " + str(idCompetition) + " ;"
+def getInfoCompet(idCompetition):
+  requete = "select idArmeCompetition, idSexeCompetition,idCategorieCompetition from COMPETITION where idCompetition = '" + str(idCompetition) +"' ;"
+  cursor.execute(requete)
+  inf = cursor.fetchall()[0]
+  idArme, idSexe, idCategorie = inf[0], inf[1], inf[2]
+  
+  
+  requete = "select intituleCompet, typeArme, intituleSexe, intituleCategorie from COMPETITION natural join LIEU natural join ARME natural join SEXE natural join CATEGORIE where idCompetition = " + str(idCompetition) + " and idArme = " + str(idArme) + " and idSexe = " + str(idSexe) + " and idCategorie = " + str(idCategorie) + ";"
   cursor.execute(requete)
   return cursor.fetchall()[0]
 
@@ -1506,6 +1521,7 @@ def lancerCompetition(idCompetition):
 #############Gestion des equipes ###############################
 ################################################################
 
+
 def isEquipe(idCompetition) : 
   infosMatch = "select typeCompetition from COMPETITION where idCompetition = "+str(idCompetition)+";"
   cursor.execute(infosMatch)
@@ -1513,7 +1529,21 @@ def isEquipe(idCompetition) :
   if nomEquipe == 'equipe' : return True
   else : return False
 
+def isCompetitionEquipe(idCompetition):
+  requete = "select * from COMPETITION where idCompetition = "+str(idCompetition)+";"
+  cursor.execute(requete)
+  res=cursor.fetchall()
+  if res == [] :
+    return False
+  if res[0][-1]=='equipe':
+    return True
+  return False
+  
 
+
+
+def genererMatchEquipe(idCompetiton): 
+    pass 
 
 def dicoCompeteEquipe(idCompetition): 
     dico = dict()
@@ -1546,6 +1576,7 @@ def dicoCompeteEquipe(idCompetition):
 
     return dico
 
+
 def getClassementEquipe(nomEquipe, idCompetition) : 
   dico = dicoCompeteEquipe(idCompetition)
   try : 
@@ -1567,6 +1598,13 @@ def equipeListeTrierDico(dico, idCompetition) :
         elif i == len(listeReturn)-1 : 
           listeReturn.insert(len(listeReturn), key)
   return listeReturn
+
+
+def getIdEquipeByNomEquipeAndCompetition(nomEquipe, idCompetition) : 
+  infosMatch = "select idEquipe from EQUIPE where nomEquipe = '"+str(nomEquipe)+"' and idCompetition = "+str(idCompetition)+";"
+  cursor.execute(infosMatch)
+  nomEquipe =cursor.fetchall()[0][0]
+  return nomEquipe
 
 
 def nomEquipeInixistantDansCompetition(nomEquipe, idCompetition):
@@ -1606,6 +1644,12 @@ def insererTireurDansEquipe(idEquipe, listeLicenceTireur):
     return True
   except Exception :
     return False
+  
+def getEquipeDansCompetition(idCompetition):
+  requete = "select nomEquipe, licenceChefEquipe from EQUIPE where idCompetition = "+str(idCompetition)+";"
+  cursor.execute(requete)
+  l = cursor.fetchall()
+  return l
   
 def addPointMatchEquipe(idMatchElimination, idEquipe) : 
   infosMatch = "select * from MATCH_EQUIPE where idMatchEquipe = "+str(idMatchElimination)+" ;"
@@ -1705,25 +1749,42 @@ if __name__ == "__main__":
     #print(insertTireurDansCompetition(20840,1,'TIREUR'))
     
     # print(getCompetitionParOrga(4029))
-    print(inscriptionOuverte())
-    print(inscriptionOuverteEquipe())
+
+    # print(inscriptionOuverteSolo())
+    # print(inscriptionOuverteEquipe())
+    # print(isCompetitionEquipe(19))
+    # print(getEquipeDansCompetition(19))
+    # print(getNomTireurs(16))
+
+    # print(getTournoisNonLancerEquipe())
+    # print(getTournoisClosedParticiperSolo(2889))
+    # print(inscriptionOuverte())
+    # print(inscriptionOuverteEquipe())
     
     # print(getTournoisNonLancerEquipe())
     #print(getTournoisClosedParticiperSolo(2889))
     #print(getIdEquipeByNomEquipeAndCompetition("Les 1", 17))
+
     #print(nomEquipeInixistantDansCompetition("Les 1", 17))
     #insOrgaDansBD() 
     # insererTireurDansEquipe(5,[45243])
     # insererTireurDansEquipe(5,[20840])
     # insererTireurDansEquipe(5,[53089])
     # insererTireurDansEquipe(5,[40845])
-    print(nomEquipeInixistantDansCompetition("Les 1", 17))
+
     
-    #insOrgaDansBD() 
-    # insererTireurDansEquipe(5,45243)
-    # insererTireurDansEquipe(5,20840)
-    # insererTireurDansEquipe(5,53089)
-    # insererTireurDansEquipe(5,40845)
+    insOrgaDansBD() 
+    createCompetition('Tournois été 2025','Orléans','11','2024-05-23','4029','equipe')
+    createCompetition('Tournois été 2026','Montréal','11','2024-05-29','4029','equipe')
+    insererEquipeDansCompetition(17,"Les 1",272582)
+    insererEquipeDansCompetition(17,"Les 2",146277)
+    insererEquipeDansCompetition(17,"Les 3",39524)
+    insererEquipeDansCompetition(17,"Les 4",18062)
+    insererTireurDansEquipe(5,45243)
+    insererTireurDansEquipe(5,20840)
+    insererTireurDansEquipe(5,53089)
+    insererTireurDansEquipe(5,40845)
+    insertTireurDansCompetition(238116, 17,'arbitre')
 
     # print(addPointMatchEquipe(1,1))
 
