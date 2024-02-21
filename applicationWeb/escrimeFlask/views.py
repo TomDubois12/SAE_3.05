@@ -23,7 +23,7 @@ def connexion_escrimeur():
 def inscription():
     return render_template('inscription.html',
                            title='Inscription',
-                           competitions=inscriptionOuverte())
+                           competitions=inscriptionOuverteSolo())
     
 @app.route('/inscriptionSoloEquipe')
 def inscriptionSoloEquipe():
@@ -34,12 +34,13 @@ def inscriptionSoloEquipe():
 def inscription_arbitre():
     return render_template('inscription_arbitre.html',
                            title='Inscription Arbitre',
-                           competitions=inscriptionOuverte())
+                           competitions=inscriptionOuverteEquipe())
 
 @app.route('/inscription_equipe')
 def inscription_equipe():
     return render_template('inscription_equipe.html',
-                           title='Inscription Equipe')
+                           title='Inscription Equipe',
+                           competitions=inscriptionOuverteEquipe())
 
 @app.route('/connexion_organisateur')
 def connexion_organisateur():
@@ -99,11 +100,15 @@ def options_competitions(nbLicense):
 
 @app.route('/infoCompetition/<nbLicense>&<nbCompet>')
 def infoCompetition(nbLicense,nbCompet):
+    if isCompetitionEquipe(int(nbCompet)):
+        participants=getEquipeDansCompetition(int(nbCompet))
+    else:
+        participants=getNomTireurs(int(nbCompet))
     return render_template('infoCompetition.html',
                            title='Info_Competition',
                            isOrganisateur=estOrganisateur(int(nbLicense)),
                             nbLicense=int(nbLicense),
-                            participants=getNomTireurs(int(nbCompet)),
+                            participants=participants,
                             nomCompet=getInfoCompet(int(nbCompet)),
                             arbitres=getNomArbitre(int(nbCompet)))
 
@@ -317,18 +322,40 @@ def verifInscription():
         if insertTireurDansCompetition(int(request.args.get("nbLicence")), int(request.args.get("compet")), str(request.args.get("role"))):
             return render_template('inscription.html',
                             title='Inscription',
-                            competitions=inscriptionOuverte(),
+                            competitions=inscriptionOuverteSolo(),
                             popup3=True)
         else:
             return render_template('inscription.html',
                             title='Inscription',
-                            competitions=inscriptionOuverte(),
+                            competitions=inscriptionOuverteSolo(),
                             popup2=True)
      else:
         return render_template('inscription.html',
                            title='Inscription',
                            popup=True,
-                           competitions=inscriptionOuverte(),
+                           competitions=inscriptionOuverteSolo(),
+                           nbLicence=request.args.get("nbLicence"))
+        
+@app.route('/verifInscriptionEquipe')
+def verifInscriptionEquipe():
+    if estOrganisateur(int(request.args.get("nbLicence"))):
+        if insererEquipeDansCompetition(int(request.args.get("compet")), str(request.args.get("nomEquipe")), int(request.args.get("nbLicence"))):
+            idEquipe=getIdEquipeByNomEquipeAndCompetition(str(request.args.get("nomEquipe")), int(request.args.get("compet")))
+            insererTireurDansEquipe(idEquipe, [int(request.args.get("titulaire1")), int(request.args.get("titulaire2")), int(request.args.get("titulaire3")), int(request.args.get("remplacant"))])
+            return render_template('inscription_equipe.html',
+                            title='Inscription Equipe',
+                            competitions=inscriptionOuverteEquipe(),
+                            popup3=True)
+        else:
+            return render_template('inscription_equipe.html',
+                            title='Inscription Equipe',
+                            competitions=inscriptionOuverteEquipe(),
+                            popup2=True)
+    else:
+        return render_template('inscription_equipe.html',
+                           title='Inscription Equipe',
+                           popup=True,
+                           competitions=inscriptionOuverteEquipe(),
                            nbLicence=request.args.get("nbLicence"))
 
 
@@ -462,7 +489,8 @@ def creationCompetition():
     arme=request.args.get("arme")
     coeff=request.args.get("coeff")
     nbLicense=request.args.get("nbLicense")
-    createCompetition(nom,lieu,categorie,sexe,arme,coeff,date,nbLicense)
+    typeCompetition=request.args.get("typeCompetition")
+    createCompetition(nom,lieu,categorie,sexe,arme,coeff,date,nbLicense,typeCompetition)
     return redirect('options_competitions/'+str(nbLicense))
 
 

@@ -40,6 +40,7 @@ insert into CLUB(nomClub) values
     ('EscrimeClubPatay');
 
 insert into ORGANISATEUR(nomOrganisateur,prenomOrganisateur,licenseOrganisateur) values
+    ("Forfeit","Forfeit",0),
     ("Roger","Bertrand",241354),
     ("Wolfart","Patrick",254612),
     ("Duboise","Tomy",734212),
@@ -113,17 +114,14 @@ insert into ORGANISATEURCOMPETITION(idCompetition, licenseOrganisateur) values
     (14,254612),
     (15,734212);
 
-insert into EQUIPE(idCompetition, nomEquipe, licenceChefEquipe) value 
-    (17,"Les 1", 4029),
-    (17,"Les 2", 241387),
-    (17,"Les 3", 605),
-    (17,"Les 4", 31646);
+-- insert into EQUIPE(idCompetition, nomEquipe, licenceChefEquipe) value 
+--     (17,"Les 1", 4029),
+--     (17,"Les 2", 241387),
+--     (17,"Les 4", 31646);
 
 -- insert into TIREUR_EQUIPE(idEquipe, licenceTireur) value 
---     (5, 45243),
---     (5, 20840),
---     (5, 53089),
---     (5, 40845);
+--     (1, 45243),
+--     (1, 40845);
 
 -- insert into TIREUR_DANS_COMPETITIONS(numeroLicenceTireur,idCompetition)values 
 --     (315486,1),
