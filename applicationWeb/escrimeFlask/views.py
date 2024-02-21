@@ -25,6 +25,17 @@ def inscription():
                            title='Inscription',
                            competitions=inscriptionOuverte())
 
+@app.route('/inscription_arbitre')
+def inscription_arbitre():
+    return render_template('inscription_arbitre.html',
+                           title='Inscription Arbitre',
+                           competitions=inscriptionOuverte())
+
+@app.route('/inscription_equipe')
+def inscription_equipe():
+    return render_template('inscription_equipe.html',
+                           title='Inscription Equipe')
+
 @app.route('/connexion_organisateur')
 def connexion_organisateur():
     return render_template('connexion_organisateur.html',
@@ -203,8 +214,96 @@ def resultats(nbLicense,nbCompet):
                             phaseFinie=phasesFinie(int(nbCompet),int(getNbPhase(int(nbCompet)))),
                             nbTotalPhase=nbTotalPhase)
 
-##Fonctions de vérification
+@app.route('/resultats_equipe/<nbLicense>&<nbCompet>')
+def resultats_equipe(nbLicense,nbCompet):
+    listArbitres= getNumeroLicenceArbitres(int(nbCompet))
+    listLicense=affichageGenererPhaseEliminations(int(nbCompet), getNbPhase(int(nbCompet)))
+    licence=[]
+    licence.append(listLicense[3])
+    licence.append(listLicense[4])
+    licence.append(listLicense[5])
+    licence.append(listLicense[6])
+    lancer=False
+    if int(nbCompet) in getListIdCompetitionTournoisLancer():
+        lancer=True
+        # print('\033[93m' + str(lancer) + '\033[0m')
+    if int(nbCompet) in getListIdCompetitionTournoisClosed():
+        lancer=True
+        # print('\033[93m' + str(lancer) + '\033[0m')
+    # print('\033[93m' + str(lancer) + '\033[0m')
+    print('\033[92m' + str(classementFinale(int(nbCompet),getNbPhase(int(nbCompet)))) + '\033[0m')
+    if lancer:
+        if int(nbLicense) in listArbitres:
+            return render_template('resultats_equipe.html',
+                            title='Résultats Equipe',
+                            isOrganisateur=estOrganisateur(int(nbLicense)),
+                            nbCompet=int(nbCompet),
+                            nbLicense=int(nbLicense),
+                            participants=InfosPouleNumLicenceArbitre(int(nbCompet),int(nbLicense)),
+                            isArbitre=True,
+                            nbPhase=getNbPhase(int(nbCompet)),
+                            matchs=getNomPrenomMatchElimination(int(nbCompet)),
+                            scores=getListeToucheByListLicence(licence, int(getNbPhase(int(nbCompet))), int(nbCompet)),
+                            lancer=lancer,
+                            classements=classementFinale(int(nbCompet),getNbPhase(int(nbCompet))),
+                            joueur=False,
+                            nomCompet=getInfoCompet(int(nbCompet)),
+                            arbitres=getNomArbitre(int(nbCompet)),
+                            phaseFinie=phasesFinie(int(nbCompet),int(getNbPhase(int(nbCompet)))))
+        
+        elif estParticipant(int(nbLicense), int(nbCompet)):
+            return render_template('resultats_equipe.html',
+                                title='Résultats Equipe',
+                                isOrganisateur=estOrganisateur(int(nbLicense)),
+                                nbCompet=int(nbCompet),
+                                nbLicense=int(nbLicense),
+                                participants=InfosPouleNumLicence(int(nbCompet),int(nbLicense)),
+                                isArbitre=False,
+                                nbPhase=getNbPhase(int(nbCompet)),
+                                matchs=getNomPrenomMatchElimination(int(nbCompet)),
+                                scores=getListeToucheByListLicence(licence, int(getNbPhase(int(nbCompet))), int(nbCompet)),
+                                lancer=lancer,
+                                classements=classementFinale(int(nbCompet),getNbPhase(int(nbCompet))),
+                                classementPerso=monClassementAMoi(int(nbCompet), int(nbLicense),getNbPhase(int(nbCompet))),
+                                joueur=True,
+                                nomCompet=getInfoCompet(int(nbCompet)),
+                                arbitres=getNomArbitre(int(nbCompet)),
+                                phaseFinie=phasesFinie(int(nbCompet),int(getNbPhase(int(nbCompet)))))
+        else:
+            return render_template('resultats_equipe.html',
+                                title='Résultats Equipe',
+                                isOrganisateur=estOrganisateur(int(nbLicense)),
+                                nbCompet=int(nbCompet),
+                                nbLicense=int(nbLicense),
+                                participants=InfosPouleSansLicence(int(nbCompet)),
+                                isArbitre=False,
+                                nbPhase=getNbPhase(int(nbCompet)),
+                                matchs=getNomPrenomMatchElimination(int(nbCompet)),
+                                scores=getListeToucheByListLicence(licence, int(getNbPhase(int(nbCompet))), int(nbCompet)),
+                                lancer=lancer,
+                                classements=classementFinale(int(nbCompet),getNbPhase(int(nbCompet))),
+                                joueur=False,
+                                nomCompet=getInfoCompet(int(nbCompet)),
+                                arbitres=getNomArbitre(int(nbCompet)),
+                                phaseFinie=phasesFinie(int(nbCompet),int(getNbPhase(int(nbCompet)))))
+    else:
+        return render_template('resultats_equipe.html',
+                            title='Résultats Equipe',
+                            isOrganisateur=estOrganisateur(int(nbLicense)),
+                            nbCompet=int(nbCompet),
+                            nbLicense=int(nbLicense),
+                            participants=[],
+                            isArbitre=False,
+                            nbPhase=getNbPhase(int(nbCompet)),
+                            matchs=getNomPrenomMatchElimination(int(nbCompet)),
+                            scores=getListeToucheByListLicence(licence, int(getNbPhase(int(nbCompet))), int(nbCompet)),
+                            lancer=lancer,
+                            joueur=False,
+                            nomCompet=getInfoCompet(int(nbCompet)),
+                            arbitres=getNomArbitre(int(nbCompet)),
+                            phaseFinie=phasesFinie(int(nbCompet),int(getNbPhase(int(nbCompet)))))
 
+##Fonctions de vérification
 
 @app.route('/verifInscription')
 def verifInscription():

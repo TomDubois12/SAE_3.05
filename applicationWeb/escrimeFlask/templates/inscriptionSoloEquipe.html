@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block linkcss %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/inscriptionSoloEquipe.css')}}">
+{% endblock %}
+{% block header %}
+    {% include "partials/_header2.html" %}
+{% endblock %}
+{% block main %}
+    <div class="infos"> 
+        <h2> S'inscrire à une compétition</h2>
+        <p> Veuillez sélectionner votre type de compétition</p>
+        <p>Attention : pour s'inscrire en équipe, il faut être organisateur. Si vous ne l'êtes pas, Rapprochez vous de votre organisateur.</p>
+
+    </div>
+    <div class="haut">
+        <a href={{url_for('inscription')}}>
+        <div class="inscription">
+            <img src="{{url_for('static', filename='images/epeeGris.png')}}" alt="Épée grise d'escrime">
+            <p>S’INSCRIRE A UNE COMPETITION EN SOLO</p>
+        </div>
+<<<<<<< HEAD
+        <a href={{url_for('inscription_equipe')}}>
+<<<<<<< HEAD
+=======
+>>>>>>> 293e74f (page d'inscription en solo ou en equipe)
+=======
+>>>>>>> 518d2fa (page d'inscription en solo ou en equipe)
+        <a href={{url_for('connexion_escrimeur')}}>
+        <div class="connection">
+            <img src="{{url_for('static', filename='images/epeeGris.png')}}" alt="Épée grise d'escrime">
+            <p>S’INSCRIRE A UNE COMPETITION EN EQUIPE</p>
+        </div>
+        </a>
+    </div>
+    <p class="info">En savoir plus sur l’escrime ? Voici <a href="/information">un petit lien</a> pour vous aider</p>
+{% endblock %}
