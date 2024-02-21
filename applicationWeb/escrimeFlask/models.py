@@ -282,7 +282,7 @@ def concourtNonFinitInscritTireur(licenceTireur) :
   info = cursor.fetchall()
   res = []
   for i in range(len(info)):
-    requete2 = """select intituleCompet,typeArme, intituleSexe,intituleCategorie, departement, dateDebutCompetiton, idCompetition, typeCompetition
+    requete2 = """select intituleCompet,typeArme, intituleSexe,intituleCategorie, departement, dateDebutCompetiton, typeCompetition, idCompetition
                   from COMPETITION natural join LIEU natural join ARME natural join SEXE natural join CATEGORIE
                   where estFinie = False and idLieu ="""+ str(info[i][7]) +" and idCategorie ="+ str(info[i][8]) +" and idSexe = "+str(info[i][9]) +" and idArme = "+ str(info[i][10]) +" and idCompetition = "+str(info[i][0]) +";"
     cursor.execute(requete2) 
@@ -297,7 +297,7 @@ def concourtNonFinitInscritArbitre(licenceArbitre) :
   info = cursor.fetchall()
   res = []
   for i in range(len(info)):
-    requete2 = """select intituleCompet,typeArme, intituleSexe,intituleCategorie, departement, dateDebutCompetiton, idCompetition, typeCompetition
+    requete2 = """select intituleCompet,typeArme, intituleSexe,intituleCategorie, departement, dateDebutCompetiton, typeCompetition, idCompetition
                   from COMPETITION natural join LIEU natural join ARME natural join SEXE natural join CATEGORIE
                   where estFinie = False and idLieu ="""+ str(info[i][7]) +" and idCategorie ="+ str(info[i][8]) +" and idSexe = "+str(info[i][9]) +" and idArme = "+ str(info[i][10]) +" and idCompetition = "+str(info[i][0]) +";"
     cursor.execute(requete2) 
@@ -346,13 +346,25 @@ def inscriptionOuverte() -> list:
   info = cursor.fetchall()
   res = []
   for i in range(len(info)):
-    requete2 = """select intituleCompet,typeArme, intituleSexe,intituleCategorie, departement, dateDebutCompetiton, idCompetition, typeCompetition
+    requete2 = """select intituleCompet,typeArme, intituleSexe,intituleCategorie, departement, dateDebutCompetiton, typeCompetition, idCompetition
                   from COMPETITION natural join LIEU natural join ARME natural join SEXE natural join CATEGORIE
                   where datediff(dateDebutCompetiton ,CURDATE()) > 14 and estFinie = False and idLieu ="""+ str(info[i][6]) +" and idCategorie ="+ str(info[i][7]) +" and idSexe = "+str(info[i][8]) +" and idArme = "+ str(info[i][9]) +" and idCompetition = "+str(info[i][0]) +";"
     cursor.execute(requete2) 
     res.append(cursor.fetchall())
   return res
 
+def inscriptionOuverteSolo() -> list:
+  requete1 = "select * from COMPETITION where datediff(dateDebutCompetiton, CURDATE()) > 14 and estFinie = False and typeCompetition = 'solo';"
+  cursor.execute(requete1)
+  info = cursor.fetchall()
+  res = []
+  for i in range(len(info)):
+    requete2 = """select intituleCompet,typeArme, intituleSexe,intituleCategorie, departement, dateDebutCompetiton, typeCompetition, idCompetition
+                  from COMPETITION natural join LIEU natural join ARME natural join SEXE natural join CATEGORIE
+                  where datediff(dateDebutCompetiton ,CURDATE()) > 14 and estFinie = False and idLieu ="""+ str(info[i][6]) +" and idCategorie ="+ str(info[i][7]) +" and idSexe = "+str(info[i][8]) +" and idArme = "+ str(info[i][9]) +" and typeCompetition = 'equipe' and idCompetition = "+str(info[i][0]) +";"
+    cursor.execute(requete2) 
+    res.append(cursor.fetchall())
+  return res
 
 def getOrganisateurClub():
   requete1 = "select * from ORGANISATEURDANSCLUB natural join CLUB ;"
@@ -377,7 +389,7 @@ def estOrganisateur(numeroLicence : int) :
 def infoCompetitionOuverte(info):
   res = []
   for i in range(len(info)):
-      requete2 = """select intituleCompet,typeArme, intituleSexe,intituleCategorie, departement, idCompetition, typeCompetition
+      requete2 = """select intituleCompet,typeArme, intituleSexe,intituleCategorie, departement , typeCompetition , idCompetition
                     from COMPETITION natural join LIEU natural join ARME natural join SEXE natural join CATEGORIE
                     where datediff(dateDebutCompetiton ,CURDATE()) > 14 and estFinie = False and idLieu ="""+ str(info[i][7]) +" and idCategorie ="+ str(info[i][8]) +" and idSexe = "+str(info[i][9]) +" and idArme = "+ str(info[i][10]) +" and idCompetition = "+str(info[i][0]) +";"
       cursor.execute(requete2) 
@@ -393,7 +405,7 @@ def infoCompetitionFinie(info):
   res = []
   for i in range(len(info)):
     
-    requete2 = """select intituleCompet,typeArme, intituleSexe,intituleCategorie, departement, idCompetition, typeCompetition
+    requete2 = """select intituleCompet,typeArme, intituleSexe,intituleCategorie, departement, typeCompetition , idCompetition
                  from COMPETITION natural join LIEU natural join ARME natural join SEXE natural join CATEGORIE
                 where estFinie = True and idLieu ="""+ str(info[i][6]) +" and idCategorie ="+ str(info[i][7]) +" and idSexe = "+str(info[i][8]) +" and idArme = "+ str(info[i][9]) +" and idCompetition = "+str(info[i][0]) +"  order by dateDebutCompetiton DESC;"
     cursor.execute(requete2) 
@@ -404,7 +416,7 @@ def infoCompetitionOuverte(info):
   res = []
   for i in range(len(info)):
     
-    requete2 = """select intituleCompet,typeArme, intituleSexe,intituleCategorie, departement, idCompetition, typeCompetition
+    requete2 = """select intituleCompet,typeArme, intituleSexe,intituleCategorie, departement, typeCompetition, idCompetition
                  from COMPETITION natural join LIEU natural join ARME natural join SEXE natural join CATEGORIE
                 where estFinie = False and idLieu ="""+ str(info[i][6]) +" and idCategorie ="+ str(info[i][7]) +" and idSexe = "+str(info[i][8]) +" and idArme = "+ str(info[i][9]) +" and idCompetition = "+str(info[i][0]) +"  order by dateDebutCompetiton DESC;"
     cursor.execute(requete2) 
@@ -458,7 +470,7 @@ def getTournoisClosedParticiper(numeroLicence):
   res = []
   for i in range(len(info)):
     
-    requete2 = """select intituleCompet,typeArme, intituleSexe,intituleCategorie, departement, idCompetition, typeCompetition
+    requete2 = """select intituleCompet,typeArme, intituleSexe,intituleCategorie, departement, typeCompetition, idCompetition
                  from COMPETITION natural join LIEU natural join ARME natural join SEXE natural join CATEGORIE
                 where estFinie = True and idLieu ="""+ str(info[i][7]) +" and idCategorie ="+ str(info[i][8]) +" and idSexe = "+str(info[i][9]) +" and idArme = "+ str(info[i][10]) +" and idCompetition = "+str(info[i][0]) +"  order by dateDebutCompetiton DESC ;"
     cursor.execute(requete2) 
@@ -472,7 +484,7 @@ def getTournoisClosedParticiperEquipe(numeroLicence):
   res = []
   for i in range(len(info)):
     
-    requete2 = """select intituleCompet,typeArme, intituleSexe,intituleCategorie, departement, idCompetition, typeCompetition
+    requete2 = """select intituleCompet,typeArme, intituleSexe,intituleCategorie, departement, typeCompetition, idCompetition
                  from COMPETITION natural join LIEU natural join ARME natural join SEXE natural join CATEGORIE
                 where estFinie = True and idLieu ="""+ str(info[i][7]) +" and idCategorie ="+ str(info[i][8]) +" and idSexe = "+str(info[i][9]) +" and idArme = "+ str(info[i][10]) +" and typeCompetition = '"+str(info[i][11])+"' and idCompetition = "+str(info[i][0]) +"  order by dateDebutCompetiton DESC ;"
     cursor.execute(requete2) 
@@ -486,9 +498,9 @@ def getTournoisClosedParticiperSolo(numeroLicence):
   res = []
   for i in range(len(info)):
     
-    requete2 = """select intituleCompet,typeArme, intituleSexe,intituleCategorie, departement, idCompetition, typeCompetition
+    requete2 = """select intituleCompet,typeArme, intituleSexe,intituleCategorie, departement, typeCompetition , idCompetition
                  from COMPETITION natural join LIEU natural join ARME natural join SEXE natural join CATEGORIE
-                where estFinie = True and idLieu ="""+ str(info[i][7]) +" and idCategorie ="+ str(info[i][8]) +" and idSexe = "+str(info[i][9]) +" and idArme = "+ str(info[i][10]) +" and typeCompetition = '"+str(info[i][11])+"' and idCompetition = "+str(info[i][0]) +"  order by dateDebutCompetiton DESC ;"
+                where estFinie = True and idLieu ="""+ str(info[i][7]) +" and idCategorie ="+ str(info[i][8]) +" and idSexe = "+str(info[i][9]) +" and idArme = "+ str(info[i][10]) +" and typeCompetition = 'solo' and idCompetition = "+str(info[i][0]) +"  order by dateDebutCompetiton DESC ;"
     cursor.execute(requete2) 
     res.append(cursor.fetchall())
   return res
@@ -751,10 +763,17 @@ def getClassementApresPoule(idCompetition):
   return listeTrie
 
 def getNbParticipant(idCompetition): 
-  requete = "select count(*) from TIREUR_DANS_COMPETITIONS where idCompetition ="+ str(idCompetition) +  "  ;"
+  requete = "select count(*) from TIREUR_DANS_COMPETITIONS where idCompetition ="+ str(idCompetition) +  " and typeCompetition = 'solo' ;"
   cursor.execute(requete)
   l1 = cursor.fetchall()
   return l1[0][0]
+
+def getNbEquipe(idCompetition) : 
+  requete = "select count(*) from EQUIPE where idCompetition ="+ str(idCompetition) +  "  and typeCompetition = 'equipe' ;"
+  cursor.execute(requete)
+  l1 = cursor.fetchall()
+  return l1[0][0]
+
 
 def getClassementPhase(idCompetition): 
   requete = "select numeroLicenceTireur from TIREUR_DANS_POULE natural join POULE where idCompetition ="+ str(idCompetition) +  " order by nbVictoire DESC, TDMTR DESC  ;"
