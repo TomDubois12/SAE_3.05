@@ -280,7 +280,21 @@ def concourtNonFinitInscritTireur(licenceTireur) :
   requete1 = "select * from TIREUR_DANS_COMPETITIONS natural join COMPETITION where numeroLicenceTireur = " + str(licenceTireur) + ";"
   cursor.execute(requete1)
   info = cursor.fetchall()
+
   res = []
+  for i in range(len(info)):
+    requete2 = """select intituleCompet,typeArme, intituleSexe,intituleCategorie, departement, dateDebutCompetiton, typeCompetition, idCompetition
+                  from COMPETITION natural join LIEU natural join ARME natural join SEXE natural join CATEGORIE
+                  where estFinie = False and idLieu ="""+ str(info[i][7]) +" and idCategorie ="+ str(info[i][8]) +" and idSexe = "+str(info[i][9]) +" and idArme = "+ str(info[i][10]) +" and idCompetition = "+str(info[i][0]) +";"
+    cursor.execute(requete2) 
+    ligneAj = cursor.fetchall()
+    if ligneAj != [] :
+      res.append(ligneAj)
+
+  
+  requeteEquipe = "select idCompetition, licenceTireur, intituleCompet, saison,estFInie, coefficientCompetition, dateDebutCompetiton, idLieuCompetition, idCategorieCompetition, idSexeCompetition, idArmeCompetition, typeCompetition from COMPETITION natural join EQUIPE natural join TIREUR_EQUIPE WHERE licenceTireur = " + str(licenceTireur) + ";"
+  cursor.execute(requeteEquipe)
+  info = cursor.fetchall()
   for i in range(len(info)):
     requete2 = """select intituleCompet,typeArme, intituleSexe,intituleCategorie, departement, dateDebutCompetiton, typeCompetition, idCompetition
                   from COMPETITION natural join LIEU natural join ARME natural join SEXE natural join CATEGORIE
@@ -1511,6 +1525,29 @@ def dicoCompeteEquipe(idCompetition):
 
     return dico
 
+def getClassementEquipe(nomEquipe, idCompetition) : 
+  dico = dicoCompeteEquipe(idCompetition)
+  try : 
+    return dico[nomEquipe][3]
+  except Exception : 
+    return 0
+  
+def equipeListeTrierDico(dico, idCompetition) : 
+  listeReturn = []
+  for key in dico.keys() :
+    score = dico[key][3]
+    if len(listeReturn) == 0 :
+      listeReturn.append(key)
+    else : 
+      for i in range(len(listeReturn)) : 
+        if score > getClassementEquipe(listeReturn[i], idCompetition) : 
+          listeReturn.insert(i, key)
+          break
+        elif i == len(listeReturn)-1 : 
+          listeReturn.insert(len(listeReturn), key)
+  return listeReturn
+
+
 def nomEquipeInixistantDansCompetition(nomEquipe, idCompetition):
   try :
     requete = "select nomEquipe from EQUIPE where idCompetition = "+str(idCompetition)+" and nomEquipe = '"+str(nomEquipe)+"';"
@@ -1534,6 +1571,8 @@ def insererEquipeDansCompetition(idCompetition, nomEquipe, licenceChef):
 def insererTireurDansEquipe(idEquipe, listeLicenceTireur): 
   try :
     for licence in listeLicenceTireur : 
+
+
       if estDansBDNational(licence): 
         insertTireurDansBD(licence)
     for licence in listeLicenceTireur : 
@@ -1579,6 +1618,12 @@ def getIdEquipeByNomEquipeAndCompetition(nomEquipe, idCompetition) :
   return nomEquipe
 
 
+def lancerCompetitionEquipe(idCompetition) : 
+  dico = dicoCompeteEquipe(idCompetition)
+  phase = 1
+  for key in dico.keys() :
+    pass
+
 ## au début de la compète il faut générer un nombre de phases en fonction du nombre d'équipe, calculer pour chaque équipe leur classement avec la sommes des 4 joueurs et trier ça 
 ## 
 ##
@@ -1587,17 +1632,21 @@ def getIdEquipeByNomEquipeAndCompetition(nomEquipe, idCompetition) :
 
 if __name__ == "__main__":
     # print(dicoCompeteEquipe(17))
+    # print(getClassementEquipe("Les 1", 17))
+    # print(equipeListeTrierDico(dicoCompeteEquipe(17),17))  # Renvoi les noms d'équipe par ordre de classement décroissant 
+    #print(concourtNonFinitInscritTireur(20840))
+    #print(insertTireurDansCompetition(20840,1,'TIREUR'))
     # print(getCompetitionParOrga(4029))
     # print(getTournoisNonLancerEquipe())
     #print(getTournoisClosedParticiperSolo(2889))
 
     #print(getIdEquipeByNomEquipeAndCompetition("Les 1", 17))
-    print(nomEquipeInixistantDansCompetition("Les 1", 17))
+    #print(nomEquipeInixistantDansCompetition("Les 1", 17))
     #insOrgaDansBD() 
-    # insererTireurDansEquipe(5,45243)
-    # insererTireurDansEquipe(5,20840)
-    # insererTireurDansEquipe(5,53089)
-    # insererTireurDansEquipe(5,40845)
+    # insererTireurDansEquipe(5,[45243])
+    # insererTireurDansEquipe(5,[20840])
+    # insererTireurDansEquipe(5,[53089])
+    # insererTireurDansEquipe(5,[40845])
     # print(addPointMatchEquipe(1,1))
 
     #print(getNomEquipeByIdEquipe(1))
