@@ -1034,6 +1034,7 @@ def maFonctionTropBelle(nbPhase, idCompetition,listeLicMatchACreer):
 
 def genererPhaseEliminations(idCompetition, nbPhase) :
     listeTireurClasser = getClassementApresPoule(idCompetition)[:16]
+    print(listeTireurClasser)
     pat = [1,16,5,12,7,10,4,13,3,14,8,9,6,11,2,15]
     huit = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
     for i in range(16) : 
@@ -1045,27 +1046,46 @@ def genererPhaseEliminations(idCompetition, nbPhase) :
     quart = [0,0,0,0,0,0,0,0]
     listeVictorieux = getListeGagnantMatchElimination(2, idCompetition)
     for i in range(8) : 
-      if huit[i*2] in listeVictorieux : 
+      if huit[i*2] != 0 and huit[i*2] in listeVictorieux : 
         quart[i] = huit[i*2]
       else :
-        quart[i] = huit[i*2+1]
+        if huit[i*2] != 0 :
+          quart[i] = huit[i*2+1]
+        else :
+          quart[i] = huit[i*2]
 
     demie = [0,0,0,0]
     listeVictorieux = getListeGagnantMatchElimination(3, idCompetition)
     for i in range(4) : 
-      if quart[i*2] in listeVictorieux : 
+      if quart[i*2] != 0 and quart[i*2] in listeVictorieux : 
         demie[i] = quart[i*2]
       else :
-        demie[i] = quart[i*2+1]
+        if quart[i*2] != 0 :
+          demie[i] = quart[i*2+1]
+        else :
+          demie[i] = quart[i*2]
 
     finale = [0,0]
     listeVictorieux = getListeGagnantMatchElimination(4, idCompetition)
     for i in range(2) : 
-      if demie[i*2] in listeVictorieux : 
+      if demie[i*2] != 0 and demie[i*2] in listeVictorieux : 
         finale[i] = demie[i*2]
       else :
-        finale[i] = demie[i*2+1]
+        if demie[i*2] != 0 :
+          finale[i] = demie[i*2+1]
+        else :
+          finale[i] = demie[i*2]
 
+
+
+    # if len(listeTireurClasser) > 16 :
+    #   nbPhase = 2 
+    # elif len(listeTireurClasser) > 8:
+    #   nbPhase = 3
+    # elif len(listeTireurClasser) > 4:
+    #   nbPhase = 4
+    # elif len(listeTireurClasser) > 2:
+    #   nbPhase = 5
     match nbPhase : 
       case 2 : 
         maFonctionTropBelle(2, idCompetition,huit)
@@ -1080,6 +1100,7 @@ def genererPhaseEliminations(idCompetition, nbPhase) :
 
 def affichageGenererPhaseEliminations(idCompetition, nbPhase) :
     listeTireurClasser = getClassementApresPoule(idCompetition)[:16]
+    print(listeTireurClasser)
     pat = [1,16,5,12,7,10,4,13,3,14,8,9,6,11,2,15]
     huit = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
     for i in range(16) : 
@@ -1090,27 +1111,40 @@ def affichageGenererPhaseEliminations(idCompetition, nbPhase) :
 
     quart = [0,0,0,0,0,0,0,0]
     listeVictorieux = getListeGagnantMatchElimination(2, idCompetition)
+    print(listeVictorieux)
     for i in range(8) : 
-      if huit[i*2] in listeVictorieux : 
+      if huit[i*2] != 0 and huit[i*2] in listeVictorieux : 
         quart[i] = huit[i*2]
       else :
-        quart[i] = huit[i*2+1]
+        if huit[i*2] != 0 :
+          quart[i] = huit[i*2+1]
+        else :
+          quart[i] = huit[i*2]
 
     demie = [0,0,0,0]
     listeVictorieux = getListeGagnantMatchElimination(3, idCompetition)
+    print(listeVictorieux)
     for i in range(4) : 
-      if quart[i*2] in listeVictorieux : 
+      if quart[i*2] != 0 and quart[i*2] in listeVictorieux : 
         demie[i] = quart[i*2]
-      else :
+      elif quart[i*2+1] != 0 and quart[i*2+1] in listeVictorieux :
         demie[i] = quart[i*2+1]
+      else :
+          demie[i] = 0
 
     finale = [0,0]
     listeVictorieux = getListeGagnantMatchElimination(4, idCompetition)
+    print(listeVictorieux)
     for i in range(2) : 
-      if demie[i*2] in listeVictorieux : 
+      if demie[i*2] != 0 and demie[i*2] in listeVictorieux : 
         finale[i] = demie[i*2]
       else :
-        finale[i] = demie[i*2+1]
+        if demie[i*2] != 0 :
+          finale[i] = demie[i*2+1]
+        else :
+          finale[i] = demie[i*2]
+
+
     
     return (pat,listeVictorieux,listeTireurClasser,huit,quart,demie,finale)
 
@@ -1412,7 +1446,6 @@ def createPoule(idCompetition,nbPoule) :
 def insTireurDansPoule(infosTireur, idCompetition) : 
   nbTireur = len(infosTireur)
   listeIdPoule = getListeidPouleCompetition(idCompetition)
-  # print(listeIdPoule)
   ind = 0 #ind  idPoule
   inc = 1 
   i = 0  # ind infoTireur
@@ -1427,7 +1460,7 @@ def insTireurDansPoule(infosTireur, idCompetition) :
       pass
     ind += inc 
     if ind >= len(listeIdPoule) : 
-      ind -= 2  
+      ind = len(listeIdPoule)-1
       inc = -1
     elif ind == -1 : 
       inc = 1
@@ -1540,11 +1573,6 @@ def isCompetitionEquipe(idCompetition):
   return False
   
 
-
-
-def genererMatchEquipe(idCompetiton): 
-    pass 
-
 def dicoCompeteEquipe(idCompetition): 
     dico = dict()
     requete = "select * from EQUIPE where idCompetition = "+str(idCompetition)+";"
@@ -1652,35 +1680,76 @@ def getEquipeDansCompetition(idCompetition):
   return l
   
 def addPointMatchEquipe(idCompetition, nbPhase,nomPoint,nomLose,) : 
-  getIdMatchEliminationByNomsAndIdCompetition(idCompetition,nomPoint,nomLose)
-  infosMatch = "select * from MATCH_EQUIPE where idMatchEquipe = "+str(idMatchElimination)+" ;"
+  idMatch = getIdMatchEliminationByNomsAndIdCompetition(idCompetition,nbPhase,nomPoint,nomLose)
+  infosMatch = "select idEquipe1, idEquipe2 from MATCH_EQUIPE where idMatchEquipe = "+str(idMatch)+" ;"
   cursor.execute(infosMatch)
-  cla =cursor.fetchall()[0]
-  if idEquipe == cla[1] : 
-    reqPointActuel = "select scoreEquipe1 from MATCH_EQUIPE where idMatchEquipe = "+str(idMatchElimination)+";"
+  cla =cursor.fetchall()
+  
+  idEquipe1 = cla[0][0]
+  idEquipe2 = cla[0][1]
+  nom1 = getNomEquipeByIdEquipe(idEquipe1)
+  nom2 = getNomEquipeByIdEquipe(idEquipe2)
+  if nom1 == nomPoint : 
+    reqPointActuel = "select scoreEquipe1 from MATCH_EQUIPE where idMatchEquipe = "+str(idMatch)+";"
     cursor.execute(reqPointActuel)
     pointActuel =cursor.fetchall()[0][0]
-    requete = "update MATCH_EQUIPE set scoreEquipe1 = " + str(pointActuel + 1) + "  where idMatchEquipe = "+str(idMatchElimination) +";"      
-    cursor.execute(requete)
-    db.commit()
-    return True
-  elif idEquipe == cla[3] :
-    reqPointActuel = "select scoreEquipe2 from MATCH_EQUIPE where idMatchEquipe = "+str(idMatchElimination)+";"
+    if pointActuel < 45:
+      requete = "update MATCH_EQUIPE set scoreEquipe1 = " + str(pointActuel + 1) + "  where idMatchEquipe = "+str(idMatch) +";"      
+      cursor.execute(requete)
+      db.commit()
+      return True
+    return False
+  elif nom2 == nomPoint :
+    reqPointActuel = "select scoreEquipe2 from MATCH_EQUIPE where idMatchEquipe = "+str(idMatch)+";"
     cursor.execute(reqPointActuel)
     pointActuel =cursor.fetchall()[0][0]
-    requete = "update MATCH_EQUIPE set scoreEquipe2 = " + str(pointActuel + 1) + "  where idMatchEquipe = "+str(idMatchElimination) +";"      
-    cursor.execute(requete)
-    db.commit()
-    return True
+    if pointActuel < 45:
+      requete = "update MATCH_EQUIPE set scoreEquipe2 = " + str(pointActuel + 1) + "  where idMatchEquipe = "+str(idMatch) +";"      
+      cursor.execute(requete)
+      db.commit()
+      return True
+    return False
+  return False
+
+def subPointMatchEquipe(idCompetition, nbPhase,nomPoint,nomLose,) : 
+  idMatch = getIdMatchEliminationByNomsAndIdCompetition(idCompetition,nbPhase,nomPoint,nomLose)
+  infosMatch = "select idEquipe1, idEquipe2 from MATCH_EQUIPE where idMatchEquipe = "+str(idMatch)+" ;"
+  cursor.execute(infosMatch)
+  cla =cursor.fetchall()
+  
+  idEquipe1 = cla[0][0]
+  idEquipe2 = cla[0][1]
+  nom1 = getNomEquipeByIdEquipe(idEquipe1)
+  nom2 = getNomEquipeByIdEquipe(idEquipe2)
+  if nom1 == nomPoint : 
+    reqPointActuel = "select scoreEquipe1 from MATCH_EQUIPE where idMatchEquipe = "+str(idMatch)+";"
+    cursor.execute(reqPointActuel)
+    pointActuel =cursor.fetchall()[0][0]
+    if pointActuel > 0:
+      requete = "update MATCH_EQUIPE set scoreEquipe1 = " + str(pointActuel - 1) + "  where idMatchEquipe = "+str(idMatch) +";"      
+      cursor.execute(requete)
+      db.commit()
+      return True
+    return False
+  elif nom2 == nomPoint :
+    reqPointActuel = "select scoreEquipe2 from MATCH_EQUIPE where idMatchEquipe = "+str(idMatch)+";"
+    cursor.execute(reqPointActuel)
+    pointActuel =cursor.fetchall()[0][0]
+    if pointActuel > 0:
+      requete = "update MATCH_EQUIPE set scoreEquipe2 = " + str(pointActuel - 1) + "  where idMatchEquipe = "+str(idMatch) +";"      
+      cursor.execute(requete)
+      db.commit()
+      return True
+    return False
   return False
 
 def getIdMatchEliminationByNomsAndIdCompetition(idCompetition, nbPhase, nom1, nom2):
   id1 = getIdEquipeByNomEquipeAndCompetition(nom1, idCompetition)
   id2 = getIdEquipeByNomEquipeAndCompetition(nom2, idCompetition)
-  requete = "select idMatchEquipe from MATCH_EQUIPE where idCompetition = "+str(idCompetition)+" and nbPahses = "+str(nbPhase)+" and ((idEquipe1 OR idEquipe2) = "+str(id1)+" OR (idEquipe1 OR idEquipe2) = "+str(id2)+")  ;" 
+  requete = "select idMatchEquipe from MATCH_EQUIPE where idCompetition = "+str(idCompetition)+" and nbPhases = "+str(nbPhase)+" and ((idEquipe2 = "+str(id1)+" OR idEquipe1 = "+str(id1)+") OR (idEquipe2 = "+str(id2)+" OR idEquipe1 = "+str(id2)+"))  ;" 
   cursor.execute(requete)
   res = cursor.fetchall()[0][0]
-  print(res)
+  return res
 
 def maFonctionPlusBelleQueLautre( idCompetition ):
   #Renvoie pour une competition dans la vue d'arbitre tout les matchs
@@ -1692,7 +1761,20 @@ def maFonctionPlusBelleQueLautre( idCompetition ):
     #nom Equipe1, nomEquipe2, nomClub Equipe1, nomClub equipe2, score equipe1, score equipe2
     listeDesMatch.append([getNomEquipeByIdEquipe(match[2]),getNomEquipeByIdEquipe(match[4]),getNomClubByIdEquipe(match[2]),getNomClubByIdEquipe(match[4]),match[3],match[5]])
   return listeDesMatch
-#
+
+def maFonctionPlusBelleQueLautreAvecPhase( idCompetition , nbPhase):
+  #Renvoie pour une competition dans la vue d'arbitre tout les matchs
+  listeDesMatch = []
+  requete = "select * from MATCH_EQUIPE where idCompetition = "+str(idCompetition)+" and nbPhases = "+str(nbPhase)+";" 
+  cursor.execute(requete)
+  res = cursor.fetchall()
+  for match in res :
+    #nom Equipe1, nomEquipe2, nomClub Equipe1, nomClub equipe2, score equipe1, score equipe2
+    listeDesMatch.append([getNomEquipeByIdEquipe(match[2]),getNomEquipeByIdEquipe(match[4]),getNomClubByIdEquipe(match[2]),getNomClubByIdEquipe(match[4]),match[3],match[5]])
+  return listeDesMatch
+
+
+
 def getNomClubByIdEquipe(idEquipe) :
   requete = "select licenceChefEquipe from EQUIPE where idEquipe = "+str(idEquipe)+";" 
   cursor.execute(requete)
@@ -1717,8 +1799,9 @@ def getNomEquipeByIdEquipe(idEquipe) :
 def getIdEquipeByNomEquipeAndCompetition(nomEquipe, idCompetition) : 
   infosMatch = "select idEquipe from EQUIPE where nomEquipe = '"+str(nomEquipe)+"' and idCompetition = "+str(idCompetition)+";"
   cursor.execute(infosMatch)
-  nomEquipe =cursor.fetchall()[0][0]
-  return nomEquipe
+  res =cursor.fetchall()[0][0]
+  print(nomEquipe,idCompetition,res)
+  return res
 
 def createMatchEquipe(idCompetition, phase, nom1, nom2) :
 
@@ -1765,15 +1848,11 @@ def lancerCompetitionEquipe(idCompetition) :
     createMatchEquipe(idCompetition, phase, listeNomEquipeTrier[i], listeNomEquipeTrier[-(i+1)])
 
 
-## au début de la compète il faut générer un nombre de phases en fonction du nombre d'équipe, calculer pour chaque équipe leur classement avec la sommes des 4 joueurs et trier ça 
-## 
-##
-##
-##
-
-
 if __name__ == "__main__":
-    print(maFonctionPlusBelleQueLautre(17))
+    print(affichageGenererPhaseEliminations(25,2))
+    #print(getNbPhase(17))
+    # print(subPointMatchEquipe(17,1,"Les 4","Les 2"))
+    # print(maFonctionPlusBelleQueLautre(17))
     #print(getNomClubByIdEquipe(1))
 #     print(lancerCompetitionEquipe(17))
     #print(equipeListeTrierDico(dicoCompeteEquipe(17),17))
@@ -1783,7 +1862,7 @@ if __name__ == "__main__":
     # print(equipeListeTrierDico(dicoCompeteEquipe(17),17))  # Renvoi les noms d'équipe par ordre de classement décroissant 
     #print(concourtNonFinitInscritTireur(20840))
     #print(insertTireurDansCompetition(20840,1,'TIREUR'))
-    
+    # getIdMatchEliminationByNomsAndIdCompetition(17,1,'Les 1','Les 2')
     # print(getCompetitionParOrga(4029))
 
     # print(inscriptionOuverteSolo())
