@@ -10,8 +10,8 @@ import mysql.connector
 #connexion au base de données
 db = mysql.connector.connect(
   host = "localhost",
-  user = "root",
-  password = "1234",
+  user = "koko",
+  password = "koko",
   database = "Escrime"
 )
 #Blabla2147
@@ -517,14 +517,14 @@ def getCompetitionParOrga(numLicence):
     #print(inscriptionOuverte())
     # print(concourtInscritLicence(521531))
     # print(getOrganisateurClub())
-    requete2 = """select intituleCompet,typeArme, intituleSexe,intituleCategorie, departement, dateDebutCompetiton, idCompetition
+    requete2 = """select intituleCompet,typeArme, intituleSexe,intituleCategorie, departement, dateDebutCompetiton, idCompetition, typeCompetition
                  from COMPETITION natural join LIEU natural join ARME natural join SEXE natural join CATEGORIE
                 where  idLieu ="""+ str(info[i][7]) +" and idCategorie ="+ str(info[i][8]) +" and idSexe = "+str(info[i][9]) +" and idArme = "+ str(info[i][10]) +" and idCompetition = "+str(info[i][0]) +" order by dateDebutCompetiton DESC;"
     cursor.execute(requete2) 
     res.append(cursor.fetchall())
   return res
 
-def createCompetition(nomCompete, lieu, categorie, sexe, arme, coef, date, licenceOrga, typeCompetition = "individuel" ) : 
+def createCompetition(nomCompete, lieu, categorie, sexe, arme, coef, date, licenceOrga, typeCompetition = "solo" ) : 
   if getIdLieuByNom(lieu) is None : setNewLieuByNom(lieu)
   requete1 = """insert into COMPETITION(intituleCompet,saison,estFinie,coefficientCompetition,dateDebutCompetiton,idLieuCompetition,idCategorieCompetition,idSexeCompetition,idArmeCompetition,typeCompetition) 
                 values ('""" + str(nomCompete) + "'," + str((date)[0:4]) + "," + "False" + "," + str(coef) + ",'" + str((date)) + "'," + str(getIdLieuByNom(lieu)) + "," + str(getIdCategorieByNom(categorie))+ "," + str(getIdSexeByNom(sexe)) +"," + str(getIdArmeByNom(arme)) + ", '" + str(typeCompetition)+"' );"""
