@@ -211,13 +211,14 @@ create table TIREUR_EQUIPE(
 );
 
 create table MATCH_EQUIPE(
+    idMatchEquipe int not null auto_increment,
     idCompetition int not null,
     idEquipe1 int not null,
     scoreEquipe1 int not null,
     idEquipe2 int not null,
     scoreEquipe2 int not null,
     nbPhases int not null,
-    primary key (idCompetition, idEquipe1, idEquipe2, nbPhases),
+    primary key (idMatchEquipe),
     Foreign key (idEquipe1) references EQUIPE(idEquipe),
     Foreign key (idEquipe2) references EQUIPE(idEquipe)
 );
