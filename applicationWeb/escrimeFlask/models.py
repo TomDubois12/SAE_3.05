@@ -11,8 +11,8 @@ import mysql.connector
 #connexion au base de données
 db = mysql.connector.connect(
   host = "localhost",
-  user = "koko",
-  password = "koko",
+  user = "nathan",
+  password = "nathan",
   database = "Escrime"
 )
 #Blabla2147
@@ -1651,7 +1651,8 @@ def getEquipeDansCompetition(idCompetition):
   l = cursor.fetchall()
   return l
   
-def addPointMatchEquipe(idMatchElimination, idEquipe) : 
+def addPointMatchEquipe(idCompetition, nbPhase,nomPoint,nomLose,) : 
+  getIdMatchEliminationByNomsAndIdCompetition(idCompetition,nomPoint,nomLose)
   infosMatch = "select * from MATCH_EQUIPE where idMatchEquipe = "+str(idMatchElimination)+" ;"
   cursor.execute(infosMatch)
   cla =cursor.fetchall()[0]
@@ -1673,8 +1674,40 @@ def addPointMatchEquipe(idMatchElimination, idEquipe) :
     return True
   return False
 
-def getIdMatchEliminationByNomsAndIdCompetition(idCompetition, nom1, nom2):
-  pass
+def getIdMatchEliminationByNomsAndIdCompetition(idCompetition, nbPhase, nom1, nom2):
+  id1 = getIdEquipeByNomEquipeAndCompetition(nom1, idCompetition)
+  id2 = getIdEquipeByNomEquipeAndCompetition(nom2, idCompetition)
+  requete = "select idMatchEquipe from MATCH_EQUIPE where idCompetition = "+str(idCompetition)+" and nbPahses = "+str(nbPhase)+" and ((idEquipe1 OR idEquipe2) = "+str(id1)+" OR (idEquipe1 OR idEquipe2) = "+str(id2)+")  ;" 
+  cursor.execute(requete)
+  res = cursor.fetchall()[0][0]
+  print(res)
+
+def maFonctionPlusBelleQueLautre( idCompetition ):
+  #Renvoie pour une competition dans la vue d'arbitre tout les matchs
+  listeDesMatch = []
+  requete = "select * from MATCH_EQUIPE where idCompetition = "+str(idCompetition)+";" 
+  cursor.execute(requete)
+  res = cursor.fetchall()
+  for match in res :
+    #nom Equipe1, nomEquipe2, nomClub Equipe1, nomClub equipe2, score equipe1, score equipe2
+    listeDesMatch.append([getNomEquipeByIdEquipe(match[2]),getNomEquipeByIdEquipe(match[4]),getNomClubByIdEquipe(match[2]),getNomClubByIdEquipe(match[4]),match[3],match[5]])
+  return listeDesMatch
+#
+def getNomClubByIdEquipe(idEquipe) :
+  requete = "select licenceChefEquipe from EQUIPE where idEquipe = "+str(idEquipe)+";" 
+  cursor.execute(requete)
+  licenceOrga = cursor.fetchall()[0][0]
+
+  requete2 = "select idClub from ORGANISATEURDANSCLUB where licenseOrganisateur = "+str(licenceOrga)+";" 
+  cursor.execute(requete2)
+  idClub = cursor.fetchall()[0][0]
+
+
+  requete3 = "select nomClub from CLUB where idClub = "+str(idClub)+";" 
+  cursor.execute(requete3)
+  res = cursor.fetchall()[0][0]
+  return res
+
 def getNomEquipeByIdEquipe(idEquipe) : 
   infosMatch = "select nomEquipe from EQUIPE where idEquipe = "+str(idEquipe)+" ;"
   cursor.execute(infosMatch)
@@ -1709,7 +1742,9 @@ def createMatchEquipe(idCompetition, phase, nom1, nom2) :
     cursor.execute(requete)
     db.commit()
   
-
+def generePhaseSuivanteEquipe(idCompetition, listeNomVictoire):
+  for i in range(len(listeNomVictoire)/2):
+    createMatchEquipe(idCompetition,getNbPhase(idCompetition)+1,listeNomVictoire[i],listeNomVictoire[i+1])
 
 def lancerCompetitionEquipe(idCompetition) : 
   dico = dicoCompeteEquipe(idCompetition)
@@ -1727,7 +1762,6 @@ def lancerCompetitionEquipe(idCompetition) :
 
 
   for i in range(int(len(listeNomEquipeTrier)/2)):
-    print(i,listeNomEquipeTrier[i], listeNomEquipeTrier[-(i+1)] )
     createMatchEquipe(idCompetition, phase, listeNomEquipeTrier[i], listeNomEquipeTrier[-(i+1)])
 
 
@@ -1739,6 +1773,8 @@ def lancerCompetitionEquipe(idCompetition) :
 
 
 if __name__ == "__main__":
+    print(maFonctionPlusBelleQueLautre(17))
+    #print(getNomClubByIdEquipe(1))
 #     print(lancerCompetitionEquipe(17))
     #print(equipeListeTrierDico(dicoCompeteEquipe(17),17))
     # print(int(len(equipeListeTrierDico(dicoCompeteEquipe(17),17))/2))
@@ -1773,18 +1809,18 @@ if __name__ == "__main__":
     # insererTireurDansEquipe(5,[40845])
 
     
-    insOrgaDansBD() 
-    createCompetition('Tournois été 2025','Orléans','11','2024-05-23','4029','equipe')
-    createCompetition('Tournois été 2026','Montréal','11','2024-05-29','4029','equipe')
-    insererEquipeDansCompetition(17,"Les 1",272582)
-    insererEquipeDansCompetition(17,"Les 2",146277)
-    insererEquipeDansCompetition(17,"Les 3",39524)
-    insererEquipeDansCompetition(17,"Les 4",18062)
-    insererTireurDansEquipe(5,45243)
-    insererTireurDansEquipe(5,20840)
-    insererTireurDansEquipe(5,53089)
-    insererTireurDansEquipe(5,40845)
-    insertTireurDansCompetition(238116, 17,'arbitre')
+    # insOrgaDansBD() 
+    # createCompetition('Tournois été 2025','Orléans','11','2024-05-23','4029','equipe')
+    # createCompetition('Tournois été 2026','Montréal','11','2024-05-29','4029','equipe')
+    # insererEquipeDansCompetition(17,"Les 1",272582)
+    # insererEquipeDansCompetition(17,"Les 2",146277)
+    # insererEquipeDansCompetition(17,"Les 3",39524)
+    # insererEquipeDansCompetition(17,"Les 4",18062)
+    # insererTireurDansEquipe(5,45243)
+    # insererTireurDansEquipe(5,20840)
+    # insererTireurDansEquipe(5,53089)
+    # insererTireurDansEquipe(5,40845)
+    # insertTireurDansCompetition(238116, 17,'arbitre')
 
     # print(addPointMatchEquipe(1,1))
 
