@@ -54,6 +54,7 @@ def profil(nbLicense,nbCompet):
     return render_template('profil.html',
                            title='Mon profil',
                            isOrganisateur=estOrganisateur(int(nbLicense)),
+                           isCompetitionEquipe=isCompetitionEquipe(int(nbCompet)),
                             nbLicense=int(nbLicense),
                             nbCompet=int(nbCompet),
                             informations=getProfil(int(nbLicense)),
@@ -64,6 +65,7 @@ def accueil(nbLicense,nbCompet):
     return render_template('accueil.html',
                            title='Accueil',
                            isOrganisateur=estOrganisateur(int(nbLicense)),
+                           isCompetitionEquipe=isCompetitionEquipe(int(nbCompet)),
                            nbCompet=int(nbCompet),
                            nbLicense=int(nbLicense),
                            nomCompet=getInfoCompetition(int(nbCompet))[0][1],
@@ -74,6 +76,7 @@ def classement_national(nbLicense,nbCompet):
     return render_template('classement_national.html',
                            title='Classement_National',
                            isOrganisateur=estOrganisateur(int(nbLicense)),
+                           isCompetitionEquipe=isCompetitionEquipe(int(nbCompet)),
                            nbCompet=int(nbCompet),
                            nbLicense=int(nbLicense))
 
@@ -82,6 +85,7 @@ def archives(nbLicense,nbCompet):
     return render_template('archives.html',
                            title='Archives',
                            isOrganisateur=estOrganisateur(int(nbLicense)),
+                           isCompetitionEquipe=isCompetitionEquipe(int(nbCompet)),
                            nbLicense=int(nbLicense),
                            nbCompet=int(nbCompet),
                            villes=getListeComiteReg(),
@@ -154,6 +158,7 @@ def resultats(nbLicense,nbCompet):
             return render_template('resultats.html',
                             title='Résultats',
                             isOrganisateur=estOrganisateur(int(nbLicense)),
+                            isCompetitionEquipe=isCompetitionEquipe(int(nbCompet)),
                             nbCompet=int(nbCompet),
                             nbLicense=int(nbLicense),
                             participants=InfosPouleNumLicenceArbitre(int(nbCompet),int(nbLicense)),
@@ -173,6 +178,7 @@ def resultats(nbLicense,nbCompet):
             return render_template('resultats.html',
                                 title='Résultats',
                                 isOrganisateur=estOrganisateur(int(nbLicense)),
+                                isCompetitionEquipe=isCompetitionEquipe(int(nbCompet)),
                                 nbCompet=int(nbCompet),
                                 nbLicense=int(nbLicense),
                                 participants=InfosPouleNumLicence(int(nbCompet),int(nbLicense)),
@@ -192,6 +198,7 @@ def resultats(nbLicense,nbCompet):
             return render_template('resultats.html',
                                 title='Résultats',
                                 isOrganisateur=estOrganisateur(int(nbLicense)),
+                                isCompetitionEquipe=isCompetitionEquipe(int(nbCompet)),
                                 nbCompet=int(nbCompet),
                                 nbLicense=int(nbLicense),
                                 participants=InfosPouleSansLicence(int(nbCompet)),
@@ -210,6 +217,7 @@ def resultats(nbLicense,nbCompet):
         return render_template('resultats.html',
                             title='Résultats',
                             isOrganisateur=estOrganisateur(int(nbLicense)),
+                            isCompetitionEquipe=isCompetitionEquipe(int(nbCompet)),
                             nbCompet=int(nbCompet),
                             nbLicense=int(nbLicense),
                             participants=[],
@@ -247,6 +255,7 @@ def resultats_equipe(nbLicense,nbCompet):
             return render_template('resultats_equipe.html',
                             title='Résultats Equipe',
                             isOrganisateur=estOrganisateur(int(nbLicense)),
+                            isCompetitionEquipe=isCompetitionEquipe(int(nbCompet)),
                             nbCompet=int(nbCompet),
                             nbLicense=int(nbLicense),
                             participants=InfosPouleNumLicenceArbitre(int(nbCompet),int(nbLicense)),
@@ -265,6 +274,7 @@ def resultats_equipe(nbLicense,nbCompet):
             return render_template('resultats_equipe.html',
                                 title='Résultats Equipe',
                                 isOrganisateur=estOrganisateur(int(nbLicense)),
+                                isCompetitionEquipe=isCompetitionEquipe(int(nbCompet)),
                                 nbCompet=int(nbCompet),
                                 nbLicense=int(nbLicense),
                                 participants=InfosPouleNumLicence(int(nbCompet),int(nbLicense)),
@@ -283,6 +293,7 @@ def resultats_equipe(nbLicense,nbCompet):
             return render_template('resultats_equipe.html',
                                 title='Résultats Equipe',
                                 isOrganisateur=estOrganisateur(int(nbLicense)),
+                                isCompetitionEquipe=isCompetitionEquipe(int(nbCompet)),
                                 nbCompet=int(nbCompet),
                                 nbLicense=int(nbLicense),
                                 participants=InfosPouleSansLicence(int(nbCompet)),
@@ -300,6 +311,7 @@ def resultats_equipe(nbLicense,nbCompet):
         return render_template('resultats_equipe.html',
                             title='Résultats Equipe',
                             isOrganisateur=estOrganisateur(int(nbLicense)),
+                            isCompetitionEquipe=isCompetitionEquipe(int(nbCompet)),
                             nbCompet=int(nbCompet),
                             nbLicense=int(nbLicense),
                             participants=[],
@@ -365,7 +377,6 @@ def verifConnexionEscrimeur():
         concoursTireur = concourtNonFinitInscritTireur(int(request.args.get("nbLicense")))
         concoursArbitre = concourtNonFinitInscritArbitre(int(request.args.get("nbLicense")))
         concours=concoursTireur+concoursArbitre
-
         if concours!=[]:
             return render_template('connexion_escrimeur.html',
                                title='Connexion_escrimeur',
@@ -391,6 +402,16 @@ def consulterArchive():
     nbLicense = request.args.get("nbLicense")
     nbCompet = request.args.get("nbCompet")
     ancienNbCompet = request.args.get("ancienNbCompet")
+    nbPartipant = getNbParticipant(int(nbCompet))
+    nbTotalPhase = nbPartipant
+    
+    trouve = False
+    i=0
+    while not trouve:
+        if nbPartipant <= 2**i:
+            nbTotalPhase = i
+            trouve = True
+        i+=1
     listLicense=affichageGenererPhaseEliminations(int(nbCompet), getNbPhase(int(nbCompet)))
     licence=[]
     licence.append(listLicense[3])
@@ -400,6 +421,7 @@ def consulterArchive():
     return render_template('resultats.html',
                                 title='Résultats',
                                 isOrganisateur=estOrganisateur(int(nbLicense)),
+                                isCompetitionEquipe=isCompetitionEquipe(int(nbCompet)),
                                 nbCompet=int(nbCompet),
                                 nbLicense=int(nbLicense),
                                 participants=InfosPouleSansLicence(int(nbCompet)),
@@ -413,7 +435,8 @@ def consulterArchive():
                                 nomCompet=getInfoCompet(int(nbCompet)),
                                 arbitres=getNomArbitre(int(nbCompet)),
                                 phaseFinie=phasesFinie(int(nbCompet),int(getNbPhase(int(nbCompet)))),
-                                ancienNbCompet=ancienNbCompet)
+                                ancienNbCompet=ancienNbCompet,
+                                nbTotalPhase=nbTotalPhase)
 
 @app.route('/traitement')
 def traitement():
@@ -440,6 +463,7 @@ def rechercheArchives():
     return render_template('archives.html',
                            title='Archives',
                            isOrganisateur=estOrganisateur(int(nbLicense)),
+                           isCompetitionEquipe=isCompetitionEquipe(int(nbCompet)),
                            nbLicense=int(nbLicense),
                             nbCompet=int(nbCompet),
                            villes=getListeComiteReg(),
@@ -468,6 +492,7 @@ def rechercheClassement():
     return render_template('classement_national.html',
                            title='Classement_National',
                            isOrganisateur=estOrganisateur(int(nbLicense)),
+                           isCompetitionEquipe=isCompetitionEquipe(int(nbCompet)),
                            nbLicense=int(nbLicense),
                            nbCompet=int(nbCompet),
                            classement=getClassementNationnal(arme,sexe,categorie))
