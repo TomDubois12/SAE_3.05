@@ -2,19 +2,18 @@
 
 {% block linkcss %}
 <link rel="stylesheet" href="{{ url_for('static', filename='css/resultats.css')}}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/pageImprimerResultat.css')}}">
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Average" rel="stylesheet">
 <script src="{{ url_for('static',filename='js/updateData.js')}}"> </script>
 {% endblock %}
 
-{% block header %}
-{% include "partials/_header3.html" %}
-{% endblock %}
 
 {% block main %}
 {% if lancer %}
-<section class="sectionnomCompet">
+<section class="sectionnomCompet">  
 <h3 class="titreCompet">Compétition : </h3> 
 <p class="nomCompet">
 {{nomCompet[0]}} 
@@ -22,12 +21,20 @@
 {{nomCompet[3]}}
 </p>
 </section>
-<form action="{{ url_for("pageImprimerResultat")}}">
-    <input type="text" hidden name="nbCompet" value="{{nbCompet}}">
-    <input type="text" hidden name="nbLicense" value="{{nbLicense}}">
-    <input type="text" hidden name="ancienNbCompet" value="{{nbCompet}}">
-    <input type="submit" value="Visualiser la page avant impression">
-</form>
+<script> 
+function maFunction(){
+    let monBouton = document.querySelector(".boutonImprimer");
+    monBouton.style.display = "none";
+    setTimeout(reAfficherBouton, 2000);
+    print();
+}
+function reAfficherBouton(){
+    let monBouton = document.querySelector(".boutonImprimer");
+    monBouton.style.display = "block";
+}
+</script>
+<button class="boutonImprimer" type="button" onclick="maFunction()">Imprimer</button>
+
 <h3 class="titreArbitres">Arbitre(s) de la compétition : </h3>
 <ul>
     {% for arbitre in arbitres %}
@@ -37,7 +44,6 @@
     <main>
         <div class="petit_titre">
             <h3>Tableau de votre poule :</h3>
-            <img class="petite_epee" src="{{url_for('static', filename='images/epeeBleu.png')}}" alt="Epée bleu d'escrime">
         </div>
         {% for participant in participants %}
             
@@ -116,7 +122,6 @@
         {# <button class="boutonRefresh" onclick="window.location.reload()">Rafraîchir les score du tableau</button> #}
         <div class="petit_titre">
             <h3>Arbre de phase éliminatoire  :</h3>
-            <img class="petite_epee" src="{{url_for('static', filename='images/epeeBleu.png')}}" alt="Epée bleu d'escrime">
         </div>
             <div class="tournament">
             {% if isArbitre %}
@@ -132,56 +137,186 @@
                 </form>
             {% endif %}
             {# <button class="boutonRefresh" onclick="window.location.reload()">Rafraîchir les score de l'arbre</button> #}
-                <div class="tournament__grid">
-                {% for i in range(nbTotalPhase-1) %}
-                        {% if i == 0 %}
-                            <div class="tournament__round tournament__round--first-round">
-                        {% else %}
-                            <div class="tournament__round">
-                        {% endif %}
-                            {% for j in range(0,((nbTotalPhase-i)**2)-1,2) %}
+            <div class="tournament__grid">
+                <!-- tournament__round 1/8 -->
+                {% if nbPhase >= 2 %}
+                    <div class="tournament__round tournament__round--first-round">
+                    <div class="tournament__match">
+                        <button class="tournament__match__team" onclick="changerScore({{matchs[0][0][2]}}, {{nbCompet}}, {{nbPhase}})">{{matchs[0][0][0]}} {{matchs[0][0][1]}} | {{scores[0][0]}}</button>
+                        <button class="tournament__match__team" onclick="changerScore({{matchs[0][1][2]}}, {{nbCompet}}, {{nbPhase}})">{{matchs[0][1][0]}} {{matchs[0][1][1]}} | {{scores[0][1]}}</button>
+                    </div>
+                    <div class="tournament__match">
+                        <button class="tournament__match__team" onclick="changerScore({{matchs[0][2][2]}}, {{nbCompet}}, {{nbPhase}})">{{matchs[0][2][0]}} {{matchs[0][2][1]}} | {{scores[0][2]}}</button>
+                        <button class="tournament__match__team" onclick="changerScore({{matchs[0][3][2]}}, {{nbCompet}}, {{nbPhase}})">{{matchs[0][3][0]}} {{matchs[0][3][1]}} | {{scores[0][3]}}</button>
+                    </div>
+                    <div class="tournament__match">
+                        <button class="tournament__match__team" onclick="changerScore({{matchs[0][4][2]}}, {{nbCompet}}, {{nbPhase}})">{{matchs[0][4][0]}} {{matchs[0][4][1]}} | {{scores[0][4]}}</button>
+                        <button class="tournament__match__team" onclick="changerScore({{matchs[0][5][2]}}, {{nbCompet}}, {{nbPhase}})">{{matchs[0][5][0]}} {{matchs[0][5][1]}} | {{scores[0][5]}}</button>
+                    </div>
+                    <div class="tournament__match">
+                        <button class="tournament__match__team" onclick="changerScore({{matchs[0][6][2]}}, {{nbCompet}}, {{nbPhase}})">{{matchs[0][6][0]}} {{matchs[0][6][1]}} | {{scores[0][6]}}</button>
+                        <button class="tournament__match__team" onclick="changerScore({{matchs[0][7][2]}}, {{nbCompet}}, {{nbPhase}})">{{matchs[0][7][0]}} {{matchs[0][7][1]}} | {{scores[0][7]}}</button>
+                    </div>
+                    <div class="tournament__match">
+                        <button class="tournament__match__team" onclick="changerScore({{matchs[0][8][2]}}, {{nbCompet}}, {{nbPhase}})">{{matchs[0][8][0]}} {{matchs[0][8][1]}} | {{scores[0][8]}}</button>
+                        <button class="tournament__match__team" onclick="changerScore({{matchs[0][9][2]}}, {{nbCompet}}, {{nbPhase}})">{{matchs[0][9][0]}} {{matchs[0][9][1]}} | {{scores[0][9]}}</button>
+                    </div>
+                    <div class="tournament__match">
+                        <button class="tournament__match__team" onclick="changerScore({{matchs[0][10][2]}}, {{nbCompet}}, {{nbPhase}})">{{matchs[0][10][0]}} {{matchs[0][10][1]}} | {{scores[0][10]}}</button>
+                        <button class="tournament__match__team" onclick="changerScore({{matchs[0][11][2]}}, {{nbCompet}}, {{nbPhase}})">{{matchs[0][11][0]}} {{matchs[0][11][1]}} | {{scores[0][11]}}</button>
+                    </div>
+                    <div class="tournament__match">
+                        <button class="tournament__match__team" onclick="changerScore({{matchs[0][12][2]}}, {{nbCompet}}, {{nbPhase}})">{{matchs[0][12][0]}} {{matchs[0][12][1]}} | {{scores[0][12]}}</button>
+                        <button class="tournament__match__team" onclick="changerScore({{matchs[0][13][2]}}, {{nbCompet}}, {{nbPhase}})">{{matchs[0][13][0]}} {{matchs[0][13][1]}} | {{scores[0][13]}}</button>
+                    </div>
+                    <div class="tournament__match">
+                        <button class="tournament__match__team" onclick="changerScore({{matchs[0][14][2]}}, {{nbCompet}}, {{nbPhase}})">{{matchs[0][14][0]}} {{matchs[0][14][1]}} | {{scores[0][14]}}</button>
+                        <button class="tournament__match__team" onclick="changerScore({{matchs[0][15][2]}}, {{nbCompet}}, {{nbPhase}})">{{matchs[0][15][0]}} {{matchs[0][15][1]}} | {{scores[0][15]}}</button>
+                    </div>
+                    </div>
+                {% else %}
+                    <div class="tournament__round tournament__round--first-round">
+                    <div class="tournament__match">
+                        <button class="tournament__match__team"></button>
+                        <button class="tournament__match__team"></button>
+                    </div>
+                    <div class="tournament__match">
+                        <button class="tournament__match__team"></button>
+                        <button class="tournament__match__team"></button>
+                    </div>
+                    <div class="tournament__match">
+                        <button class="tournament__match__team"></button>
+                        <button class="tournament__match__team"></button>
+                    </div>
+                    <div class="tournament__match">
+                        <button class="tournament__match__team"></button>
+                        <button class="tournament__match__team"></button>
+                    </div>
+                    <div class="tournament__match">
+                        <button class="tournament__match__team"></button>
+                        <button class="tournament__match__team"></button>
+                    </div>
+                    <div class="tournament__match">
+                        <button class="tournament__match__team"></button>
+                        <button class="tournament__match__team"></button>
+                    </div>
+                    <div class="tournament__match">
+                        <button class="tournament__match__team"></button>
+                        <button class="tournament__match__team"></button>
+                    </div>
+                    <div class="tournament__match">
+                        <button class="tournament__match__team"></button>
+                        <button class="tournament__match__team"></button>
+                    </div>
+                    </div>
+                {% endif %}
                             
-                            <div class="tournament__match">
-                            {% if nbPhase >= i+2 %}
-                                <button class="tournament__match__team" onclick="changerScore({{matchs[i][j][2]}}, {{nbCompet}}, {{nbPhase}})">{{matchs[i][j][0]}} {{matchs[i][j][1]}} | {{scores[i][j]}}</button>
-                                <button class="tournament__match__team" onclick="changerScore({{matchs[i][j+1][2]}}, {{nbCompet}}, {{nbPhase}})">{{matchs[i][j+1][0]}} {{matchs[i][j+1][1]}} | {{scores[i][j+1]}}</button>
-                            {% else %}
-                                <button class="tournament__match__team"></button>
-                                <button class="tournament__match__team"></button>
-                            {% endif %}
-                            </div>
-                            {% endfor %}  
-                        </div>
-                {% endfor %}
-                        <div class="tournament__round tournament__round--final">
-                        {% if condition %}{% endif %}
-                        
-                        <div class="tournament__match">
-                            {% if nbPhase >= nbTotalPhase+2 %}
-                            <button class="tournament__match__team" onclick="changerScore({{matchs[nbTotalPhase-1][0][2]}}, {{nbCompet}}, {{nbPhase}})">{{matchs[nbTotalPhase-1][0][0]}} {{matchs[nbTotalPhase-1][0][j]}} | {{scores[nbTotalPhase-1][0]}}</button>
-                            <button class="tournament__match__team" onclick="changerScore({{matchs[nbTotalPhase-1][1][2]}}, {{nbCompet}}, {{nbPhase}})">{{matchs[nbTotalPhase-1][1][0]}} {{matchs[nbTotalPhase-1][1][1]}} | {{scores[nbTotalPhase-1][1]}}</button>
-                            {% else %}
-                            <button class="tournament__match__team"></button>
-                            <button class="tournament__match__team"></button>
-                            {% endif %}
-                        </div>
-                        </div>
-                        <div class="tournament__round tournament__round--winner">
-                        <div class="tournament__match">
-                            {% if nbPhase >= nbTotalPhase+2 %}
-                            <button class="tournament__match__team">{{matchs[nbTotalPhase-1][0][0]}} {{matchs[nbTotalPhase-1][0][1]}}</button>
-                            {% else %}
-                            <button class="tournament__match__team"></button>    
-                            {% endif %}
-                        </div>
-                        </div>
-                </div>
+                <!-- tournament__round 1/4 -->
+                {% if nbPhase >= 3 %}
+                    <div class="tournament__round tournament__round--first-round">
+                    <div class="tournament__match">
+                        <button class="tournament__match__team" onclick="changerScore({{matchs[1][0][2]}}, {{nbCompet}}, {{nbPhase}})">{{matchs[1][0][0]}} {{matchs[1][0][1]}} | {{scores[1][0]}}</button>
+                        <button class="tournament__match__team" onclick="changerScore({{matchs[1][1][2]}}, {{nbCompet}}, {{nbPhase}})">{{matchs[1][1][0]}} {{matchs[1][1][1]}} | {{scores[1][1]}}</button>
+                    </div>
+                    <div class="tournament__match">
+                        <button class="tournament__match__team" onclick="changerScore({{matchs[1][2][2]}}, {{nbCompet}}, {{nbPhase}})">{{matchs[1][2][0]}} {{matchs[1][2][1]}} | {{scores[1][2]}}</button>
+                        <button class="tournament__match__team" onclick="changerScore({{matchs[1][3][2]}}, {{nbCompet}}, {{nbPhase}})">{{matchs[1][3][0]}} {{matchs[1][3][1]}} | {{scores[1][3]}}</button>
+                    </div>
+                    <div class="tournament__match">
+                        <button class="tournament__match__team" onclick="changerScore({{matchs[1][4][2]}}, {{nbCompet}}, {{nbPhase}})">{{matchs[1][4][0]}} {{matchs[1][4][1]}} | {{scores[1][4]}}</button>
+                        <button class="tournament__match__team" onclick="changerScore({{matchs[1][5][2]}}, {{nbCompet}}, {{nbPhase}})">{{matchs[1][5][0]}} {{matchs[1][5][1]}} | {{scores[1][5]}}</button>
+                    </div>
+                    <div class="tournament__match">
+                        <button class="tournament__match__team" onclick="changerScore({{matchs[1][6][2]}}, {{nbCompet}}, {{nbPhase}})">{{matchs[1][6][0]}} {{matchs[1][6][1]}} | {{scores[1][6]}}</button>
+                        <button class="tournament__match__team" onclick="changerScore({{matchs[1][7][2]}}, {{nbCompet}}, {{nbPhase}})">{{matchs[1][7][0]}} {{matchs[1][7][1]}} | {{scores[1][7]}}</button>
+                    </div>
+                    </div>
+                {% else %}
+                    <div class="tournament__round tournament__round--first-round">
+                    <div class="tournament__match">
+                        <button class="tournament__match__team"></button>
+                        <button class="tournament__match__team"></button>
+                    </div>
+                    <div class="tournament__match">
+                        <button class="tournament__match__team"></button>
+                        <button class="tournament__match__team"></button>
+                    </div>
+                    <div class="tournament__match">
+                        <button class="tournament__match__team"></button>
+                        <button class="tournament__match__team"></button>
+                    </div>
+                    <div class="tournament__match">
+                        <button class="tournament__match__team"></button>
+                        <button class="tournament__match__team"></button>
+                    </div>
+                    </div>
+                {% endif %}
+
+
+                <!-- tournament__round 1/2 -->
+                {% if nbPhase >= 4 %}
+                    <div class="tournament__round">
+                    <div class="tournament__match">
+                        <button class="tournament__match__team" onclick="changerScore({{matchs[2][0][2]}}, {{nbCompet}}, {{nbPhase}})">{{matchs[2][0][0]}} {{matchs[2][0][1]}} | {{scores[2][0]}}</button>
+                        <button class="tournament__match__team" onclick="changerScore({{matchs[2][1][2]}}, {{nbCompet}}, {{nbPhase}})">{{matchs[2][1][0]}} {{matchs[2][1][1]}} | {{scores[2][1]}}</button>
+                    </div>
+                    <div class="tournament__match">
+                        <button class="tournament__match__team" onclick="changerScore({{matchs[2][2][2]}}, {{nbCompet}}, {{nbPhase}})">{{matchs[2][2][0]}} {{matchs[2][2][1]}} | {{scores[2][2]}}</button>
+                        <button class="tournament__match__team" onclick="changerScore({{matchs[2][3][2]}}, {{nbCompet}}, {{nbPhase}})">{{matchs[2][3][0]}} {{matchs[2][3][1]}} | {{scores[2][3]}}</button>
+                    </div>
+                    </div>    
+                {% else %}
+                    <div class="tournament__round">
+                    <div class="tournament__match">
+                        <button class="tournament__match__team"></button>
+                        <button class="tournament__match__team"></button>
+                    </div>
+                    <div class="tournament__match">
+                        <button class="tournament__match__team"></button>
+                        <button class="tournament__match__team"></button>
+                    </div>
+                    </div>                
+                {% endif %}
+
+
+                <!-- tournament__round final -->
+                {% if nbPhase >= 5 %}
+                    <div class="tournament__round tournament__round--final">
+                    <div class="tournament__match">
+                        <button class="tournament__match__team" onclick="changerScore({{matchs[3][0][2]}}, {{nbCompet}}, {{nbPhase}})">{{matchs[3][0][0]}} {{matchs[3][0][1]}} | {{scores[3][0]}}</button>
+                        <button class="tournament__match__team" onclick="changerScore({{matchs[3][1][2]}}, {{nbCompet}}, {{nbPhase}})">{{matchs[3][1][0]}} {{matchs[3][1][1]}} | {{scores[3][1]}}</button>
+                    </div>
+                    </div>
+                {% else %}
+                    <div class="tournament__round tournament__round--final">
+                    <div class="tournament__match">
+                        <button class="tournament__match__team"></button>
+                        <button class="tournament__match__team"></button>
+                    </div>
+                    </div>
+                {% endif %}
+                
+
+                <!-- tournament__round winner -->
+                {% if nbPhase >= 5 %}
+                    <div class="tournament__round tournament__round--winner">
+                    <div class="tournament__match">
+                        <button class="tournament__match__team">{{matchs[4][0][0]}} {{matchs[4][0][1]}}</button>
+                    </div>
+                    </div>
+                {% else %}
+                    <div class="tournament__round tournament__round--winner">
+                    <div class="tournament__match">
+                        <button class="tournament__match__team"></button>
+                    </div>
+                    </div>
+                {% endif %}
             </div>
+        </div>
         
         
         <div class="petit_titre">
             <h3>Classement  :</h3>
-            <img class="petite_epee" src="{{url_for('static', filename='images/epeeBleu.png')}}" alt="Epée bleu d'escrime">    
         </div>
         <div class="classement">
             {% if joueur %}
@@ -334,7 +469,6 @@
     <main>
         <div class="petit_titre">
             <h3>Tableau de votre poule :</h3>
-            <img class="petite_epee" src="{{url_for('static', filename='images/epeeBleu.png')}}" alt="Epée bleu d'escrime">
         </div>
             <section class="tableau">    
                 <table border="0" width="100%" height="100%">
@@ -456,7 +590,6 @@
         {# <button class="boutonRefresh" onclick="window.location.reload()">Rafraîchir les score du tableau</button> #}
         <div class="petit_titre">
             <h3>Arbre de phase éliminatoire  :</h3>
-            <img class="petite_epee" src="{{url_for('static', filename='images/epeeBleu.png')}}" alt="Epée bleu d'escrime">
         </div>
             <div class="tournament">
             {% if isArbitre %}
@@ -648,7 +781,6 @@
         
         <div class="petit_titre">
             <h3>Classement  :</h3>
-            <img class="petite_epee" src="{{url_for('static', filename='images/epeeBleu.png')}}" alt="Epée bleu d'escrime">    
         </div>
         <div class="classement">
             <table>
