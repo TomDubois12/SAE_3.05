@@ -451,11 +451,19 @@ def getTournoisClosedParticiper(numeroLicence):
     res.append(cursor.fetchall())
   return res
 
-def getTournoisNonLancerEquipe(): 
-  requete1 = "select * from COMPETITION where typeCompetition = 'equipe' and estFinie = False  order by dateDebutCompetiton DESC;"
+def inscriptionOuverteEquipe(): 
+  requete1 = "select * from COMPETITION where datediff(dateDebutCompetiton, CURDATE()) > 14 and estFinie = False and typeCompetition = 'equipe';"
   cursor.execute(requete1)
   info = cursor.fetchall()
-  return info
+  res = []
+  for i in range(len(info)):
+    requete2 = """select intituleCompet,typeArme, intituleSexe,intituleCategorie, departement, dateDebutCompetiton, typeCompetition ,idCompetition
+                  from COMPETITION natural join LIEU natural join ARME natural join SEXE natural join CATEGORIE
+                  where datediff(dateDebutCompetiton ,CURDATE()) > 14 and estFinie = False and idLieu ="""+ str(info[i][6]) +" and idCategorie ="+ str(info[i][7]) +" and idSexe = "+str(info[i][8]) +" and idArme = "+ str(info[i][9]) +" and idCompetition = "+str(info[i][0]) + " and typeCompetition = '" +str(info[i][10]) +"';"
+    cursor.execute(requete2) 
+    res.append(cursor.fetchall())
+  return res
+
 
 def getProfil(numLicence): 
   fichiers = fichiersDossier("./escrimeFlask/csvEscrimeur/")
@@ -1498,9 +1506,10 @@ def getNomEquipeByIdEquipe(idEquipe) :
 ##
 
 if __name__ == "__main__":
-    print(dicoCompeteEquipe(17))
-    print(getCompetitionParOrga(4029))
-    print(getTournoisNonLancerEquipe())
+    # print(dicoCompeteEquipe(17))
+    # print(getCompetitionParOrga(4029))
+    print(inscriptionOuverte())
+    print(inscriptionOuverteEquipe())
     # insOrgaDansBD() 
     # print(addPointMatchEquipe(1,1))
 
@@ -1690,52 +1699,52 @@ if __name__ == "__main__":
     
     ##Cree compete
 
-    insertTireurDansBD(45243)
-    insertTireurDansBD(20840)
-    insertTireurDansBD(53089)
-    insertTireurDansBD(40845)
-    insertTireurDansBD(37189)
-    insertTireurDansBD(53998)
-    insertTireurDansBD(54797)
-    insertTireurDansBD(5387)
-    insertTireurDansBD(35524)
-    insertTireurDansBD(20981)
-    insertTireurDansBD(2889)
-    # # insertTireurDansBD(7006)
-    # # insertTireurDansBD(119662)
-    # # insertTireurDansBD(41337)
-    # # insertTireurDansBD(37332)
-    # # 37332
+    # insertTireurDansBD(45243)
+    # insertTireurDansBD(20840)
+    # insertTireurDansBD(53089)
+    # insertTireurDansBD(40845)
+    # insertTireurDansBD(37189)
+    # insertTireurDansBD(53998)
+    # insertTireurDansBD(54797)
+    # insertTireurDansBD(5387)
+    # insertTireurDansBD(35524)
+    # insertTireurDansBD(20981)
+    # insertTireurDansBD(2889)
+    # # # insertTireurDansBD(7006)
+    # # # insertTireurDansBD(119662)
+    # # # insertTireurDansBD(41337)
+    # # # insertTireurDansBD(37332)
+    # # # 37332
 
-    test = [45243,20840,53089,40845,37189,53998,54797,5387,35524,20981,2889]
+    # test = [45243,20840,53089,40845,37189,53998,54797,5387,35524,20981,2889]
 
-    for id in test : 
-      requete5 = "insert into TIREUR_DANS_COMPETITIONS (numeroLicenceTireur,idCompetition) values("+str(id)+", 16  );"
-      cursor.execute(requete5)
-      db.commit()
+    # for id in test : 
+    #   requete5 = "insert into TIREUR_DANS_COMPETITIONS (numeroLicenceTireur,idCompetition) values("+str(id)+", 16  );"
+    #   cursor.execute(requete5)
+    #   db.commit()
 
-    insertArbitreDansBD(51032)
-    insertArbitreDansBD(51061)
+    # insertArbitreDansBD(51032)
+    # insertArbitreDansBD(51061)
 
-    # 51061
+    # # 51061
 
-    test1 = [51032,51061]
-    for id in test1 : 
-      requete5 = "insert into ARBITRE_DANS_COMPETITIONS (numeroLicenceArbitre,idCompetition) values("+str(id)+", 17  );"
-      cursor.execute(requete5)
-      db.commit()
+    # test1 = [51032,51061]
+    # for id in test1 : 
+    #   requete5 = "insert into ARBITRE_DANS_COMPETITIONS (numeroLicenceArbitre,idCompetition) values("+str(id)+", 17  );"
+    #   cursor.execute(requete5)
+    #   db.commit()
 
-    # print(lancerCompetition(16)) # Pour creer une competition pour les tests
+    # # print(lancerCompetition(16)) # Pour creer une competition pour les tests
   
 
-    # print(classementFinale(16,5))
-    #print(trierCeClass([45243,20840,53089,40845,37189,53998,54797,5387,35524,20981,2889,37332],16,5))
+    # # print(classementFinale(16,5))
+    # #print(trierCeClass([45243,20840,53089,40845,37189,53998,54797,5387,35524,20981,2889,37332],16,5))
 
 
-    #print(getNomPrenomMatchElimination(16))
-    #print(getListeToucheByListLicence(affichageGenererPhaseEliminations(16, getNbPhase(16)), getNbPhase(16), 16))
-    #print(trierCeClass(getClassementPhase(16),16,5))
+    # #print(getNomPrenomMatchElimination(16))
+    # #print(getListeToucheByListLicence(affichageGenererPhaseEliminations(16, getNbPhase(16)), getNbPhase(16), 16))
+    # #print(trierCeClass(getClassementPhase(16),16,5))
 
       
-    print(getNbParticipant(16))
+    # print(getNbParticipant(16))
     pass
