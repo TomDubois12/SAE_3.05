@@ -34,7 +34,7 @@
         <img class="petite_epee" src="{{url_for('static', filename='images/epeeBleu.png')}}" alt="Epée bleu d'escrime">
     </div>
 
-    <section class="tableau">
+    {# <section class="tableau">
         <table border="0" width="100%" height="100%">
             <thead>
                 <tr>
@@ -65,7 +65,8 @@
                 </tr>
             </tbody>
         </table>
-    </section>
+    </section> #}
+
     {% for participant in participants %}
 
     <section class="tableau">
@@ -81,17 +82,22 @@
                 </tr>
             </thead>
             <tbody>
-                {% for p in participant.items() %}
-                    <tr>
-                        <td class="caseBleuClair">{{p[0]}}</td>
-                        <td class="caseBleuClair">{{p[1]}}</td>
-                        <td class="black"></td>
-                        <td class="caseBleuClair"><a> - </a></td>
-                        <td class="caseBleuClair">{{p[3]}}</td>
-                        <td class="caseBleuClair"><a> + </a></td>
-                    </tr>
-                {% endfor %}
-                
+                <tr>
+                    <td class="caseBleuClair">{{participant[0]}}</td>
+                    <td class="caseBleuClair">{{participant[2]}}</td>
+                    <td class="black"></td>
+                    <td class="caseBleuClair"><a> - </a></td>
+                    <td class="caseBleuClair">{{participant[4]}}</td>
+                    <td class="caseBleuClair"><a> + </a></td>
+                </tr>    
+                <tr>
+                    <td class="caseBleuClair">{{participant[1]}}</td>
+                    <td class="caseBleuClair">{{participant[3]}}</td>
+                    <td class="black"></td>
+                    <td class="caseBleuClair"><a> - </a></td>
+                    <td class="caseBleuClair">{{participant[5]}}</td>
+                    <td class="caseBleuClair"><a> + </a></td>
+                </tr>
             </tbody>
             
         </table>

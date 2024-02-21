@@ -11,8 +11,8 @@ import mysql.connector
 #connexion au base de données
 db = mysql.connector.connect(
   host = "localhost",
-  user = "nathan",
-  password = "nathan",
+  user = "koko",
+  password = "koko",
   database = "Escrime"
 )
 #Blabla2147
@@ -1527,6 +1527,7 @@ def metAJourInfoTireurDansPoule(dico, idCompetition) :
 def lancerCompetition(idCompetition): 
   if isEquipe(idCompetition):
     lancerCompetitionEquipe(idCompetition)
+    
   else :
 
     lancerCompetitionDate(idCompetition)
@@ -1850,7 +1851,7 @@ def generePhaseSuivanteEquipe(idCompetition, listeNomVictoire):
 def lancerCompetitionEquipe(idCompetition) : 
   dico = dicoCompeteEquipe(idCompetition)
   phase = 1
-  #lancerCompetitionDate(idCompetition)
+  lancerCompetitionDate(idCompetition)
   listeNomEquipeTrier = equipeListeTrierDico(dicoCompeteEquipe(idCompetition),idCompetition)
   puissanceDeDeux = math.floor(math.log2(len(listeNomEquipeTrier))) # renvoie 2 pour taille de 4
 
