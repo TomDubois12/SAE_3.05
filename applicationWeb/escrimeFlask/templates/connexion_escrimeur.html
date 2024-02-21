@@ -34,11 +34,11 @@
         </div>
         <form class="concoursInfo" action="{{url_for("validationConnexion")}}" method="GET">
             {% for x in concoursTireur %}
-                <input type="radio" id="{{x[0][-1]}}" class="input" name="compet" required="required" value="{{x[0][-1]}}"> <label for="{{x[0][-1]}}">{{x[0][0].upper()}} {{x[0][1].upper()}} {{x[0][2].upper()}} {{x[0][3].upper()}}, {{x[0][4]}} {{x[0][5]}}, en tant que TIREUR</label></input>
+                <input type="radio" id="{{x[0][-1]}}" class="input" name="compet" required="required" value="{{x[0][-1]}}"> <label for="{{x[0][-1]}}">{{x[0][0].upper()}} {{x[0][1].upper()}} {{x[0][2].upper()}} {{x[0][3].upper()}} EN {{x[0][-2].upper()}}, {{x[0][4]}} {{x[0][5]}}, en tant que TIREUR</label></input>
                 <span></span>
             {% endfor %}
             {% for x in concoursArbitre %}
-                <input type="radio" id="{{x[0][-1]}}"  class="input" name="compet" required="required" value="{{x[0][-1]}}"> <label for="{{x[0][-1]}}">{{x[0][0].upper()}} {{x[0][1].upper()}} {{x[0][2].upper()}} {{x[0][3].upper()}}, {{x[0][4]}} {{x[0][5]}}, en tant qu'ARBITRE</label></input>
+                <input type="radio" id="{{x[0][-1]}}"  class="input" name="compet" required="required" value="{{x[0][-1]}}"> <label for="{{x[0][-1]}}">{{x[0][0].upper()}} {{x[0][1].upper()}} {{x[0][2].upper()}} {{x[0][3].upper()}} EN {{x[0][-2].upper()}}, {{x[0][4]}} {{x[0][5]}}, en tant qu'ARBITRE</label></input>
                 <span></span>
             {% endfor %}
             <input type="text" hidden name="nbLicense" value="{{nbLicense}}">

@@ -92,9 +92,9 @@ insert into COMPETITION(intituleCompet,saison,estFinie,coefficientCompetition,da
     ("Tournois printemps 2019","2019",True,0.2,"2019-11-14",2,1,1,3,'solo'),
     ("Tournois automn 2019","2019",True,0.2,"2019-04-14",2,2,2,1,'solo'),
     ("Tournois hiver 2019","2019",True,0.4,"2019-12-23",2,3,2,2,'solo'),
-    ("Tournois été 2019","2019",True,0.2,"2019-07-22",2,4,2,3,'solo'),
-    ("Tournois été 2025","2025",False,0.2,"2025-07-22",2,4,2,3,'equipe'),
-    ("Tournois été 2026","2026",False,0.2,"2026-07-22",2,4,2,3,'equipe');
+    ("Tournois été 2019","2019",True,0.2,"2019-07-22",2,4,2,3,'solo');
+    -- ("Tournois été 2025","2025",False,0.2,"2025-07-22",2,4,2,3,'equipe'),
+    -- ("Tournois été 2026","2026",False,0.2,"2026-07-22",2,4,2,3,'equipe');
 
 insert into ORGANISATEURCOMPETITION(idCompetition, licenseOrganisateur) values 
     (1,241354),
@@ -111,13 +111,15 @@ insert into ORGANISATEURCOMPETITION(idCompetition, licenseOrganisateur) values
     (12,254612),
     (13,241354),
     (14,254612),
-    (15,734212);
+    (15,734212),
+    (16,468412),
+    (17,4029);
 
-insert into EQUIPE(idCompetition, nomEquipe, licenceChefEquipe) value 
-    (17,"Les 1", 4029),
-    (17,"Les 2", 241387),
-    (17,"Les 3", 605),
-    (17,"Les 4", 31646);
+-- insert into EQUIPE(idCompetition, nomEquipe, licenceChefEquipe) value 
+--     (17,"Les 1", 272582),
+--     (17,"Les 2", 241387),
+--     (17,"Les 3", 605),
+--     (17,"Les 4", 31646);
 
 -- insert into TIREUR_EQUIPE(idEquipe, licenceTireur) value 
 --     (5, 45243),
