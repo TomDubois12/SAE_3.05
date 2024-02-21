@@ -1398,9 +1398,105 @@ def lancerCompetition(idCompetition):
   insArbitreDansPoule(infosArbitre, idCompetition)
   genererMatchPouleIdCompetition(idCompetition)
 
+################################################################
+#############Gestion des equipes ###############################
+################################################################
 
+def genererMatchEquipe(idCompetiton): 
+    pass 
+
+
+
+def dicoCompeteEquipe(idCompetition): 
+    dico = dict()
+    requete = "select * from EQUIPE where idCompetition = "+str(idCompetition)+";"
+    cursor.execute(requete)
+    l = cursor.fetchall()
+    for equipe in l : 
+      dico[equipe[2]] = [equipe[0], equipe[1], equipe[3]]
+
+    indIdComp = 1
+    indIdEquipe = 0
+    indLicenceChef = 2
+
+    # Mettre les numéro de licence des tireur de l'équipe dans le dico avec la somme de leurs classements
+    for key in dico.keys():
+      requete = "select licenceTireur from TIREUR_EQUIPE where idEquipe = "+str(dico.get(key)[indIdEquipe]) +";"
+      cursor.execute(requete)
+      rep = cursor.fetchall()
+      listeLicenceEquipe = []
+      cla = 0
+      for licence in rep :
+        listeLicenceEquipe.append(licence[0])
+        requete = "select classement from TIREUR where numeroLicenceTireur = "+str(licence[0]) +";"
+        cursor.execute(requete)
+        cla += int(cursor.fetchall()[0][0])
+      dico[key] = [dico.get(key)[indIdEquipe],dico.get(key)[indIdComp],dico.get(key)[indLicenceChef], cla, listeLicenceEquipe]
+    ## key = nomEquipe , valeur = idEquipe, idCompetition, nbPointEquipe , licenceChef, liste licence tireurs et les dernier tireur est le remplacant
+      
+    # {'Les 1': [1, 17, 4029, 224272, [20840, 40845, 45243, 53089]]} // exemple d'un dico qui à une équipe 
+
+    return dico
+
+def insererEquipeDansCompetition(idCompetition, nomEquipe, licenceChef): 
+  try :
+    requete = "insert into EQUIPE(idCompetition,nomEquipe,licenceChefEquipe) value("+str(idCompetition)+",'"+str(nomEquipe)+"',"+str(licenceChef)+");" 
+    cursor.execute(requete)
+    db.commit()
+    return True
+  except Exception :
+    return False
+
+def insererTireurDansEquipe(idEquipe, listeLicenceTireur): 
+  try :
+    for licence in listeLicenceTireur : 
+      requete = "insert into TIREUR_EQUIPE(idEquipe, licenceTireur) value("+str(idEquipe)+","+str(licence)+");" 
+      cursor.execute(requete)
+      db.commit()
+    return True
+  except Exception :
+    return False
+  
+def addPointMatchEquipe(idMatchElimination, idEquipe) : 
+  infosMatch = "select * from MATCH_EQUIPE where idMatchEquipe = "+str(idMatchElimination)+" ;"
+  cursor.execute(infosMatch)
+  cla =cursor.fetchall()[0]
+  if idEquipe == cla[1] : 
+    reqPointActuel = "select scoreEquipe1 from MATCH_EQUIPE where idMatchEquipe = "+str(idMatchElimination)+";"
+    cursor.execute(reqPointActuel)
+    pointActuel =cursor.fetchall()[0][0]
+    requete = "update MATCH_EQUIPE set scoreEquipe1 = " + str(pointActuel + 1) + "  where idMatchEquipe = "+str(idMatchElimination) +";"      
+    cursor.execute(requete)
+    db.commit()
+    return True
+  elif idEquipe == cla[3] :
+    reqPointActuel = "select scoreEquipe2 from MATCH_EQUIPE where idMatchEquipe = "+str(idMatchElimination)+";"
+    cursor.execute(reqPointActuel)
+    pointActuel =cursor.fetchall()[0][0]
+    requete = "update MATCH_EQUIPE set scoreEquipe2 = " + str(pointActuel + 1) + "  where idMatchEquipe = "+str(idMatchElimination) +";"      
+    cursor.execute(requete)
+    db.commit()
+    return True
+  return False
+
+def getNomEquipeByIdEquipe(idEquipe) : 
+  infosMatch = "select nomEquipe from EQUIPE where idEquipe = "+str(idEquipe)+" ;"
+  cursor.execute(infosMatch)
+  nomEquipe =cursor.fetchall()[0][0]
+  return nomEquipe
+
+## au début de la compète il faut générer un nombre de phases en fonction du nombre d'équipe, calculer pour chaque équipe leur classement avec la sommes des 4 joueurs et trier ça 
+## 
+##
+##
+##
 
 if __name__ == "__main__":
+    # print(dicoCompeteEquipe(17))
+    # print(addPointMatchEquipe(1,1))
+
+    #print(getNomEquipeByIdEquipe(1))
+
     # print(getNomByLicence(315486))
     # print(InfosPouleNumLicence(1,315486))
     # print(getListeidPouleCompetition(1))
@@ -1629,7 +1725,7 @@ if __name__ == "__main__":
 
     #print(getNomPrenomMatchElimination(16))
     #print(getListeToucheByListLicence(affichageGenererPhaseEliminations(16, getNbPhase(16)), getNbPhase(16), 16))
-    print(trierCeClass(getClassementPhase(16),16,5))
+    #print(trierCeClass(getClassementPhase(16),16,5))
 
       
     print(getNbParticipant(16))
