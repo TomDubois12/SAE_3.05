@@ -492,7 +492,10 @@ def getTournoisClosedParticiper(numeroLicence):
     res.append(cursor.fetchall())
   return res
 
-def getTournoisClosedParticiperEquipe(numeroLicence):
+def inscriptionOuverteEquipe(): 
+  requete1 = "select * from COMPETITION where datediff(dateDebutCompetiton, CURDATE()) > 14 and estFinie = False and typeCompetition = 'equipe';"
+
+  def getTournoisClosedParticiperEquipe(numeroLicence):
   requete1 = "select * from TIREUR_DANS_COMPETITIONS natural join COMPETITION where numeroLicenceTireur = " + str(numeroLicence) + " and estFinie = True and typeCompetition = 'equipe'  order by dateDebutCompetiton DESC;"
   cursor.execute(requete1)
   info = cursor.fetchall()
@@ -524,7 +527,15 @@ def getTournoisNonLancerEquipe():
   requete1 = "select * from COMPETITION where typeCompetition = 'equipe' and estFinie = False  order by dateDebutCompetiton DESC;"
   cursor.execute(requete1)
   info = cursor.fetchall()
-  return info
+  res = []
+  for i in range(len(info)):
+    requete2 = """select intituleCompet,typeArme, intituleSexe,intituleCategorie, departement, dateDebutCompetiton, typeCompetition ,idCompetition
+                  from COMPETITION natural join LIEU natural join ARME natural join SEXE natural join CATEGORIE
+                  where datediff(dateDebutCompetiton ,CURDATE()) > 14 and estFinie = False and idLieu ="""+ str(info[i][6]) +" and idCategorie ="+ str(info[i][7]) +" and idSexe = "+str(info[i][8]) +" and idArme = "+ str(info[i][9]) +" and idCompetition = "+str(info[i][0]) + " and typeCompetition = '" +str(info[i][10]) +"';"
+    cursor.execute(requete2) 
+    res.append(cursor.fetchall())
+  return res
+
 
 def getTournoisFinitEquipe(): 
   requete1 = "select * from COMPETITION where typeCompetition = 'equipe' and estFinie = True  order by dateDebutCompetiton DESC;"
@@ -1692,10 +1703,13 @@ if __name__ == "__main__":
     # print(equipeListeTrierDico(dicoCompeteEquipe(17),17))  # Renvoi les noms d'équipe par ordre de classement décroissant 
     #print(concourtNonFinitInscritTireur(20840))
     #print(insertTireurDansCompetition(20840,1,'TIREUR'))
+    
     # print(getCompetitionParOrga(4029))
+    print(inscriptionOuverte())
+    print(inscriptionOuverteEquipe())
+    
     # print(getTournoisNonLancerEquipe())
     #print(getTournoisClosedParticiperSolo(2889))
-
     #print(getIdEquipeByNomEquipeAndCompetition("Les 1", 17))
     #print(nomEquipeInixistantDansCompetition("Les 1", 17))
     #insOrgaDansBD() 
@@ -1703,6 +1717,14 @@ if __name__ == "__main__":
     # insererTireurDansEquipe(5,[20840])
     # insererTireurDansEquipe(5,[53089])
     # insererTireurDansEquipe(5,[40845])
+    print(nomEquipeInixistantDansCompetition("Les 1", 17))
+    
+    #insOrgaDansBD() 
+    # insererTireurDansEquipe(5,45243)
+    # insererTireurDansEquipe(5,20840)
+    # insererTireurDansEquipe(5,53089)
+    # insererTireurDansEquipe(5,40845)
+
     # print(addPointMatchEquipe(1,1))
 
     #print(getNomEquipeByIdEquipe(1))
@@ -1929,14 +1951,14 @@ if __name__ == "__main__":
     # # print(lancerCompetition(16)) # Pour creer une competition pour les tests
   
 
-    # print(classementFinale(16,5))
-    #print(trierCeClass([45243,20840,53089,40845,37189,53998,54797,5387,35524,20981,2889,37332],16,5))
+    # # print(classementFinale(16,5))
+    # #print(trierCeClass([45243,20840,53089,40845,37189,53998,54797,5387,35524,20981,2889,37332],16,5))
 
 
-    #print(getNomPrenomMatchElimination(16))
-    #print(getListeToucheByListLicence(affichageGenererPhaseEliminations(16, getNbPhase(16)), getNbPhase(16), 16))
-    #print(trierCeClass(getClassementPhase(16),16,5))
+    # #print(getNomPrenomMatchElimination(16))
+    # #print(getListeToucheByListLicence(affichageGenererPhaseEliminations(16, getNbPhase(16)), getNbPhase(16), 16))
+    # #print(trierCeClass(getClassementPhase(16),16,5))
 
-      
     #print(getNbParticipant(16))
+
     pass
