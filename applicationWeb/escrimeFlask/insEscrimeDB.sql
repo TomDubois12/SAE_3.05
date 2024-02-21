@@ -111,6 +111,18 @@ insert into ORGANISATEURCOMPETITION(idCompetition, licenseOrganisateur) values
     (14,254612),
     (15,734212);
 
+insert into EQUIPE(idCompetition, nomEquipe, licenceChefEquipe) value 
+    (17,"Les 1", 4029),
+    (17,"Les 2", 241387),
+    (17,"Les 3", 605),
+    (17,"Les 4", 31646);
+
+insert into TIREUR_EQUIPE(idEquipe, licenceTireur) value 
+    (9, 45243),
+    (9, 20840),
+    (9, 53089),
+    (9, 40845);
+
 -- insert into TIREUR_DANS_COMPETITIONS(numeroLicenceTireur,idCompetition)values 
 --     (315486,1),
 --     (315486,2),
