@@ -16,13 +16,10 @@ main{
     width: 20vw;
 }
 
-
 .haut div {
     display: flex;
 }
-a img{
-    width:20%;
-}
+
 div p {
     color: #FFFFFF;
     font-size: 3.2vmin;

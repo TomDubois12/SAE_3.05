@@ -13,6 +13,7 @@
 
     </div>
     <div class="haut">
+        
         <a href={{url_for('inscription')}}>
         <div class="inscription">
             <img src="{{url_for('static', filename='images/epeeGris.png')}}" alt="Épée grise d'escrime">
@@ -22,8 +23,14 @@
         <a href={{url_for('inscription_equipe')}}>
         <div class="connection">
             <img src="{{url_for('static', filename='images/epeeGris.png')}}" alt="Épée grise d'escrime">
-            <p>S’INSCRIRE A UNE COMPETITION EN EQUIPE</p>
+            <p>S’INSCRIRE A UNE COMPETITION EN EQUIPE  EN TANT QUE JOUEUR</p>
         </div>
-        </a>
+
+        <a href={{url_for('inscription_arbitre')}}>
+            <div class="connection">
+                <img src="{{url_for('static', filename='images/epeeGris.png')}}" alt="Épée grise d'escrime">
+                <p>S’INSCRIRE A UNE COMPETITION EN EQUIPE EN TANT QU'ARBITRE</p>
+            </div>
+
     </div>
 {% endblock %}
