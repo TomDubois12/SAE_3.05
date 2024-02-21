@@ -10,8 +10,8 @@ import mysql.connector
 #connexion au base de données
 db = mysql.connector.connect(
   host = "localhost",
-  user = "koko",
-  password = "koko",
+  user = "nathan",
+  password = "nathan",
   database = "Escrime"
 )
 #Blabla2147
@@ -461,6 +461,34 @@ def getTournoisClosedParticiper(numeroLicence):
     requete2 = """select intituleCompet,typeArme, intituleSexe,intituleCategorie, departement, idCompetition, typeCompetition
                  from COMPETITION natural join LIEU natural join ARME natural join SEXE natural join CATEGORIE
                 where estFinie = True and idLieu ="""+ str(info[i][7]) +" and idCategorie ="+ str(info[i][8]) +" and idSexe = "+str(info[i][9]) +" and idArme = "+ str(info[i][10]) +" and idCompetition = "+str(info[i][0]) +"  order by dateDebutCompetiton DESC ;"
+    cursor.execute(requete2) 
+    res.append(cursor.fetchall())
+  return res
+
+def getTournoisClosedParticiperEquipe(numeroLicence):
+  requete1 = "select * from TIREUR_DANS_COMPETITIONS natural join COMPETITION where numeroLicenceTireur = " + str(numeroLicence) + " and estFinie = True and typeCompetition = 'equipe'  order by dateDebutCompetiton DESC;"
+  cursor.execute(requete1)
+  info = cursor.fetchall()
+  res = []
+  for i in range(len(info)):
+    
+    requete2 = """select intituleCompet,typeArme, intituleSexe,intituleCategorie, departement, idCompetition, typeCompetition
+                 from COMPETITION natural join LIEU natural join ARME natural join SEXE natural join CATEGORIE
+                where estFinie = True and idLieu ="""+ str(info[i][7]) +" and idCategorie ="+ str(info[i][8]) +" and idSexe = "+str(info[i][9]) +" and idArme = "+ str(info[i][10]) +" and typeCompetition = '"+str(info[i][11])+"' and idCompetition = "+str(info[i][0]) +"  order by dateDebutCompetiton DESC ;"
+    cursor.execute(requete2) 
+    res.append(cursor.fetchall())
+  return res
+
+def getTournoisClosedParticiperSolo(numeroLicence):
+  requete1 = "select * from TIREUR_DANS_COMPETITIONS natural join COMPETITION where numeroLicenceTireur = " + str(numeroLicence) + " and estFinie = True and typeCompetition = 'solo'  order by dateDebutCompetiton DESC;"
+  cursor.execute(requete1)
+  info = cursor.fetchall()
+  res = []
+  for i in range(len(info)):
+    
+    requete2 = """select intituleCompet,typeArme, intituleSexe,intituleCategorie, departement, idCompetition, typeCompetition
+                 from COMPETITION natural join LIEU natural join ARME natural join SEXE natural join CATEGORIE
+                where estFinie = True and idLieu ="""+ str(info[i][7]) +" and idCategorie ="+ str(info[i][8]) +" and idSexe = "+str(info[i][9]) +" and idArme = "+ str(info[i][10]) +" and typeCompetition = '"+str(info[i][11])+"' and idCompetition = "+str(info[i][0]) +"  order by dateDebutCompetiton DESC ;"
     cursor.execute(requete2) 
     res.append(cursor.fetchall())
   return res
@@ -1520,9 +1548,10 @@ def getNomEquipeByIdEquipe(idEquipe) :
 ##
 
 if __name__ == "__main__":
-    print(dicoCompeteEquipe(17))
-    print(getCompetitionParOrga(4029))
-    print(getTournoisNonLancerEquipe())
+    # print(dicoCompeteEquipe(17))
+    # print(getCompetitionParOrga(4029))
+    # print(getTournoisNonLancerEquipe())
+    print(getTournoisClosedParticiperSolo(2889))
     # insOrgaDansBD() 
     # print(addPointMatchEquipe(1,1))
 
@@ -1712,42 +1741,42 @@ if __name__ == "__main__":
     
     ##Cree compete
 
-    insertTireurDansBD(45243)
-    insertTireurDansBD(20840)
-    insertTireurDansBD(53089)
-    insertTireurDansBD(40845)
-    insertTireurDansBD(37189)
-    insertTireurDansBD(53998)
-    insertTireurDansBD(54797)
-    insertTireurDansBD(5387)
-    insertTireurDansBD(35524)
-    insertTireurDansBD(20981)
-    insertTireurDansBD(2889)
-    # # insertTireurDansBD(7006)
-    # # insertTireurDansBD(119662)
-    # # insertTireurDansBD(41337)
-    # # insertTireurDansBD(37332)
-    # # 37332
+    # insertTireurDansBD(45243)
+    # insertTireurDansBD(20840)
+    # insertTireurDansBD(53089)
+    # insertTireurDansBD(40845)
+    # insertTireurDansBD(37189)
+    # insertTireurDansBD(53998)
+    # insertTireurDansBD(54797)
+    # insertTireurDansBD(5387)
+    # insertTireurDansBD(35524)
+    # insertTireurDansBD(20981)
+    # insertTireurDansBD(2889)
+    # # # insertTireurDansBD(7006)
+    # # # insertTireurDansBD(119662)
+    # # # insertTireurDansBD(41337)
+    # # # insertTireurDansBD(37332)
+    # # # 37332
 
-    test = [45243,20840,53089,40845,37189,53998,54797,5387,35524,20981,2889]
+    # test = [45243,20840,53089,40845,37189,53998,54797,5387,35524,20981,2889]
 
-    for id in test : 
-      requete5 = "insert into TIREUR_DANS_COMPETITIONS (numeroLicenceTireur,idCompetition) values("+str(id)+", 16  );"
-      cursor.execute(requete5)
-      db.commit()
+    # for id in test : 
+    #   requete5 = "insert into TIREUR_DANS_COMPETITIONS (numeroLicenceTireur,idCompetition) values("+str(id)+", 16  );"
+    #   cursor.execute(requete5)
+    #   db.commit()
 
-    insertArbitreDansBD(51032)
-    insertArbitreDansBD(51061)
+    # insertArbitreDansBD(51032)
+    # insertArbitreDansBD(51061)
 
-    # 51061
+    # # 51061
 
-    test1 = [51032,51061]
-    for id in test1 : 
-      requete5 = "insert into ARBITRE_DANS_COMPETITIONS (numeroLicenceArbitre,idCompetition) values("+str(id)+", 17  );"
-      cursor.execute(requete5)
-      db.commit()
+    # test1 = [51032,51061]
+    # for id in test1 : 
+    #   requete5 = "insert into ARBITRE_DANS_COMPETITIONS (numeroLicenceArbitre,idCompetition) values("+str(id)+", 17  );"
+    #   cursor.execute(requete5)
+    #   db.commit()
 
-    # print(lancerCompetition(16)) # Pour creer une competition pour les tests
+    # # print(lancerCompetition(16)) # Pour creer une competition pour les tests
   
 
     # print(classementFinale(16,5))
