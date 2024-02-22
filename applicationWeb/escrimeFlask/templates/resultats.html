@@ -111,6 +111,7 @@
         {# <button class="boutonRefresh" onclick="window.location.reload()">Rafraîchir les score du tableau</button> #}
         <div class="petit_titre">
             <h3>Arbre de phase éliminatoire  :</h3>
+            {{nbTotalPhase}}
             <img class="petite_epee" src="{{url_for('static', filename='images/epeeBleu.png')}}" alt="Epée bleu d'escrime">
         </div>
             <div class="tournament">
@@ -134,8 +135,7 @@
                         {% else %}
                             <div class="tournament__round">
                         {% endif %}
-                            {% for j in range(0,((nbTotalPhase-i)**2)-1,2) %}
-                            
+                            {% for j in range(0,(2**(nbTotalPhase-i))-1,2) %}
                             <div class="tournament__match">
                             {% if nbPhase >= i+2 %}
                                 <button class="tournament__match__team" onclick="changerScore({{matchs[i][j][2]}}, {{nbCompet}}, {{nbPhase}})">{{matchs[i][j][0]}} {{matchs[i][j][1]}} | {{scores[i][j]}}</button>
