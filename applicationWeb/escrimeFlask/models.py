@@ -11,8 +11,8 @@ import mysql.connector
 #connexion au base de données
 db = mysql.connector.connect(
   host = "localhost",
-  user = "nathan",
-  password = "nathan",
+  user = "koko",
+  password = "koko",
   database = "Escrime"
 )
 #Blabla2147
@@ -1938,7 +1938,7 @@ def getClassementEquipFinal(idCompetition) :
   return listeReturn
 
 if __name__ == "__main__":
-    print(getClassementEquipFinal(17))
+    # print(getClassementEquipe(17))
     # print(getInfosMatchEquipeNumLicence(17,40845))
     #print(affichageGenererPhaseEliminations(25,2))
     # print(affichageGenererPhaseEliminations(25,2))
@@ -1981,7 +1981,7 @@ if __name__ == "__main__":
     # insererTireurDansEquipe(5,[40845])
 
     
-    insOrgaDansBD() 
+    # insOrgaDansBD() 
     # createCompetition('Tournois été 2025','Orléans','11','2024-05-23','4029','equipe')
     # createCompetition('Tournois été 2026','Montréal','11','2024-05-29','4029','equipe')
     # insererEquipeDansCompetition(17,"Les 1",272582)
