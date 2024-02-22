@@ -234,7 +234,7 @@ def resultats(nbLicense,nbCompet):
 
 @app.route('/resultats_equipe/<nbLicense>&<nbCompet>')
 def resultats_equipe(nbLicense,nbCompet):
-    nbPartipant = getNbParticipant(int(nbCompet))
+    nbPartipant = getNbEquipe(int(nbCompet))
     nbTotalPhase = nbPartipant
     
     trouve = False
@@ -268,38 +268,16 @@ def resultats_equipe(nbLicense,nbCompet):
                             isCompetitionEquipe=isCompetitionEquipe(int(nbCompet)),
                             nbCompet=int(nbCompet),
                             nbLicense=int(nbLicense),
-                            participants=maFonctionPlusBelleQueLautre(int(nbCompet),int(nbLicense)),
+                            participants=maFonctionPlusBelleQueLautreAvecPhase(int(nbCompet),getNbPhase(int(nbCompet))),
                             isArbitre=True,
                             nbPhase=getNbPhase(int(nbCompet)),
-                            matchs=getNomPrenomMatchElimination(int(nbCompet)),
-                            scores=getListeToucheByListLicence(licence, int(getNbPhase(int(nbCompet))), int(nbCompet)),
+                            matchs=maFonctionPlusBelleQueLautre(int(nbCompet)),
                             lancer=lancer,
                             classements=classementFinale(int(nbCompet),getNbPhase(int(nbCompet))),
                             joueur=False,
                             nomCompet=getInfoCompet(int(nbCompet)),
                             arbitres=getNomArbitre(int(nbCompet)),
                             phaseFinie=phasesFinie(int(nbCompet),int(getNbPhase(int(nbCompet)))),
-                            nbTotalPhase=nbTotalPhase)
-        
-        elif estParticipant(int(nbLicense), int(nbCompet)):
-            return render_template('resultats_equipe.html',
-                                title='Résultats Equipe',
-                                isOrganisateur=estOrganisateur(int(nbLicense)),
-                                isCompetitionEquipe=isCompetitionEquipe(int(nbCompet)),
-                                nbCompet=int(nbCompet),
-                                nbLicense=int(nbLicense),
-                                participants=InfosPouleNumLicence(int(nbCompet),int(nbLicense)),
-                                isArbitre=False,
-                                nbPhase=getNbPhase(int(nbCompet)),
-                                matchs=getNomPrenomMatchElimination(int(nbCompet)),
-                                scores=getListeToucheByListLicence(licence, int(getNbPhase(int(nbCompet))), int(nbCompet)),
-                                lancer=lancer,
-                                classements=classementFinale(int(nbCompet),getNbPhase(int(nbCompet))),
-                                classementPerso=monClassementAMoi(int(nbCompet), int(nbLicense),getNbPhase(int(nbCompet))),
-                                joueur=True,
-                                nomCompet=getInfoCompet(int(nbCompet)),
-                                arbitres=getNomArbitre(int(nbCompet)),
-                                phaseFinie=phasesFinie(int(nbCompet),int(getNbPhase(int(nbCompet)))),
                             nbTotalPhase=nbTotalPhase)
         else:
             return render_template('resultats_equipe.html',
@@ -308,18 +286,16 @@ def resultats_equipe(nbLicense,nbCompet):
                                 isCompetitionEquipe=isCompetitionEquipe(int(nbCompet)),
                                 nbCompet=int(nbCompet),
                                 nbLicense=int(nbLicense),
-                                participants=maFonctionPlusBelleQueLautre(int(nbCompet)),
                                 isArbitre=False,
                                 nbPhase=getNbPhase(int(nbCompet)),
-                                matchs=getNomPrenomMatchElimination(int(nbCompet)),
-                                scores=getListeToucheByListLicence(licence, int(getNbPhase(int(nbCompet))), int(nbCompet)),
+                                matchs=maFonctionPlusBelleQueLautre(int(nbCompet)),                                
                                 lancer=lancer,
                                 classements=classementFinale(int(nbCompet),getNbPhase(int(nbCompet))),
                                 joueur=False,
                                 nomCompet=getInfoCompet(int(nbCompet)),
                                 arbitres=getNomArbitre(int(nbCompet)),
                                 phaseFinie=phasesFinie(int(nbCompet),int(getNbPhase(int(nbCompet)))),
-                            nbTotalPhase=nbTotalPhase)
+                                nbTotalPhase=nbTotalPhase)
     else:
         return render_template('resultats_equipe.html',
                             title='Résultats Equipe',
@@ -330,8 +306,7 @@ def resultats_equipe(nbLicense,nbCompet):
                             participants=[],
                             isArbitre=False,
                             nbPhase=getNbPhase(int(nbCompet)),
-                            matchs=getNomPrenomMatchElimination(int(nbCompet)),
-                            scores=getListeToucheByListLicence(licence, int(getNbPhase(int(nbCompet))), int(nbCompet)),
+                            matchs=maFonctionPlusBelleQueLautre(int(nbCompet)),
                             lancer=lancer,
                             joueur=False,
                             nomCompet=getInfoCompet(int(nbCompet)),
@@ -416,9 +391,12 @@ def consulterArchive():
     nbLicense = request.args.get("nbLicense")
     nbCompet = request.args.get("nbCompet")
     ancienNbCompet = request.args.get("ancienNbCompet")
-    nbPartipant = getNbParticipant(int(nbCompet))
-    nbTotalPhase = nbPartipant
     
+    if isCompetitionEquipe(int(nbCompet)):
+        nbPartipant = getNbEquipe(int(nbCompet))
+    else:
+        nbPartipant = getNbParticipant(int(nbCompet))
+    nbTotalPhase = nbPartipant
     trouve = False
     i=0
     while not trouve:
@@ -426,13 +404,33 @@ def consulterArchive():
             nbTotalPhase = i
             trouve = True
         i+=1
+        
     listLicense=affichageGenererPhaseEliminations(int(nbCompet), getNbPhase(int(nbCompet)))
     licence=[]
     licence.append(listLicense[3])
     licence.append(listLicense[4])
     licence.append(listLicense[5])
     licence.append(listLicense[6])
-    return render_template('resultats.html',
+    if isCompetitionEquipe(int(nbCompet)):
+        return render_template('resultats_equipe.html',
+                                title='Résultats Equipe',
+                                isOrganisateur=estOrganisateur(int(nbLicense)),
+                                isCompetitionEquipe=isCompetitionEquipe(int(nbCompet)),
+                                nbCompet=int(nbCompet),
+                                nbLicense=int(nbLicense),
+                                isArbitre=False,
+                                nbPhase=getNbPhase(int(nbCompet)),
+                                matchs=maFonctionPlusBelleQueLautre(int(nbCompet)),                                
+                                lancer=True,
+                                classements=classementFinale(int(nbCompet),getNbPhase(int(nbCompet))),
+                                joueur=False,
+                                nomCompet=getInfoCompet(int(nbCompet)),
+                                arbitres=getNomArbitre(int(nbCompet)),
+                                phaseFinie=phasesFinie(int(nbCompet),int(getNbPhase(int(nbCompet)))),
+                                ancienNbCompet=ancienNbCompet,
+                                nbTotalPhase=nbTotalPhase)
+    else:
+        return render_template('resultats.html',
                                 title='Résultats',
                                 isOrganisateur=estOrganisateur(int(nbLicense)),
                                 isCompetitionEquipe=isCompetitionEquipe(int(nbCompet)),
@@ -592,3 +590,34 @@ def genererEliminations():
     # print('\033[93m' + str(nbPhase) + '\033[0m')
     genererPhaseEliminations(int(nbCompet), int(nbPhase)+1)
     return redirect('resultats/'+str(nbLicense)+'&'+str(nbCompet))
+
+@app.route('/ajouterPoints', methods=['POST'])
+def ajouterPoints():
+    nbLicence=request.form.get('nbLicense')
+    nbCompet = int(request.form.get('numCompet'))
+    nbPhase = getNbPhase(nbCompet)
+    nomPoint = request.form.get('nomPoint')
+    nomLose = request.form.get('nomLose')
+    addPointMatchEquipe(nbCompet, nbPhase, nomPoint, nomLose)
+    return redirect('resultats_equipe/'+str(nbLicence)+'&'+str(nbCompet))
+
+@app.route('/enleverPoints', methods=['POST'])
+def enleverPoints():
+    nbLicence=request.form.get('nbLicense')
+    nbCompet = int(request.form.get('numCompet'))
+    nbPhase = getNbPhase(nbCompet)
+    nomPoint = request.form.get('nomPoint')
+    nomLose = request.form.get('nomLose')
+    subPointMatchEquipe(nbCompet, nbPhase, nomPoint, nomLose)
+    return redirect('resultats_equipe/'+str(nbLicence)+'&'+str(nbCompet))
+    
+
+
+@app.route('/genererPhaseEquipe', methods=['POST'])
+def genererPhaseEquipe():
+    nbCompet = int(request.form.get('nbCompet'))
+    nblicense = int(request.form.get('nbLicense'))
+    listeNomVictoire=request.form.getlist('nomVictoire')
+    generePhaseSuivanteEquipe(int(nbCompet), str(listeNomVictoire))
+    return redirect('resultats_equipe/'+str(nblicense)+'&'+str(nbCompet))
+

@@ -671,13 +671,26 @@ def fichiersDossier(path : str) :
 ########################################################################
 
 def getNbPhase(idCompetition) :
-  requete = "select max(nbPhases) from MATCHELIMINATION where idCompetition = " + str(idCompetition) + " ;"
-  cursor.execute(requete)
-  nb = cursor.fetchall()
-  if nb[0][0] == None : 
-    return 1
+  reqType = "select typeCompetition from COMPETITION where idCompetition = "+str(idCompetition)+";"
+  cursor.execute(reqType)
+  nb = cursor.fetchall()[0][0]
+  print(nb)
+  if nb == 'equipe' :
+    r = "select max(nbPhases) from MATCH_EQUIPE where idCompetition = " + str(idCompetition) + " ;"
+    cursor.execute(r)
+    nb = cursor.fetchall()
+    if nb[0][0] == None : 
+      return 1
+    else :
+      return nb[0][0]
   else :
-    return nb[0][0]
+    requete = "select max(nbPhases) from MATCHELIMINATION where idCompetition = " + str(idCompetition) + " ;"
+    cursor.execute(requete)
+    nb = cursor.fetchall()
+    if nb[0][0] == None : 
+      return 1
+    else :
+      return nb[0][0]
 
 def getInfoCompet(idCompetition):
   requete = "select idArmeCompetition, idSexeCompetition,idCategorieCompetition from COMPETITION where idCompetition = '" + str(idCompetition) +"' ;"
@@ -805,6 +818,12 @@ def getClassementApresPoule(idCompetition):
 
 def getNbParticipant(idCompetition): 
   requete = "select count(*) from TIREUR_DANS_COMPETITIONS where idCompetition ="+ str(idCompetition) +  ";"
+  cursor.execute(requete)
+  l1 = cursor.fetchall()
+  return l1[0][0]
+
+def getNbEquipe(idCompetition) :
+  requete = "select count(*) from EQUIPE where idCompetition ="+ str(idCompetition) +  ";"
   cursor.execute(requete)
   l1 = cursor.fetchall()
   return l1[0][0]
@@ -1843,10 +1862,17 @@ def createMatchEquipe(idCompetition, phase, nom1, nom2) :
     requete = "insert into MATCH_EQUIPE(idCompetition, idEquipe1, scoreEquipe1, idEquipe2, scoreEquipe2, nbPhases) value("+str(idCompetition)+","+str(idE1)+",0,"+str(idE2)+",0,"+str(phase)+");" 
     cursor.execute(requete)
     db.commit()
-  
+
 def generePhaseSuivanteEquipe(idCompetition, listeNomVictoire):
-  for i in range(len(listeNomVictoire)/2):
-    createMatchEquipe(idCompetition,getNbPhase(idCompetition)+1,listeNomVictoire[i],listeNomVictoire[i+1])
+  lNomVictoire=[]
+  listeNomVictoire = listeNomVictoire.replace('[','').replace(']','').replace("'","")
+  for nom in listeNomVictoire.split(","):
+    if nom != "":
+      lNomVictoire.append(nom)
+  for i in range(len(lNomVictoire)//2):
+    print('\033[94m' + str(lNomVictoire[i]) + " i = " + str(i) + '\033[0m')
+    nbPhase = getNbPhase(idCompetition)+1
+    createMatchEquipe(idCompetition,nbPhase,lNomVictoire[i],lNomVictoire[i+1])
 
 def lancerCompetitionEquipe(idCompetition) : 
   dico = dicoCompeteEquipe(idCompetition)
@@ -1870,6 +1896,8 @@ def lancerCompetitionEquipe(idCompetition) :
 if __name__ == "__main__":
     print(getInfosMatchEquipeNumLicence(17,40845))
     #print(affichageGenererPhaseEliminations(25,2))
+    # print(affichageGenererPhaseEliminations(25,2))
+    # print(generePhaseSuivanteEquipe(19,"['NathGOAT','GatGOAT']"))
     #print(getNbPhase(17))
     # print(subPointMatchEquipe(17,1,"Les 4","Les 2"))
     # print(maFonctionPlusBelleQueLautre(17))
