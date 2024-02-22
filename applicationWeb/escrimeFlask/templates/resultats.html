@@ -153,9 +153,7 @@
                             {% endfor %}  
                         </div>
                 {% endfor %}
-                        <div class="tournament__round tournament__round--final">
-                        {% if condition %}{% endif %}
-                        
+                        <div class="tournament__round tournament__round--final">                        
                         <div class="tournament__match">
                             {% if nbPhase >= nbTotalPhase+2 %}
                             <button class="tournament__match__team" onclick="changerScore({{matchs[nbTotalPhase-1][0][2]}}, {{nbCompet}}, {{nbPhase}})">{{matchs[nbTotalPhase-1][0][0]}} {{matchs[nbTotalPhase-1][0][j]}} | {{scores[nbTotalPhase-1][0]}}</button>

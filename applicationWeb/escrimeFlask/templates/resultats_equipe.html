@@ -5,7 +5,6 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Average" rel="stylesheet">
-<script src="{{ url_for('static',filename='js/updateData.js')}}"> </script>
 {% endblock %}
 
 {% block header %}
@@ -29,12 +28,14 @@
     {% endfor %}
 </ul>
 <main>
+    {% if participants %}
+    
     <div class="petit_titre">
         <h3>Score :</h3>
         <img class="petite_epee" src="{{url_for('static', filename='images/epeeBleu.png')}}" alt="Epée bleu d'escrime">
     </div>
 
-    <section class="tableau">
+    {# <section class="tableau">
         <table border="0" width="100%" height="100%">
             <thead>
                 <tr>
@@ -65,104 +66,106 @@
                 </tr>
             </tbody>
         </table>
-    </section>
+    </section> #}
 
     {% for participant in participants %}
 
     <section class="tableau">
         <table border="0" width="100%" height="100%">
-            <tr>
-                <th>Nom</th>
-                <th>Club</th>
-                <th></th>
-                {% for i in range(participant|length) %}
-                <th>{{ i+1 }}</th>
-                {% endfor %}
-                <th></th>
-                <th>V</th>
-                <th>TD</th>
-                <th>TR</th>
-                <th>TD-TR</th>
-                <th></th>
-                <th>Place</th>
-            </tr>
-            {% for p in participant.items() %}
-            {# {{p}} #}
-            <tr>
-                <td class="caseBleuClair">{{ p[1][0] }} {{ p[1][1] }}</td>
-                <td class="caseBleuClair">{{ p[1][2] }}</td>
-                <td class="caseBleuFonce">{{ loop.index }}</td>
-                {% for resultat in p[1][3] %}
-                {% if resultat[1] == -1 %}
+            <thead>
+                <tr>
+                    <th>Nom</th>
+                    <th>Club</th>
+                    <th class="black"></th>
+                    <th></th>
+                    <th>Score</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
                 {% if isArbitre %}
-                {% if nbPhase == 1 %}
-                <td class="caseBleuClair" contenteditable="true"
-                    onblur="updateData(this.innerText, {{p[0][0]}}, {{resultat[0]}}, {{nbCompet}}, {{1}})"></td>
+                
+                <tr>
+                    <td class="caseBleuClair">{{participant[0]}}</td>
+                    <td class="caseBleuClair">{{participant[2]}}</td>
+                    <td class="black"></td>
+                    <form action="{{url_for('enleverPoints')}}" method="POST">
+                    <input type="text" hidden name="nbLicense" value="{{nbLicense}}">
+                    <input type="text" hidden name="numCompet" value="{{nbCompet}}">
+                    <input type="text" hidden name="nomPoint" value="{{participant[0]}}">
+                    <input type="text" hidden name="nomLose" value="{{participant[1]}}">
+                    <td class="caseBleuClair"><button type="submit">-</button></td>
+                    </form>
+                    <td class="caseBleuClair" id="score">{{participant[4]}}</td>
+                    <form action="{{url_for('ajouterPoints')}}" method="POST">
+                    <input type="text" hidden name="nbLicense" value="{{nbLicense}}">
+                    <input type="text" hidden name="numCompet" value="{{nbCompet}}">
+                    <input type="text" hidden name="nomPoint" value="{{participant[0]}}">
+                    <input type="text" hidden name="nomLose" value="{{participant[1]}}">
+                    <td class="caseBleuClair"><button type="submit">+</button></td>
+                    </form>
+                </tr>    
+                <tr>
+                    <td class="caseBleuClair">{{participant[1]}}</td>
+                    <td class="caseBleuClair">{{participant[3]}}</td>
+                    <td class="black"></td>
+                    <form action="{{url_for('enleverPoints')}}" method="POST">
+                    <input type="text" hidden name="nbLicense" value="{{nbLicense}}">
+                    <input type="text" hidden name="numCompet" value="{{nbCompet}}">
+                    <input type="text" hidden name="nomPoint" value="{{participant[1]}}">
+                    <input type="text" hidden name="nomLose" value="{{participant[0]}}">
+                    <td class="caseBleuClair"><button type="submit">-</button></td>
+                    </form>
+                    <td class="caseBleuClair" id="score">{{participant[5]}}</td>
+                    <form action="{{url_for('ajouterPoints')}}" method="POST">
+                    <input type="text" hidden name="nbLicense" value="{{nbLicense}}">
+                    <input type="text" hidden name="numCompet" value="{{nbCompet}}">
+                    <input type="text" hidden name="nomPoint" value="{{participant[1]}}">
+                    <input type="text" hidden name="nomLose" value="{{participant[0]}}">
+                    <td class="caseBleuClair"><button type="submit">+</button></td>
+                    </form>
+                </tr>
                 {% else %}
-                <td class="caseBleuClair"></td>
+                <tr>
+                    <td class="caseBleuClair">{{participant[0]}}</td>
+                    <td class="caseBleuClair">{{participant[2]}}</td>
+                    <td class="black"></td>
+                    <td class="caseBleuClair">-</td>
+                    <td class="caseBleuClair">{{participant[4]}}</td>
+                    <td class="caseBleuClair">+</td>
+                </tr>
+                <tr>
+                    <td class="caseBleuClair">{{participant[1]}}</td>
+                    <td class="caseBleuClair">{{participant[3]}}</td>
+                    <td class="black"></td>
+                    <td class="caseBleuClair">-</td>
+                    <td class="caseBleuClair">{{participant[5]}}</td>
+                    <td class="caseBleuClair">+</td>
+                </tr>
                 {% endif %}
-                {% else %}
-                <td class="caseBleuClair"></td>
-                {% endif %}
-                {% else %}
-                {% if resultat[1] == -2 %}
-                <td class="black"></td>
-                {% else %}
-                {% if isArbitre %}
-                {% if nbPhase == 1 %}
-                <td class="caseBleuClair" contenteditable="true"
-                    onblur="updateData(this.innerText, {{p[0][0]}}, {{resultat[0]}}, {{nbCompet}}, {{1}} )">
-                    {{resultat[1]}}</td>
-                {% else %}
-                <td class="caseBleuClair">{{ resultat[1] }}</td>
-                {% endif %}
-                {% else %}
-                <td class="caseBleuClair">{{ resultat[1] }}</td>
-                {% endif %}
-                {% endif %}
-                {% endif %}
-                {% endfor %}
-                <td class="caseBleuFonce"></td>
-                <td class="caseBleuClair">{{ p[1][6] }}</td>
-                <td class="caseBleuClair">{{ p[1][4] }}</td>
-                <td class="caseBleuClair">{{ p[1][5] }}</td>
-                <td class="caseBleuClair">{{p[1][4] - p[1][5]}}</td>
-                <td class="caseBleuFonce"></td>
-                <td class="caseRouge">{{p[1][7]}}</td>
-            </tr>
-            {% endfor %}
-
-            <tr>
-                <td class="caseBleuFonce">Touches Reçues</td>
-                <td class="caseBleuFonce"></td>
-                <td class="caseBleuFonce"></td>
-                {% for p in participant.values() %}
-                <td class="caseBleuClair">{{ p[5] }}</td>
-                {% endfor %}
-            </tr>
+            </tbody>
         </table>
     </section>
-
     {% endfor %}
+
+    {% endif %}
+
+    {% if isArbitre %}
+        <form id="form-generer-eliminations" action="{{url_for('genererPhaseEquipe')}}" method="POST">
+            <input type="text" hidden name="nbCompet" value="{{nbCompet}}">
+            <input type="text" hidden name="nbLicense" value="{{nbLicense}}">
+            <button class="boutonRefresh" type="button" onclick="confirmerChoix()">Générer les prochaines phases d'éliminations</button>
+        </form>
+    {% endif %}
+
     {# <button class="boutonRefresh" onclick="window.location.reload()">Rafraîchir les score du tableau</button> #}
         <div class="petit_titre">
             <h3>Arbre de phase éliminatoire  :</h3>
+            {# {{matchs}}
+            {{nbTotalPhase}} #}
             <img class="petite_epee" src="{{url_for('static', filename='images/epeeBleu.png')}}" alt="Epée bleu d'escrime">
         </div>
             <div class="tournament">
-            {% if isArbitre %}
-                <form id="form-generer-eliminations" action="{{url_for('genererEliminations')}}" method="POST">
-                    <input type="text" hidden name="nbCompet" value="{{nbCompet}}">
-                    <input type="text" hidden name="nbLicense" value="{{nbLicense}}">
-                    <input type="text" hidden name="nbPhase" value="{{nbPhase}}">
-                    {% if phaseFinie %}
-                        <button class="boutonRefresh" type="button" onclick="confirmerChoix()">Générer les prochaines phases d'éliminations</button>
-                    {% else %}
-                        <button class="boutonRefresh" type="button" onclick="alert('Tous les matchs ne sont pas finis.')">Générer les prochaines phases d'éliminations</button>
-                    {% endif %}
-                </form>
-            {% endif %}
-            {# <button class="boutonRefresh" onclick="window.location.reload()">Rafraîchir les score de l'arbre</button> #}
                 <div class="tournament__grid">
                 {% for i in range(nbTotalPhase-1) %}
                         {% if i == 0 %}
@@ -170,12 +173,12 @@
                         {% else %}
                             <div class="tournament__round">
                         {% endif %}
-                            {% for j in range(0,((nbTotalPhase-i)**2)-1,2) %}
-                            
+                            {% for j in range(0,((nbTotalPhase-i)**2)//2) %}
                             <div class="tournament__match">
-                            {% if nbPhase >= i+2 %}
-                                <button class="tournament__match__team" onclick="changerScore({{matchs[i][j][2]}}, {{nbCompet}}, {{nbPhase}})">{{matchs[i][j][0]}} {{matchs[i][j][1]}} | {{scores[i][j]}}</button>
-                                <button class="tournament__match__team" onclick="changerScore({{matchs[i][j+1][2]}}, {{nbCompet}}, {{nbPhase}})">{{matchs[i][j+1][0]}} {{matchs[i][j+1][1]}} | {{scores[i][j+1]}}</button>
+                            {{j}}
+                            {% if nbPhase >= i %}
+                                <button class="tournament__match__team">{{matchs[i+j][0]}} {{matchs[i+j][2]}} | {{matchs[i+j][4]}}</button>
+                                <button class="tournament__match__team">{{matchs[i+j][1]}} {{matchs[i+j][3]}} | {{matchs[i+j][5]}}</button>
                             {% else %}
                                 <button class="tournament__match__team"></button>
                                 <button class="tournament__match__team"></button>
@@ -184,13 +187,11 @@
                             {% endfor %}  
                         </div>
                 {% endfor %}
-                        <div class="tournament__round tournament__round--final">
-                        {% if condition %}{% endif %}
-                        
+                        <div class="tournament__round tournament__round--final">                        
                         <div class="tournament__match">
-                            {% if nbPhase >= nbTotalPhase+2 %}
-                            <button class="tournament__match__team" onclick="changerScore({{matchs[nbTotalPhase-1][0][2]}}, {{nbCompet}}, {{nbPhase}})">{{matchs[nbTotalPhase-1][0][0]}} {{matchs[nbTotalPhase-1][0][j]}} | {{scores[nbTotalPhase-1][0]}}</button>
-                            <button class="tournament__match__team" onclick="changerScore({{matchs[nbTotalPhase-1][1][2]}}, {{nbCompet}}, {{nbPhase}})">{{matchs[nbTotalPhase-1][1][0]}} {{matchs[nbTotalPhase-1][1][1]}} | {{scores[nbTotalPhase-1][1]}}</button>
+                            {% if nbPhase >= nbTotalPhase %}
+                            <button class="tournament__match__team">{{matchs[-1][0]}} {{matchs[-1][2]}} | {{matchs[-1][4]}}</button>
+                            <button class="tournament__match__team">{{matchs[-1][1]}} {{matchs[-1][3]}} | {{matchs[-1][5]}}</button>
                             {% else %}
                             <button class="tournament__match__team"></button>
                             <button class="tournament__match__team"></button>
@@ -199,8 +200,12 @@
                         </div>
                         <div class="tournament__round tournament__round--winner">
                         <div class="tournament__match">
-                            {% if nbPhase >= nbTotalPhase+2 %}
-                            <button class="tournament__match__team">{{matchs[nbTotalPhase-1][0][0]}} {{matchs[nbTotalPhase-1][0][1]}}</button>
+                            {% if nbPhase >= nbTotalPhase %}
+                                {% if matchs[-1][4] > matchs[-1][5] %}
+                                <button class="tournament__match__team">{{matchs[-1][0]}} {{matchs[-1][2]}}</button>
+                                {% else %}
+                                <button class="tournament__match__team">{{matchs[-1][1]}} {{matchs[-1][3]}}</button>
+                                {% endif %}
                             {% else %}
                             <button class="tournament__match__team"></button>    
                             {% endif %}
@@ -269,59 +274,70 @@
         </table>
     </div>
 </main>
+
+{# display: none; #}
+<div class="donnee" style="display: None;">
+    {% for participant in participants %}
+        <p id="participants">{{participant[4]}},{{participant[5]}}</p>
+        {% if participant[4] > participant[5] %}
+        <p class="gagnant">{{participant[0]}}</p>
+        {% else %}
+        <p class="gagnant">{{participant[1]}}</p>
+        {% endif %}
+        
+    {% endfor %}
+</div>
+
 <script>
 
     function confirmerChoix() {
+        if (verifierFinPhase() == false) {
+            alert("Tous les matchs ne sont pas finis.");
+            return;
+        }
+
         var confirmation = confirm(`Êtes-vous sûr de vouloir générer les prochaines phases d'éliminations ?
         
     Cette action est irréversible. et vous ne pourrez plus modifier les scores des matchs précédents`);
         if (confirmation) {
-            document.getElementById("form-generer-eliminations").submit();
+            recupGagnant();
         }
     }
 
-
-    function updateData(value, nbLicenceTireur, nbLicenceTireurAdverse, numCompetition, nbPhase) {
-        // Convertir la valeur en nombre
-        var numericValue = parseFloat(value);
-
-        // Vérifier si la valeur est un nombre compris entre 0 et 5
-        if (numericValue >= 0 && numericValue <= 5) {
-            // Utilisez AJAX pour envoyer la valeur à la fonction Flask
-            var xhr = new XMLHttpRequest();
-            xhr.open("POST", "/update_data", true);
-            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-            xhr.onreadystatechange = function () {
-                if (xhr.readyState === 4) {
-                    if (xhr.status === 200) {
-                        // Traitement de la réponse du serveur si nécessaire
-                        console.log(xhr.responseText);
-                        // Rafraîchir la page après avoir envoyé les données avec succès
-                        location.reload();
-                    } else {
-                        // Gérer les erreurs si nécessaire
-                        alert("Erreur lors de l'envoi des données.");
-                    }
+    function verifierFinPhase() {
+        reponse = [];
+        document.querySelectorAll('#participants').forEach(function (participant) {
+            let scores = participant.textContent.split(',');
+            for (let i = 0; i < scores.length; i++) {
+                if (parseInt(scores[0]) != 45 && parseInt(scores[1]) != 45) {
+                    console.log("match pas fini")
+                    reponse.push(false);
                 }
-            };
-            // Envoyez la valeur et l'index (ou toute autre information nécessaire) à la fonction Flask
-            xhr.send("data=" + numericValue + "&nbLicenceTireur=" + nbLicenceTireur + "&nbLicenceTireurAdverse=" + nbLicenceTireurAdverse + "&numCompetition=" + numCompetition + "&nbPhase=" + nbPhase);
-        } else {
-            alert("Veuillez saisir un nombre entre 0 et 5");
-            location.reload();
-
-        }
+                else {
+                    console.log("match fini")
+                    reponse.push(true);
+                }
+            }
+        });
+        return reponse.includes(false) ? false : true;
     }
 
-
-    function changerScore(nbLicenceTireur, numCompetition, nbPhase) {
-        {% if isArbitre %}
-        var score = prompt("Veuillez saisir un chiffre entre 0 et 5:");
-        updateData(score, nbLicenceTireur, 0, numCompetition, nbPhase);
-        {% else %}
-        alert("Vous n'êtes pas arbitre");
-        {% endif %}
+    function recupGagnant() {
+        let gagnants = document.querySelectorAll('.gagnant');
+        let gagnantsArray = [];
+        gagnants.forEach(function (gagnant) {
+            gagnantsArray.push(gagnant.textContent);
+        });
+        console.log(gagnantsArray);
+        let input = document.createElement('input');
+        input.type = "text";
+        input.name = "nomVictoire";
+        input.value = gagnantsArray;
+        input.hidden = true;
+        document.getElementById("form-generer-eliminations").appendChild(input);
+        document.getElementById("form-generer-eliminations").submit();
     }
+
 </script>
 
 {% else %}

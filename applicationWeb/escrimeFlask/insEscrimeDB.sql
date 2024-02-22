@@ -39,6 +39,9 @@ insert into CLUB(nomClub) values
     ("EscrimeClubBoulay"),
     ('EscrimeClubPatay');
 
+insert into CLUB(idClub, nomCLub) value
+    (0,"0");
+
 insert into ORGANISATEUR(nomOrganisateur,prenomOrganisateur,licenseOrganisateur) values
     ("Forfeit","Forfeit",0),
     ("Roger","Bertrand",241354),
@@ -47,6 +50,7 @@ insert into ORGANISATEUR(nomOrganisateur,prenomOrganisateur,licenseOrganisateur)
     ("Well","Brian",468412);
 
 insert into ORGANISATEURDANSCLUB(licenseOrganisateur, idClub) values 
+    (0,0),
     (241354,1),
     (254612,2),
     (734212,3),
