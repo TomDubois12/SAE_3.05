@@ -278,7 +278,8 @@ def resultats_equipe(nbLicense,nbCompet):
                             nomCompet=getInfoCompet(int(nbCompet)),
                             arbitres=getNomArbitre(int(nbCompet)),
                             phaseFinie=phasesFinie(int(nbCompet),int(getNbPhase(int(nbCompet)))),
-                            nbTotalPhase=nbTotalPhase)
+                            nbTotalPhase=nbTotalPhase,
+                            classement=getClassementEquipFinal(nbCompet))
         else:
             return render_template('resultats_equipe.html',
                                 title='Résultats Equipe',
@@ -295,7 +296,8 @@ def resultats_equipe(nbLicense,nbCompet):
                                 nomCompet=getInfoCompet(int(nbCompet)),
                                 arbitres=getNomArbitre(int(nbCompet)),
                                 phaseFinie=phasesFinie(int(nbCompet),int(getNbPhase(int(nbCompet)))),
-                                nbTotalPhase=nbTotalPhase)
+                                nbTotalPhase=nbTotalPhase,
+                            classement=getClassementEquipFinal(nbCompet))
     else:
         return render_template('resultats_equipe.html',
                             title='Résultats Equipe',
@@ -312,7 +314,8 @@ def resultats_equipe(nbLicense,nbCompet):
                             nomCompet=getInfoCompet(int(nbCompet)),
                             arbitres=getNomArbitre(int(nbCompet)),
                             phaseFinie=phasesFinie(int(nbCompet),int(getNbPhase(int(nbCompet)))),
-                            nbTotalPhase=nbTotalPhase)
+                            nbTotalPhase=nbTotalPhase,
+                            classement=getClassementEquipFinal(nbCompet))
 
 ##Fonctions de vérification
 
@@ -428,7 +431,8 @@ def consulterArchive():
                                 arbitres=getNomArbitre(int(nbCompet)),
                                 phaseFinie=phasesFinie(int(nbCompet),int(getNbPhase(int(nbCompet)))),
                                 ancienNbCompet=ancienNbCompet,
-                                nbTotalPhase=nbTotalPhase)
+                                nbTotalPhase=nbTotalPhase,
+                            classement=getClassementEquipFinal(nbCompet))
     else:
         return render_template('resultats.html',
                                 title='Résultats',
