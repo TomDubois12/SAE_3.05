@@ -43,14 +43,14 @@ insert into CLUB(idClub, nomCLub) value
     (0,"0");
 
 insert into ORGANISATEUR(nomOrganisateur,prenomOrganisateur,licenseOrganisateur) values
-    ("Forfeit","Forfeit",0),
+    ("Forfeit","Forfeit",-1),
     ("Roger","Bertrand",241354),
     ("Wolfart","Patrick",254612),
     ("Duboise","Tomy",734212),
     ("Well","Brian",468412);
 
 insert into ORGANISATEURDANSCLUB(licenseOrganisateur, idClub) values 
-    (0,0),
+    (-1,0),
     (241354,1),
     (254612,2),
     (734212,3),

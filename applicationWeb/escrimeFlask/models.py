@@ -11,8 +11,8 @@ import mysql.connector
 #connexion au base de données
 db = mysql.connector.connect(
   host = "localhost",
-  user = "koko",
-  password = "koko",
+  user = "nathan",
+  password = "nathan",
   database = "Escrime"
 )
 #Blabla2147
@@ -1882,7 +1882,7 @@ def lancerCompetitionEquipe(idCompetition) :
   puissanceDeDeux = math.floor(math.log2(len(listeNomEquipeTrier))) # renvoie 2 pour taille de 4
 
   if 2**puissanceDeDeux != len(listeNomEquipeTrier) :
-    requete = "insert into EQUIPE(idCompetition,nomEquipe,licenceChefEquipe) value("+str(idCompetition)+",'',"+str(0)+");" 
+    requete = "insert into EQUIPE(idCompetition,nomEquipe,licenceChefEquipe) value("+str(idCompetition)+",'',"+str(-1)+");" 
     cursor.execute(requete)
     db.commit()
     for j in range(len(listeNomEquipeTrier), 2**(puissanceDeDeux + 1)):
@@ -1892,9 +1892,49 @@ def lancerCompetitionEquipe(idCompetition) :
   for i in range(int(len(listeNomEquipeTrier)/2)):
     createMatchEquipe(idCompetition, phase, listeNomEquipeTrier[i], listeNomEquipeTrier[-(i+1)])
 
+def getClassementEquipe(idCompetition) : 
+  nbPhase = getNbPhase(idCompetition)
+  listeDeListe = []
+  for i in range(1,nbPhase+1):
+      
+    infosMatch = "select * from MATCH_EQUIPE where idCompetition = "+str(idCompetition)+" and nbPhases = "+str(i)+";"
+    cursor.execute(infosMatch)
+    listeDesMatchs =cursor.fetchall()
+    listeDeListe.append(listeDesMatchs)
+  print(listeDeListe)
+  listeClassement = []
+
+  while len(listeDeListe) > 0 : 
+    for match in listeDeListe[-1] : 
+      nomEquipe1 = getNomEquipeByIdEquipe(match[2])
+      nomEquipe2 = getNomEquipeByIdEquipe(match[4])
+      score1 = match[3]
+      score2= match[5]
+      if score1 > score2 and nomEquipe1 not in listeClassement : 
+          listeClassement.append(nomEquipe1)
+      else :
+        if nomEquipe1 not in listeClassement :
+          listeClassement.append(nomEquipe2)
+    
+    for match in listeDeListe[-1] : 
+      nomEquipe1 = getNomEquipeByIdEquipe(match[2])
+      nomEquipe2 = getNomEquipeByIdEquipe(match[4])
+      score1 = match[3]
+      score2= match[5]
+      if nomEquipe1 not in listeClassement : 
+          listeClassement.append(nomEquipe1)
+      else :
+        if nomEquipe2 not in listeClassement :
+          listeClassement.append(nomEquipe2)
+    listeDeListe.pop(-1)
+
+  for equipe in listeClassement : 
+    pass
+  return listeClassement
 
 if __name__ == "__main__":
-    print(getInfosMatchEquipeNumLicence(17,40845))
+    print(getClassementEquipe(17))
+    # print(getInfosMatchEquipeNumLicence(17,40845))
     #print(affichageGenererPhaseEliminations(25,2))
     # print(affichageGenererPhaseEliminations(25,2))
     # print(generePhaseSuivanteEquipe(19,"['NathGOAT','GatGOAT']"))
