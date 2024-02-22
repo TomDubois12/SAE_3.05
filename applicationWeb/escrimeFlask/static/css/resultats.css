@@ -129,6 +129,16 @@ table {
 
   .caseBleuClair{
     background-color: #CFE2F3;
+    text-align: center;
+
+  }
+
+  .caseBleuClair > button{
+    color: #062656;
+    height: 100%;
+    width: 100%;
+    background: none;
+    border: none;
   }
 
   .caseBleuFonce{
