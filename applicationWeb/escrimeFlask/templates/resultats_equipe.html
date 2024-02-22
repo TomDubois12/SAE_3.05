@@ -219,38 +219,10 @@
         <img class="petite_epee" src="{{url_for('static', filename='images/epeeBleu.png')}}" alt="Epée bleu d'escrime">
     </div>
     <div class="classement">
-        {% if joueur %}
-        <table>
-            <tr class="titre-tableau">
-                <td class="caseBleuFonce">RANG</td>
-                <td class="caseBleuFonce">NOM</td>
-                <td class="caseBleuFonce">PRÉNOM</td>
-                <td class="caseBleuFonce">COMITE REGIONAL</td>
-                <td class="caseBleuFonce">CLUB</td>
-                <td class="caseBleuFonce">POINTS</td>
-            </tr>
-            {% if classements|length > 0 and nbPhase == 5 %}
-            <tr>
-                <td class="caseRouge">{{classementPerso[0]}}</td>
-                <td class="caseBleuClair">{{classementPerso[1]}}</td>
-                <td class="caseBleuClair">{{classementPerso[2]}}</td>
-                <td class="caseBleuClair">{{classementPerso[3]}}</td>
-                <td class="caseBleuClair">{{classementPerso[4]}}</td>
-                <td class="caseJaune">{{classementPerso[5]}}</td>
-            </tr>
-            {% else %}
-            <tr>
-                <td class="classementDispo" colspan="6">Classement disponible à la fin de la compétition</td>
-            </tr>
-            {% endif %}
-        </table>
-        {% endif %}
         <table>
             <tr>
                 <td class="caseBleuFonce">RANG</td>
-                <td class="caseBleuFonce">NOM</td>
-                <td class="caseBleuFonce">PRÉNOM</td>
-                <td class="caseBleuFonce">COMITE REGIONAL</td>
+                <td class="caseBleuFonce">EQUIPE</td>
                 <td class="caseBleuFonce">CLUB</td>
                 <td class="caseBleuFonce">POINTS</td>
             </tr>
@@ -260,8 +232,6 @@
                 <td class="caseRouge">{{classement[0]}}</td>
                 <td class="caseBleuClair">{{classement[1]}}</td>
                 <td class="caseBleuClair">{{classement[2]}}</td>
-                <td class="caseBleuClair">{{classement[3]}}</td>
-                <td class="caseBleuClair">{{classement[4]}}</td>
                 <td class="caseJaune">{{classement[5]}}</td>
             </tr>
             {% endfor %}

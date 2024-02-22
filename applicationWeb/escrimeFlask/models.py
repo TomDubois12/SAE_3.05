@@ -1976,7 +1976,7 @@ if __name__ == "__main__":
     # insererTireurDansEquipe(5,[40845])
 
     
-    # insOrgaDansBD() 
+    insOrgaDansBD() 
     # createCompetition('Tournois été 2025','Orléans','11','2024-05-23','4029','equipe')
     # createCompetition('Tournois été 2026','Montréal','11','2024-05-29','4029','equipe')
     # insererEquipeDansCompetition(17,"Les 1",272582)
