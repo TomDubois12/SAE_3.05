@@ -459,6 +459,7 @@ def pageImprimerResultat():
     nbLicense = request.args.get("nbLicense")
     nbCompet = request.args.get("nbCompet")
     ancienNbCompet = request.args.get("ancienNbCompet")
+    
     listLicense=affichageGenererPhaseEliminations(int(nbCompet), getNbPhase(int(nbCompet)))
     licence=[]
     licence.append(listLicense[3])
@@ -482,6 +483,48 @@ def pageImprimerResultat():
                                 arbitres=getNomArbitre(int(nbCompet)),
                                 phaseFinie=phasesFinie(int(nbCompet),int(getNbPhase(int(nbCompet)))),
                                 ancienNbCompet=ancienNbCompet)  
+
+@app.route('/pageImprimerResultatEquipe')
+def pageImprimerResultatEquipe():
+    nbLicense = request.args.get("nbLicense")
+    nbCompet = request.args.get("nbCompet")
+    ancienNbCompet = request.args.get("ancienNbCompet")
+    if isCompetitionEquipe(int(nbCompet)):
+        nbPartipant = getNbEquipe(int(nbCompet))
+    else:
+        nbPartipant = getNbParticipant(int(nbCompet))
+    nbTotalPhase = nbPartipant
+    trouve = False
+    i=0
+    while not trouve:
+        if nbPartipant <= 2**i:
+            nbTotalPhase = i
+            trouve = True
+        i+=1
+    listLicense=affichageGenererPhaseEliminations(int(nbCompet), getNbPhase(int(nbCompet)))
+    licence=[]
+    licence.append(listLicense[3])
+    licence.append(listLicense[4])
+    licence.append(listLicense[5])
+    licence.append(listLicense[6])
+    return render_template('pageImprimerResultatEquipe.html',
+                                title='Résultats Equipe',
+                                isOrganisateur=estOrganisateur(int(nbLicense)),
+                                isCompetitionEquipe=isCompetitionEquipe(int(nbCompet)),
+                                nbCompet=int(nbCompet),
+                                nbLicense=int(nbLicense),
+                                isArbitre=False,
+                                nbPhase=getNbPhase(int(nbCompet)),
+                                matchs=maFonctionPlusBelleQueLautre(int(nbCompet)),                                
+                                lancer=True,
+                                classements=classementFinale(int(nbCompet),getNbPhase(int(nbCompet))),
+                                joueur=False,
+                                nomCompet=getInfoCompet(int(nbCompet)),
+                                arbitres=getNomArbitre(int(nbCompet)),
+                                phaseFinie=phasesFinie(int(nbCompet),int(getNbPhase(int(nbCompet)))),
+                                ancienNbCompet=ancienNbCompet,
+                                nbTotalPhase=nbTotalPhase,
+                                classement=getClassementEquipFinal(nbCompet))
 
 @app.route('/traitement')
 def traitement():

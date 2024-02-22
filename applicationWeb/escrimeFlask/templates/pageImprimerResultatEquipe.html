@@ -2,16 +2,29 @@
 
 {% block linkcss %}
 <link rel="stylesheet" href="{{ url_for('static', filename='css/resultats.css')}}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/pageImprimerResultat.css')}}">
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Average" rel="stylesheet">
 {% endblock %}
 
-{% block header %}
-{% include "partials/_header3.html" %}
-{% endblock %}
 
 {% block main %}
+<script> 
+    function maFunction(){
+        let monBouton = document.querySelector(".boutonImprimer");
+        monBouton.style.display = "none";
+        setTimeout(reAfficherBouton, 2000);
+        print();
+    }
+    function reAfficherBouton(){
+        let monBouton = document.querySelector(".boutonImprimer");
+        monBouton.style.display = "block";
+    }
+</script>
+<button class="boutonImprimer" type="button" onclick="maFunction()">Imprimer</button>
+    
 {% if lancer %}
 <section class="sectionnomCompet">
     <h3 class="titreCompet">Compétition : </h3>
@@ -32,7 +45,6 @@
     
     <div class="petit_titre">
         <h3>Score :</h3>
-        <img class="petite_epee" src="{{url_for('static', filename='images/epeeBleu.png')}}" alt="Epée bleu d'escrime">
     </div>
 
     {# <section class="tableau">
@@ -163,7 +175,6 @@
             <h3>Arbre de phase éliminatoire  :</h3>
             {# {{matchs}}
             {{nbTotalPhase}} #}
-            <img class="petite_epee" src="{{url_for('static', filename='images/epeeBleu.png')}}" alt="Epée bleu d'escrime">
         </div>
             <div class="tournament">
                 <div class="tournament__grid">
@@ -216,7 +227,6 @@
 
     <div class="petit_titre">
         <h3>Classement :</h3>
-        <img class="petite_epee" src="{{url_for('static', filename='images/epeeBleu.png')}}" alt="Epée bleu d'escrime">
     </div>
     <div class="classement">
         <table>
@@ -258,12 +268,6 @@
     {% endfor %}
 </div>
 
-<form class="wrapperVisualiserImprim" action="{{ url_for("pageImprimerResultatEquipe")}}">
-    <input type="text" hidden name="nbCompet" value="{{nbCompet}}">
-    <input type="text" hidden name="nbLicense" value="{{nbLicense}}">
-    <input type="text" hidden name="ancienNbCompet" value="{{nbCompet}}">
-    <input  class="btnVisualiserImprim" type="submit" value="Visualiser la page avant impression">
-</form>
 
 <script>
 
@@ -322,7 +326,6 @@
 <main>
     <div class="petit_titre">
         <h3>Score :</h3>
-        <img class="petite_epee" src="{{url_for('static', filename='images/epeeBleu.png')}}" alt="Epée bleu d'escrime">
     </div>
     <section class="tableau">
         <table border="0" width="100%" height="100%">
@@ -444,7 +447,6 @@
     {# <button class="boutonRefresh" onclick="window.location.reload()">Rafraîchir les score du tableau</button> #}
     <div class="petit_titre">
         <h3>Arbre de phase éliminatoire :</h3>
-        <img class="petite_epee" src="{{url_for('static', filename='images/epeeBleu.png')}}" alt="Epée bleu d'escrime">
     </div>
     <div class="tournament">
         {% if isArbitre %}
@@ -697,7 +699,6 @@
 
     <div class="petit_titre">
         <h3>Classement :</h3>
-        <img class="petite_epee" src="{{url_for('static', filename='images/epeeBleu.png')}}" alt="Epée bleu d'escrime">
     </div>
     <div class="classement">
         <table>
