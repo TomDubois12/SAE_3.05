@@ -151,7 +151,28 @@ table {
     padding-right: 1.5em;
     margin-left: 2.5em;
   }
+.wrapperVisualiserImprim{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  padding-bottom: 1em;
+}
 
+.btnVisualiserImprim{
+  background-color: blue;
+  padding:10px;
+  font-size: 18px;
+  color: white;
+  border-radius: 20px;
+  border: thin solid black;
+}
+
+.btnVisualiserImprim:hover{
+  padding: 12px;
+  font-size: 20px;
+  background-color: rgb(0, 0, 221);
+}
 /* Arbre phase elimination */
 
 :root {

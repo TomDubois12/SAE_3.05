@@ -22,12 +22,7 @@
 {{nomCompet[3]}}
 </p>
 </section>
-<form action="{{ url_for("pageImprimerResultat")}}">
-    <input type="text" hidden name="nbCompet" value="{{nbCompet}}">
-    <input type="text" hidden name="nbLicense" value="{{nbLicense}}">
-    <input type="text" hidden name="ancienNbCompet" value="{{nbCompet}}">
-    <input type="submit" value="Visualiser la page avant impression">
-</form>
+
 <h3 class="titreArbitres">Arbitre(s) de la compétition : </h3>
 <ul>
     {% for arbitre in arbitres %}
@@ -236,6 +231,12 @@
                 
             </table>  
         </div>
+        <form class="wrapperVisualiserImprim" action="{{ url_for("pageImprimerResultat")}}">
+            <input type="text" hidden name="nbCompet" value="{{nbCompet}}">
+            <input type="text" hidden name="nbLicense" value="{{nbLicense}}">
+            <input type="text" hidden name="ancienNbCompet" value="{{nbCompet}}">
+            <input  class="btnVisualiserImprim" type="submit" value="Visualiser la page avant impression">
+        </form>
     </main>
     <script>
 
@@ -689,11 +690,13 @@
                     </tr>
                     {% endfor %} #}
             </table>  
+            
         </div>
-
+       
         <div class="fondBlur">
             <h1>TOURNOI NON LANCÉ</h1>
         </div>
+        
     </main>
 
 {% endif %}
