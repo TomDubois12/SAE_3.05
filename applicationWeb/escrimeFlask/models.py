@@ -1892,7 +1892,7 @@ def lancerCompetitionEquipe(idCompetition) :
   for i in range(int(len(listeNomEquipeTrier)/2)):
     createMatchEquipe(idCompetition, phase, listeNomEquipeTrier[i], listeNomEquipeTrier[-(i+1)])
 
-def getClassementEquipe(idCompetition) : 
+def getClassementEquipFinal(idCompetition) : 
   nbPhase = getNbPhase(idCompetition)
   listeDeListe = []
   for i in range(1,nbPhase+1):
@@ -1901,7 +1901,6 @@ def getClassementEquipe(idCompetition) :
     cursor.execute(infosMatch)
     listeDesMatchs =cursor.fetchall()
     listeDeListe.append(listeDesMatchs)
-  print(listeDeListe)
   listeClassement = []
 
   while len(listeDeListe) > 0 : 
@@ -1928,12 +1927,18 @@ def getClassementEquipe(idCompetition) :
           listeClassement.append(nomEquipe2)
     listeDeListe.pop(-1)
 
+  ind = 1
+  listeReturn = []
   for equipe in listeClassement : 
-    pass
-  return listeClassement
+    if equipe != "" :
+      listeReturn.append([ind, equipe,getNomClubByIdEquipe(getIdEquipeByNomEquipeAndCompetition(equipe, idCompetition)), getClassementEquipe(equipe, idCompetition)])
+      ind += 1
+    
+    
+  return listeReturn
 
 if __name__ == "__main__":
-    print(getClassementEquipe(17))
+    print(getClassementEquipFinal(17))
     # print(getInfosMatchEquipeNumLicence(17,40845))
     #print(affichageGenererPhaseEliminations(25,2))
     # print(affichageGenererPhaseEliminations(25,2))
