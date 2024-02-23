@@ -6,44 +6,84 @@ from .models import *
 
 @app.route('/')
 def index():
+    """ Page d'accueil du site
+
+    Returns:
+        fonction: affiche la page d'accueil
+    """
     return render_template('lancement.html',
                            title='Lancement')
 
 @app.route('/information')
 def information():
+    """ Page d'information à propos de l'escrime
+
+    Returns:
+        fonction: affiche la page d'information
+    """
     return render_template('information.html',
                            title='Information')
 
 @app.route('/connexion_escrimeur')
 def connexion_escrimeur():
+    """ Page de connexion pour les escrimeurs et les arbitres
+
+    Returns:
+        fonction: affiche la page de connexion
+    """
     return render_template('connexion_escrimeur.html',
                            title='Connexion_escrimeur')
 
 @app.route('/inscription')
 def inscription():
+    """ Page d'inscription pour les escrimeurs et les arbitres dans une compétition solo
+
+    Returns:
+        fonction: affiche la page d'inscription
+    """
     return render_template('inscription.html',
                            title='Inscription',
                            competitions=inscriptionOuverteSolo())
     
 @app.route('/inscriptionSoloEquipe')
 def inscriptionSoloEquipe():
+    """ Page pour choisir entre s'inscrire en solo ou en équipe
+
+    Returns:
+       fonction : affiche la page d'inscriptionSoloEquipe
+    """
     return render_template('inscriptionSoloEquipe.html',
                            title='Inscription_Solo_Equipe')
 
 @app.route('/inscription_arbitre')
 def inscription_arbitre():
+    """ Page d'inscription pour les arbitres dans une compétition en equipe
+
+    Returns:
+        fonction:  affiche la page d'inscription_arbitre
+    """
     return render_template('inscription_arbitre.html',
                            title='Inscription Arbitre',
                            competitions=inscriptionOuverteEquipe())
 
 @app.route('/inscription_equipe')
 def inscription_equipe():
+    """ Page d'inscription pour les escrimeurs dans une compétition en equipe
+
+    Returns:
+        fonction: affiche la page d'inscription_equipe
+    """
     return render_template('inscription_equipe.html',
                            title='Inscription Equipe',
                            competitions=inscriptionOuverteEquipe())
 
 @app.route('/connexion_organisateur')
 def connexion_organisateur():
+    """ Page de connexion pour les organisateurs
+
+    Returns:
+        fonction: affiche la page de connexion_organisateur
+    """
     return render_template('connexion_organisateur.html',
                            title='Connexion_organisateur')
 
@@ -51,6 +91,15 @@ def connexion_organisateur():
 
 @app.route('/profil/<nbLicense>&<nbCompet>')
 def profil(nbLicense,nbCompet):
+    """ Page de profil de l'escrimeur
+
+    Args:
+        nbLicense (int): Numéro de licence de l'escrimeur
+        nbCompet (int): Numéro de la compétition auquel l'escrimeur s'est connecté
+
+    Returns:
+        fonction: affiche la page de profil
+    """
     return render_template('profil.html',
                            title='Mon profil',
                            isOrganisateur=estOrganisateur(int(nbLicense)),
@@ -62,6 +111,15 @@ def profil(nbLicense,nbCompet):
 
 @app.route('/accueil/<nbLicense>&<nbCompet>')
 def accueil(nbLicense,nbCompet):
+    """ Page d'accueil pour une compétition
+
+    Args:
+        nbLicense (int): Numéro de licence de l'escrimeur
+        nbCompet (int): Numéro de la compétition auquel l'escrimeur s'est connecté
+
+    Returns:
+        fonction: affiche la page d'accueil de la compétition
+    """
     return render_template('accueil.html',
                            title='Accueil',
                            isOrganisateur=estOrganisateur(int(nbLicense)),
@@ -73,6 +131,15 @@ def accueil(nbLicense,nbCompet):
 
 @app.route('/classement_national/<nbLicense>&<nbCompet>')
 def classement_national(nbLicense,nbCompet):
+    """ Page du classement national des escrimeurs
+
+    Args:
+        nbLicense (int): Numéro de licence de l'escrimeur
+        nbCompet (int): Numéro de la compétition auquel l'escrimeur s'est connecté
+
+    Returns:
+        fonction: affiche la page du classement national
+    """
     return render_template('classement_national.html',
                            title='Classement_National',
                            isOrganisateur=estOrganisateur(int(nbLicense)),
@@ -82,6 +149,15 @@ def classement_national(nbLicense,nbCompet):
 
 @app.route('/archives/<nbLicense>&<nbCompet>')
 def archives(nbLicense,nbCompet):
+    """ Page des archives des compétitions
+
+    Args:
+        nbLicense (int): Numéro de licence de l'escrimeur
+        nbCompet (int): Numéro de la compétition auquel l'escrimeur s'est connecté
+
+    Returns:
+        fonction: affiche la page des archives
+    """
     return render_template('archives.html',
                            title='Archives',
                            isOrganisateur=estOrganisateur(int(nbLicense)),
@@ -94,6 +170,14 @@ def archives(nbLicense,nbCompet):
 
 @app.route('/options_competitions/<nbLicense>')
 def options_competitions(nbLicense):
+    """ Page des options des compétitions pour un organisateur
+
+    Args:
+        nbLicense (int): Numéro de licence de l'organisateur
+
+    Returns:
+        fonction: affiche la page des options des compétitions
+    """
     return render_template('options_competitions.html',
                            title='Options_Compétitions',
                            isOrganisateur=estOrganisateur(int(nbLicense)),
@@ -104,6 +188,15 @@ def options_competitions(nbLicense):
 
 @app.route('/infoCompetition/<nbLicense>&<nbCompet>')
 def infoCompetition(nbLicense,nbCompet):
+    """ Page d'information d'une compétition
+
+    Args:
+        nbLicense (int): Numéro de licence de l'organisateur
+        nbCompet (int): Numéro de compétition que l'on veut avoir des informations
+
+    Returns:
+        fonction: affiche la page d'information de la compétition
+    """
     if isCompetitionEquipe(int(nbCompet)):
         participants=getEquipeDansCompetition(int(nbCompet))
     else:
@@ -118,6 +211,14 @@ def infoCompetition(nbLicense,nbCompet):
 
 @app.route('/creation_competition/<nbLicense>')
 def creation_competition(nbLicense):
+    """ Page de création d'une compétition
+
+    Args:
+        nbLicense (int): Numéro de licence de l'organisateur
+
+    Returns:
+        fonction: affiche la page de création d'une compétition
+    """
     return render_template('creation_competition.html',
                            title='Création_Compétition',
                            isOrganisateur=estOrganisateur(int(nbLicense)),
@@ -126,6 +227,16 @@ def creation_competition(nbLicense):
 
 @app.route('/resultats/<nbLicense>&<nbCompet>')
 def resultats(nbLicense,nbCompet):
+    """ Page des résultats d'une compétition
+    la page est différente si l'escrimeur est un arbitre ou un participant ou un spectateur/organisateur
+
+    Args:
+        nbLicense (int): Numéro de licence de l'escrimeur
+        nbCompet (int): Numéro de la compétition auquel l'escrimeur s'est connecté
+
+    Returns:
+        fonction: affiche la page des résultats
+    """
     nbPartipant = getNbParticipant(int(nbCompet))
     nbTotalPhase = nbPartipant
     
@@ -234,6 +345,16 @@ def resultats(nbLicense,nbCompet):
 
 @app.route('/resultats_equipe/<nbLicense>&<nbCompet>')
 def resultats_equipe(nbLicense,nbCompet):
+    """ Page des résultats d'une compétition en équipe
+    la page est différente si l'escrimeur est un arbitre ou un participant/spectateur/organisateur
+
+    Args:
+        nbLicense (int): Numéro de licence de l'escrimeur
+        nbCompet (int): Numéro de la compétition auquel l'escrimeur s'est connecté
+
+    Returns:
+        fonction: affiche la page des résultats en équipe
+    """
     nbPartipant = getNbEquipe(int(nbCompet))
     nbTotalPhase = nbPartipant
     
@@ -318,10 +439,16 @@ def resultats_equipe(nbLicense,nbCompet):
                             classement=getClassementEquipFinal(nbCompet))
 
 ##Fonctions de vérification
+## Penser a changer les render_template en redirect quand c'est possible !!!!
 
 @app.route('/verifInscription')
 def verifInscription():
-     if estDansBDNational(int(request.args.get("nbLicence"))):
+    """ Fonction de vérification de l'inscription d'un escrimeur dans une compétition solo
+
+    Returns:
+        fonction: affiche la page d'inscription avec une popup en fonction de la vérification
+    """
+    if estDansBDNational(int(request.args.get("nbLicence"))):
         print(estDansBDNational(int(request.args.get("nbLicence"))))
         if insertTireurDansCompetition(int(request.args.get("nbLicence")), int(request.args.get("compet")), str(request.args.get("role"))):
             return render_template('inscription.html',
@@ -333,7 +460,7 @@ def verifInscription():
                             title='Inscription',
                             competitions=inscriptionOuverteSolo(),
                             popup2=True)
-     else:
+    else:
         return render_template('inscription.html',
                            title='Inscription',
                            popup=True,
@@ -342,6 +469,11 @@ def verifInscription():
         
 @app.route('/verifInscriptionEquipe')
 def verifInscriptionEquipe():
+    """ Fonction de vérification de l'inscription d'un escrimeur dans une compétition en équipe
+
+    Returns:
+        fonction: affiche la page d'inscription_equipe avec une popup en fonction de la vérification
+    """
     if estOrganisateur(int(request.args.get("nbLicence"))):
         if insererEquipeDansCompetition(int(request.args.get("compet")), str(request.args.get("nomEquipe")), int(request.args.get("nbLicence"))):
             idEquipe=getIdEquipeByNomEquipeAndCompetition(str(request.args.get("nomEquipe")), int(request.args.get("compet")))
@@ -365,6 +497,11 @@ def verifInscriptionEquipe():
 
 @app.route('/verifConnexionEscrimeur')
 def verifConnexionEscrimeur():
+    """ Fonction de vérification de la connexion d'un escrimeur
+
+    Returns:
+        fonction: affiche la page de connexion_escrimeur avec une popup en fonction de la vérification
+    """
     if estDansBDNational(int(request.args.get("nbLicense"))):
         concoursTireur = concourtNonFinitInscritTireur(int(request.args.get("nbLicense")))
         concoursArbitre = concourtNonFinitInscritArbitre(int(request.args.get("nbLicense")))
@@ -391,6 +528,11 @@ def verifConnexionEscrimeur():
     
 @app.route('/consulterArchive')
 def consulterArchive():
+    """ Fonction de vérification de la consultation des archives
+
+    Returns:
+        fonction: affiche la page résultat de la compétition souhaitée (equipe ou solo)
+    """
     nbLicense = request.args.get("nbLicense")
     nbCompet = request.args.get("nbCompet")
     ancienNbCompet = request.args.get("ancienNbCompet")
@@ -456,6 +598,11 @@ def consulterArchive():
 
 @app.route('/pageImprimerResultat')
 def pageImprimerResultat():
+    """ Page d'impression des résultats d'une compétition solo
+
+    Returns:
+        fonction: affiche la page d'impression des résultats solo
+    """
     nbLicense = request.args.get("nbLicense")
     nbCompet = request.args.get("nbCompet")
     ancienNbCompet = request.args.get("ancienNbCompet")
@@ -486,6 +633,11 @@ def pageImprimerResultat():
 
 @app.route('/pageImprimerResultatEquipe')
 def pageImprimerResultatEquipe():
+    """ Page d'impression des résultats d'une compétition en équipe
+
+    Returns:
+        foncrion: affiche la page d'impression des résultats en équipe
+    """
     nbLicense = request.args.get("nbLicense")
     nbCompet = request.args.get("nbCompet")
     ancienNbCompet = request.args.get("ancienNbCompet")
@@ -528,6 +680,11 @@ def pageImprimerResultatEquipe():
 
 @app.route('/traitement')
 def traitement():
+    """ Fonction de traitement de la connexion d'un organisateur
+
+    Returns:
+        fonction: redirect vers la page d'options_competitions si c'est un organisateur, sinon affiche la page de connexion_organisateur
+    """
     dicoOrganisateur = getOrganisateurClub()
     print(request.args)
     print(dicoOrganisateur)
@@ -542,6 +699,11 @@ def traitement():
 
 @app.route('/rechercheArchives')
 def rechercheArchives():
+    """ Fonction de recherche des archives
+
+    Returns:
+        fonction: affiche la page des archives avec la recherche effectuée
+    """
     arme=request.args.get("arme")
     sexe=request.args.get("sexe")
     categorie=request.args.get("categorie")
@@ -560,6 +722,11 @@ def rechercheArchives():
 
 @app.route('/rechercheArchivesNC')
 def rechercheArchivesNC():
+    """ Fonction de recherche des archives pour un non connecté
+
+    Returns:
+        fonction: affiche la page des archives avec la recherche effectuée
+    """
     arme=request.args.get("arme")
     sexe=request.args.get("sexe")
     categorie=request.args.get("categorie")
@@ -572,6 +739,11 @@ def rechercheArchivesNC():
 
 @app.route('/rechercheClassement')
 def rechercheClassement():
+    """ Fonction de recherche du classement national
+
+    Returns:
+        fonction: affiche la page du classement national avec la recherche effectuée
+    """
     arme=request.args.get("arme")
     sexe=request.args.get("sexe")
     categorie=request.args.get("categorie")
@@ -587,6 +759,11 @@ def rechercheClassement():
 
 @app.route('/validationConnexion')
 def validationConnexion():
+    """ Fonction de validation de la connexion d'un escrimeur
+
+    Returns:
+        fonction: redirect vers la page d'accueil d'une compétition
+    """
     nbCompet=request.args.get("compet")
     nbLicense=request.args.get("nbLicense")
     return redirect('accueil/'+str(nbLicense)+'&'+str(nbCompet))
@@ -594,6 +771,11 @@ def validationConnexion():
 
 @app.route('/creationCompetition')
 def creationCompetition():
+    """ Fonction de création d'une compétition
+
+    Returns:
+        fonction: redirect vers la page d'options_competitions avec la compétition créée
+    """
     nom=request.args.get("nom")
     lieu=request.args.get("ville")
     date=request.args.get("date")
@@ -609,16 +791,31 @@ def creationCompetition():
 
 @app.route('/boutonLancer')
 def boutonLancer():
+    """ Fonction de lancement d'une compétition
+
+    Returns:
+        fonction: redirect vers la page d'options_competitions avec la compétition lancée
+    """
     lancerCompetition(int(request.args.get("nbCompet")))
     return redirect('options_competitions/'+str(request.args.get("nbLicense")))
 
 @app.route('/boutonArchiver')
 def boutonArchiver():
+    """ Fonction d'archivage d'une compétition
+
+    Returns:
+        fonction: redirect vers la page d'options_competitions avec la compétition archivée
+    """
     archiverCompetition(int(request.args.get("nbCompet")))
     return redirect('options_competitions/'+str(request.args.get("nbLicense")))
 
 @app.route('/update_data', methods=['POST'])
 def update_data():
+    """ Fonction de mise à jour des données d'une compétition
+
+    Returns:
+        fonction: redirect vers la page resultat avec la compétition mise à jour
+    """
     data = request.form.get('data')
     nbLicenceTireur = request.form.get('nbLicenceTireur')
     nbLicenceTireurAdverse = request.form.get('nbLicenceTireurAdverse')
@@ -630,6 +827,11 @@ def update_data():
 
 @app.route('/genererEliminations', methods=['POST'])
 def genererEliminations():
+    """ Fonction de génération des phases d'éliminations
+
+    Returns:
+        fonction: redirect vers la page resultat avec la compétition mise à jour
+    """
     nbCompet = int(request.form.get('nbCompet'))
     nbPhase = int(request.form.get('nbPhase'))
     nbLicense = int(request.form.get('nbLicense'))
@@ -640,6 +842,11 @@ def genererEliminations():
 
 @app.route('/ajouterPoints', methods=['POST'])
 def ajouterPoints():
+    """ Fonction d'ajout de points a une équipe
+
+    Returns:
+        fonction:  redirect vers la page resultat_equipe avec la compétition mise à jour
+    """
     nbLicence=request.form.get('nbLicense')
     nbCompet = int(request.form.get('numCompet'))
     nbPhase = getNbPhase(nbCompet)
@@ -650,6 +857,11 @@ def ajouterPoints():
 
 @app.route('/enleverPoints', methods=['POST'])
 def enleverPoints():
+    """ Fonction de retrait de points a une équipe
+
+    Returns:
+        fonction: redirect vers la page resultat_equipe avec la compétition mise à jour
+    """
     nbLicence=request.form.get('nbLicense')
     nbCompet = int(request.form.get('numCompet'))
     nbPhase = getNbPhase(nbCompet)
@@ -662,6 +874,11 @@ def enleverPoints():
 
 @app.route('/genererPhaseEquipe', methods=['POST'])
 def genererPhaseEquipe():
+    """ Fonction de génération des phases d'éliminations en équipe
+
+    Returns:
+        fonction: redirect vers la page resultat_equipe avec la compétition mise à jour
+    """
     nbCompet = int(request.form.get('nbCompet'))
     nblicense = int(request.form.get('nbLicense'))
     listeNomVictoire=request.form.getlist('nomVictoire')
