@@ -1,0 +1,91 @@
+{% extends "base.html" %}
+
+{% block linkcss %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/classement_national.css')}}">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Average" rel="stylesheet">
+{% endblock %}
+
+{% block header %}
+{% include "partials/_header3.html" %}
+{% endblock %}
+
+{% block main %}
+<main> 
+    <div>  
+        <div class="titre">
+            <h3>Classement National :</h3>
+            <img class="epeeCN" src="{{url_for('static', filename='images/epeeBleu.png')}}" alt="Epée bleu d'escrime">
+        </div>
+        <form class="selector" action="{{url_for('rechercheClassement')}}", method="GET" onsubmit="return validateForm();">
+            <select class = "arme" name="arme">
+                <option value="none" selected disabled hidden>Choisissez une arme</option>
+                <option value="Fleuret">Fleuret</option>
+                <option value="Epée">Épée</option>
+                <option value="Sabre">Sabre</option>
+            </select>
+            <select class = "sexe" name="sexe">
+                <option value="none" selected disabled hidden>Choisissez un sexe</option>
+                <option value="Homme">Homme</option>
+                <option value="Dames">Dames</option>
+            </select>
+            <select class = "categorie" name="categorie">
+                <option value="none" selected hidden>Choississez une catégorie</option>
+                <option value="M15">M15</option>
+                <option value="M17">M17</option>
+                <option value="M20">M20</option>
+                <option value="Seniors">Senior</option>
+                <option value="Vétérans1">Vétérans1</option>
+                <option value="Vétérans2">Vétérans2</option>
+                <option value="Vétérans3">Vétérans3</option>
+                <option value="Vétérans4">Vétérans4</option>
+            </select>
+            <input type="text" hidden name="nbLicense" value="{{nbLicense}}">
+            <input type="text" hidden name="nbCompet" value="{{nbCompet}}">
+            <input class="rechercher" type="submit" value="Rechercher"></input>
+        </form>
+        <div class="tableau">
+            <table>
+                <tr class="titre-tableau">
+                    <td>RANG</td>
+                    <td>NOM</td>
+                    <td>PRÉNOM</td>
+                    <td>COMITE REGIONAL</td>
+                    <td>CLUB</td>
+                    <td>POINTS</td>
+                </tr>
+                {% if classement|length> 0  %}
+                    {% for joueur in classement %}
+                    <tr>
+                        <td>{{joueur[8]}}</td>
+                        <td>{{joueur[0]}}</td>
+                        <td>{{joueur[1]}}</td>
+                        <td>{{joueur[5]}}</td>
+                        <td>{{joueur[6]}}</td>
+                        <td>{{joueur[7]}}</td>
+                    </tr>
+                    {% endfor %}
+                {% else %}
+                    <h3 class="choisir">CHOISISSEZ UNE ARME, UN SEXE, UNE CATEGORIE</h3>
+                {% endif %}
+            </table>  
+        </div>
+    </div>
+</main>
+
+<script>
+function validateForm() {
+    var armeSelect = document.querySelector('select[name="arme"]');
+    var sexeSelect = document.querySelector('select[name="sexe"]');
+    var categorieSelect = document.querySelector('select[name="categorie]');
+    
+    if (armeSelect.value === "none" || sexeSelect.value === "none" || categorieSelect.value === "none") {
+        alert("Veuillez sélectionner une option valide pour chaque champ.");
+        return false;
+    }
+    return true;
+}
+</script>
+
+{% endblock %}

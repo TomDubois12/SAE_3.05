@@ -1,0 +1,348 @@
+.tableau{
+    width: 100%  ;
+}
+
+iframe{
+    height: 75vh;
+}
+
+/* titre */
+.epeeR {
+    position: relative;
+    top: -2vmin;
+    right: 2vmin;
+
+}
+
+.epeeR img {
+    width: 100%;
+    object-fit: fill;
+    display: block;
+}
+
+.titre {
+    margin-top: 4em;
+    margin-left: 5em;
+}
+
+.titre h3 {
+    padding-bottom: 0;
+    margin-left: 10vh;
+    font-size: 5vh;
+    font-family: 'Average', sans-serif;
+}
+
+.texteimg {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+
+/* nom compet et nom arbitre */
+
+.nomCompet{
+  margin-left: 5em;
+  margin-bottom: 3em;
+  font-weight: bold;
+}
+
+.titreArbitres, .titreCompet{
+  padding-bottom: 0;
+  margin-left: 4vh;
+  margin-bottom: 1vw;
+  font-size: 3vh;
+  font-family: 'Average', sans-serif;
+}
+
+.nomsArbitres{
+  margin-left: 5em;
+}
+
+
+/* petit_titre */
+.petite_epee {
+    position: relative;
+    top: -2vmin;
+    right: 2vmin;
+
+}
+
+.petite_epee {
+    width: 25%;
+    object-fit: fill;
+    display: block;
+}
+
+.petit_titre {
+    margin-top: 4em;
+    margin-left: 7em;
+}
+
+.petit_titre h3 {
+    padding-bottom: 0;
+    margin-left: 4vh;
+    font-size: 3vh;
+    font-family: 'Average', sans-serif;
+}
+
+.texteimg {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+p {
+    margin-left: 8em;
+}
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+    height: 100%;
+  }
+  
+  th, td {
+    border: 2px solid black;
+    padding: 5px;
+  }
+  
+  th {
+    color: white;
+    background-color: #062657;
+  }
+
+  .tableau{
+    padding: 2em;
+  }
+  
+  .black{
+    background-color: black;
+    color: white;
+  }
+
+  .classementDispo{
+    text-align: center;
+  }
+
+  .caseJaune{
+    background-color: #F9F871;
+  }
+
+  .caseBleuClair{
+    background-color: #CFE2F3;
+    text-align: center;
+
+  }
+
+  .caseBleuClair > button{
+    color: #062656;
+    height: 100%;
+    width: 100%;
+    background: none;
+    border: none;
+  }
+
+  .caseBleuFonce{
+    color: white;
+    background-color: #062657;
+    font-weight: bold;
+  }
+
+  .caseRouge{
+    color: white;
+    background-color: #951625;
+    font-weight: bold;
+  }
+
+  .boutonRefresh{
+    background-color: #062656;
+    color: white;
+    padding: 0.5em;
+    padding-left: 1.5em;
+    padding-right: 1.5em;
+    margin-left: 2.5em;
+  }
+.wrapperVisualiserImprim{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  padding-bottom: 1em;
+}
+
+.btnVisualiserImprim{
+  background-color: blue;
+  padding:10px;
+  font-size: 18px;
+  color: white;
+  border-radius: 20px;
+  border: thin solid black;
+}
+
+.btnVisualiserImprim:hover{
+  padding: 12px;
+  font-size: 20px;
+  background-color: rgb(0, 0, 221);
+}
+/* Arbre phase elimination */
+
+:root {
+  /* lignes entre les cases   */
+  /* --tournament-grid-line-color: rgba(0, 0, 0, 0.2); */
+    --tournament-grid-line-color: #062657;
+    --tournament-grid-command-height: 32px;
+    --tournament-grid-command-width: auto;
+    /* --tournament-grid-command-bd-color: rgba(0, 0, 0, 0.2); */
+    --tournament-grid-command-bd-color: #CFE2F3;
+    --team-icon-spacing: 36px;
+    --tournament-round-width: var(--tournament-grid-command-width);
+    --tournament-match-min-height: 100px;
+  }
+  
+  .tournament {
+    position: relative;
+    min-height: 300px;
+    padding: 30px 0 0;
+  }
+  
+  .tournament__grid {
+    font-size: 0;
+    line-height: 0;
+    display: flex;
+    align-items: stretch;
+    min-height: 400px;
+  }
+  
+  .tournament__round {
+    position: relative;
+    flex: 1 0;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .tournament__match {
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    flex: 1 0;
+    align-items: center;
+    min-height: var(--tournament-match-min-height);
+  
+    &:first-child {
+      margin: 0 !important;
+    }
+  
+    .tournament__round--first-round & {
+      padding-left: 0;
+    }
+  
+    .tournament__round--winner & {
+      padding-right: 0;
+      height: var(--tournament-grid-command-height);
+    }
+  
+    &:after {
+      content: '';
+      position: absolute;
+      right: 0;
+      width: 2px;
+      background: var(--tournament-grid-line-color);
+      top: 25%;
+      bottom: 25%;
+  
+      .tournament__round--winner &,
+      .tournament__round--end-point & {
+        display: none;
+      }
+    }
+  }
+  
+  .tournament__match__team {
+    font-size: 14px;
+    font-weight: bold;
+    transition: color 0.3s ease;
+    color: #000;
+    text-decoration: none;
+    border: 2px solid;
+    border-color: #062657;
+  
+    &:focus,
+    &:hover {
+      color: #000;
+    }
+  
+    box-sizing: border-box;
+    background: var(--tournament-grid-command-bd-color);
+    display: block;
+    position: relative;
+    width: var(--tournament-grid-command-width);
+    height: var(--tournament-grid-command-height);
+    line-height: var(--tournament-grid-command-height);
+    padding: 0 var(--team-icon-spacing) 0 var(--team-icon-spacing);
+    margin: auto;
+  
+    &:before,
+    &:after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      width: 999px;
+      height: 2px;
+      margin-top: -1px;
+      background: var(--tournament-grid-line-color);
+    }
+  
+    &:after {
+      left: 100%;
+  
+      .tournament__round:last-child &,
+      .tournament__round--end-point & {
+        display: none;
+      }
+    }
+  
+    &:before {
+      right: 100%;
+  
+      .tournament__round:first-child & {
+        display: none;
+      }
+    }
+  }
+  
+  .classement {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 4em;
+    margin-bottom: 4em;
+  }
+
+  .fondBlur {
+    position: fixed;
+    height: 100vh;
+    width: 100vw;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    backdrop-filter: blur(5px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .fondBlur h1 {
+    font-size: 5em;
+    color: red;
+    font-family: 'Average', sans-serif;
+  }
+  
+
+
+  /* tableau classement */
+
+  .titre-tableau{
+    background-color: #CFE2F3;
+  }

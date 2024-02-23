@@ -1,0 +1,418 @@
+/* titre */
+.epeeA {
+    position: relative;
+    top: -2vmin;
+    right: 2vmin;
+
+}
+
+.epeeA img {
+    width: 100%;
+    object-fit: fill;
+    display: block;
+}
+
+.titre {
+    margin-top: 4em;
+    margin-left: 5em;
+}
+
+.titre h3 {
+    padding-bottom: 0;
+    margin-left: 10vh;
+    font-size: 5vh;
+    font-family: 'Average', sans-serif;
+}
+
+.texteimg {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.vousavezparticipe {
+    width: 10%;
+    object-fit: fill;
+}   
+
+.t {
+    margin-left: 5em;
+    font-size: 175%;
+}
+
+.texteimg { 
+    margin-top: 0.25em;
+}
+
+/* selector */
+
+.selector {
+    margin-left : 5em;
+    margin-top: 4em;
+}
+
+.selector select{
+    margin-right: 4em;
+}
+
+
+/* compétition */
+
+.competition {
+    justify-content: space-between;
+    margin-left: 8em;
+    margin-right: 8em;
+    margin-top: 2em;
+    margin-bottom: 2em;
+    padding-left: 3em;
+    padding-right: 3em;
+    background-color: lightgray;
+    display: flex;
+}
+
+.concours{
+    padding-top: 1em;
+    padding-bottom: 1em;
+}
+
+.vousavezparticipe1 {
+    display: block;
+    width: 10%;
+    object-fit: fill;
+    margin: 2em;
+}   
+
+input, .bouton a {
+    background-color: #062656;
+    color: white;
+    padding: 0.5em;
+    padding-left: 1.5em;
+    padding-right: 1.5em;
+}
+
+
+/* bouton */
+
+.competition .bouton {
+    right: 0px;
+    margin-top: 2em;
+    margin-bottom: 2em;
+    margin-right: 10em;
+}
+
+@media screen and (min-width: 1400px) {
+    
+    form > *{
+        margin:0;
+    }
+    .selector{
+        width:80%;
+        margin-left:10%;
+        margin-top:2em;
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+    }
+    
+}
+
+@media screen and (max-width: 1400px) {
+    .selector{
+        margin-left: 6em;
+    }
+
+    .selector select{
+        margin-left: 0.25em;
+        margin-right: 0.25em;    
+    }
+
+    .selector button{
+        font-size: 1em;
+        padding: 1em;
+        padding-left: 1.5em;
+        padding-right: 1.5em;
+    }
+}
+
+
+
+@media screen and (max-width: 1250px) {
+    
+    .titre h3{
+        font-size: 1.75em;
+        margin-left: 1.5em;
+        margin-right: 1em;
+    }
+
+    .titre img{
+        width: 35%;
+        height: 50%;
+    }
+
+    .texte p {
+        font-size: 75%;
+    }
+
+    .texteimg {
+        font-size: 75%;
+    }
+
+    
+    .rechercher{
+        display: block;
+        margin-top: 2em;
+        margin-left: 33em;
+    }
+
+    .selector{
+        margin-left: 7em;
+    }
+
+    select *{
+        font-size: small;
+        font-style: italic bold;
+        color: rgb(24, 24, 123);
+    }
+
+    .selector select {
+        margin-left: 0.25em;
+        margin-right: 0.25em;
+    }
+
+    .vousavezparticipe1 {
+        display: block;
+        width: 15%;
+        height: 10%;
+        object-fit: fill;
+        margin: 2em;
+    }   
+
+    table{
+        margin : 3em;
+    }
+
+}
+
+
+@media screen and (max-width: 1250px) {
+    
+    .titre h3{
+        font-size: 1.50em;
+        margin-left: 1.5em;
+        margin-right: 1em;
+    }
+
+    .titre img{
+        width: 30%;
+        height: 50%;
+    }
+
+    .texte p {
+        font-size: 65%;
+    }
+
+    .texteimg {
+        font-size: 65%;
+    }
+
+    .selector{
+        margin-left: 13.5em;
+    }
+
+    .selector .region{
+        display: block;
+        margin-top: 2em;
+        margin-left: 15em;
+    }
+
+    .rechercher{
+        display: block;
+        margin-top: 2em;
+        margin-left: 25em;
+    }
+
+    select *{
+        font-size: small;
+        font-style: italic bold;
+        color: rgb(24, 24, 123);
+    }
+
+    .selector select {
+        margin-left: 2.25em;
+        margin-right: 0.25em;
+    }
+
+    .vousavezparticipe1 {
+        display: block;
+        width: 15%;
+        height: 10%;
+        object-fit: fill;
+        margin: 2em;
+    }   
+
+    table{
+        margin : 3em;
+    }
+}
+
+
+@media screen and (max-width: 1200px) {
+    
+    .titre h3{
+        font-size: 1.50em;
+        margin-left: 1.5em;
+        margin-right: 1em;
+    }
+
+    .titre img{
+        width: 30%;
+        height: 50%;
+    }
+
+    .texte p {
+        font-size: 65%;
+    }
+
+    .texteimg {
+        font-size: 65%;
+    }
+
+    .selector{
+        margin-left: 13.5em;
+    }
+
+    
+    .selector .categorie{
+        display: block;
+        margin-top: 2em;
+        margin-left: 14em;
+    }
+    
+    .selector .region{
+        display: block;
+        margin-top: 2em;
+        margin-left: 12em;
+    }
+
+    .rechercher{
+        display: block;
+        margin-top: 2em;
+        margin-left: 22em;
+    }
+
+    select *{
+        font-size: small;
+        font-style: italic bold;
+        color: rgb(24, 24, 123);
+    }
+
+    .selector select {
+        margin-left: 8em;
+        margin-right: 0.25em;
+    }
+
+    .selector .sexe{
+        margin-left: 1em;
+    }
+
+    .vousavezparticipe1 {
+        display: block;
+        width: 15%;
+        height: 10%;
+        object-fit: fill;
+        margin: 2em;
+    }   
+
+    table{
+        margin : 3em;
+    }
+}
+
+@media screen and (max-width: 1100px) {
+
+    .selector{
+        margin-left: 10em;
+    }
+
+}
+
+@media screen and (max-width: 1000px) {
+    
+    .titre h3{
+        font-size: 1.4em;
+        margin-left: 1.5em;
+        margin-right: 1em;
+        margin-bottom: 0.4em;
+    }
+    
+    .selector{
+        margin-left: 7em;
+    }
+
+}
+
+@media screen and (max-width: 900px) {
+
+    .titre h3{
+        font-size: 1.3em;
+        margin-left: 1.5em;
+        margin-right: 1em;
+        margin-bottom: 0.4em;
+    }
+
+    .selector{
+        margin-left: 5em;
+    }
+
+    .principal > .competition > .bouton {
+        margin-right: 0em;
+    }
+
+    .vousavezparticipe {
+        width: 12%;
+        object-fit: fill;
+    }
+
+}
+
+@media screen and (max-width: 800px) {
+
+    .titre h3{
+        font-size: 1.2em;
+        margin-left: 1.5em;
+        margin-right: 1em;
+        margin-bottom: 0.4em;
+    }
+
+    .selector{
+        margin-left: 3em;
+    }
+
+    .principal > .competition > .bouton {
+        margin-right: 0em;
+    }
+
+    .vousavezparticipe {
+        width: 15%;
+        object-fit: fill;
+    }
+
+    .competition {
+        margin-left: 5em;
+        margin-right: 5em;
+    }
+
+}
+
+@media screen and (max-width: 700px) {
+
+
+    .selector{
+        margin-left: 0em;
+    }
+
+    .competition {
+        margin-left: 3em;
+        margin-right: 3em;
+    }
+
+}

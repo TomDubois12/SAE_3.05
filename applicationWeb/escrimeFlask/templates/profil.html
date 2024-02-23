@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+
+{% block linkcss %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/profil.css')}}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/select.css') }}">
+{% endblock %}
+{% block script %}
+<script src="{{ url_for('static', filename='css/selectProfil.js')}}"></script>
+{% endblock %}
+{% block header %}
+{% include "partials/_header3.html" %}
+{% endblock %}
+{% block main %}
+<div class="profil">
+    <section id="informations">
+        <h1>Mon profil</h1>
+        <img class="epee"
+            src="{{url_for('static', filename='images/epeeBleu.png')}}"
+            alt="Epée bleu d'escrime">
+        <div>
+            <h2>NOM :</h2>
+            <p>{{informations[0][0]}}</p>
+        </div>
+        <div>
+            <h2>PRENOM :</h2>
+            <p>{{informations[0][1]}}</p>
+        </div>
+        <div>
+            <h2>DATE DE NAISSANCE</h2>
+            <p>{{informations[0][2]}}</p>
+        </div>
+        <img class="epeeCroix"
+            src="{{url_for('static', filename='images/epeeCroisees.png')}}"
+            alt="Deux épee croisés">
+        <div>
+            <h2>NUMERO DE LICENCE :</h2>
+            <p>{{informations[0][3]}}</p>
+        </div>
+        <div>
+            <h2>NATION :</h2>
+            <p>{{informations[0][4]}}</p>
+        </div>
+        <div>
+            <h2>COMITE REGIONNAL :</h2>
+            <p>{{informations[0][5]}}</p>
+        </div>
+        <div>
+            <h2>CLUB :</h2>
+            <p>{{informations[0][6]}}</p>
+        </div>
+    </section>
+    <section id="statistiques">
+        <h1>Mes statistiques</h1>
+        <img class="epee"
+            src="{{url_for('static', filename='images/epeeBleu.png')}}"
+            alt="Epée bleu d'escrime">
+        <div class="classement">
+            {% for stat in stats %}
+                <p>Armes : {{stat[0]}}</p>
+                <p> Points : {{stat[1]}}</p>
+                <p> Rang : {{stat[2]}}</p>
+                <p> Catégorie : {{stat[3]}}</p>
+            {% endfor %}
+        </div>
+    </section>
+</div>
+<div class="image">
+    <img src="{{ url_for('static', filename='images/monProfil.png') }}"
+        alt="Un escrimeur">
+</div>
+{% endblock %}

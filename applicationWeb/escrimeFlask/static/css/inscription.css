@@ -1,0 +1,371 @@
+body{
+    height: 100vh;
+}
+
+main{
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    flex-grow: 1;
+}
+
+form{
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    flex-grow: 1;
+}
+
+.open{
+    flex-basis: 30%;
+    border: black thin solid;
+    height: auto;
+}
+
+.inscription{
+    display: flex;
+    flex-direction: column;
+    border: black thin solid;
+    box-shadow: 0.3em 0.3em 0.1em #00000040;
+    margin-bottom: 1em;
+    width: 30vw;
+}
+
+.blockInscription{
+    flex-basis: 30%;
+}
+
+.infoInscription{
+
+    flex-grow: 1;
+    padding: 1em;
+}
+
+.titreOpen{
+    text-align: center;
+    background-color: #062656;
+    padding: 1em;
+}
+
+.titreInscription{
+    text-align: center;
+    background-color: #062656;
+    padding: 1em;
+}
+
+.titreOpen h2, .titreInscription h2{
+    color: #FFFFFF;
+}
+
+.numLicence{
+    display: flex;
+    margin-bottom: 1.5em;
+    gap: 0.5em;
+}
+
+
+.numLicence input{
+    text-align: center;
+    background-color: #EDEDED;
+    width: 25%;
+    
+}
+
+.infoInscription>p{
+    margin-bottom: 0.5em;
+}
+
+.nomPrenom, .titulaire1, .titulaire2, .titulaire3, .remplacant{
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 1em;
+}
+
+.nomPrenom div {
+    display: flex;
+    justify-content: space-between;
+
+}
+
+.nomPrenom input, .titulaireA input{    
+    width: 35%;
+    background-color: #EDEDED;
+    padding-left: 0.5em;
+}
+
+.titulaireA input{
+    width: 75%;
+}
+
+.naissanceClub, .titulaireA{
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 1em;
+    width: 100%;}
+
+.naissance{
+    flex-basis: 40%;
+}
+
+.naissance input{
+    background-color: #EDEDED;
+    padding-left: 0.5em;
+    width: 100%;
+}
+
+.club{
+    flex-basis: 40%;
+}
+
+.club input {
+    background-color: #EDEDED;
+    padding-left: 0.5em;
+    width: 100%;
+}
+
+.role{
+    display: flex;
+    flex-direction: column;
+}
+
+.radioButtonRole{
+    display: flex;
+    justify-content: space-evenly;
+    padding: 5%;
+}
+
+
+.blockInscription>p{
+    margin-bottom: 0.2em;
+}
+
+.blockInscription>a {
+    text-decoration: underline;
+    color: #0019FF;
+}
+
+.submit{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.submit input {
+    position: relative;
+    background-color: #062656;
+    color: #FFFFFF;
+    padding: 1em;
+}
+
+
+.contentOpen{
+    padding: 1em;
+    display: flex;
+    flex-direction: column;
+    max-height: 50vh;
+    overflow: auto;
+}
+
+.contentOpen label{
+    padding: 0.5em;
+    margin: 0.5em;
+    font-size: 2.2vmin;
+    text-align: start;
+    display: block;
+}
+
+
+
+.contentOpen label:last-child{
+    border-bottom: none;
+}
+
+.contentOpen input:checked+label{
+    background-color: #062656;
+    color: #FFFFFF;
+}
+
+.contentOpen [type="radio"] {
+    opacity: 0;
+}
+
+span{
+    border: #062656 2px solid;
+    flex-grow: 1;
+}
+
+span:last-child{
+    border: none;
+}
+
+
+
+/* Affichage Popup */
+
+.affichage_popup{
+    position: absolute;
+    display: flex;
+    top:50%;
+    left:50%;
+    transform: translate(-50%,-50%);
+    background-color: rgb(255, 255, 255);
+    width:60vw;
+    height:65vh;
+    border: solid black thin;
+    box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.159);
+    z-index: 2;
+}
+.affichage_popup .imgEscrimeur{
+    width:50%;
+    height: 100%;
+}
+.affichage_popup > div{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    padding: 1em;
+    width:50%;
+    height: 100%;
+    background-color: rgb(255, 255, 255);
+    padding-bottom: 3em;
+}
+.affichage_popup h1{
+    margin-bottom: 2em ;
+    color: red;
+    text-align: center;
+    font-size: 270%;
+}
+.affichage_popup p{
+    margin-bottom: 1.5em;
+    font-size: 2.3vmin;
+}
+.cover{
+    position: absolute;
+    top:0;
+    left:0;
+    width:100vw;
+    height:100vh;
+    background-color: rgba(135, 135, 135, 0.344);
+    filter: blur(10em);
+    
+}
+.btn-close{
+    background: none;
+    position: absolute;
+    border-radius: 50%;
+    border: none;
+    width:30px;
+    height:30px;
+    top:2%;
+    right:3%;
+    transform: translate(50%,0%);
+}
+
+.croixFermer{
+    width:100%;
+    height:100%;
+}
+
+
+
+@media screen and (max-width: 1100px) {
+    
+    .affichage_popup h1{
+        margin-bottom: 2em ;
+        color: red;
+        text-align: center;
+        font-size: 230%;
+    }
+    
+    .affichage_popup .imgEscrimeur{
+        margin-top: 4em;
+        width:40%;
+        height: 70%;
+    }
+    
+}
+
+@media screen and (max-width: 1000px) {
+    .form {
+        display: block;
+        justify-content: center;
+    }
+
+    .open, .blockInscription {
+        margin-left: 5em;
+        margin-right: 5em;
+        margin-bottom: 3em;
+    }
+
+    .blockInscription{
+        margin-left: 8em;
+    }
+
+    .blockInscription p {
+        width: fit-content;
+    }
+
+    .open, .blockInscription, .open .contentOpen, .blockInscription .inscription {
+        width: 80%;
+    }
+
+    .affichage_popup h1{
+        margin-bottom: 2em ;
+        color: red;
+        text-align: center;
+        font-size: 150%;
+    }
+
+    .affichage_popup .imgEscrimeur{
+        margin-top: 4em;
+        width:40%;
+        height: 70%;
+    }
+
+}
+
+
+@media screen and (max-width: 800px) {
+
+    .affichage_popup h1{
+        margin-bottom: 2em ;
+        color: red;
+        text-align: center;
+        font-size: 100%;
+    }
+
+    .affichage_popup .imgEscrimeur{
+        margin-top: 5em;
+        width:45%;
+        height: 60%;
+    }
+
+    .btn-close{
+        background: none;
+        position: absolute;
+        border-radius: 50%;
+        border: none;
+        width:30px;
+        height:30px;
+        top:2%;
+        right:3%;
+        transform: translate(50%,0%);
+        margin-right: 1em;
+    }
+
+    .croixFermer{
+        margin-top: 0;
+    }
+
+    .affichage_popup > div{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        padding: 1em;
+        height: 100%;
+        background-color: rgb(255, 255, 255);
+    }
+
+}

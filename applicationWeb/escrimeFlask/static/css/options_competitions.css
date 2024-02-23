@@ -1,0 +1,174 @@
+/* titre */
+
+main{
+    width:100vw;
+}
+
+.principal{
+    width:100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items:center;
+    row-gap: 1.5em;
+    margin-bottom: 3em;
+}
+
+
+.epeeOC {
+    position: relative;
+    top: -2vmin;
+    right: 2vmin;
+
+}
+
+.epeeOC img {
+    width: 100%;
+    object-fit: fill;
+    display: block;
+}
+
+.titre {
+    margin-top: 4em;
+    margin-left: 5em;
+}
+
+.titre h3 {
+    padding-bottom: 0;
+    margin-left: 80px;
+    font-size: 4vmax;
+    transform: translateY(30%);
+    font-family: 'Average', sans-serif;
+}
+
+.texteimg {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.vousavezparticipe {
+    width: 10%;
+    object-fit: fill;
+}   
+
+.t {
+    margin-left: 5em;
+    font-size: 175%;
+}
+
+.texteimg { 
+    margin-top: 0.25em;
+}
+
+.create{
+    display: block;
+    position: relative;
+    left: 10%;
+    width: fit-content;
+    height: fit-content;
+}
+
+/* compétition */
+
+.competition {
+    
+    background-color: lightgray;
+    width: 80%;
+    display: flex;
+}
+
+.nom_competition{
+
+    font-size: 125%;
+    width: 50%;
+    padding-top: 0.5em;
+    padding-bottom: 0.5em;
+
+    
+}
+.nom_competition p{
+    margin-left: 1em;
+}
+.buttonSubmit{
+    background-color: #062656;
+    color: white;
+    width:100%;
+    height:100%;
+    border-radius: 1em;
+
+}
+
+.button_desactivated {
+    background-color: #5E5E5E;
+    color: white;
+    width:100%;
+    height:100%;
+    border-radius: 1em;
+
+
+}
+
+.bouton{
+    justify-content: space-around;
+    align-items: center;
+    display: flex;
+    width: 50%;
+    
+}
+
+.consulter a{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width:100%;
+}
+
+.bouton > * {
+    width: 20%;
+    height: 40%;
+
+}
+.bouton  *:hover{
+    cursor:pointer;
+    transform: scale(1.05);
+}
+.bouton *{
+    border: none;
+}
+
+.bouton>a{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 75%;
+}
+
+@media only screen and (max-width: 1000px){
+
+    .bouton > * {
+        width: 35%;
+        height: 40%;
+    
+    }
+}
+
+
+@media only screen and (max-width: 700px){
+
+    .bouton > * {
+        width: 50%;
+        height: 4vmax;
+
+    }
+
+    .bouton{
+        flex-direction: column;
+        row-gap: 1em;
+    }
+
+    .titre h3{
+        font-size: 6vmin;
+        margin-left: 60px;
+        transform: translateY(20%);
+    }
+}

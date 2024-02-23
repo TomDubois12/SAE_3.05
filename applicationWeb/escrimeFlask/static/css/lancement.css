@@ -1,0 +1,294 @@
+body{
+    height: 100vh;
+}
+
+main{
+    height: 60%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex-grow: 1;
+    justify-content: space-evenly;
+    
+}
+
+.haut a {
+    width: 20vw;
+}
+
+.bas a {
+    width: 20vw;
+}
+
+.haut div, .bas div {
+    display: flex;
+}
+a img{
+    width:20%;
+}
+div p {
+    color: #FFFFFF;
+    font-size: 3.2vmin;
+    text-align: center;
+    width: 79%;
+    height: fit-content;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+
+
+div img {
+    position: relative;
+    top: -3em;
+    left: 0.2em;
+    height:110%;
+}
+
+main>p{
+    color :#000000;
+}
+
+main>p a {
+    color: #0019FF;
+    text-decoration:underline;
+}
+
+.consultation p {
+    color: #5E5E5E;
+}
+
+.haut{
+    width: 100%;
+    display: flex;
+    justify-content: space-evenly;
+    height: 30%;
+}
+
+.haut div {
+    width: 100%;
+    height: 100%;
+}
+.bas{
+    
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    height: 30%;
+    margin-top: 3em;
+
+}
+
+.bas div {
+    width: 100%;
+    height: 100%;
+}
+
+.inscription{
+    width: 15%;
+    height: 15%;
+    background-color: #062656;
+    box-shadow: -0.5em 0.5em 0.1em #00000040;
+    transition: ease-in-out 0.2s;
+    align-items: center;
+
+}
+.inscription img{
+    transition: ease-in 0.15s;
+
+}
+.inscription:hover img {
+    transform: translateY(-2em);
+}
+
+.inscription:hover{
+    transform: translate(0.3em, -0.3em);
+    box-shadow: -0.8em 0.8em 0.1em #00000040;
+}
+
+.connection{
+    width: 15%;
+    height: 15%;
+    background-color: #000000;
+    box-shadow: 0em 0.5em 0.1em #00000040;
+    transition: ease-in-out 0.2s;
+    align-items: center;
+
+}
+.connection img{
+    transition: ease-in 0.15s;
+
+}
+.connection:hover img {
+    transform: translateY(-2em);
+}
+
+.connection:hover {
+    transform: translateY(-0.3em);
+    box-shadow: 0 0.8em 0.1em #00000040;
+}
+
+.creer{
+    width: 15%;
+    height: 15%;
+    background-color: #840707;
+    box-shadow: 0.5em 0.5em 0.1em #00000040;
+    transition: ease-in-out 0.2s;
+    align-items: center;
+}
+
+.creer img{
+    transition: ease-in 0.15s;
+
+}
+.creer:hover img {
+    transform: translateY(-2em);
+}
+
+.creer:hover {
+    transform: translate(-0.3em, -0.3em);
+    box-shadow: 0.8em 0.8em 0.1em #00000040;
+}
+
+.consultation{
+    width: 15%;
+    height: 15%;
+    background-color: #F6F5F5;
+    box-shadow: 0 0.5em 0.1em #00000040;
+    transition: ease-in-out 0.2s;
+    align-items: center;
+
+}
+.consultation img{
+    transition: ease-in 0.15s;
+}
+.consultation:hover img {
+    transform: translateY(-2em);
+}
+
+.consultation:hover{
+    transform: translateY(-0.3em);
+    box-shadow: 0 0.8em 0.1em #00000040;
+}
+
+
+
+
+@media screen and (max-width: 1700px) {
+    .haut a {
+        width: 20vw;
+    }
+    
+    .bas a {
+        width: 20vw;
+    }
+}
+@media screen and (max-width: 1300px) {
+    .haut a {
+        width: 23vw;
+    }
+    
+    .bas a {
+        width: 23vw;
+    }
+}
+@media screen and (max-width: 1100px) {
+    .haut a {
+        width: 26vw;
+    }
+    
+    .bas a {
+        width: 26vw;
+    }
+}
+
+
+@media only screen and (max-width: 900px) {
+    
+    main{
+        height: auto;   
+    }
+    .bas{
+        margin-top: 0;
+        margin-bottom: 3em;
+    }
+
+    .haut {
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        height: auto;
+    }
+    .haut > *{
+        margin-bottom: 4em;
+    }
+  
+    
+    .haut p {
+        padding-left: 0.5em;
+        padding-right: 2em;
+        padding-top: 2em;
+        padding-bottom: 2em;
+        font-size: 1em;
+        margin-left:25%;
+    }
+
+    .haut img{
+        width: 25%;
+        height: 110%;
+        position: absolute;
+        top:-2em;
+    }
+    .haut a {
+        width: 30vw;
+    }
+    .haut div{
+        position: relative;
+  
+        min-height:18vh;
+
+    }
+    
+    .bas a {
+        width: 30vw;
+    }
+   
+    
+    .bas p {
+        padding-left: 0.5em;
+        padding-right: 2em;
+        padding-top: 2em;
+        padding-bottom: 2em;
+        font-size: 1em;
+        margin-left:25%;
+
+    }
+
+    .bas img{
+        width: 25%;
+        height: 110%;
+        position: absolute;
+        top:-2em;
+    }
+    .bas div{
+        position: relative;
+        min-height:18vh;
+
+    }
+
+    .inscription .connection .creer .consultation {
+        margin: 5em;
+    }
+}
+
+
+
+
+@media screen and (max-width: 700px) {
+    .haut a {
+        width: 40vw;
+    }
+    
+    .bas a {
+        width: 40vw;
+    }
+}
+    

@@ -1,0 +1,63 @@
+main > div{
+    margin-left: 3vw;
+    margin-top: 3vmin;
+    margin-bottom: 3vmin;
+}
+main > div > h1{
+    position: absolute;
+    margin-left: 6% ;
+    font-size:  4.2vw;
+    transform: translateY(-40%);
+
+}
+main > div > img{
+    width: 70%;
+    max-height: 5em;
+}
+
+main > section{
+    display: flex;
+    justify-content: space-between;
+    width: 95vw;
+    /*background-color: gray;*/
+    margin-left: 2.5vw; 
+    margin-bottom: 5vmin;
+}
+
+section > img{
+    width: 45%;
+}
+
+section > * {
+    margin: 1vw;
+}
+section > div{
+    width: 50%;
+}
+h2{
+    font-size: 2.8vmax;
+    font-family: sans-serif;
+}
+div > p {
+    margin-top: 30px;
+    font-size: 1.4em;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+
+@media (max-width: 1100px) {
+    div > p {
+        text-align: justify;
+        font-size: 1.2em;
+    }
+    section {
+       /*flex-direction: column;*/
+    }
+    section > img {
+        width:40%;
+        height: auto;
+    }
+    section > div{
+        width:60%;
+    }
+}

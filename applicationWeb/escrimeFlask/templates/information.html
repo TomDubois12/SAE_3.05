@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+
+{% block linkcss %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/information.css')}}">
+{% endblock %}
+
+{% block header %}
+{% include "partials/_header2.html" %}
+{% endblock %}
+{% block main %}
+
+
+<main>
+    <div>
+        <h1>Règles de compétition en escrime</h1>
+        <img class="epee" src="{{url_for('static', filename='images/epeeBleu.png')}}" alt="Epée bleu d'escrime">
+    </div>
+
+    
+    <section> 
+        <img src="{{url_for('static', filename='images/imgInfo1.png')}}" alt="Epée bleu d'escrime">
+
+        <div> 
+            <h2> Le déroulement d'une compétition</h2>
+            <p>Une épreuve d’escrime oppose deux adversaires, chacun tentant de toucher l’autre sur les surfaces valables à l’aide de son arme. Il s’agit de cumuler suffisamment de points pour gagner le combat. Pour les épreuves individuelles, le premier tireur qui marque 15 touches est déclaré vainqueur. Pour les épreuves par équipes, la victoire est attribuée à celle qui en marque 45.</p>
+        </div>
+    </section>
+
+    <section> 
+        
+        <div> 
+            <h2>L'arbitrage</h2>
+            <p>Un assaut commence lorsque l’arbitre annonce « En garde! Messieurs (Mesdames), êtes-vous prêts(es) ? Allez!». Les tireurs prennent position sur leur ligne de mise en garde respective, qui se trouve à deux mètres de la ligne médiane. Ils se tiennent de côté, un pied devant l’autre, l’arme pointée vers l’adversaire et le bras non armé derrière eux. Lorsque l’assaut doit reprendre après une touche, les tireurs adoptent à nouveau cette position.</p>
+        </div>
+        <img src="{{url_for('static', filename='images/imgInfo2.png')}}" alt="Epée bleu d'escrime">
+    </section>
+
+    <section> 
+        <img src="{{url_for('static', filename='images/imgInfo3.png')}}" alt="Epée bleu d'escrime">
+
+        <div> 
+            <h2>Le marquage</h2>
+            <p>Lorsque l’arbitre donne l’ordre de combattre, les tireurs tentent de marquer des touches, tout en restant sur la piste. Les combats individuels comportent trois manches de trois minutes, avec une minute de pause entre chaque manche.Le vainqueur est le premier à marquer 15 touches, ou, si 15 touches n’ont pas été marquées avant la fin du temps réglementaire, le tireur ayant le plus de points. Grâce au système électronique, les armes sont câblées de telle sorte qu’un système de lampes indique les touches valables</p>
+        </div>
+    </section>
+
+    <section> 
+        
+        <div> 
+            <h2>Les pénalités</h2>
+            <p>Lorsqu’un combat est interrompu, les tireurs reprennent là où ils se sont arrêtés, sauf dans le cas d’une pénalité de perte de terrain d’un mètre. Dans ce cas, l’assaut reprend un mètre plus loin, dans la zone du tireur fautif. Si les deux pieds du tireur sortent sur les côtés de la piste, celui-ci est pénalisé d’une perte de terrain d’un mètre. Si un tireur sort de la piste par la limite arrière, son adversaire se voit attribuer une touche. Une pénalité peut également être attribuée si, après un avertissement, un tireur commet une faute grave.</p>
+        </div>
+        <img src="{{url_for('static', filename='images/imgInfo4.png')}}" alt="Epée bleu d'escrime">
+    </section>
+
+    <section> 
+        <img src="{{url_for('static', filename='images/imgInfo5.png')}}" alt="Epée bleu d'escrime">
+
+        <div> 
+            <h2>Equipement</h2>
+            <p>La piste est large de 1,5 mètre et longue de 14 mètres, et conçue pour ne pas comptabiliser les touches lorsque les armes l’effleurent. Elle est délimitée par des lignes arrière et des lignes latérales, et une ligne médiane la divise en deux zones égales. Les lignes de mise en garde sont situées à deux mètres de la ligne médiane. Des lignes d’avertissement doivent être tracées deux mètres avant la ligne arrière pour permettre au tireur de repérer sa position. Une zone de sécurité, où les touches ne peuvent pas être comptabilisées, entoure la piste.</p>
+        </div>
+    </section>
+</main>
+{% endblock %}

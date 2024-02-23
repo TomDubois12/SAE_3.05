@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block linkcss %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/inscriptionSoloEquipe.css')}}">
+{% endblock %}
+{% block header %}
+    {% include "partials/_header2.html" %}
+{% endblock %}
+{% block main %}
+    <div class="infos"> 
+        <h2> S'inscrire à une compétition</h2>
+        <p> Veuillez sélectionner votre type de compétition</p>
+        <p>Attention : pour s'inscrire en équipe, il faut être organisateur. Si vous ne l'êtes pas, Rapprochez vous de votre organisateur.</p>
+
+    </div>
+    <div class="haut">
+        
+        <a href={{url_for('inscription')}}>
+        <div class="inscription">
+            <img src="{{url_for('static', filename='images/epeeGris.png')}}" alt="Épée grise d'escrime">
+            <p>S’INSCRIRE À UNE COMPETITION EN SOLO</p>
+        </div>
+
+        <a href={{url_for('inscription_equipe')}}>
+        <div class="connection">
+            <img src="{{url_for('static', filename='images/epeeGris.png')}}" alt="Épée grise d'escrime">
+            <p>INSCRIRE UNE EQUIPE À UNE COMPETITION</p>
+        </div>
+
+        <a href={{url_for('inscription_arbitre')}}>
+            <div class="connection">
+                <img src="{{url_for('static', filename='images/epeeGris.png')}}" alt="Épée grise d'escrime">
+                <p>S’INSCRIRE À UNE COMPETITION EN EQUIPE EN TANT QU'ARBITRE</p>
+            </div>
+
+    </div>
+{% endblock %}

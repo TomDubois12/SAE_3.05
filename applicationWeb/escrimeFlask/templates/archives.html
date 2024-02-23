@@ -1,0 +1,97 @@
+{% extends "base.html" %}
+
+{% block linkcss %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/archives.css')}}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/select.css')}}">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Average" rel="stylesheet">
+{% endblock %}
+
+{% block header %}
+{% include "partials/_header3.html" %}
+{% endblock %}
+
+{% block main %}
+<main> 
+    <div class="principal">   
+        
+        <div class="titre">
+            <h3>Archives :</h3>
+            <img class="epeeA" src="{{url_for('static', filename='images/epeeBleu.png')}}" alt="Epée bleu d'escrime">
+        </div>
+        <div class="t">
+            <div class="texte">
+                <p>Vous pouvez consulter ici les archives des compétitions déjà terminées.</p>
+            </div>
+            {% if nbLicense==0 %}
+
+            {% else %}
+                {% if isOrganisateur %}
+                    
+                {% else %}
+                     <div class="texteimg">    
+                        <p>Celles auxquelles vous avez participé vous serez indiqué par </p>
+                        <img class="vousavezparticipe" src="{{url_for('static', filename='images/vousavezparticipe.png')}}" alt="Vous avez participé">
+                    </div>
+                {% endif %}
+            {% endif %}
+        </div>
+        <form class="selector" action="{{url_for('rechercheArchives')}}", method="GET">
+            <select name="arme">
+                <option value="none" selected hidden>Choississez une arme</option>
+                <option value="Fleuret">Fleuret</option>
+                <option value="Épée">Épée</option>
+                <option value="Sabre">Sabre</option>
+            </select>
+            <select class="sexe" name="sexe">
+                <option value="none" selected hidden>Choississez un sexe</option>
+                <option value="Homme">Homme</option>
+                <option value="Dames">Dames</option>
+            </select>
+            <select class= "categorie" name="categorie">
+                <option value="none" selected hidden>Choississez une catégorie</option>
+                <option value="U13">U13</option>
+                <option value="U15">U15</option>
+                <option value="U17">U17</option>
+                <option value="U20">U20</option>
+                <option value="Senior">Senior</option>
+                <option value="V1">Vétérans1</option>
+                <option value="V2">Vétérans2</option>
+                <option value="V3">Vétérans3</option>
+                <option value="V4">Vétérans4</option>
+            </select>
+            <select class= "region" name="ville">
+                <option value="none" selected hidden>Choississez une région</option>
+                {% for ville in villes %}
+                    <option value="{{ ville }}">{{ ville }}</option>
+                {% endfor %}
+            </select>
+            <input type="text" hidden name="nbLicense" value="{{nbLicense}}">
+            <input type="text" hidden name="nbCompet" value="{{nbCompet}}">
+            <input class="rechercher" type="submit" value="Rechercher"></input>
+        </form>
+        {% for competition in competitions %}
+            <div class="competition">
+                <div class="concours">
+                    <p>CONCOURS {{ competition[0][0].upper()}}</p>
+                    <p>{{ competition[0][1].upper()}} {{competition[0][2].upper()}} </p>
+                    <p>{{competition[0][3]}}, {{competition[0][4]}} </p>
+                </div>
+                {% if competition in competitionsParticiper %}
+                        <img class="vousavezparticipe1" src="{{url_for('static', filename='images/vousavezparticipe.png')}}" alt="Vous avez participé">
+                {% endif %}
+                <div class="bouton">
+                    {# <a href={{url_for('resultats', nbLicense=nbLicense, nbCompet=competition[0][5])}}>Consulter</a> #}
+                    <form action="{{ url_for("consulterArchive")}}">
+                        <input type="text" hidden name="nbCompet" value="{{competition[0][-1]}}">
+                        <input type="text" hidden name="nbLicense" value="{{nbLicense}}">
+                        <input type="text" hidden name="ancienNbCompet" value="{{nbCompet}}">
+                        <input type="submit" value="Consulter">
+
+                    </form>
+                </div>
+            </div>
+        {% endfor %}
+</main>
+{% endblock %}

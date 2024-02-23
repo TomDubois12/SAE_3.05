@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block linkcss %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/lancement.css')}}">
+{% endblock %}
+{% block header %}
+    {% include "partials/_header.html" %}
+{% endblock %}
+{% block main %}
+    <div class="haut">
+        <a href={{url_for('inscriptionSoloEquipe')}}>
+        <div class="inscription">
+            <img src="{{url_for('static', filename='images/epeeGris.png')}}" alt="Épée grise d'escrime">
+            <p>S’INSCRIRE A UNE COMPETITION</p>
+        </div>
+        <a href={{url_for('connexion_escrimeur')}}>
+        <div class="connection">
+            <img src="{{url_for('static', filename='images/epeeGris.png')}}" alt="Épée grise d'escrime">
+            <p>SE CONNECTER A UNE COMPETITION</p>
+        </div>
+        </a>
+        <a href={{url_for('connexion_organisateur')}}>
+        <div class="creer">
+            <img src="{{url_for('static', filename='images/epeeGris.png')}}" alt="Épée grise d'escrime">
+            <p>CREER ET GERER DES COMPETITIONS</p>
+        </div>
+        </a>
+    </div>
+    <div class="bas">
+        <a href={{url_for('archives', nbLicense=0, nbCompet=0)}}>
+        <div class="consultation">
+            <img src="{{url_for('static', filename='images/epeeGris.png')}}" alt="Épée grise d'escrime">
+            <p>CONSULTER DES RESULTATS DE COMPETITIONS</p>
+        </div>
+        </a>
+    </div>
+    <p class="info">En savoir plus sur l’escrime ? Voici <a href="/information">un petit lien</a> pour vous aider</p>
+{% endblock %}
+

@@ -1,0 +1,106 @@
+{% extends "base.html" %}
+{% block linkcss %}
+<link rel="stylesheet"
+    href="{{ url_for('static', filename='css/creation_competition.css')}}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/select.css') }}">
+<script defer src="https://pyscript.net/alpha/pyscript.js"></script>
+{% endblock %}
+{% block header %}
+{% include "partials/_header3.html" %}
+{% endblock %}
+{% block main %}
+<form class="creation" action="{{url_for('creationCompetition')}}", method="GET" onsubmit="return validateForm();">
+    <h1>CRÉATION D’UNE COMPÉTITION</h1>
+    <div class="nomCompet">
+        <h2>Nom de la compétition</h2>
+        <input required type="text" name="nom" id="nom">
+    </div>
+    <div class="choix">
+        <h2>Type</h2>
+        <select name="typeCompetition" id="typeCompetition">
+            <option value="solo">Solo</option>
+            <option value="equipe">Équipe</option>
+        </select>
+    </div>
+    <div class="choix">
+        <h2>Lieu</h2>
+        <select name="ville">
+            <option value="none" selected hidden>Choississez une région</option>
+            {% for ville in villes %}
+                <option value="{{ ville }}">{{ ville }}</option>
+            {% endfor %}
+        </select>
+    </div>
+    <div class="date">
+        <h2>Date</h2>
+        <input required type="date" id="choisirDate" name="date">
+        <script>
+            var dateA = document.getElementById("choisirDate");
+            var now = new Date();  // Obtenir la date et l'heure actuelles
+
+            // Ajouter 15 jours à la date actuelle
+            now.setDate(now.getDate() + 15);
+
+            // Formater la date pour le format ISO 8601 (YYYY-MM-DD)
+            var minDate = now.toISOString().slice(0, 10);
+
+            // Définir la valeur "min" de l'élément <input>
+            dateA.setAttribute("min", minDate);
+        </script>
+    </div>
+    <div class="choix">
+        <h2>Catégorie</h2>
+        <select name="categorie">
+                <option value="none" selected hidden>Choississez une catégorie</option>
+                <option value="U13">U13</option>
+                <option value="U15">U15</option>
+                <option value="U17">U17</option>
+                <option value="U20">U20</option>
+                <option value="Senior">Senior</option>
+                <option value="V1">Vétérans1</option>
+                <option value="V2">Vétérans2</option>
+                <option value="V3">Vétérans3</option>
+                <option value="V4">Vétérans4</option>
+        </select>
+    </div>
+    <div class="choix">
+        <h2>Type</h2>
+        <div class="type">
+            <select required name="sexe">
+                <option value="none" selected hidden>Choississez un sexe</option>
+                <option value="Homme">Homme</option>
+                <option value="Dames">Dames</option>
+            </select>
+            <select required name="arme">
+                <option value="none" selected hidden>Choississez une arme</option>
+                <option value="Fleuret">Fleuret</option>
+                <option value="Épée">Épée</option>
+                <option value="Sabre">Sabre</option>
+            </select>
+        </div>
+    </div>
+    <div class="coeff">
+        <h2>Coefficient</h2>
+        <input type="number" step="0.01" required name="coeff" id="coeff" min="0.01">
+    </div>
+    <input hidden name="nbLicense" value="{{ nbLicense }}">
+    <input type="submit" value="Créer la compétition" id="valider"></input>
+</form>
+
+<script>
+function validateForm() {
+    var villeSelect = document.querySelector('select[name="ville"]');
+    var categorieSelect = document.querySelector('select[name="categorie]');
+    var sexeSelect = document.querySelector('select[name="sexe"]');
+    var armeSelect = document.querySelector('select[name="arme"]');
+
+
+    
+    if (villeSelect.value === "none" || sexeSelect.value === "none" || categorieSelect.value === "none" || armeSelect.value === "none") {
+        alert("Veuillez sélectionner une option valide pour chaque champ.");
+        return false;
+    }
+    return true;
+}
+</script>
+{% endblock %}

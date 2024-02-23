@@ -1,0 +1,272 @@
+/* div */
+.resultats > div, .classement > div, .archives > div, .profil > div{
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+}
+
+.resultats > div{
+    background-color: #010101;
+    margin-top: 5vh;
+}
+.resultats >div:hover{
+
+    transform: scaleY(1.02);
+    box-shadow: 0px 0px 4px rgb(0, 0, 0);
+}
+
+.classement > div{
+    background-color: #F1F6F7;
+}
+.classement >div:hover{
+    
+    transform: scaleY(1.02);
+    box-shadow: 0px 0px 8px rgb(255, 255, 255);
+}
+
+.archives > div{
+    background-color: #010101;
+}
+.archives >div:hover{
+
+    transform: scaleY(1.02);
+    box-shadow: 0px 0px 8px rgb(1, 1, 1) ;
+}
+
+.profil > div{
+    background-color: #E9EBEA;
+}
+.profil >div:hover{
+    transform: scaleY(1.02);
+    box-shadow: 0px 0px 8px rgb(255, 255, 255);
+}
+
+/* p */
+.resultats_p {
+    float: right;
+    justify-content: center;
+    margin: auto;
+    flex-wrap: nowrap;
+}
+
+.resultats_p p {
+    color: white;
+    font-size: 3.5vh;
+    margin: 0.2vh;
+    font-family: 'Average', sans-serif;
+}
+
+.resultats_p4 {
+    margin-top: 5vh;
+}
+
+.classement_p {
+    float: left;
+    justify-content: center;
+    margin: auto;
+    flex-wrap: nowrap;
+}
+
+.classement_p p {
+    font-size: 3.5vh;
+    margin: 0.2vh;
+    margin-left: 5vh;
+    font-family: 'Average', sans-serif;
+}
+
+.classement_p3 {
+    margin-top: 5vh;
+}
+
+.archives_p {
+    float: right;
+    justify-content: center;
+    margin: auto;   
+    flex-wrap: nowrap;
+}
+
+.archives_p p {
+    color: white;
+    font-size: 3.5vh;
+    margin: 0.2vh;
+    font-family: 'Average', sans-serif;
+}
+
+.archives_p5 {
+    margin-top: 5vh;
+}
+
+.profil_p {
+    float: left;
+    justify-content: center;
+    margin: auto;
+    flex-wrap: nowrap;
+}
+
+.profil_p p {
+    font-size: 3.5vh;
+    margin: 0.2vh;
+    margin-left: 5vh;
+    font-family: 'Average', sans-serif;
+}
+
+.profil_p3 {
+    margin-top: 5vh;
+}
+
+/* img */
+.resultats img {
+    flex-basis: 20%;
+    width: 60vw;
+    height: 25vw;
+    margin: 0;
+    padding: 0;
+    float: left;
+}
+
+.classement img {
+    flex-basis: 20%;
+    width: 60vw;
+    height: 25vw;
+    margin: 0;
+    padding: 0;
+    float: right;
+}
+
+.archives img {
+    flex-basis: 20%;
+    width: 60vw;
+    height: 25vw;
+    margin: 0;
+    padding: 0;
+    float: left;
+}
+
+.profil img {
+    flex-basis: 20%;
+    width: 60vw;
+    height: 25vw;
+    margin: 0;
+    padding: 0;
+    float: right;
+}
+
+
+footer{
+    background-color: #010101;
+    text-align: center;
+    padding: 5vh;
+}
+
+footer >p {
+    color: white;
+}
+
+footer .footer_p2, footer a {
+    color: white;
+    margin-top: 2vh;
+}
+
+@media screen and (max-width: 1500px){  
+    .resultats .resultats_p p {
+        font-size: 1.5vh;
+    }
+
+    .classement .classement_p p {
+        font-size: 1.5vh;
+        margin : auto;
+    }
+
+    .archives .archives_p p {
+        font-size: 1.5vh;
+    }
+
+    .profil .profil_p p {
+        font-size: 1.5vh;   
+        margin-left: 0.3em;
+        margin-right: 0.3em;
+    }
+}
+
+@media screen and (max-width: 1000px){  
+
+    .resultats_p {
+        padding-top: 1em;
+        padding-bottom: 1em;
+    }
+    
+    .resultats .resultats_p p {
+        font-size: 1.2vh;
+    }
+    
+    .resultats img{
+        width: auto;
+        height: auto;
+        max-width: 35%;
+        max-height: 10%;
+        padding-top: 2em;
+        padding-bottom: 2em;
+    }
+
+
+
+    .classement_p {
+        padding-top: 1em;
+        padding-bottom: 1em;
+        margin-left: 0.2em;
+        margin-right: 0.2em;
+    }
+    
+    .classement .classement_p p {
+        font-size: 1.2vh;
+        margin : auto;
+    }
+    
+    .classement img{
+        width: auto;
+        height: auto;
+        max-width: 35%;
+        max-height: 10%;
+    }
+
+
+
+    
+    .archives_p {
+        padding-top: 1em;
+        padding-bottom: 1em;
+        margin: 0;
+    }
+    
+    .archives .archives_p p {
+        font-size: 1.2vh;
+    }
+    
+    .archives img{  
+        width: 30%;
+        height: 5%;
+        padding-top: 2em;
+    }
+
+    .archives .archives_p .archives_p5 {
+        margin-top: 2vh;
+    }
+
+    
+    .profil_p {
+        padding-top: 1em;
+        padding-bottom: 1em;
+    }
+    
+    .profil .profil_p p {
+        font-size: 1.2vh;
+        margin-left: 0.3em;
+        margin-right: 0.3em;
+    }
+    
+    .profil img{
+        width: 30%;
+        height: 10%;
+        margin-top: 2em;
+    }
+}

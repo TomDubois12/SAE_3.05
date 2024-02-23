@@ -1,0 +1,19 @@
+body{
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+
+header{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    height: 18vmin;
+    margin-bottom: 4vmin;
+
+}
+
+header img{
+    margin: 5vmin;
+    height: 10vmin;
+}
