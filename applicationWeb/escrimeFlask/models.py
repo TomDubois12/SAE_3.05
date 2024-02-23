@@ -21,11 +21,18 @@ cursor = db.cursor()
 
 ########################################################################
 ########################################################################
+#################       GET        #####################################
 ########################################################################
-########################################################################
-#######œ#################################################################
+#######œ################################################################
 
 def getIdLieuByNom(nomLieu): 
+    """
+     Renvoi de l'id d'un lieu par le nom
+     
+     @param nomLieu - nom du lieu à chercher
+     
+     @return numéro de l'id du lieu trouvé
+    """
     try :
         requete = "select idLieu from LIEU where comiteReg = '" + str(nomLieu) +"' ;"
         cursor.execute(requete)
@@ -33,74 +40,142 @@ def getIdLieuByNom(nomLieu):
     except Exception : 
         return None
 
-def setNewLieuByNom(nomLieu): 
-    requete = "insert into LIEU(adresse,region,departement,comiteReg) values('"+ str(nomLieu) +"','"+ str(nomLieu) +"','" + str(nomLieu) + "', '" + str(nomLieu) + "' )"
-    cursor.execute(requete)
-    db.commit()
-
 def getIdCategorieByNom(nomCat): 
+    """
+     Renvoyer l'identifiant d'une catégorie par le nom de la classe
+     
+     @param nomCat - Nom de la catégorie à chercher
+     
+     @return Id de la catégorie trouvée
+    """
     requete = "select idCategorie from CATEGORIE where intituleCategorie = '" + str(nomCat) +"' ;"
     cursor.execute(requete)
     return cursor.fetchall()[0][0]
 
 def getIdSexeByNom(nomSexe): 
+    """
+     Renvoi de l'identifiant d'un sexe en fonction du nom donné
+     
+     @param nomSexe - Nom de sexe à retourner
+     
+     @return Id du sexe trouvé
+    """
     requete = "select idSexe from SEXE where intituleSexe = '" + str(nomSexe) +"' ;"
     cursor.execute(requete)
     return cursor.fetchall()[0][0]
 
-
 def getIdArmeByNom(nomArme): 
+    """
+     Renvoie l'identifiant d'arme par rapport au nom donné
+     
+     @param nomArme - Nom de l'arme à chercher
+     
+     @return Id de l'arme trouvée
+    """
     requete = "select idArme from ARME where typeArme = '" + str(nomArme) +"' ;"
     cursor.execute(requete)
     return cursor.fetchall()[0][0]
 
 def getIdClubByNom(nomClub): 
+    """
+     Renvoie l'identifiant d'un club par rapport au nom donné
+     
+     @param nomClub - Nom de la club à utiliser
+     
+     @return Id correspondant au club du nom donné
+    """
     requete = "select idClub from CLUB where nomClub = '" + str(nomClub) +"' ;"
     cursor.execute(requete)
     return cursor.fetchall()[0][0]
 
-
-
 def getIdSexeByIdCompetition(idCompetition : int) -> int:
+  """
+   Renvoie l'id du sexe d'une compétition donnée
+   
+   @param idCompetition - identifiant du sexe de la compétition
+   
+   @return l'id du sexe trouvé
+  """
   requete = "select idSexeCompetition from COMPETITION where idCompetition = " + str(idCompetition) + ";"
   cursor.execute(requete)
   return cursor.fetchall()
 
 def getIdMaxCompetition() -> int :
+    """
+     Renvoie le plus grand id de compétition de la base de donnée
+     
+     
+     @return le plus grand id
+    """
     requete = "select MAX(idCompetition) from COMPETITION;"
     cursor.execute(requete)
     return cursor.fetchall()[0][0]
 
 ########################################################################
 ########################################################################
-########################################################################
+#################       SET        #####################################
 ########################################################################
 ########################################################################
 
 def setNewClub(nomClub):
+  """
+   Insérer un nouveau club dans la bd
+   
+   @param nomClub - nom du nouveau club
+  """
   req = "insert into CLUB (nomClub) value('"+str(nomClub)+"');"
   cursor.execute(req)
   db.commit()
 
 def setTireurDansClub(licT, nomClub): 
+  """
+   Cette fonction permet d'ajouter un numéro de licence (tireur) à un club
+   
+   @param licT - numéro de licence d'un tireur
+   @param nomClub - nom du club
+  """
   idClub = getIdClubByNom(nomClub)
   req = "insert into TIREUR_DANS_CLUB (numeroLicenceTireur,idClub) value("+str(licT)+",'"+str(idClub)+"');"
   cursor.execute(req)
   db.commit()
 
+def setNewLieuByNom(nomLieu): 
+    """
+     Inscription d'un lieu dans la base de données par rapport à un nom
+     
+     @param nomLieu - Nom du lieu à ajouter
+    """
+    requete = "insert into LIEU(adresse,region,departement,comiteReg) values('"+ str(nomLieu) +"','"+ str(nomLieu) +"','" + str(nomLieu) + "', '" + str(nomLieu) + "' )"
+    cursor.execute(requete)
+    db.commit()
+
 ########################################################################
 ########################################################################
-########################################################################
+#################      EXIST       #####################################
 ########################################################################
 ########################################################################
 
 def clubExist(nomClub) :
+  """
+   Cette fonction vérifie si le club est dans la base de données
+   
+   @param nomClub - nom du club à chercher
+   
+   @return Boolean le club existe ou pas
+  """
   requete = "select * from CLUB where nomCLub = '" + str(nomClub) +"' ;"
   cursor.execute(requete)
   res = cursor.fetchall()
   return len(res) == 1
 
 def tireurDansClub(licenceTireur) :
+  """
+   Renvoie True si licenceTireur est dans un club
+   
+   @param licenceTireur - numéro de licence du tireur
+   
+   @return si le tireur a un club ou non
+  """
   requete = "select * from TIREUR_DANS_CLUB where numeroLicenceTireur = " + str(licenceTireur) +" ;"
   cursor.execute(requete)
   res = cursor.fetchall()
@@ -108,16 +183,30 @@ def tireurDansClub(licenceTireur) :
 
 ########################################################################
 ########################################################################
-########################################################################
+#################      ORGA        #####################################
 ########################################################################
 ######################################################################## 
 
 # On gère les orga ici 
 
 def getInfoOrgaFromBDNational() -> list :
+  """
+   Obtenir les informations du csv d'organisateur
+   
+   
+   @return la liste des noms d'organisateur (str) ou liste vide
+  """
   return classementFile("./escrimeFlask/csvOrga/orga.csv")
    
 def orgaDansClub(licOrga, nomClub) :    
+  """
+   Indique si la license d'organisateur est bien associé au club donné
+   
+   @param licOrga - Licence de l'organisateur
+   @param nomClub - Nom du club
+   
+   @return true si il est dans le club, false sinon
+  """
   idClub = getIdClubByNom(nomClub)
   requete = "select * from CLUB natural join ORGANISATEURDANSCLUB where idClub = '" + str(idClub) +"' and licenseOrganisateur = "+str(licOrga) + " ;"
   cursor.execute(requete)
@@ -125,6 +214,13 @@ def orgaDansClub(licOrga, nomClub) :
   return len(res) == 1
 
 def setOrgaDansClub(licenceOrga, nomClub) : 
+  """
+   Fonction permettant d'ajouter un organisateur à un club
+   
+   @param licenceOrga - licence de l'organisateur à ajouter
+   @param nomClub - nom du club où faire l'ajout
+  """
+  # Si le club existe déjà et le club existe
   if clubExist(nomClub) == False :
     setNewClub(nomClub)
   if orgaDansClub(licenceOrga, nomClub) == False :
@@ -134,7 +230,11 @@ def setOrgaDansClub(licenceOrga, nomClub) :
     db.commit()
 
 def insOrgaDansBD() : 
+  """
+   Insérer les organisateurs dans la bd
+  """
   listeOrga = getInfoOrgaFromBDNational()
+  # Insérer toutes les organisations de la liste
   for orga in listeOrga : 
     requete5 = "insert into ORGANISATEUR (nomOrganisateur,prenomOrganisateur, licenseOrganisateur) values(%s,%s,%s);"
     cursor.execute(requete5, (orga[0],orga[1], orga[3]))
@@ -148,23 +248,33 @@ def insOrgaDansBD() :
 ########################################################################
 
 def insertTireurDansCompetition(numeroLicence : int ,idCompetition: int, ToA : str) -> bool:
+    """
+     Insérer un tireur dans une compétition
+     
+     @param numeroLicence - numéro de license du tieur à ajouter
+     @param idCompetition - id de la compétition où ajouter
+     @param ToA - TIREUR ou ARBITRE
+     
+     @return Vrai si bon Faux si l'ajout a bien été fait ou non
+    """
     try :
+        # Vérifiez si le numéro de licence est dans les csv
         if estDansBDNational(numeroLicence) :
           try :
-            #Verifié si les info données correspondent aux valeurs de la BD national
             infoTireur = getInfoFromBDNational(numeroLicence)
             if infoTireur != False : # si le numéro de licence est dans la BD national
-              infs = infoTireur[1] # On prend la infos de la personne qui veut s'inscrire 
-              # Il manque de vérifié le genre de la compète et idSexe + si arbitre ou tireur est passé en paremètre
+              infs = infoTireur[1] # On prend les infos de la personne qui veut s'inscrire 
+              # Ion regarde si arbitre ou tireur est passé en paremètre
               if ToA.upper() == 'TIREUR' : 
                 insertTireurDansBD(numeroLicence)
+                # on vérifie si la personne à inscrire est du bon sexe
                 if getIdSexeByIdCompetition(idCompetition) == getIdSexeByNumLicence(numeroLicence) :
                   requete5 = "insert into TIREUR_DANS_COMPETITIONS (numeroLicenceTireur,idCompetition) values(%s,%s);"
                   cursor.execute(requete5, (numeroLicence,idCompetition))
                   db.commit()
                   return True  
                 else : 
-                  return False #pas le bon idSexe
+                  return False # pas le bon sexe
               else : 
                 insertArbitreDansBD(numeroLicence)
                 requete5 = "insert into ARBITRE_DANS_COMPETITIONS(numeroLicenceArbitre,idCompetition) values(%s,%s);"
@@ -181,17 +291,22 @@ def insertTireurDansCompetition(numeroLicence : int ,idCompetition: int, ToA : s
       print(mysql_error)
       return False
 
-
 def insertTireurDansBD(numeroLicence : int) : 
+   """
+    Insérer un tireur dans la base de donnees
+    
+    @param numeroLicence - numéro de licence à inscrire
+    
+    @return true si l'insert a réussi, false si problème avec la bd
+   """
+   # on vérifié si la licence est dans les csv
    if estDansBDNational(numeroLicence) : 
       try :
         infoTireurGlobal = getInfoFromBDNational(numeroLicence)
         # = [idsexe] ['PETIT', 'Stéphane', '02/09/1963', '138932', 'FRANCE', 'ILE DE FRANCE Ouest', 'NEUILLY ESCR', '1687', '149']
         infoTireur = infoTireurGlobal[1]
         idSexe = infoTireurGlobal[0]
-
-        
-
+        # on regarde le sexe pour le mettre à 1 -> hommes, 2 -> dames
         if "Dames" in str(idSexe) : 
            idSexe = 2
         else : 
@@ -200,9 +315,11 @@ def insertTireurDansBD(numeroLicence : int) :
         cursor.execute(requete1, (infoTireur[0],infoTireur[1],numeroLicence,infoTireur[7],idSexe,corrigerDate(infoTireur[2]),infoTireur[4],infoTireur[5]))
         db.commit()
 
+        # on regarde le club du tireur, si il existe pas, on crée le club
         if clubExist(infoTireur[6]) == False :
           setNewClub(infoTireur[6])
 
+        # sinon on ajoute le tireur au club
         if tireurDansClub(infoTireur[3]) == False :
           setTireurDansClub(infoTireur[3],infoTireur[6])
         return True
@@ -210,14 +327,22 @@ def insertTireurDansBD(numeroLicence : int) :
         print(mysql_error)
         return False
       
-
 def insertArbitreDansBD(numeroLicence : int) : 
+   """
+    Insérer une licence d'arbitre dans la base de donnees
+    
+    @param numeroLicence - numéro de licence à inscrire
+    
+    @return true si l'insert a réussi, false si problème avec la bd
+   """
+    # on vérifié si la licence est dans les csv
    if estDansBDNational(numeroLicence) : 
       try :
         infoTireurGlobal = getInfoFromBDNational(numeroLicence)
         # = ['PETIT', 'Stéphane', '02/09/1963', '138932', 'FRANCE', 'ILE DE FRANCE Ouest', 'NEUILLY ESCR', '1687', '149']
         infoTireur = infoTireurGlobal[1]
         idSexe = infoTireurGlobal[0]
+         # on regarde le sexe pour le mettre à 1 -> hommes, 2 -> dames
         if "Dames" in str(idSexe) : 
            idSexe = 2
         else : 
@@ -230,7 +355,6 @@ def insertArbitreDansBD(numeroLicence : int) :
         print(mysql_error)
         return False
       
-
 def corrigerDate(date :str) -> str : 
    newDate = date[6] + date[7] + date[8] + date[9] + "-" + date[3] + date[4] + "-" + date[0] + date[1]
    return newDate
@@ -240,6 +364,13 @@ def crypterDate(date :str) -> str :
    return newDate
 
 def getInfoFromBDNational(numeroLicence : int) -> list :
+  """
+   Renvoie les infos d'un tireur selon sa licence
+   
+   @param numeroLicence - numéro de licence à chercher
+   
+   @return les infos du tireur ayant ce numéro de licence, false si il n'existe pas
+  """
   fichiers = fichiersDossier("./escrimeFlask/csvEscrimeur/")
   for f in fichiers :
     infoFichier = classementFile("./escrimeFlask/csvEscrimeur/" + f)
@@ -249,8 +380,13 @@ def getInfoFromBDNational(numeroLicence : int) -> list :
           return [f,cat]
   return False
 
-
 def getListeComiteReg():
+  """
+   Retourne la liste des comités régionaux
+   
+   
+   @return liste des comités
+  """
   fichiers = fichiersDossier("./escrimeFlask/csvEscrimeur/")
   listeComiteReg = []
   for f in fichiers :
@@ -260,8 +396,14 @@ def getListeComiteReg():
         listeComiteReg.append(comite[5])
   return listeComiteReg
 
-
 def estDansBDNational(numeroLicence : int) -> bool:
+  """
+   vérifie que la liste est dans la bd
+   
+   @param numeroLicence - numéro de licence à trouver
+   
+   @return true si existe, false sinon
+  """
   fichiers = fichiersDossier("./escrimeFlask/csvEscrimeur/")
   for f in fichiers :
     infoFichier = classementFile("./escrimeFlask//csvEscrimeur/" + f)
@@ -270,14 +412,27 @@ def estDansBDNational(numeroLicence : int) -> bool:
           return True
   return False 
 
-
 def concourtInscritLicenceTireur(numeroLicence : int) -> list:
+  """
+   Renvoie la liste des compétitions non finies auquel un arbitre est inscrit
+   
+   @param numeroLicence - numéro de licence du tireur
+   
+   @return la liste des compétitions non finies
+  """
   requete1 = "select * from TIREUR_DANS_COMPETITIONS natural join COMPETITION where numeroLicenceTireur = " + str(numeroLicence) + ";"
   cursor.execute(requete1)
   info = cursor.fetchall()
   return infoCompetitionOuverte(info)
 
 def concourtNonFinitInscritTireur(licenceTireur) : 
+  """
+   Renvoie la liste des compétitions non finies auquel un tireur est inscrit
+   
+   @param numeroLicence - numéro de licence du tireur
+   
+   @return la liste des compétitions non finies
+  """
   requete1 = "select * from TIREUR_DANS_COMPETITIONS natural join COMPETITION where numeroLicenceTireur = " + str(licenceTireur) + ";"
   cursor.execute(requete1)
   info = cursor.fetchall()
@@ -307,6 +462,13 @@ def concourtNonFinitInscritTireur(licenceTireur) :
   return res
 
 def concourtNonFinitInscritArbitre(licenceArbitre) : 
+  """
+   Renvoie la liste des compétitions non finies auquel un arbitre est inscrit
+   
+   @param numeroLicence - numéro de licence de l'arbitre
+   
+   @return la liste des compétitions non finies
+  """
   requete1 = "select * from ARBITRE_DANS_COMPETITIONS natural join COMPETITION where numeroLicenceArbitre = " + str(licenceArbitre) + ";"
   cursor.execute(requete1)
   info = cursor.fetchall()
@@ -321,16 +483,28 @@ def concourtNonFinitInscritArbitre(licenceArbitre) :
       res.append(ligneAj)
   return res
 
-
 def concourtInscritLicenceArbitre(numeroLicence : int) -> list:
+  """"
+   Renvoie la liste des compétitions auquel un arbitre est inscrit
+   
+   @param numeroLicence - numéro de licence de l'arbitre
+   
+   @return la liste des compétitions
+  """
   requete1 = "select * from ARBITRE_DANS_COMPETITIONS natural join COMPETITION where numeroLicenceArbitre = " + str(numeroLicence) + ";"
   cursor.execute(requete1)
   info = cursor.fetchall()
   return infoCompetitionOuverte(info)
   # return sous la forme : nomCompetition intituleCompet typeArme intituleSexe intituleCategorie departement
   
-
 def classementFile(filename :str) -> list:
+    """
+     Lit un fichier csv
+     
+     @param filename - lien du csv
+     
+     @return liste contenant les infos du csv
+    """
     "nom prenom date_naissance adherent nation comite_regional club points rang"
     res = []
     with open(filename, 'r',encoding='Latin-1') as file :
@@ -343,6 +517,15 @@ def classementFile(filename :str) -> list:
     return res
 
 def getClassementNationnal(arme,sexe,categorie) : 
+  """
+  Donne le classement national selon les critères renseigné
+ 
+  @param arme - l'arme voulue
+  @param sexe - le sexe voulue
+  @param categorie - la categorie voulue
+
+  @return le classement en fonction du csv voulu
+  """
   print(categorie)
   if (categorie == 'Vétérans3' or categorie == 'Vétérans4') and arme == "Epée" and sexe == "Homme" : 
       print("ici")
@@ -356,6 +539,11 @@ def getClassementNationnal(arme,sexe,categorie) :
   
 #print(getClassementNationnal("Epée","Femme","Vétérans3"))
 def inscriptionOuverte() -> list:
+  """
+  Récupérer les compétitions où l'inscription est ouverte
+ 
+  @return - la liste des inscriptions ouvertes
+  """
   requete1 = "select * from COMPETITION where datediff(dateDebutCompetiton, CURDATE()) > 14 and estFinie = False;"
   cursor.execute(requete1)
   info = cursor.fetchall()
@@ -369,6 +557,11 @@ def inscriptionOuverte() -> list:
   return res
 
 def inscriptionOuverteSolo() -> list:
+  """
+  Récupérer les compétitions individuelles où l'inscription est ouverte
+ 
+  @return - la liste des inscriptions individuelles ouvertes
+  """
   requete1 = "select * from COMPETITION where datediff(dateDebutCompetiton, CURDATE()) > 14 and estFinie = False and typeCompetition = 'solo';"
   cursor.execute(requete1)
   info = cursor.fetchall()
@@ -382,6 +575,11 @@ def inscriptionOuverteSolo() -> list:
   return res
 
 def inscriptionOuverteEquipe(): 
+  """
+  Récupérer les compétitions en équipe où l'inscription est ouverte
+ 
+  @return - la liste des inscriptions en équipe ouvertes
+  """
   requete1 = "select * from COMPETITION where datediff(dateDebutCompetiton, CURDATE()) > 14 and estFinie = False and typeCompetition = 'equipe';"
   cursor.execute(requete1)
   info = cursor.fetchall()
@@ -395,6 +593,11 @@ def inscriptionOuverteEquipe():
   return res
 
 def getOrganisateurClub():
+  """
+  Récupérer les organisateurs des clubs
+ 
+  @return - la liste des organisateurs et leurs club
+  """
   requete1 = "select * from ORGANISATEURDANSCLUB natural join CLUB ;"
   cursor.execute(requete1)
   info = cursor.fetchall()
@@ -402,7 +605,6 @@ def getOrganisateurClub():
   for i in range(len(info)):
     res[info[i][1]] = info[i][2]
   return res
-
 
 def getIdSexeByNumLicence(numeroLicence : int) -> int:
   requete = "select idSexeTireur from TIREUR where numeroLicenceTireur = " + str(numeroLicence) + ";"
@@ -451,8 +653,6 @@ def infoCompetitionOuverte(info):
     res.append(cursor.fetchall())
   return res
 
-
-
 def getListTournoisAllCLosed():
   requete1 = "select * from COMPETITION where estFinie = True order by dateDebutCompetiton DESC;"
   cursor.execute(requete1)
@@ -492,6 +692,13 @@ def getListIdCompetitionTournoisLancer():
   return listeIdCompetition
 
 def getTournoisClosedParticiper(numeroLicence):
+  """
+  Récupérer les compétitions finies à laquelle numeroLicence a participé
+
+  @param numeroLicence - un tireur
+ 
+  @return - la liste des compétitions à laquelle numeroLicence a participé
+  """
   requete1 = "select * from TIREUR_DANS_COMPETITIONS natural join COMPETITION where numeroLicenceTireur = " + str(numeroLicence) + " and estFinie = True  order by dateDebutCompetiton DESC;"
   cursor.execute(requete1)
   info = cursor.fetchall()
@@ -506,6 +713,13 @@ def getTournoisClosedParticiper(numeroLicence):
   return res
 
 def getTournoisClosedParticiperEquipe(numeroLicence):
+  """
+  Récupérer les compétitions finies à laquelle une équipe a participé
+
+  @param numeroLicence - une équipe
+ 
+  @return - la liste des compétitions à laquelle une équipe a participé
+  """
   requete1 = "select * from TIREUR_DANS_COMPETITIONS natural join COMPETITION where numeroLicenceTireur = " + str(numeroLicence) + " and estFinie = True and typeCompetition = 'equipe'  order by dateDebutCompetiton DESC;"
   cursor.execute(requete1)
   info = cursor.fetchall()
@@ -520,6 +734,13 @@ def getTournoisClosedParticiperEquipe(numeroLicence):
   return res
 
 def getTournoisClosedParticiperSolo(numeroLicence):
+  """
+  Récupérer les compétitions solo finies à laquelle un tireur a participé
+
+  @param numeroLicence - un tireur
+ 
+  @return - la liste des compétitions solo à laquelle un tireur a participé
+  """
   requete1 = "select * from TIREUR_DANS_COMPETITIONS natural join COMPETITION where numeroLicenceTireur = " + str(numeroLicence) + " and estFinie = True and typeCompetition = 'solo'  order by dateDebutCompetiton DESC;"
   cursor.execute(requete1)
   info = cursor.fetchall()
@@ -546,7 +767,6 @@ def getTournoisNonLancerEquipe():
     res.append(cursor.fetchall())
   return res
 
-
 def getTournoisFinitEquipe(): 
   requete1 = "select * from COMPETITION where typeCompetition = 'equipe' and estFinie = True  order by dateDebutCompetiton DESC;"
   cursor.execute(requete1)
@@ -564,6 +784,16 @@ def getProfil(numLicence):
   return profil
 
 def trieArchive(arme, sexe, categorie, region):
+  """
+  Trie les archives pour ne récupérer que celles ayant les critères cherchés
+
+  @param arme - une arme
+  @param sexe - un sexe
+  @param categorie - une categorie
+  @param region - une region
+ 
+  @return - les archives ayant les critères requis
+  """
   liste = getListTournoisAllCLosed()
   liste2 = []
   for comp  in liste : 
@@ -588,8 +818,14 @@ def trieArchive(arme, sexe, categorie, region):
 
   return liste2
 
-
 def getStatistique(numLicence):
+  """
+  Donne les classements d'un tireur
+
+  @param numLicence - un tireur
+ 
+  @return - les statistiques d'un tireur
+  """
   fichiers = fichiersDossier("./escrimeFlask/csvEscrimeur/")
   stats = []
   for f in fichiers :
@@ -610,7 +846,13 @@ def getStatistique(numLicence):
           stats.append(("Fleuret",ligne[7],ligne[8],f.split("_")[-1][0:-4]))
   return stats
 
-def getCompetitionParOrga(numLicence): 
+def getCompetitionParOrga(numLicence):
+  """
+  Récupérer les compétitions crée par un organisateur
+  @param numeroLicence - un organisateur
+ 
+  @return - la liste des compétitions qu'il a crée
+  """
   requete = "select * from ORGANISATEURCOMPETITION natural join COMPETITION  where licenseOrganisateur = " + str(numLicence) + " order by dateDebutCompetiton DESC;"
   cursor.execute(requete)
   info = cursor.fetchall()
@@ -834,7 +1076,6 @@ def getNbEquipe(idCompetition) :
   l1 = cursor.fetchall()
   return l1[0][0]
 
-
 def getClassementPhase(idCompetition): 
   requete = "select numeroLicenceTireur from TIREUR_DANS_POULE natural join POULE where idCompetition ="+ str(idCompetition) +  " order by nbVictoire DESC, TDMTR DESC  ;"
   cursor.execute(requete)
@@ -1030,7 +1271,6 @@ def phasesFinie(idCompetition, nbPhases ) :
       print(ligne)
       if ligne[3] < 15 and ligne[5] < 15 : return False 
   return res 
-
 
 def maFonctionTropBelle(nbPhase, idCompetition,listeLicMatchACreer): 
   
@@ -1542,7 +1782,6 @@ def metAJourInfoTireurDansPoule(dico, idCompetition) :
     print(elem[0] , tdmtr , placePoule,nbVictoire)
     pass
 
-
 def lancerCompetition(idCompetition): 
   if isEquipe(idCompetition):
     lancerCompetitionEquipe(idCompetition)
@@ -1574,8 +1813,14 @@ def lancerCompetition(idCompetition):
 #############Gestion des equipes ###############################
 ################################################################
 
-
 def isEquipe(idCompetition) : 
+  """
+  Indique si une compétiton est de type équipe ou non
+
+  @param idCompetition - l'id d'une compétition
+ 
+  @return - true si equipe, false sinon
+  """
   infosMatch = "select typeCompetition from COMPETITION where idCompetition = "+str(idCompetition)+";"
   cursor.execute(infosMatch)
   nomEquipe =cursor.fetchall()[0][0]
@@ -1592,7 +1837,6 @@ def isCompetitionEquipe(idCompetition):
     return True
   return False
   
-
 def dicoCompeteEquipe(idCompetition): 
     dico = dict()
     requete = "select * from EQUIPE where idCompetition = "+str(idCompetition)+";"
@@ -1624,7 +1868,6 @@ def dicoCompeteEquipe(idCompetition):
 
     return dico
 
-
 def getClassementEquipe(nomEquipe, idCompetition) : 
   dico = dicoCompeteEquipe(idCompetition)
   try : 
@@ -1647,13 +1890,11 @@ def equipeListeTrierDico(dico, idCompetition) :
           listeReturn.insert(len(listeReturn), key)
   return listeReturn
 
-
-def getIdEquipeByNomEquipeAndCompetition(nomEquipe, idCompetition) : 
+def getIdEquipeByNomEquipeAndCompetition(nomEquipe, idCompetition) :
   infosMatch = "select idEquipe from EQUIPE where nomEquipe = '"+str(nomEquipe)+"' and idCompetition = "+str(idCompetition)+";"
   cursor.execute(infosMatch)
   nomEquipe =cursor.fetchall()[0][0]
   return nomEquipe
-
 
 def nomEquipeInixistantDansCompetition(nomEquipe, idCompetition):
   try :
@@ -1667,6 +1908,13 @@ def nomEquipeInixistantDansCompetition(nomEquipe, idCompetition):
     return False
 
 def insererEquipeDansCompetition(idCompetition, nomEquipe, licenceChef): 
+  """
+  Ajouter d'une équipe a une compétition'
+
+  @param idCompetition - l'id de la compétition où ajouté l'équipe
+  @param nomEquipe - le nom de l'équipe a ajouté
+  @param licenceChef - la licence de l'organisateur
+  """
   try :
     if nomEquipe != "" :
       requete = "insert into EQUIPE(idCompetition,nomEquipe,licenceChefEquipe) value("+str(idCompetition)+",'"+str(nomEquipe)+"',"+str(licenceChef)+");" 
@@ -1679,6 +1927,12 @@ def insererEquipeDansCompetition(idCompetition, nomEquipe, licenceChef):
     return False
 
 def insererTireurDansEquipe(idEquipe, listeLicenceTireur): 
+  """
+  Ajouter des joueurs a une equipe
+
+  @param idEquiê - l'id d'une équipe a qui ajouté les tireurs
+  @param listeLicenceTireur - la liste des tireurs a ajouté
+  """
   try :
     for licence in listeLicenceTireur : 
 
@@ -1694,12 +1948,29 @@ def insererTireurDansEquipe(idEquipe, listeLicenceTireur):
     return False
   
 def getEquipeDansCompetition(idCompetition):
+  """
+  Récupère la liste des équipes d'une compétition
+
+  @param idCompetition - l'id d'une compétition
+ 
+  @return - la liste des équipes
+  """
   requete = "select nomEquipe, licenceChefEquipe from EQUIPE where idCompetition = "+str(idCompetition)+";"
   cursor.execute(requete)
   l = cursor.fetchall()
   return l
   
-def addPointMatchEquipe(idCompetition, nbPhase,nomPoint,nomLose,) : 
+def addPointMatchEquipe(idCompetition, nbPhase,nomPoint,nomLose) : 
+  """
+  Faire gagner un point à une équipe
+
+  @param idCompetition - l'id d'une compétition
+  @param nbPhase - le numéro de phase
+  @param nomPoint - l'équipe qui gagne un point
+  @param nom2 - l'équipe qui perd un point
+ 
+  @return - le match affrontant les deux équipes
+  """
   idMatch = getIdMatchEliminationByNomsAndIdCompetition(idCompetition,nbPhase,nomPoint,nomLose)
   infosMatch = "select idEquipe1, idEquipe2 from MATCH_EQUIPE where idMatchEquipe = "+str(idMatch)+" ;"
   cursor.execute(infosMatch)
@@ -1731,7 +2002,17 @@ def addPointMatchEquipe(idCompetition, nbPhase,nomPoint,nomLose,) :
     return False
   return False
 
-def subPointMatchEquipe(idCompetition, nbPhase,nomPoint,nomLose,) : 
+def subPointMatchEquipe(idCompetition, nbPhase,nomPoint,nomLose) :
+  """
+  Faire perdre un point à une équipe
+
+  @param idCompetition - l'id d'une compétition
+  @param nbPhase - le numéro de phase
+  @param nomPoint - l'équipe qui perd un point
+  @param nom2 - l'équipe qui ne perd pas de point
+ 
+  @return - le match affrontant les deux équipes
+  """
   idMatch = getIdMatchEliminationByNomsAndIdCompetition(idCompetition,nbPhase,nomPoint,nomLose)
   infosMatch = "select idEquipe1, idEquipe2 from MATCH_EQUIPE where idMatchEquipe = "+str(idMatch)+" ;"
   cursor.execute(infosMatch)
@@ -1764,6 +2045,16 @@ def subPointMatchEquipe(idCompetition, nbPhase,nomPoint,nomLose,) :
   return False
 
 def getIdMatchEliminationByNomsAndIdCompetition(idCompetition, nbPhase, nom1, nom2):
+  """
+  Récupérer un match d'élimination
+
+  @param idCompetition - l'id d'une compétition
+  @param nbPhase - le numéro de phase
+  @param nom1 - l'équipe 1
+  @param nom2 - l'équipe 2
+ 
+  @return - le match affrontant les deux équipes
+  """
   id1 = getIdEquipeByNomEquipeAndCompetition(nom1, idCompetition)
   id2 = getIdEquipeByNomEquipeAndCompetition(nom2, idCompetition)
   requete = "select idMatchEquipe from MATCH_EQUIPE where idCompetition = "+str(idCompetition)+" and nbPhases = "+str(nbPhase)+" and ((idEquipe2 = "+str(id1)+" OR idEquipe1 = "+str(id1)+") OR (idEquipe2 = "+str(id2)+" OR idEquipe1 = "+str(id2)+"))  ;" 
@@ -1793,7 +2084,14 @@ def maFonctionPlusBelleQueLautreAvecPhase( idCompetition , nbPhase):
     listeDesMatch.append([getNomEquipeByIdEquipe(match[2]),getNomEquipeByIdEquipe(match[4]),getNomClubByIdEquipe(match[2]),getNomClubByIdEquipe(match[4]),match[3],match[5]])
   return listeDesMatch
 
-def getInfosMatchEquipeNumLicence(idCompetition, numeroLicence) : 
+def getInfosMatchEquipeNumLicence(idCompetition, numeroLicence) :
+  """
+  Récupérer les infos d'un match d'équipe par l'id competition et le num de licence de l'équipe
+
+  @param numeroLicence - une équipe
+ 
+  @return - les infos du match en cours
+  """
   #Renvoie pour une competition dans la vue d'arbitre tout les matchs
   listeDesMatch = []
   dico = dicoCompeteEquipe(idCompetition)
@@ -1812,8 +2110,14 @@ def getInfosMatchEquipeNumLicence(idCompetition, numeroLicence) :
     listeDesMatch.append([getNomEquipeByIdEquipe(match[2]),getNomEquipeByIdEquipe(match[4]),getNomClubByIdEquipe(match[2]),getNomClubByIdEquipe(match[4]),match[3],match[5]])
   return listeDesMatch
 
-
 def getNomClubByIdEquipe(idEquipe) :
+  """
+  Récupérer le nom de du club d'une équipe par l'id de l'équipe
+ 
+  @param idEquipe - id de l'équipe dont on veut leclub
+
+  @return le nom du club
+  """
   requete = "select licenceChefEquipe from EQUIPE where idEquipe = "+str(idEquipe)+";" 
   cursor.execute(requete)
   licenceOrga = cursor.fetchall()[0][0]
@@ -1829,12 +2133,27 @@ def getNomClubByIdEquipe(idEquipe) :
   return res
 
 def getNomEquipeByIdEquipe(idEquipe) : 
+  """
+  Récupérer le nom de l'équipe par son id
+ 
+  @param idEquipe - id de l'équipe dont on veut le nom
+
+  @return le nom de l'équipe
+  """
   infosMatch = "select nomEquipe from EQUIPE where idEquipe = "+str(idEquipe)+" ;"
   cursor.execute(infosMatch)
   nomEquipe =cursor.fetchall()[0][0]
   return nomEquipe
 
 def getIdEquipeByNomEquipeAndCompetition(nomEquipe, idCompetition) : 
+  """
+  Retourne l'id de l'équipe par son nom et un id competition
+ 
+  @param  nomEquipe - nom de l'équipe cherché
+  @param idCompetition - id de la compétition
+
+  @return idEquipe
+  """
   infosMatch = "select idEquipe from EQUIPE where nomEquipe = '"+str(nomEquipe)+"' and idCompetition = "+str(idCompetition)+";"
   cursor.execute(infosMatch)
   res =cursor.fetchall()[0][0]
@@ -1842,6 +2161,14 @@ def getIdEquipeByNomEquipeAndCompetition(nomEquipe, idCompetition) :
   return res
 
 def createMatchEquipe(idCompetition, phase, nom1, nom2) :
+  """
+  Créer un match d'équipe
+ 
+  @param idCompetition - l'id de la compétition
+  @param phase - le numéro de phase
+  @param nom1 - l'équipe 1
+  @param nom2 - l'équipe 2
+  """
 
   if (nom1 and nom2) != "" : 
     idE1= getIdEquipeByNomEquipeAndCompetition(nom1, idCompetition)
@@ -1864,6 +2191,12 @@ def createMatchEquipe(idCompetition, phase, nom1, nom2) :
     db.commit()
 
 def generePhaseSuivanteEquipe(idCompetition, listeNomVictoire):
+  """
+  Lancer une compétition d'équipe
+ 
+  @param idCompetition - l'id de la compétition
+  @param listeNomVictoire - les équipes victorieuses
+  """
   lNomVictoire=[]
   listeNomVictoire = listeNomVictoire.replace('[','').replace(']','').replace("'","")
   for nom in listeNomVictoire.split(","):
@@ -1875,6 +2208,12 @@ def generePhaseSuivanteEquipe(idCompetition, listeNomVictoire):
     createMatchEquipe(idCompetition,nbPhase,lNomVictoire[i],lNomVictoire[i+1])
 
 def lancerCompetitionEquipe(idCompetition) : 
+  """
+  Lancer une compétition d'équipe
+ 
+  @param lid de la compétition
+  """
+
   dico = dicoCompeteEquipe(idCompetition)
   phase = 1
   lancerCompetitionDate(idCompetition)
@@ -1888,11 +2227,17 @@ def lancerCompetitionEquipe(idCompetition) :
     for j in range(len(listeNomEquipeTrier), 2**(puissanceDeDeux + 1)):
       listeNomEquipeTrier.append("")
 
-
   for i in range(int(len(listeNomEquipeTrier)/2)):
     createMatchEquipe(idCompetition, phase, listeNomEquipeTrier[i], listeNomEquipeTrier[-(i+1)])
 
 def getClassementEquipFinal(idCompetition) : 
+  """
+   Renvoie la classement final d'une compétition d'équipe
+   
+   @param idCompetition - id de la compétition
+   
+   @return une liste avec le classsement final
+  """
   nbPhase = getNbPhase(idCompetition)
   listeDeListe = []
   for i in range(1,nbPhase+1):
